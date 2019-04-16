@@ -10,16 +10,22 @@ public class ProjectileMaker {
     private double posY;
     private ImageView projectileImage;
     private double angle;
+    PROJECTILE proj;
 
 
     public ImageView getProjectileImage() {
         return projectileImage;
     }
 
+    public PROJECTILE getProj() {
+        return proj;
+    }
+
     public ProjectileMaker(double posX, double posY, PROJECTILE projectile, double angle) {
         this.posX = posX;
         this.posY = posY;
         this.angle = angle;
+        proj = projectile;
         spawnProjectile(projectile.getType());
 
     }

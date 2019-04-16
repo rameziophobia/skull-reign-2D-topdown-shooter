@@ -7,6 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import model.Enemies.Enemy;
+import model.Enemies.normalTank;
 import model.projectiles.PROJECTILE;
 import model.projectiles.ProjectileMaker;
 import model.player.PLAYER;
@@ -14,14 +16,15 @@ import model.player.PLAYER;
 import java.util.ArrayList;
 
 import static java.lang.Math.atan2;
+import static model.Enemies.ENEMY_ENUM.TANK_SAND;
 
 
 public class GameViewManager {
+    public static final int HEIGHT = 768;
+    public static final int WIDTH = 1200;
     private AnchorPane gamePane;
     private Scene gameScene;
     private Stage gameStage;
-    public static final int HEIGHT = 768;
-    public static final int WIDTH = 1200;
     private Stage menuStage;
     private ImageView playerImage;
     private double mouseXPos;
@@ -36,6 +39,7 @@ public class GameViewManager {
     private final double SPEED = 4;
     private double angle;
     private ArrayList<ProjectileMaker> projArr;
+    private ArrayList<Enemy> enemyArrayList;
     private GridPane buildings;
 
     public GameViewManager() {
@@ -128,10 +132,25 @@ public class GameViewManager {
         this.menuStage.hide();
         gameStage.show();
         createPlayer(chosenPlayer);
+        createEnemy();
         trackMouse();
         gameLoop();
         fireProjectile();
         initializeBuildings();
+    }
+
+    private void followPlayer() {
+        for (Enemy enemy : enemyArrayList) {
+            enemy.updateDirection(playerXPos,playerYPos);
+            enemy.move();
+        }
+    }
+
+    private void createEnemy() {
+        enemyArrayList = new ArrayList<>();
+        Enemy sandTank = new normalTank(TANK_SAND, playerXPos,playerYPos);
+        enemyArrayList.add(sandTank);
+        gamePane.getChildren().add(sandTank.getEnemyImage());
     }
 
     private void initializeBuildings() {//todo initialize random buildings with gridpane
@@ -157,6 +176,8 @@ public class GameViewManager {
             public void handle(long now) {
                 movePlayer();
                 moveProjectile();
+                followPlayer();
+                checkCollision();
             }
         };
         gameTimer.start();
@@ -181,7 +202,7 @@ public class GameViewManager {
             }
             gamePane.getChildren().removeAll(projArrImgRemove);
             projArr.removeAll(projArrRemove);
-            System.out.println(projArr.size());
+//            System.out.println(projArr.size());
 
         }
     }
@@ -189,13 +210,12 @@ public class GameViewManager {
     private void fireProjectile() {
         projArr = new ArrayList<>();
         gamePane.setOnMousePressed(e -> {
-            if(e.isSecondaryButtonDown()){
+            if (e.isSecondaryButtonDown()) {
                 projArr.add(new ProjectileMaker(playerXPos, playerYPos,
                         PROJECTILE.FIRE, angle));
                 gamePane.getChildren().add(
                         projArr.get(projArr.size() - 1).getProjectileImage());
-            }else
-            {
+            } else {
                 projArr.add(new ProjectileMaker(playerXPos, playerYPos,
                         PROJECTILE.BULLET, angle));
                 gamePane.getChildren().add(
@@ -208,6 +228,7 @@ public class GameViewManager {
 
     private void movePlayer() { //todo can be coded more efficiently
         final double DIAGONAL_FACTOR = 1.5;
+
         if (upPressed) {
             if (rightPressed || leftPressed) {
                 playerImage.setLayoutY(playerYPos - SPEED / DIAGONAL_FACTOR); // to avoid moving fast
@@ -249,9 +270,45 @@ public class GameViewManager {
 
         }
         //when the player leaves the screen he emerges from the other edge
-        playerYPos = (playerYPos < 0) ? (playerYPos + HEIGHT): (playerYPos % HEIGHT);
-        playerXPos = (playerXPos < 0) ? (playerXPos + WIDTH): (playerXPos % WIDTH);
+        playerYPos = (playerYPos < 0) ? (playerYPos + HEIGHT) : (playerYPos % HEIGHT);
+        playerXPos = (playerXPos < 0) ? (playerXPos + WIDTH) : (playerXPos % WIDTH);
 
+    }
+
+    private void checkCollision(){//todo: enqueue & dequeue
+
+        ArrayList<ProjectileMaker> projArrRemove = new ArrayList<>();
+        ArrayList<ImageView> arrImgRemove = new ArrayList<>();
+        ArrayList<Enemy> enemyArrRemove = new ArrayList<>();
+
+        for(ProjectileMaker p: projArr){
+            for(Enemy enemy: enemyArrayList){
+
+                final int hitRadius = p.getProj().getHitRadius();
+
+                if((hitRadius + enemy.getHitRadius()) >
+                distance(p.getProjectileImage().getLayoutX() + hitRadius,enemy.getEnemyImage().getLayoutX() + enemy.getHitRadius()
+                ,p.getProjectileImage().getLayoutY() + hitRadius,enemy.getEnemyImage().getLayoutY() + enemy.getHitRadius())){
+                    //3ashan my3mlsh collisions abl ma yetshal
+                    p.getProjectileImage().setLayoutY(-500);
+
+                    enemy.setHp_current(enemy.getHp_current() - p.getProj().getDamage()) ;
+
+                    projArrRemove.add(p);
+                    arrImgRemove.add(p.getProjectileImage());
+
+                    if(enemy.getHp_current() <= 0){
+                        enemyArrRemove.add(enemy);
+                        arrImgRemove.add(enemy.getEnemyImage());
+                        //todo: add points
+                        //todo: respawn
+                    }
+                }
+            }
+        }
+        gamePane.getChildren().removeAll(arrImgRemove);
+        enemyArrayList.removeAll(enemyArrRemove);
+        enemyArrayList.removeAll(projArrRemove);
     }
 
     private void setCrosshair(Pane pane) {
@@ -261,4 +318,7 @@ public class GameViewManager {
                 image.getHeight() / 2));
     }
 
+    public  double distance(double x1, double x2, double y1, double y2){
+        return Math.hypot(x2 - x1, y2 - y1);
+    }
 }

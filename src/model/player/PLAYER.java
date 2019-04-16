@@ -8,7 +8,8 @@ public enum PLAYER {
     SOLDIER("file:src/model/player/resources/Soldier 1/soldier1_gun.png");
 
     String urlPlayer;
-    private PLAYER(String urlPlayer)
+    public static final int hitRadius = 22;
+    PLAYER(String urlPlayer)
     {
         this.urlPlayer = urlPlayer;
     }
