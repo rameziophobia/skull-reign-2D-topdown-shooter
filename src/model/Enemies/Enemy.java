@@ -3,6 +3,11 @@ package model.Enemies;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Random;
+
+import static view.GameViewManager.HEIGHT;
+import static view.GameViewManager.WIDTH;
+
 
 public abstract class Enemy {
 
@@ -21,9 +26,10 @@ public abstract class Enemy {
     }
 
     public Enemy(ENEMY_ENUM enemyType, double playerXPos, double playerYPos) {
+        Random rand = new Random();
         enemyImage = new ImageView(new Image(enemyType.getType()));
-        enemyImage.setLayoutY(200);
-        enemyImage.setLayoutX(200);
+        enemyImage.setLayoutY(rand.nextInt(HEIGHT));
+        enemyImage.setLayoutX(rand.nextInt(WIDTH));
         this.enemyType = enemyType;
         updateDirection(playerXPos, playerYPos);
         enemyImage.setRotate(angle);
@@ -33,8 +39,6 @@ public abstract class Enemy {
         double diffX = playerXPos - enemyImage.getLayoutX();
         double diffY = playerYPos - enemyImage.getLayoutY();
         angle = Math.toDegrees(Math.atan2(diffY , diffX));
-        System.out.println(playerXPos + " " + playerYPos + " "
-                + enemyImage.getLayoutX() + " " + enemyImage.getLayoutY() + " " + angle);
         enemyImage.setRotate(angle);
     }
 

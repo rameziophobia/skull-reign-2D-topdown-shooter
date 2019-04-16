@@ -1,6 +1,7 @@
 package view;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.Group;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 import static java.lang.Math.atan2;
 import static model.Enemies.ENEMY_ENUM.TANK_SAND;
+import static model.obstacles.Obstacle.createRandomRotator;
 
 
 public class GameViewManager {
@@ -41,6 +43,9 @@ public class GameViewManager {
     private ArrayList<ProjectileMaker> projArr;
     private ArrayList<Enemy> enemyArrayList;
     private GridPane buildings;
+    private int numberOfObstacles = 0;
+    private int numberOfEnemies = 0;
+    private double score;
 
     public GameViewManager() {
         initializeStage();
@@ -131,12 +136,17 @@ public class GameViewManager {
         this.menuStage = menuStage;
         this.menuStage.hide();
         gameStage.show();
+        createUI();
         createPlayer(chosenPlayer);
         createEnemy();
         trackMouse();
         gameLoop();
         fireProjectile();
         initializeBuildings();
+    }
+
+    private void createUI() {
+        gamePane.getChildren().add(new GameViewUI().getGroup());
     }
 
     private void followPlayer() {
@@ -174,6 +184,9 @@ public class GameViewManager {
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                score++;
+                createEnemies();
+                createObstacles();
                 movePlayer();
                 moveProjectile();
                 followPlayer();
@@ -181,6 +194,25 @@ public class GameViewManager {
             }
         };
         gameTimer.start();
+    }
+
+    private void createEnemies(){
+        if(score / 100 > numberOfEnemies){
+            Enemy enemy = new normalTank(TANK_SAND, playerXPos,playerYPos);
+            enemyArrayList.add(enemy);
+            gamePane.getChildren().add(enemy.getEnemyImage());
+            numberOfEnemies++;
+        }
+
+    }
+    private void createObstacles() {//todo implement score
+        if(score / 1000 > numberOfObstacles){
+            gamePane.getChildren().add(createRandomRotator());
+            numberOfObstacles++;
+            System.out.println("here");
+        }
+        System.out.println(score);
+
     }
 
     private void moveProjectile() {
