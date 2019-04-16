@@ -58,12 +58,33 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
+        <entry file="file://$PROJECT_DIR$/src/view/GameViewManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" selection-start-line="10" selection-end-line="10" />
+            <state relative-caret-position="586">
+              <caret line="164" column="9" lean-forward="true" selection-start-line="164" selection-start-column="9" selection-end-line="164" selection-end-column="9" />
+              <folding>
+                <element signature="method#GameViewManager#0;class#GameViewManager#0" />
+                <element signature="method#createKeyListeners#0;class#GameViewManager#0" />
+                <element signature="method#initializeStage#0;class#GameViewManager#0" />
+                <element signature="method#createPlayer#0;class#GameViewManager#0" />
+                <element signature="method#createBackground#0;class#GameViewManager#0" />
+                <element signature="e#4478#4657#0" expanded="true" />
+                <element signature="e#4656#4657#0" expanded="true" />
+                <element signature="method#setCrosshair#0;class#GameViewManager#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/model/projectiles/ProjectileMaker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="422">
+              <caret line="32" column="41" selection-start-line="32" selection-start-column="41" selection-end-line="32" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#449#450#0" expanded="true" />
+                <element signature="e#487#488#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -72,10 +93,9 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/ViewManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="210" selection-start-line="210" selection-end-line="210" />
+            <state relative-caret-position="850">
+              <caret line="184" selection-start-line="184" selection-end-line="184" />
               <folding>
-                <element signature="imports" expanded="true" />
                 <element signature="method#ViewManager#0;class#ViewManager#0" />
                 <element signature="method#setCursorHand#0;class#ViewManager#0" />
                 <element signature="method#CreateButtons#0;class#ViewManager#0" />
@@ -96,71 +116,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/view/GameViewManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="310">
-              <caret line="139" column="39" lean-forward="true" selection-start-line="139" selection-start-column="39" selection-end-line="139" selection-end-column="39" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#GameViewManager#0;class#GameViewManager#0" />
-                <element signature="method#createKeyListeners#0;class#GameViewManager#0" />
-                <element signature="e#1089#1574#0" />
-                <element signature="e#1568#2033#0" />
-                <element signature="method#initializeStage#0;class#GameViewManager#0" />
-                <element signature="method#createPlayer#0;class#GameViewManager#0" />
-                <element signature="method#createBackground#0;class#GameViewManager#0" />
-                <element signature="method#createNewGame#0;class#GameViewManager#0" />
-                <element signature="method#trackMouse#0;class#GameViewManager#0" />
-                <element signature="method#gameLoop#0;class#GameViewManager#0" />
-                <element signature="e#4335#4475#0" expanded="true" />
-                <element signature="e#4474#4475#0" expanded="true" />
-                <element signature="method#movePlayer#0;class#GameViewManager#0" />
-                <element signature="method#setCursorHand#0;class#GameViewManager#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/player/PLAYER.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-              <folding>
-                <element signature="e#545#546#0" expanded="true" />
-                <element signature="e#577#578#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/styles.css">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/PlayerPicker.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="25" column="59" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="59" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#823#824#0" expanded="true" />
-                <element signature="e#852#853#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -184,9 +146,12 @@
       <find>chose</find>
       <find>curs</find>
       <find>createpl</find>
-      <find>sys</find>
       <find>tra</find>
       <find>curso</find>
+      <find>gametime</find>
+      <find>here</find>
+      <find>move</find>
+      <find>sys</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -205,7 +170,14 @@
         <option value="$PROJECT_DIR$/src/model/SpaceRunnerSubscene.java" />
         <option value="$PROJECT_DIR$/src/model/PlayerPicker.java" />
         <option value="$PROJECT_DIR$/src/view/ViewManager.java" />
+        <option value="$PROJECT_DIR$/src/model/Projectiles.java" />
+        <option value="$PROJECT_DIR$/src/model/Projectile.java" />
+        <option value="$PROJECT_DIR$/src/model/projectiles/Projectile.java" />
+        <option value="$PROJECT_DIR$/src/model/projectiles/PROJECTILES.java" />
+        <option value="$PROJECT_DIR$/src/model/projectiles/PROJECTILE.java" />
+        <option value="$PROJECT_DIR$/src/model/subsceneTemp.java" />
         <option value="$PROJECT_DIR$/src/view/GameViewManager.java" />
+        <option value="$PROJECT_DIR$/src/model/projectiles/ProjectileMaker.java" />
       </list>
     </option>
   </component>
@@ -232,6 +204,51 @@
               <item name="spaceRunner" type="b2602c69:ProjectViewProjectNode" />
               <item name="spaceRunner" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="spaceRunner" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spaceRunner" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spaceRunner" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spaceRunner" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spaceRunner" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spaceRunner" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="projectiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spaceRunner" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spaceRunner" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spaceRunner" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spaceRunner" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="projectiles" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spaceRunner" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spaceRunner" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="sample" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="spaceRunner" type="b2602c69:ProjectViewProjectNode" />
+              <item name="spaceRunner" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="view" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -257,6 +274,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\projects\java2\spaceRunner\src\model\resources\projectiles" />
       <recent name="F:\projects\java2\spaceRunner\src\view\resources\crosshair" />
       <recent name="F:\projects\java2\spaceRunner\src\model\resources" />
       <recent name="F:\projects\java2\spaceRunner\src\view\resources" />
@@ -439,15 +457,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="998" height="1047" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.6703755" visible="true" weight="0.26458332" />
-      <window_info id="Structure" order="2" weight="0.24930362" />
-      <window_info id="Favorites" order="3" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.6703755" visible="true" weight="0.26354167" />
+      <window_info id="Structure" order="2" weight="0.24895833" />
+      <window_info id="Favorites" order="3" weight="0.32916668" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32932165" />
-      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.32932165" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.32932165" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -520,16 +539,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/BtnTemp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/resources/buttonLong_blue.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -552,37 +561,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/subsceneTemp.java">
+    <entry file="file://$PROJECT_DIR$/topDownShooter.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="53" column="8" selection-start-line="53" selection-start-column="8" selection-end-line="53" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1695#1696#0" expanded="true" />
-            <element signature="e#1745#1746#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="204">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/PlayerPicker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="25" column="59" selection-start-line="25" selection-start-column="8" selection-end-line="25" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#823#824#0" expanded="true" />
-            <element signature="e#852#853#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/model/player/resources/Hitman 1/hitman1_stand.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/player/resources/Hitman 1/hitman1_reload.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/player/resources/Hitman 1/hitman1_machine.png">
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
+        <state relative-caret-position="136">
           <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/player/resources/Hitman 1/hitman1_silencer.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/player/resources/Hitman 1/hitman1_hold.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/BtnTemp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="25" column="33" selection-start-line="25" selection-start-column="33" selection-end-line="25" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -590,19 +601,42 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/PlayerPicker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="23" column="29" lean-forward="true" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
           <folding>
-            <element signature="e#545#546#0" expanded="true" />
-            <element signature="e#577#578#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/subsceneTemp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-323">
+          <caret line="5" column="27" lean-forward="true" selection-start-line="5" selection-start-column="27" selection-end-line="5" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/projectiles/PROJECTILE.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding>
+            <element signature="e#327#328#0" expanded="true" />
+            <element signature="e#354#355#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/ViewManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="210" selection-start-line="210" selection-end-line="210" />
+        <state relative-caret-position="850">
+          <caret line="184" selection-start-line="184" selection-end-line="184" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#ViewManager#0;class#ViewManager#0" />
             <element signature="method#setCursorHand#0;class#ViewManager#0" />
             <element signature="method#CreateButtons#0;class#ViewManager#0" />
@@ -624,24 +658,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/GameViewManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="310">
-          <caret line="139" column="39" lean-forward="true" selection-start-line="139" selection-start-column="39" selection-end-line="139" selection-end-column="39" />
+        <state relative-caret-position="586">
+          <caret line="164" column="9" lean-forward="true" selection-start-line="164" selection-start-column="9" selection-end-line="164" selection-end-column="9" />
           <folding>
-            <element signature="imports" expanded="true" />
             <element signature="method#GameViewManager#0;class#GameViewManager#0" />
             <element signature="method#createKeyListeners#0;class#GameViewManager#0" />
-            <element signature="e#1089#1574#0" />
-            <element signature="e#1568#2033#0" />
             <element signature="method#initializeStage#0;class#GameViewManager#0" />
             <element signature="method#createPlayer#0;class#GameViewManager#0" />
             <element signature="method#createBackground#0;class#GameViewManager#0" />
-            <element signature="method#createNewGame#0;class#GameViewManager#0" />
-            <element signature="method#trackMouse#0;class#GameViewManager#0" />
-            <element signature="method#gameLoop#0;class#GameViewManager#0" />
-            <element signature="e#4335#4475#0" expanded="true" />
-            <element signature="e#4474#4475#0" expanded="true" />
-            <element signature="method#movePlayer#0;class#GameViewManager#0" />
-            <element signature="method#setCursorHand#0;class#GameViewManager#0" />
+            <element signature="e#4478#4657#0" expanded="true" />
+            <element signature="e#4656#4657#0" expanded="true" />
+            <element signature="method#setCrosshair#0;class#GameViewManager#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/projectiles/ProjectileMaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="32" column="41" selection-start-line="32" selection-start-column="41" selection-end-line="32" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#449#450#0" expanded="true" />
+            <element signature="e#487#488#0" expanded="true" />
           </folding>
         </state>
       </provider>

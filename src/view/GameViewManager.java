@@ -7,7 +7,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import model.projectiles.PROJECTILE;
+import model.projectiles.ProjectileMaker;
 import model.player.PLAYER;
+
+import java.util.ArrayList;
 
 import static java.lang.Math.atan2;
 
@@ -30,6 +34,8 @@ public class GameViewManager {
     private boolean leftPressed;
     private AnimationTimer gameTimer;
     private final double SPEED = 4;
+    private double angle;
+    private ArrayList<ProjectileMaker> projArr;
 
     public GameViewManager() {
         initializeStage();
@@ -123,23 +129,24 @@ public class GameViewManager {
         createPlayer(chosenPlayer);
         trackMouse();
         gameLoop();
+        fireProjectile();
     }
 
     private void trackMouse() {
         gamePane.setOnMouseMoved(e -> {
             mouseXPos = e.getX() - playerXPos;
             mouseYPos = e.getY() - playerYPos;
-            double deg = calculateRotation();
-            System.out.print(playerXPos + " " + playerYPos +
-                    mouseXPos + " " + mouseYPos + " = " + deg);
-            System.out.println();
-            playerImage.setRotate(deg);
+            double angle = calculateRotation();
+//            System.out.print(playerXPos + " " + playerYPos +
+//                    mouseXPos + " " + mouseYPos + " = " + angle);
+//            System.out.println();
+            playerImage.setRotate(angle);
         });
     }
 
     private double calculateRotation() {
-        double degree = Math.toDegrees(atan2(mouseYPos, mouseXPos));
-        return degree;
+        angle = Math.toDegrees(atan2(mouseYPos, mouseXPos));
+        return angle;
     }
 
     private void gameLoop() {
@@ -147,9 +154,31 @@ public class GameViewManager {
             @Override
             public void handle(long now) {
                 movePlayer();
+                moveProjectile(true);
             }
         };
         gameTimer.start();
+    }
+
+    private void moveProjectile(boolean b) {
+        if(projArr.size() > 0)
+        {
+            for(ProjectileMaker p:projArr)
+            {
+                p.move();
+            }
+        }
+
+    }
+
+    private void fireProjectile() {
+        projArr = new ArrayList<>();
+        gamePane.setOnMousePressed(e ->{
+            ProjectileMaker proj = new ProjectileMaker(playerXPos,playerYPos,
+                    PROJECTILE.BULLET,angle);
+            gamePane.getChildren().add(proj.getProjectileImage());
+            projArr.add(proj);
+        });
     }
 
     private void movePlayer() { //todo can be coded more efficiently

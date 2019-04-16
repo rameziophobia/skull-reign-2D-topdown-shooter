@@ -1,13 +1,9 @@
 package model;
 
-import com.sun.org.apache.bcel.internal.generic.DUP;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.SubScene;
-import javafx.scene.control.Control;
-import javafx.scene.control.SkinBase;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
