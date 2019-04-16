@@ -57,30 +57,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/view/GameViewManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="586">
-              <caret line="164" column="9" lean-forward="true" selection-start-line="164" selection-start-column="9" selection-end-line="164" selection-end-column="9" />
+            <state relative-caret-position="153">
+              <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
               <folding>
                 <element signature="method#GameViewManager#0;class#GameViewManager#0" />
-                <element signature="method#createKeyListeners#0;class#GameViewManager#0" />
                 <element signature="method#initializeStage#0;class#GameViewManager#0" />
                 <element signature="method#createPlayer#0;class#GameViewManager#0" />
                 <element signature="method#createBackground#0;class#GameViewManager#0" />
-                <element signature="e#4478#4657#0" expanded="true" />
-                <element signature="e#4656#4657#0" expanded="true" />
+                <element signature="e#4476#4655#0" expanded="true" />
+                <element signature="e#4654#4655#0" expanded="true" />
                 <element signature="method#setCrosshair#0;class#GameViewManager#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/projectiles/PROJECTILE.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" selection-start-line="5" selection-end-line="5" />
+              <folding>
+                <element signature="e#327#328#0" expanded="true" />
+                <element signature="e#354#355#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/projectiles/ProjectileMaker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="422">
-              <caret line="32" column="41" selection-start-line="32" selection-start-column="41" selection-end-line="32" selection-end-column="41" />
+            <state relative-caret-position="408">
+              <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#449#450#0" expanded="true" />
@@ -93,7 +105,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/view/ViewManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="850">
+            <state relative-caret-position="650">
               <caret line="184" selection-start-line="184" selection-end-line="184" />
               <folding>
                 <element signature="method#ViewManager#0;class#ViewManager#0" />
@@ -174,10 +186,10 @@
         <option value="$PROJECT_DIR$/src/model/Projectile.java" />
         <option value="$PROJECT_DIR$/src/model/projectiles/Projectile.java" />
         <option value="$PROJECT_DIR$/src/model/projectiles/PROJECTILES.java" />
-        <option value="$PROJECT_DIR$/src/model/projectiles/PROJECTILE.java" />
         <option value="$PROJECT_DIR$/src/model/subsceneTemp.java" />
-        <option value="$PROJECT_DIR$/src/view/GameViewManager.java" />
         <option value="$PROJECT_DIR$/src/model/projectiles/ProjectileMaker.java" />
+        <option value="$PROJECT_DIR$/src/model/projectiles/PROJECTILE.java" />
+        <option value="$PROJECT_DIR$/src/view/GameViewManager.java" />
       </list>
     </option>
   </component>
@@ -467,7 +479,7 @@
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32932165" />
       <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.32932165" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.39934355" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.32932165" />
@@ -477,7 +489,7 @@
       <window_info anchor="bottom" id="Changes" order="11" />
       <window_info anchor="bottom" id="Profiler" order="12" />
       <window_info anchor="bottom" id="Event Log" order="13" weight="0.32932165" />
-      <window_info anchor="bottom" id="Messages" order="14" weight="0.32896176" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.32822758" />
       <window_info anchor="right" id="Palette&#9;" order="0" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="2" weight="0.25" />
@@ -621,20 +633,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/projectiles/PROJECTILE.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="20" lean-forward="true" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
-          <folding>
-            <element signature="e#327#328#0" expanded="true" />
-            <element signature="e#354#355#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/view/ViewManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="850">
+        <state relative-caret-position="650">
           <caret line="184" selection-start-line="184" selection-end-line="184" />
           <folding>
             <element signature="method#ViewManager#0;class#ViewManager#0" />
@@ -656,31 +657,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/GameViewManager.java">
+    <entry file="file://$PROJECT_DIR$/src/model/projectiles/PROJECTILE.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="586">
-          <caret line="164" column="9" lean-forward="true" selection-start-line="164" selection-start-column="9" selection-end-line="164" selection-end-column="9" />
+        <state relative-caret-position="85">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
           <folding>
-            <element signature="method#GameViewManager#0;class#GameViewManager#0" />
-            <element signature="method#createKeyListeners#0;class#GameViewManager#0" />
-            <element signature="method#initializeStage#0;class#GameViewManager#0" />
-            <element signature="method#createPlayer#0;class#GameViewManager#0" />
-            <element signature="method#createBackground#0;class#GameViewManager#0" />
-            <element signature="e#4478#4657#0" expanded="true" />
-            <element signature="e#4656#4657#0" expanded="true" />
-            <element signature="method#setCrosshair#0;class#GameViewManager#0" />
+            <element signature="e#327#328#0" expanded="true" />
+            <element signature="e#354#355#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/projectiles/ProjectileMaker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="422">
-          <caret line="32" column="41" selection-start-line="32" selection-start-column="41" selection-end-line="32" selection-end-column="41" />
+        <state relative-caret-position="408">
+          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#449#450#0" expanded="true" />
             <element signature="e#487#488#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/view/GameViewManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="22" column="40" selection-start-line="22" selection-start-column="40" selection-end-line="22" selection-end-column="40" />
+          <folding>
+            <element signature="method#GameViewManager#0;class#GameViewManager#0" />
+            <element signature="method#initializeStage#0;class#GameViewManager#0" />
+            <element signature="method#createPlayer#0;class#GameViewManager#0" />
+            <element signature="method#createBackground#0;class#GameViewManager#0" />
+            <element signature="e#4476#4655#0" expanded="true" />
+            <element signature="e#4654#4655#0" expanded="true" />
+            <element signature="method#setCrosshair#0;class#GameViewManager#0" />
           </folding>
         </state>
       </provider>

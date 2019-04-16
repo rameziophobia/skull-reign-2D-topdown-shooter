@@ -10,7 +10,6 @@ public class ProjectileMaker {
     private double posY;
     private ImageView projectileImage;
     private double angle;
-    private PROJECTILE projectile;
 
 
     public ImageView getProjectileImage() {
@@ -20,7 +19,6 @@ public class ProjectileMaker {
     public ProjectileMaker(double posX, double posY, PROJECTILE projectile, double angle) {
         this.posX = posX;
         this.posY = posY;
-        this.projectile = projectile;
         this.angle = angle;
         spawnProjectile(projectile.getType());
 
@@ -39,6 +37,7 @@ public class ProjectileMaker {
         double speedY = Math.sin(Math.toRadians(angle)) * SPEED;
         projectileImage.setLayoutY(projectileImage.getLayoutY() + speedY);
         projectileImage.setLayoutX(projectileImage.getLayoutX() + speedX);
+
     }
 
 }

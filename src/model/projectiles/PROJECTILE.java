@@ -1,7 +1,8 @@
 package model.projectiles;
 
 public enum PROJECTILE {
-    BULLET  ("file:src/model/resources/projectiles/bullet.png", 100);
+    BULLET  ("file:src/model/resources/projectiles/bullet.png", 100),
+    FIRE ("file:src/model/resources/projectiles/fire.png",40);
 
     private final String type;
     private final int interval;
