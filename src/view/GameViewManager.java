@@ -1,9 +1,7 @@
 package view;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.Group;
 import javafx.scene.ImageCursor;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,9 +9,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Enemies.Enemy;
 import model.Enemies.normalTank;
+import model.player.PLAYER;
 import model.projectiles.PROJECTILE;
 import model.projectiles.ProjectileMaker;
-import model.player.PLAYER;
 
 import java.util.ArrayList;
 
@@ -185,7 +183,7 @@ public class GameViewManager {
         gameTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                score++;
+                score += 0.016;
                 createEnemies();
                 createObstacles();
                 movePlayer();
@@ -210,9 +208,8 @@ public class GameViewManager {
         if(score / 1000 > numberOfObstacles){
             gamePane.getChildren().add(createRandomRotator());
             numberOfObstacles++;
-            System.out.println("here");
         }
-        System.out.println(score);
+//        System.out.println(score);
 
     }
 
@@ -317,12 +314,7 @@ public class GameViewManager {
         for(ProjectileMaker p: projArr){
             for(Enemy enemy: enemyArrayList){
 
-                final int hitRadius = p.getProj().getHitRadius();
-
-
-                if((hitRadius + enemy.getHitRadius()) >
-                distance(p.getLayoutX() + hitRadius, enemy.getLayoutX() + enemy.getHitRadius()
-                , p.getLayoutY() + hitRadius, enemy.getLayoutY() + enemy.getHitRadius())){
+                if(p.isIntersects(enemy)){
                     //3ashan my3mlsh collisions abl ma yetshal
                     p.setLayoutY(-500);
 
@@ -340,10 +332,11 @@ public class GameViewManager {
                 }
             }
         }
-        gamePane.getChildren().removeAll(arrImgRemove);
+        gamePane.getChildren().removeAll(arrImgRemove);//todo: this is stupid
         enemyArrayList.removeAll(enemyArrRemove);
         enemyArrayList.removeAll(projArrRemove);
     }
+
 
     private void setCrosshair(Pane pane) {
         Image image = new Image("file:src/view/resources/crosshair/4.png");
@@ -352,7 +345,7 @@ public class GameViewManager {
                 image.getHeight() / 2));
     }
 
-    public  double distance(double x1, double x2, double y1, double y2){
-        return Math.hypot(x2 - x1, y2 - y1);
-    }
+//    public  double minDistance(double x1, double x2, double y1, double y2){
+//        return Math.hypot(x2 - x1, y2 - y1);
+//    }
 }

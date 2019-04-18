@@ -3,10 +3,9 @@ package model.projectiles;
 import model.Sprite;
 
 public class ProjectileMaker  extends Sprite {
+
     private final double SPEED = 6;
 
-    private double posX;
-    private double posY;
     private double angle;
     PROJECTILE proj;
 
@@ -17,26 +16,25 @@ public class ProjectileMaker  extends Sprite {
     }
 
     public ProjectileMaker(double posX, double posY, PROJECTILE projectile, double angle) {
-        super(projectile.getType());
-        this.posX = posX;
-        this.posY = posY;
-        this.angle = angle;
-        proj = projectile;
-        spawnProjectile();
+        super(projectile.getType(), projectile.getWidth(), projectile.getHeight());
 
+        spawnProjectile(posX,posY,angle);
+        proj = projectile;
+        this.angle = angle;
     }
 
-    public void spawnProjectile() {
-        setLayoutX(posX);
-        setLayoutY(posY);
+    public void spawnProjectile(double posX, double posY, double angle) {
+        setSpriteX(posX);
+        setSpriteY(posY);
         setRotate(angle);
     }
 
     public void move() {
         double speedX = Math.cos(Math.toRadians(angle)) * SPEED;
         double speedY = Math.sin(Math.toRadians(angle)) * SPEED;
-        setLayoutY(getLayoutY() + speedY);
-        setLayoutX(getLayoutX() + speedX);
+        System.out.println(speedX + " " + speedY + getLayoutX() + " " + getLayoutY());
+        setSpriteY(getLayoutY() + speedY);
+        setSpriteX(getLayoutX() + speedX);
 
     }
 
