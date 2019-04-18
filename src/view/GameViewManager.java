@@ -3,6 +3,7 @@ package view;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Group;
 import javafx.scene.ImageCursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -160,7 +161,7 @@ public class GameViewManager {
         enemyArrayList = new ArrayList<>();
         Enemy sandTank = new normalTank(TANK_SAND, playerXPos,playerYPos);
         enemyArrayList.add(sandTank);
-        gamePane.getChildren().add(sandTank.getEnemyImage());
+        gamePane.getChildren().add(sandTank);
     }
 
     private void initializeBuildings() {//todo initialize random buildings with gridpane
@@ -200,7 +201,7 @@ public class GameViewManager {
         if(score / 100 > numberOfEnemies){
             Enemy enemy = new normalTank(TANK_SAND, playerXPos,playerYPos);
             enemyArrayList.add(enemy);
-            gamePane.getChildren().add(enemy.getEnemyImage());
+            gamePane.getChildren().add(enemy);
             numberOfEnemies++;
         }
 
@@ -222,14 +223,14 @@ public class GameViewManager {
             for (ProjectileMaker p : projArr) {
                 p.move();
                 //if the object crossed the boundary adds it to the remove list
-                if (p.getProjectileImage().getLayoutY() > GameViewManager.HEIGHT ||
-                        p.getProjectileImage().getLayoutY() < 0) {
+                if (p.getLayoutY() > GameViewManager.HEIGHT ||
+                        p.getLayoutY() < 0) {
                     projArrRemove.add(p);
-                    projArrImgRemove.add(p.getProjectileImage());
-                } else if (p.getProjectileImage().getLayoutX() > GameViewManager.WIDTH ||
-                        p.getProjectileImage().getLayoutX() < 0) {
+                    projArrImgRemove.add(p);
+                } else if (p.getLayoutX() > GameViewManager.WIDTH ||
+                        p.getLayoutX() < 0) {
                     projArrRemove.add(p);
-                    projArrImgRemove.add(p.getProjectileImage());
+                    projArrImgRemove.add(p);
                 }
             }
             gamePane.getChildren().removeAll(projArrImgRemove);
@@ -246,12 +247,12 @@ public class GameViewManager {
                 projArr.add(new ProjectileMaker(playerXPos, playerYPos,
                         PROJECTILE.FIRE, angle));
                 gamePane.getChildren().add(
-                        projArr.get(projArr.size() - 1).getProjectileImage());
+                        projArr.get(projArr.size() - 1));
             } else {
                 projArr.add(new ProjectileMaker(playerXPos, playerYPos,
                         PROJECTILE.BULLET, angle));
                 gamePane.getChildren().add(
-                        projArr.get(projArr.size() - 1).getProjectileImage());
+                        projArr.get(projArr.size() - 1));
             }
 
         });
@@ -318,20 +319,21 @@ public class GameViewManager {
 
                 final int hitRadius = p.getProj().getHitRadius();
 
+
                 if((hitRadius + enemy.getHitRadius()) >
-                distance(p.getProjectileImage().getLayoutX() + hitRadius,enemy.getEnemyImage().getLayoutX() + enemy.getHitRadius()
-                ,p.getProjectileImage().getLayoutY() + hitRadius,enemy.getEnemyImage().getLayoutY() + enemy.getHitRadius())){
+                distance(p.getLayoutX() + hitRadius, enemy.getLayoutX() + enemy.getHitRadius()
+                , p.getLayoutY() + hitRadius, enemy.getLayoutY() + enemy.getHitRadius())){
                     //3ashan my3mlsh collisions abl ma yetshal
-                    p.getProjectileImage().setLayoutY(-500);
+                    p.setLayoutY(-500);
 
                     enemy.setHp_current(enemy.getHp_current() - p.getProj().getDamage()) ;
 
                     projArrRemove.add(p);
-                    arrImgRemove.add(p.getProjectileImage());
+                    arrImgRemove.add(p);
 
                     if(enemy.getHp_current() <= 0){
                         enemyArrRemove.add(enemy);
-                        arrImgRemove.add(enemy.getEnemyImage());
+                        arrImgRemove.add(enemy);
                         //todo: add points
                         //todo: respawn
                     }

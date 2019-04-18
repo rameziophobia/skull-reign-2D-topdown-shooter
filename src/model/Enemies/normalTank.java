@@ -8,7 +8,6 @@ public class normalTank extends Enemy {
 
     private static final double MAX_HP = 100;
     private double hp_current = 100;
-    private final ImageView tankImg;
     private final int hitRadius = 25;
     private ENEMY_ENUM enemyType;
 
@@ -18,7 +17,6 @@ public class normalTank extends Enemy {
 
     public normalTank(ENEMY_ENUM enemyType, double playerXPos, double playerYPos) {
         super(enemyType, playerXPos, playerYPos);
-        tankImg = super.getEnemyImage();
         this.enemyType = enemyType;
     }
 
@@ -34,7 +32,7 @@ public class normalTank extends Enemy {
         double angle = super.getAngle();
         double speedX = Math.cos(Math.toRadians(angle)) * enemyType.getSpeed();
         double speedY = Math.sin(Math.toRadians(angle)) * enemyType.getSpeed();
-        tankImg.setLayoutY(tankImg.getLayoutY() + speedY);
-        tankImg.setLayoutX(tankImg.getLayoutX() + speedX);
+        setLayoutY(getLayoutY() + speedY);
+        setLayoutX(getLayoutX() + speedX);
     }
 }
