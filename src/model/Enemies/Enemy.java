@@ -1,5 +1,6 @@
 package model.Enemies;
 
+import javafx.geometry.Point2D;
 import model.Sprite;
 
 import java.util.Random;
@@ -13,16 +14,16 @@ public abstract class Enemy extends Sprite {
 
     //    private final double SPEED = 2; //replaced in children
     private double angle;
-    private ENEMY_ENUM enemyType;
+    private EnemyType enemyType;
 
 
-//    public ENEMY_ENUM getEnemyType() {
+//    public EnemyType getEnemyType() {
 //        return enemyType;
 //    }
 
-    public Enemy(ENEMY_ENUM enemyType, double playerXPos, double playerYPos) {
-        super(enemyType.getType(), enemyType.getWidth(),
-                enemyType.getHeight(),enemyType.getSpeed(),null);//todo change null
+    public Enemy(EnemyType enemyType, double playerXPos, double playerYPos) {
+        super(enemyType.URL, enemyType.WIDTH,
+                enemyType.HEIGHT,enemyType.SPEED,new Point2D(1,1),null);//todo change null
         this.enemyType = enemyType; //todo: add shooting mechanic to enemies
 
         Random rand = new Random();
@@ -49,8 +50,8 @@ public abstract class Enemy extends Sprite {
 
     public void move(){
         double angle = getAngle();
-        double speedX = Math.cos(Math.toRadians(angle)) * enemyType.getSpeed();
-        double speedY = Math.sin(Math.toRadians(angle)) * enemyType.getSpeed();
+        double speedX = Math.cos(Math.toRadians(angle)) * enemyType.SPEED;
+        double speedY = Math.sin(Math.toRadians(angle)) * enemyType.SPEED;
         setLayoutY(getLayoutY() + speedY);
         setLayoutX(getLayoutX() + speedX);
     }

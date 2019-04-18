@@ -3,6 +3,7 @@ package model.player;
 import model.Sprite;
 import view.GameViewManager;
 
+
 public class Player extends Sprite {
 
     final static int WIDTH = 28;
@@ -12,10 +13,14 @@ public class Player extends Sprite {
     private double currentHp = MAX_HP;
 
     public Player(PLAYERS player) { //todo: change magics
-        super(player.getUrlPlayer(), WIDTH, HEIGHT,SPEED,player.spawner);
+        super(player.URL, WIDTH, HEIGHT,SPEED,player.spawner,null);
         setLayoutX(WIDTH / 2 - getFitWidth() / 2);
-        setLayoutY(HEIGHT / 2 - getFitHeight() / 2);
+        setLayoutY(HEIGHT / 2 - getFitHeight() / 2); //todo: howa leh msh fel center >.< ?
     }
+
+
+
+
 
     public void move(boolean upPressed, boolean downPressed,
     boolean leftPressed, boolean rightPressed) { //todo can be coded more efficiently

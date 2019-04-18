@@ -1,47 +1,42 @@
 package model.projectiles;
 
+import javafx.geometry.Point2D;
+import model.Sprite;
 
-import javafx.scene.shape.Rectangle;
+public class Projectile extends Sprite {
 
-public enum PROJECTILE {
-    BULLET  ("file:src/model/resources/projectiles/bullet.png",
-            100,5,13,3),
-    FIRE ("file:src/model/resources/projectiles/fire.png",
-            400,30,32,12);
+    private static final double SPEED = 6;
 
-    private final String TYPE;
-    private final int INTERVAL;
-    private final int DAMAGE;
-    private final int WIDTH;
-    private final int HEIGHT;
+    private double angle;
+    ProjectileType proj;
 
 
 
-    PROJECTILE(String type, int interval, int damage,int width, int height) {
-        this.TYPE = type;
-        this.INTERVAL = interval;
-        this.DAMAGE = damage;
-        this.WIDTH = width;
-        this.HEIGHT = height;
+    public ProjectileType getProj() {
+        return proj;
     }
 
-    public int getDamage() {
-        return DAMAGE;
+    public Projectile(Point2D spawner, ProjectileType projectileType, double angle) {
+        super(projectileType.URL, projectileType.WIDTH,
+                projectileType.HEIGHT,SPEED,new Point2D(1,1),null);//todo: add speed to enum
+
+        spawnProjectile(spawner,angle);
+        proj = projectileType;
+        this.angle = angle;
     }
 
-    public int getWidth() {
-        return WIDTH;
+    public void spawnProjectile(Point2D spawner, double angle) {
+        setSpriteX(spawner.getX());
+        setSpriteY(spawner.getY());
+        setRotate(angle);
     }
 
-    public int getHeight() {
-        return HEIGHT;
+    public void move() {
+        double speedX = Math.cos(Math.toRadians(angle)) * SPEED;
+        double speedY = Math.sin(Math.toRadians(angle)) * SPEED;
+        setSpriteY(getLayoutY() + speedY);
+        setSpriteX(getLayoutX() + speedX);
+
     }
 
-    public String getType() {
-        return TYPE;
-    }
-
-    public int getInterval() {
-        return INTERVAL;
-    }
 }

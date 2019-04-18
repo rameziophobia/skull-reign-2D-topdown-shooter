@@ -23,7 +23,7 @@ public class PlayerPicker extends VBox {
     {
         this.player = player;
         buttonImage = new ImageView(buttonNotChosen);
-        playerImage = new ImageView(player.getUrlPlayer());
+        playerImage = new ImageView(player.URL);
         playerImage.setRotate(270);
         isChosen = false;
         this.setAlignment(Pos.CENTER);

@@ -1,6 +1,7 @@
 package view;
 
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Point2D;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -9,16 +10,17 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import model.Enemies.Enemy;
 import model.Enemies.normalTank;
+import model.Sprite;
 import model.player.PLAYERS;
 import model.player.Player;
-import model.projectiles.PROJECTILE;
-import model.projectiles.ProjectileMaker;
+import model.projectiles.ProjectileType;
+import model.projectiles.Projectile;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-import static java.lang.Math.atan2;
-import static model.Enemies.ENEMY_ENUM.TANK_SAND;
+import static java.lang.Math.*;
+import static model.Enemies.EnemyType.TANK_SAND;
 import static model.obstacles.Obstacle.createRandomRotator;
 
 
@@ -38,7 +40,7 @@ public class GameViewManager {
     private boolean leftPressed;
     private AnimationTimer gameTimer;
     private double angle;
-    private ArrayList<ProjectileMaker> projArr;
+    private ArrayList<Projectile> projArr;
     private ArrayList<Enemy> enemyArrayList;
     private GridPane buildings;
     private int numberOfObstacles = 0;
@@ -201,7 +203,7 @@ public class GameViewManager {
     }
 
     private void createEnemies(){
-        if(timer / 3 > numberOfEnemies){
+        if(timer / 100 > numberOfEnemies){
             Enemy enemy = new normalTank(TANK_SAND, player.getLayoutX(),player.getLayoutY());
             enemyArrayList.add(enemy);
             gamePane.getChildren().add(enemy);
@@ -210,7 +212,7 @@ public class GameViewManager {
 
     }
     private void createObstacles() {//todo implement timer
-        if(timer / 10 > numberOfObstacles){
+        if(timer / 20 > numberOfObstacles){
             gamePane.getChildren().add(createRandomRotator());
             numberOfObstacles++;
         }
@@ -220,8 +222,8 @@ public class GameViewManager {
 
     private void moveProjectile() {
         if (projArr.size() > 0) {
-            ArrayList<ProjectileMaker> projArrRemove = new ArrayList();
-            for (ProjectileMaker p : projArr) {
+            ArrayList<Projectile> projArrRemove = new ArrayList();
+            for (Projectile p : projArr) {
                 p.move();
                 //if the object crossed the boundary adds it to the remove list
                 if (p.getLayoutY() > GameViewManager.HEIGHT ||
@@ -243,13 +245,18 @@ public class GameViewManager {
         projArr = new ArrayList<>();
         gamePane.setOnMousePressed(e -> {
             if (e.isSecondaryButtonDown()) {
-                projArr.add(new ProjectileMaker(player.getSpawner(),
-                        PROJECTILE.FIRE, angle));
+                double playerPosX = player.getLayoutX() + 24;
+                double playerPosY = player.getLayoutY() + 21;
+                projArr.add(new Projectile(player.getSpawner(angle),
+                        ProjectileType.FIRE,angle));
+                //new Point2D(playerPosX + (49 * 43 / sqrt(pow(43,2)+(pow(49,2)
+                //                        * pow(tan( -1 * angle),2)))),playerPosY),
+                //                        ProjectileType.FIRE, angle)
                 gamePane.getChildren().add(
                         projArr.get(projArr.size() - 1));
             } else {
-                projArr.add(new ProjectileMaker(player.getSpawner(),
-                        PROJECTILE.BULLET, angle));
+                projArr.add(new Projectile(player.getSpawner(angle),
+                        ProjectileType.BULLET,angle));
                 gamePane.getChildren().add(
                         projArr.get(projArr.size() - 1));
             }
@@ -261,17 +268,17 @@ public class GameViewManager {
     private void checkCollision(){//todo: enqueue & dequeue
         //todo: move collisions to a listener inside sprite classes
 
-        ArrayList<ProjectileMaker> projArrRemove = new ArrayList<>();
+        ArrayList<Projectile> projArrRemove = new ArrayList<>();
         ArrayList<Enemy> enemyArrRemove = new ArrayList<>();
 
-        for(ProjectileMaker p: projArr){
+        for(Projectile p: projArr){
             for(Enemy enemy: enemyArrayList){
 
                 if(p.isIntersects(enemy)){
                     //3ashan my3mlsh collisions abl ma yetshal
                     p.setLayoutY(-500);
 
-                    enemy.setHp_current(enemy.getCurrentHp() - p.getProj().getDamage()) ;
+                    enemy.setHp_current(enemy.getCurrentHp() - p.getProj().DAMAGE) ;
 
                     projArrRemove.add(p);
 

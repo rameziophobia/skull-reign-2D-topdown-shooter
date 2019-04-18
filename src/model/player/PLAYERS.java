@@ -10,12 +10,12 @@ public enum PLAYERS {
     SOLDIER("file:src/model/player/resources/Soldier 1/soldier1_gun.png", 45, 30);
     //todo: change assets
 
-    String urlPlayer;
-    Point2D spawner;
+    public String URL;
+    public Point2D spawner;
 
     PLAYERS(String urlPlayer, double spawnX, double spawnY)
     {
-        this.urlPlayer = urlPlayer;
+        this.URL = urlPlayer;
         spawner = new Point2D(spawnX, spawnY);
     }
 
@@ -23,7 +23,4 @@ public enum PLAYERS {
         return spawner;
     }
 
-    public String getUrlPlayer() {
-        return urlPlayer;
-    }
 }
