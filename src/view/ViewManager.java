@@ -16,7 +16,7 @@ import model.smallLabel;
 import model.PlayerPicker;
 import model.BtnTemp;
 import model.subsceneTemp;
-import model.player.PLAYER;
+import model.player.PLAYERS;
 
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class ViewManager {
     private StackPane stkPane;
     private subsceneTemp currentSubScene;
     private ArrayList<PlayerPicker> playerList;
-    private PLAYER chosenPlayer;
+    private PLAYERS chosenPlayer;
 
     public ViewManager() {
         mainPane = new BorderPane();
@@ -137,7 +137,7 @@ public class ViewManager {
         HBox hbx_start = new HBox();
         hbx_start.setSpacing(20);
         playerList = new ArrayList<>();
-        for (PLAYER p : PLAYER.values()) {
+        for (PLAYERS p : PLAYERS.values()) {
             PlayerPicker pp = new PlayerPicker(p);
             hbx_start.getChildren().add(pp);
             playerList.add(pp);

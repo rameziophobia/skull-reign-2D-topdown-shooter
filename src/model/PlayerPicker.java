@@ -4,7 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import model.player.PLAYER;
+import model.player.PLAYERS;
 
 public class PlayerPicker extends VBox {
 
@@ -14,12 +14,12 @@ public class PlayerPicker extends VBox {
     private String buttonNotChosen = "file:src/model/resources/buttonSquare_grey.png";
     private String buttonChosen = "file:src/model/resources/buttonSquare_blue_pressed.png";
 
-    private PLAYER player;
+    private PLAYERS player;
 
     private boolean isChosen;
 
 
-    public PlayerPicker(PLAYER player)
+    public PlayerPicker(PLAYERS player)
     {
         this.player = player;
         buttonImage = new ImageView(buttonNotChosen);
@@ -32,7 +32,7 @@ public class PlayerPicker extends VBox {
         getChildren().add(playerImage);
     }
 
-    public PLAYER getPlayer() {
+    public PLAYERS getPlayer() {
         return player;
     }
 

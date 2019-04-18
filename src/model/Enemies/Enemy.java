@@ -16,13 +16,14 @@ public abstract class Enemy extends Sprite {
     private ENEMY_ENUM enemyType;
 
 
-    public ENEMY_ENUM getEnemyType() {
-        return enemyType;
-    }
+//    public ENEMY_ENUM getEnemyType() {
+//        return enemyType;
+//    }
 
     public Enemy(ENEMY_ENUM enemyType, double playerXPos, double playerYPos) {
-        super(enemyType.getType(), enemyType.getWidth(),enemyType.getHeight());
-        this.enemyType = enemyType;
+        super(enemyType.getType(), enemyType.getWidth(),
+                enemyType.getHeight(),enemyType.getSpeed(),null);//todo change null
+        this.enemyType = enemyType; //todo: add shooting mechanic to enemies
 
         Random rand = new Random();
         setSpriteY(rand.nextInt(HEIGHT));
@@ -42,7 +43,7 @@ public abstract class Enemy extends Sprite {
 
 
 
-    public abstract double getHp_current();
+    public abstract double getCurrentHp();
 
     public abstract void setHp_current(double hp);
 

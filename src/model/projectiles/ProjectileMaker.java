@@ -1,10 +1,11 @@
 package model.projectiles;
 
+import javafx.geometry.Point2D;
 import model.Sprite;
 
 public class ProjectileMaker  extends Sprite {
 
-    private final double SPEED = 6;
+    private static final double SPEED = 6;
 
     private double angle;
     PROJECTILE proj;
@@ -15,17 +16,18 @@ public class ProjectileMaker  extends Sprite {
         return proj;
     }
 
-    public ProjectileMaker(double posX, double posY, PROJECTILE projectile, double angle) {
-        super(projectile.getType(), projectile.getWidth(), projectile.getHeight());
+    public ProjectileMaker(Point2D spawner, PROJECTILE projectile, double angle) {
+        super(projectile.getType(), projectile.getWidth(),
+                projectile.getHeight(),SPEED,null);//todo: add speed to enum
 
-        spawnProjectile(posX,posY,angle);
+        spawnProjectile(spawner,angle);
         proj = projectile;
         this.angle = angle;
     }
 
-    public void spawnProjectile(double posX, double posY, double angle) {
-        setSpriteX(posX);
-        setSpriteY(posY);
+    public void spawnProjectile(Point2D spawner, double angle) {
+        setSpriteX(spawner.getX());
+        setSpriteY(spawner.getY());
         setRotate(angle);
     }
 
