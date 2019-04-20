@@ -7,6 +7,8 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 
+import java.util.Collection;
+
 import static java.lang.Math.*;
 
 public class Sprite extends ImageView {
@@ -43,21 +45,21 @@ public class Sprite extends ImageView {
         return new Rectangle(getLayoutX(), getLayoutY(), width, height);
     }
 
-    public Point2D getSpawner(double angle){
-
-        c = new Circle(50);
-        c.setCenterX(spawner.getX() + getLayoutX());
-        c.setCenterY(spawner.getY() + getLayoutY());
-        c.setLayoutX(spawner.getX() + getLayoutX());
-        c.setLayoutY(spawner.getY() + getLayoutY());
-        Rotate r = new Rotate(angle,getLayoutX(),getLayoutY());
-        System.out.println("before: " + c.getLayoutX() + " " + c.getLayoutY() + " " + c.getCenterX() + " " + c.getCenterY());
-        c.getTransforms().add(r);
-        System.out.println(r.getPivotX() + " " + r.getPivotY());
-        System.out.println("after: " + c.getLayoutX() + " " + c.getLayoutY() + " " + c.getCenterX() + " " + c.getCenterY());
-        return new Point2D(c.getLayoutX(),c.getLayoutY());
-
-    }
+//    public Point2D getSpawner(double angle){
+//
+//        c = new Circle(50);
+//        c.setCenterX(spawner.getX() + getLayoutX());
+//        c.setCenterY(spawner.getY() + getLayoutY());
+//        c.setLayoutX(spawner.getX() + getLayoutX());
+//        c.setLayoutY(spawner.getY() + getLayoutY());
+//        Rotate r = new Rotate(angle,getLayoutX(),getLayoutY());
+////        System.out.println("before: " + c.getLayoutX() + " " + c.getLayoutY() + " " + c.getCenterX() + " " + c.getCenterY());
+//        c.getTransforms().add(r);
+//        System.out.println(r.getPivotX() + " " + r.getPivotY());
+////        System.out.println("after: " + c.getLayoutX() + " " + c.getLayoutY() + " " + c.getCenterX() + " " + c.getCenterY());
+//        return new Point2D(c.getLayoutX(),c.getLayoutY());
+//
+//}
 
     public double calcShootAngle(){
 //        return atan2(spawner.getY() - getLayoutY(),spawner.getX() - getLayoutX());
@@ -75,10 +77,15 @@ public class Sprite extends ImageView {
 //                        calcDistanceToSpawner() * cos(calcShootAngle() + getRotate())));
 //    }
 
+    public Point2D getSpawner() {
+        return new Point2D(getLayoutX(),getLayoutY())
+        .add(new Point2D(getFitWidth() / 2, getFitHeight() / 2));
+    }
+
     public boolean isIntersects(Sprite s) {
         return getBounds().intersects(s.getBounds().getX(),
                 s.getBounds().getY(),
                 s.getBounds().getWidth(),
                 s.getBounds().getHeight());
-    }//todo: ((Path)Shape.intersect(bullet, target)).getElements().size() > 0 better implementation
+    }//todo: ((Path)Shape.intersect(bullet, target)).getElements().size() > 0 better implementation??
 }

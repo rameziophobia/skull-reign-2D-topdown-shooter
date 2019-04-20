@@ -6,16 +6,16 @@ import view.GameViewManager;
 
 public class Player extends Sprite {
 
-    final static int WIDTH = 28;
-    final static int HEIGHT = 43;
-    final static double SPEED = 6;
+    private final static int WIDTH = 28;
+    private final static int HEIGHT = 43;
+    private final static double SPEED = 6;
     private static final double MAX_HP = 100;
     private double currentHp = MAX_HP;
 
     public Player(PLAYERS player) { //todo: change magics
         super(player.URL, WIDTH, HEIGHT,SPEED,player.spawner,null);
-        setLayoutX(WIDTH / 2 - getFitWidth() / 2);
-        setLayoutY(HEIGHT / 2 - getFitHeight() / 2); //todo: howa leh msh fel center >.< ?
+        setLayoutX(GameViewManager.WIDTH / 2 - getFitWidth() / 2);
+        setLayoutY(GameViewManager.HEIGHT / 2 - getFitHeight() / 2); //todo: howa leh msh fel center >.< ?
     }
 
 
