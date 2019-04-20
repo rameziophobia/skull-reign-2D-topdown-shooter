@@ -12,6 +12,7 @@ import model.Enemies.Enemy;
 import model.Enemies.normalTank;
 import model.player.PLAYERS;
 import model.player.Player;
+import model.projectiles.PowerUp;
 import model.projectiles.Projectile;
 import model.projectiles.ProjectileHandler;
 import model.projectiles.ProjectileType;
@@ -27,7 +28,7 @@ import static model.obstacles.Obstacle.createRandomRotator;
 public class GameViewManager {
     public static final int HEIGHT = 768;
     public static final int WIDTH = 1200;
-    private AnchorPane gamePane;
+    public static AnchorPane gamePane;
     private Scene gameScene;
     private Stage gameStage;
     private Stage menuStage;
@@ -47,7 +48,6 @@ public class GameViewManager {
     private int numberOfEnemies = 0;
     private double timer;
     private ProjectileHandler projectileHandler;
-    private boolean keyPressed;
 
     public GameViewManager() {
         initializeStage();
@@ -56,7 +56,6 @@ public class GameViewManager {
 
     private void createKeyListeners() {
         gameScene.setOnKeyPressed(event -> {
-            keyPressed = true;
             switch (event.getCode()) {
                 case W:
                 case UP: {
@@ -82,7 +81,6 @@ public class GameViewManager {
 
         });
         gameScene.setOnKeyReleased(event -> {
-            keyPressed = false;
             switch (event.getCode()) {
                 case W:
                 case UP: {
@@ -149,7 +147,7 @@ public class GameViewManager {
 
         projArr = new ArrayList<>();
         projectileHandler = new ProjectileHandler(ProjectileType.BULLET,
-                ProjectileType.FIRE,player,gamePane, projArr);
+                ProjectileType.FIRE,player, projArr);
     }
 
     private void createPlayer(PLAYERS chosenPlayer) {
@@ -194,6 +192,9 @@ public class GameViewManager {
 
                 projectileHandler.moveProjectile();
                 projectileHandler.fireProjectile(angle);
+//                projectileHandler.setPowerUpPrimary(PowerUp.SCALE,3);
+//                projectileHandler.setPowerUpSecondary(PowerUp.MULT,2);
+//                projectileHandler.setPowerUpSecondary(PowerUp.SPEED,30);
                 projectileHandler.fireProjectile();
                 followPlayer();
                 checkCollision();
@@ -250,7 +251,7 @@ public class GameViewManager {
                     //3ashan my3mlsh collisions abl ma yetshal
                     p.setLayoutY(-500);
 
-                    enemy.setHp_current(enemy.getCurrentHp() - p.getProj().DAMAGE);
+                    enemy.setHp_current(enemy.getCurrentHp() - p.getDamage());
 
                     projArrRemove.add(p);
 

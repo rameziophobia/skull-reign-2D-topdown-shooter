@@ -5,9 +5,9 @@ import model.Sprite;
 
 public class Projectile extends Sprite {
 
-    private static final double SPEED = 6;
     private double angle;
     private ProjectileType proj;
+    private double scale = 1;
 
 
     public ProjectileType getProj() {
@@ -16,12 +16,18 @@ public class Projectile extends Sprite {
 
     Projectile(Point2D spawner, ProjectileType projectileType, double angle) {
         super(projectileType.URL, projectileType.WIDTH,
-                projectileType.HEIGHT, SPEED, new Point2D(1, 1), null);//todo: add speed to enum
+                projectileType.HEIGHT, projectileType.SPEED, new Point2D(1, 1), null);
 
         spawnProjectile(spawner, angle);
         proj = projectileType;
         this.angle = angle;
     }
+
+//    Projectile(Point2D spawner, ProjectileType projectileType, double angle, double[] bonus){
+//        this(spawner, projectileType, angle);
+//
+//    }
+
 
     private void spawnProjectile(Point2D spawner, double angle) {
         setSpriteX(spawner.getX());
@@ -30,10 +36,31 @@ public class Projectile extends Sprite {
     }
 
     void move() {
-        double speedX = Math.cos(Math.toRadians(angle)) * SPEED;
-        double speedY = Math.sin(Math.toRadians(angle)) * SPEED;
+        double speedX = Math.cos(Math.toRadians(angle)) * speed;
+        double speedY = Math.sin(Math.toRadians(angle)) * speed;
         setSpriteY(getLayoutY() + speedY);
         setSpriteX(getLayoutX() + speedX);
+    }
 
+    void addSpeed(double speed) {
+        this.speed = this.speed + speed;
+    }
+
+    void setScale(double scale) {
+        this.scale = 1 + scale / 100;
+        setScaleX(this.scale);
+        setScaleY(this.scale);
+    }
+
+    public double getScale() {
+        return scale;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public double getDamage() {
+        return proj.DAMAGE * (((getScale() - 1) * 2) + 1);
     }
 }

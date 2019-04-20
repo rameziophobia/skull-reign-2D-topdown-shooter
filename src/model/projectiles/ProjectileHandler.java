@@ -7,8 +7,12 @@ import model.player.Player;
 import view.GameViewManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ProjectileHandler {
+
+//    private static final int powerUpNum = 5;
+    private static final Pane gamePane = GameViewManager.gamePane;
 
     private long[] lastFired;
 
@@ -22,11 +26,12 @@ public class ProjectileHandler {
     private enum buttons {PRIMARY, SECONDARY}
     private buttons lastPressed;
 
+    private HashMap<String, Double> powerUpPrimary;
+    private HashMap<String, Double> powerUpSecondary;
 
-    private Pane gamePane;
 
     public ProjectileHandler(ProjectileType primary, ProjectileType secondary, Player playerFiring,
-                             Pane gamePane, ArrayList<Projectile> projArr) {
+                             ArrayList<Projectile> projArr) {
 
         //todo: class needs renaming
         this.lastFired = new long[5];
@@ -34,8 +39,19 @@ public class ProjectileHandler {
         this.secondary = secondary;
         this.projArr = projArr;
         this.playerFiring = playerFiring;
-        this.gamePane = gamePane;
+        this.powerUpPrimary = new HashMap<>();
+        this.powerUpSecondary = new HashMap<>();
+        initializePowerUp();
 
+    }
+
+    private void initializePowerUp() {
+        for(PowerUp pup: PowerUp.values()){
+            powerUpPrimary.put(pup.name(), (double) 0);
+            powerUpSecondary.put(pup.name(), (double) 0);
+        }
+        powerUpPrimary.put(PowerUp.MULT.name(), (double) 1);
+        powerUpSecondary.put(PowerUp.MULT.name(), (double) 1);
     }
 
     public void fireProjectile() {
@@ -53,11 +69,14 @@ public class ProjectileHandler {
         gamePane.setOnMouseReleased(e -> mousePressed = false);
     }
 
+
+
     private void detectTouchType() {
         if (lastPressed == buttons.PRIMARY) {
-            createProjectile(0, primary);
+            createProjectile(0, primary, powerUpPrimary);
         } else if (lastPressed == buttons.SECONDARY) {
-            createProjectile(1, secondary);
+
+            createProjectile(1, secondary, powerUpSecondary);
         }
     }
 
@@ -67,20 +86,23 @@ public class ProjectileHandler {
             lastPressed = buttons.PRIMARY; //buttons da enum ana 3amlo
         } else if (e.isSecondaryButtonDown()) {
             lastPressed = buttons.SECONDARY; //buttons da enum ana 3amlo
-
         }
     }
 
-    private void createProjectile(int i, ProjectileType fire) {
+    private void createProjectile(int i, ProjectileType fire, HashMap<String, Double> powerUp) {
         if (System.currentTimeMillis() > (lastFired[i] + 1000 / fire.FIRERATE)) {
+            System.out.println("yo");
+            for(int mult = 0; mult < powerUp.get(PowerUp.MULT.name()); mult++){
+                projArr.add(new Projectile(playerFiring.getSpawner(),
+                        fire, angle + mult * fire.MULTANGLE));
+                System.out.println("ysso");
+                lastFired[i] = System.currentTimeMillis();
 
-            projArr.add(new Projectile(playerFiring.getSpawner(),
-                    fire, angle));
+                projArr.get(projArr.size() - 1).setScale(powerUp.get(PowerUp.SCALE.name()));
+                projArr.get(projArr.size() - 1).addSpeed(powerUp.get(PowerUp.SPEED.name()));
+                gamePane.getChildren().add(projArr.get(projArr.size() - 1));
+            }
 
-            lastFired[i] = System.currentTimeMillis();
-
-            gamePane.getChildren().add(
-                    projArr.get(projArr.size() - 1));
         }
     }
 
@@ -116,4 +138,19 @@ public class ProjectileHandler {
     public void setSecondary(ProjectileType secondary) {
         this.secondary = secondary;
     }
+
+
+    public void setPowerUpPrimary(PowerUp key, double value) {
+        powerUpPrimary.put(key.name(), value);
+    }
+
+    public void setPowerUpSecondary(PowerUp key, double value) {
+        powerUpSecondary.put(key.name(), value);
+    }
+
+    public void setPowerUpAll(PowerUp key,double value) {
+        setPowerUpPrimary(key, value);
+        setPowerUpSecondary(key, value);
+    }
+
 }

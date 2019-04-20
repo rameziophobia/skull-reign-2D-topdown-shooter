@@ -2,14 +2,10 @@ package model;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Rotate;
 
-import java.util.Collection;
-
-import static java.lang.Math.*;
+import static java.lang.Math.atan2;
 
 public class Sprite extends ImageView {
 
@@ -36,6 +32,7 @@ public class Sprite extends ImageView {
     protected void setSpriteX(double x){
         setLayoutX(x);
     }
+
 
     public Point2D getCenter(){
         return new Point2D(getLayoutX() ,getLayoutY());

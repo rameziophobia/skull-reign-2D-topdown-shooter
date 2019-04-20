@@ -8,7 +8,7 @@ public class Player extends Sprite {
 
     private final static int WIDTH = 28;
     private final static int HEIGHT = 43;
-    private final static double SPEED = 6;
+    private final static double SPEED = 4;
     private static final double MAX_HP = 100;
     private double currentHp = MAX_HP;
 
