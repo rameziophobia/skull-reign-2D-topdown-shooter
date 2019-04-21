@@ -52,4 +52,5 @@ public class Sprite extends ImageView {
                 s.getBounds().getWidth(),
                 s.getBounds().getHeight());
     }//todo: ((Path)Shape.intersect(bullet, target)).getElements().size() > 0 better implementation??
+
 }

@@ -1,7 +1,16 @@
 package model.player;
 
+import javafx.geometry.Point2D;
 import model.Sprite;
+import model.projectiles.PowerUp;
+import model.projectiles.Projectile;
+import model.projectiles.ProjectileHandler;
+import model.projectiles.ProjectileType;
 import view.GameViewManager;
+
+import java.util.ArrayList;
+
+import static java.lang.Math.atan2;
 
 
 public class Player extends Sprite {
@@ -10,20 +19,25 @@ public class Player extends Sprite {
     private final static int HEIGHT = 43;
     private final static double SPEED = 4;
     private static final double MAX_HP = 100;
+    private final ProjectileHandler primaryBtnHandler;
+    private final ProjectileHandler secondaryBtnHandler;
     private double currentHp = MAX_HP;
+    private double angle;
 
-    public Player(PLAYERS player) { //todo: change magics
+    //todo: change projArr to array containing array of projectiles for everyType????
+    public Player(PLAYERS player, ArrayList<Projectile> projArr) { //todo: change magics
         super(player.URL, WIDTH, HEIGHT,SPEED,player.spawner,null);
         setLayoutX(GameViewManager.WIDTH / 2 - getFitWidth() / 2);
-        setLayoutY(GameViewManager.HEIGHT / 2 - getFitHeight() / 2); //todo: howa leh msh fel center >.< ?
+        setLayoutY(GameViewManager.HEIGHT / 2 - getFitHeight() / 2);
+
+        primaryBtnHandler = new ProjectileHandler(ProjectileType.BULLET,
+                ProjectileHandler.buttons.PRIMARY,this, projArr);
+        secondaryBtnHandler = new ProjectileHandler(ProjectileType.FIRE,
+                ProjectileHandler.buttons.SECONDARY,this, projArr);
     }
 
-
-
-
-
-    public void move(boolean upPressed, boolean downPressed,
-    boolean leftPressed, boolean rightPressed) { //todo can be coded more efficiently
+    private void move(boolean upPressed, boolean downPressed,
+                      boolean leftPressed, boolean rightPressed) { //todo can be coded more efficiently
         final double DIAGONAL_FACTOR = 1.5;
 
 
@@ -59,8 +73,30 @@ public class Player extends Sprite {
         }
     }
 
-    public void warp(){
+    private void warp(){
         setLayoutY((getLayoutY() < 0) ? (getLayoutY() + GameViewManager.HEIGHT) :(getLayoutY() % GameViewManager.HEIGHT));
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
+    }
+
+    private double calculateRotation(Point2D mouseLocation) {
+        angle = Math.toDegrees(atan2(mouseLocation.getY() - getLayoutY(), mouseLocation.getX()  - getLayoutX()));
+        return angle;
+    }
+
+    public void control(boolean upPressed, boolean downPressed, //todo: change to an enum array keys pressed
+                        boolean leftPressed, boolean rightPressed,
+                        double mouseXPos, double mouseYPos)
+    {
+        setRotate(calculateRotation(new Point2D(mouseXPos, mouseYPos)));
+        move(upPressed, downPressed, leftPressed, rightPressed);
+        warp();
+        primaryBtnHandler.startLoop(angle);
+        secondaryBtnHandler.startLoop(angle);
+
+//                projectileHandler.setPowerUp(PowerUp.SCALE,3);
+//        projectileHandler.setRange(500);
+//        projectileHandler.setPowerUp(PowerUp.MULT,30);
+//                projectileHandler.setPowerUp(PowerUp.SPEED,30);
+
     }
 }

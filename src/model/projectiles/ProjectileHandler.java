@@ -16,70 +16,72 @@ public class ProjectileHandler {
     private long[] lastFired;
 
     private double angle;
-    private ProjectileType primary;
-    private ProjectileType secondary;
+    private ProjectileType projectile;
     private ArrayList<Projectile> projArr;
     private Player playerFiring;
 
     private boolean mousePressed;
 
-    private enum buttons {PRIMARY, SECONDARY}
-
+    public enum buttons {PRIMARY, SECONDARY}
+    private buttons projectileBtn;
     private buttons lastPressed;
 
-    private HashMap<PowerUp, Double> powerUpPrimary;
-    private HashMap<PowerUp, Double> powerUpSecondary;
+    private HashMap<PowerUp, Double> powerUp;
 
     private boolean rangeEnable = false;
     private double range;
 
-    public ProjectileHandler(ProjectileType primary, ProjectileType secondary, Player playerFiring,
+    public ProjectileHandler(ProjectileType projectile, buttons projectileBtn, Player playerFiring,
                              ArrayList<Projectile> projArr) {
 
         //todo: class needs renaming
         this.lastFired = new long[5];
-        this.primary = primary;
-        this.secondary = secondary;
+        this.projectile = projectile;
+        this.projectileBtn = projectileBtn;
         this.projArr = projArr;
         this.playerFiring = playerFiring;
-        this.powerUpPrimary = new HashMap<>();
-        this.powerUpSecondary = new HashMap<>();
+        this.powerUp = new HashMap<>();
         initializePowerUp();
 
     }
 
     private void initializePowerUp() {
         for (PowerUp pup : PowerUp.values()) {
-            powerUpPrimary.put(pup, (double) 0);
-            powerUpSecondary.put(pup, (double) 0);
+            powerUp.put(pup, (double) 0);
         }
-        powerUpPrimary.put(PowerUp.MULT, (double) 1);
-        powerUpSecondary.put(PowerUp.MULT, (double) 1);
+        powerUp.put(PowerUp.MULT, (double) 1);
     }
 
     public void fireProjectile() {
         if (mousePressed) {
-            detectTouchType();//todo: func name needs refactoring
+            isProjectileBtnPressed();//todo: func name needs refactoring
         }
     }
 
     public void fireProjectile(double angle) {
-
-        this.angle = angle;
         gamePane.addEventFilter(MouseEvent.ANY, this::detectBtnType);
-        gamePane.addEventFilter(TouchEvent.ANY, e -> detectTouchType());//law el shasha touch xD
+        gamePane.addEventFilter(TouchEvent.ANY, e -> isProjectileBtnPressed());//law el shasha touch xD
 
         gamePane.setOnMousePressed(e -> mousePressed = true);
         gamePane.setOnMouseReleased(e -> mousePressed = false);
     }
 
-    private void detectTouchType() {
-        if (lastPressed == buttons.PRIMARY) {
-            createProjectile(0, primary, powerUpPrimary);
-        } else if (lastPressed == buttons.SECONDARY) {
+    public void startLoop(double angle){
+        this.angle = angle;
+        moveProjectile();
+        fireProjectile();
+        fireProjectile(angle);
+    }
 
-            createProjectile(1, secondary, powerUpSecondary);
+    private void isProjectileBtnPressed() {
+        if (projectileBtn == buttons.PRIMARY){
+            System.out.println("primary");
         }
+        if (lastPressed == projectileBtn) {
+            System.out.println("qqqqqqqqqq");
+            createProjectile(0, projectile, powerUp);
+        }
+//        System.out.println("pppppppp");
     }
 
     private void detectBtnType(MouseEvent e) {
@@ -91,13 +93,13 @@ public class ProjectileHandler {
         }
     }
 
-    private void createProjectile(int i, ProjectileType fire, HashMap<PowerUp, Double> powerUp) {
+    private void createProjectile(int i, ProjectileType type, HashMap<PowerUp, Double> powerUp) {
 
-        if (System.currentTimeMillis() > (lastFired[i] + 1000 / fire.FIRERATE)) {
+        if (System.currentTimeMillis() > (lastFired[i] + 1000 / type.FIRERATE)) {
             for (int mult = 0; mult < powerUp.get(PowerUp.MULT); mult++) {
-
+                System.out.println("paaaaaaaaaaaaas");
                 projArr.add(new Projectile(playerFiring.getSpawner(),
-                        fire, angle + mult * fire.MULTANGLE * Math.pow(-1, mult)));
+                        type, angle + mult * type.MULTANGLE * Math.pow(-1, mult)));
 
                 projArr.get(projArr.size() - 1).setScale(powerUp.get(PowerUp.SCALE));
                 projArr.get(projArr.size() - 1).addSpeed(powerUp.get(PowerUp.SPEED));
@@ -143,28 +145,13 @@ public class ProjectileHandler {
                 > range;
     }
 
-    public void setPrimary(ProjectileType primary) {
-        this.primary = primary;
+    public void setProjectile(ProjectileType projectile) {
+        this.projectile = projectile;
     }
 
-    public void setSecondary(ProjectileType secondary) {
-        this.secondary = secondary;
+    public void setPowerUp(PowerUp key, double value) {
+        powerUp.put(key, value);
     }
-
-
-    public void setPowerUpPrimary(PowerUp key, double value) {
-        powerUpPrimary.put(key, value);
-    }
-
-    public void setPowerUpSecondary(PowerUp key, double value) {
-        powerUpSecondary.put(key, value);
-    }
-
-    public void setPowerUpAll(PowerUp key, double value) {
-        setPowerUpPrimary(key, value);
-        setPowerUpSecondary(key, value);
-    }
-
     public void setRange(double range) {
         this.range = range;
         rangeEnable = true;
