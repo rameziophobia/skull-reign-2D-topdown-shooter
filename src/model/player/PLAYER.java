@@ -2,9 +2,8 @@ package model.player;
 
 import javafx.geometry.Point2D;
 import model.Sprite;
-import model.projectiles.PowerUp;
 import model.projectiles.Projectile;
-import model.projectiles.ProjectileHandler;
+import model.projectiles.spellMaker;
 import model.projectiles.ProjectileType;
 import view.GameViewManager;
 
@@ -19,8 +18,8 @@ public class Player extends Sprite {
     private final static int HEIGHT = 43;
     private final static double SPEED = 4;
     private static final double MAX_HP = 100;
-    private final ProjectileHandler primaryBtnHandler;
-    private final ProjectileHandler secondaryBtnHandler;
+    private final spellMaker primaryBtnHandler;
+    private final spellMaker secondaryBtnHandler;
     private double currentHp = MAX_HP;
     private double angle;
 
@@ -30,10 +29,10 @@ public class Player extends Sprite {
         setLayoutX(GameViewManager.WIDTH / 2 - getFitWidth() / 2);
         setLayoutY(GameViewManager.HEIGHT / 2 - getFitHeight() / 2);
 
-        primaryBtnHandler = new ProjectileHandler(ProjectileType.BULLET,
-                ProjectileHandler.buttons.PRIMARY,this, projArr);
-        secondaryBtnHandler = new ProjectileHandler(ProjectileType.FIRE,
-                ProjectileHandler.buttons.SECONDARY,this, projArr);
+        primaryBtnHandler = new spellMaker(ProjectileType.BULLET,
+                spellMaker.buttons.PRIMARY,this, projArr);
+        secondaryBtnHandler = new spellMaker(ProjectileType.FIRE,
+                spellMaker.buttons.SECONDARY,this, projArr);
     }
 
     private void move(boolean upPressed, boolean downPressed,
@@ -90,8 +89,8 @@ public class Player extends Sprite {
         setRotate(calculateRotation(new Point2D(mouseXPos, mouseYPos)));
         move(upPressed, downPressed, leftPressed, rightPressed);
         warp();
-        primaryBtnHandler.startLoop(angle);
-        secondaryBtnHandler.startLoop(angle);
+        secondaryBtnHandler.update(angle);
+        primaryBtnHandler.update(angle);
 
 //                projectileHandler.setPowerUp(PowerUp.SCALE,3);
 //        projectileHandler.setRange(500);

@@ -9,21 +9,21 @@ import view.GameViewManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ProjectileHandler {
+public class spellMaker {
 
     private static final Pane gamePane = GameViewManager.gamePane;
 
-    private long[] lastFired;
+    private long lastFireTime;
 
     private double angle;
-    private ProjectileType projectile;
+    private ProjectileType type;
     private ArrayList<Projectile> projArr;
     private Player playerFiring;
 
     private boolean mousePressed;
 
     public enum buttons {PRIMARY, SECONDARY}
-    private buttons projectileBtn;
+    private final buttons projectileBtn;
     private buttons lastPressed;
 
     private HashMap<PowerUp, Double> powerUp;
@@ -31,12 +31,11 @@ public class ProjectileHandler {
     private boolean rangeEnable = false;
     private double range;
 
-    public ProjectileHandler(ProjectileType projectile, buttons projectileBtn, Player playerFiring,
-                             ArrayList<Projectile> projArr) {
+    public spellMaker(ProjectileType projectile, buttons projectileBtn, Player playerFiring,
+                      ArrayList<Projectile> projArr) {
 
         //todo: class needs renaming
-        this.lastFired = new long[5];
-        this.projectile = projectile;
+        this.type = projectile;
         this.projectileBtn = projectileBtn;
         this.projArr = projArr;
         this.playerFiring = playerFiring;
@@ -58,30 +57,26 @@ public class ProjectileHandler {
         }
     }
 
-    public void fireProjectile(double angle) {
+    public void mouseEvents() {
         gamePane.addEventFilter(MouseEvent.ANY, this::detectBtnType);
         gamePane.addEventFilter(TouchEvent.ANY, e -> isProjectileBtnPressed());//law el shasha touch xD
 
-        gamePane.setOnMousePressed(e -> mousePressed = true);
-        gamePane.setOnMouseReleased(e -> mousePressed = false);
+        gamePane.addEventFilter(MouseEvent.MOUSE_PRESSED,e -> mousePressed = true);
+        gamePane.addEventFilter(MouseEvent.MOUSE_RELEASED,e -> mousePressed = false);
+
     }
 
-    public void startLoop(double angle){
+    public void update(double angle){
         this.angle = angle;
         moveProjectile();
         fireProjectile();
-        fireProjectile(angle);
+        mouseEvents();
     }
 
     private void isProjectileBtnPressed() {
-        if (projectileBtn == buttons.PRIMARY){
-            System.out.println("primary");
-        }
         if (lastPressed == projectileBtn) {
-            System.out.println("qqqqqqqqqq");
-            createProjectile(0, projectile, powerUp);
+            createProjectile();
         }
-//        System.out.println("pppppppp");
     }
 
     private void detectBtnType(MouseEvent e) {
@@ -93,21 +88,21 @@ public class ProjectileHandler {
         }
     }
 
-    private void createProjectile(int i, ProjectileType type, HashMap<PowerUp, Double> powerUp) {
+    private void createProjectile() {
 
-        if (System.currentTimeMillis() > (lastFired[i] + 1000 / type.FIRERATE)) {
+        if (System.currentTimeMillis() > (lastFireTime + 1000 / type.FIRERATE)) {
             for (int mult = 0; mult < powerUp.get(PowerUp.MULT); mult++) {
-                System.out.println("paaaaaaaaaaaaas");
-                projArr.add(new Projectile(playerFiring.getSpawner(),
-                        type, angle + mult * type.MULTANGLE * Math.pow(-1, mult)));
 
-                projArr.get(projArr.size() - 1).setScale(powerUp.get(PowerUp.SCALE));
-                projArr.get(projArr.size() - 1).addSpeed(powerUp.get(PowerUp.SPEED));
+                Projectile projectile = new Projectile(playerFiring.getSpawner(),
+                        type, angle + mult * type.MULTANGLE * Math.pow(-1, mult));
 
-                lastFired[i] = System.currentTimeMillis();
-                gamePane.getChildren().add(projArr.get(projArr.size() - 1));
+                projectile.setScale(powerUp.get(PowerUp.SCALE));
+                projectile.addSpeed(powerUp.get(PowerUp.SPEED));
+
+                projArr.add(projectile);
+                lastFireTime = System.currentTimeMillis();
+                gamePane.getChildren().add(projectile);
             }
-
         }
     }
 
@@ -145,8 +140,8 @@ public class ProjectileHandler {
                 > range;
     }
 
-    public void setProjectile(ProjectileType projectile) {
-        this.projectile = projectile;
+    public void setType(ProjectileType type) {
+        this.type = type;
     }
 
     public void setPowerUp(PowerUp key, double value) {

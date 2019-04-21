@@ -39,8 +39,6 @@ public class GameViewManager {
     private boolean leftPressed;
 
     private AnimationTimer gameTimer;
-
-    private double angle;
     private ArrayList<Projectile> projArr;
     private ArrayList<Enemy> enemyArrayList;
     private GridPane buildings;
@@ -142,9 +140,8 @@ public class GameViewManager {
         createPlayer(chosenPlayer);
         createEnemy();
         setMouseListeners();
-        gameLoop();
         initializeBuildings();
-
+        gameLoop();
 
 
     }
@@ -223,10 +220,10 @@ public class GameViewManager {
     }
 
     private void setMouseListeners() {
-        gamePane.addEventFilter(MouseEvent.ANY,this::setMouseLocation);
+        gamePane.addEventFilter(MouseEvent.ANY,this::getMouseLocation);
     }
 
-    private void setMouseLocation(MouseEvent e) {
+    private void getMouseLocation(MouseEvent e) {
         mouseXPos = e.getX();
         mouseYPos = e.getY();
     }
@@ -261,6 +258,7 @@ public class GameViewManager {
                 }
             }
         }
+
         gamePane.getChildren().removeAll(projArrRemove);//todo: this is stupid
         gamePane.getChildren().removeAll(enemyArrRemove);//todo: this is stupid
         enemyArrayList.removeAll(enemyArrRemove);
