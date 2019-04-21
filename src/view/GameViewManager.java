@@ -26,8 +26,8 @@ import static model.obstacles.Obstacle.createRandomRotator;
 
 
 public class GameViewManager {
-    public static final int HEIGHT = 768;
-    public static final int WIDTH = 1200;
+    public static final int HEIGHT = 1080;
+    public static final int WIDTH = 1920;
     public static AnchorPane gamePane;
     private Scene gameScene;
     private Stage gameStage;
@@ -119,7 +119,7 @@ public class GameViewManager {
         double width = resolution.getWidth();
         double height = resolution.getHeight();
         double w = width / WIDTH;  //your window width
-        double h = height / HEIGHT;  //your window hight
+        double h = height / HEIGHT;  //your window height
         Scale scale = new Scale(w, h, 0, 0);
         gamePane.getTransforms().add(scale);
 
@@ -128,7 +128,7 @@ public class GameViewManager {
 
     private void createBackground() {
         Image backgroundImage = new Image("file:src/view/resources/floor2.png");
-        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
+        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         gamePane.setBackground(new Background(background));
     }
 
@@ -193,7 +193,7 @@ public class GameViewManager {
                 projectileHandler.moveProjectile();
                 projectileHandler.fireProjectile(angle);
 //                projectileHandler.setPowerUpPrimary(PowerUp.SCALE,3);
-//                projectileHandler.setPowerUpSecondary(PowerUp.MULT,2);
+                projectileHandler.setPowerUpSecondary(PowerUp.MULT,30);
 //                projectileHandler.setPowerUpSecondary(PowerUp.SPEED,30);
                 projectileHandler.fireProjectile();
                 followPlayer();
