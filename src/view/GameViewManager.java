@@ -48,10 +48,15 @@ public class GameViewManager {
     private int numberOfEnemies = 0;
     private double timer;
     private ProjectileHandler projectileHandler;
+    private GameViewUI GVUI;
+    public static long nextRegenTime = 0;
+    public static long regenerationTimeLimitms= 5000;
+
 
     public GameViewManager() {
         initializeStage();
         createKeyListeners();
+        GVUI = new GameViewUI();
     }
 
     private void createKeyListeners() {
@@ -151,12 +156,12 @@ public class GameViewManager {
     }
 
     private void createPlayer(PLAYERS chosenPlayer) {
-        player = new Player(chosenPlayer);
+        player = new Player(chosenPlayer,GVUI.getHPRectangle(),GVUI.getShieldRectangle());
         gamePane.getChildren().add(player);
     }
 
     private void createUI() {
-        gamePane.getChildren().add(new GameViewUI().getGroup());
+        gamePane.getChildren().addAll(GVUI.getGroup(),GVUI.getVBox());
     }
 
     private void followPlayer() {
