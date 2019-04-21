@@ -2,9 +2,17 @@ package model.player;
 
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
+import javafx.geometry.Point2D;
 import model.Sprite;
 import view.Bars;
+import model.projectiles.Projectile;
+import model.projectiles.spellMaker;
+import model.projectiles.ProjectileType;
 import view.GameViewManager;
+
+import java.util.ArrayList;
+
+import static java.lang.Math.atan2;
 
 
 public class Player extends Sprite {
@@ -16,11 +24,16 @@ public class Player extends Sprite {
     private static final double MAX_SHIELD = 100;
     private Bars HPRectangle;
     private Bars ShieldRectangle;
+    private final spellMaker primaryBtnHandler;
+    private final spellMaker secondaryBtnHandler;
+    private double currentHp = MAX_HP;
+    private double angle;
 
-    public Player(PLAYERS player, Bars HPBar,Bars ShieldBar) { //todo: change magics
+    //todo: change projArr to array containing array of projectiles for everyType????
+    public Player(PLAYERS player, ArrayList<Projectile> projArr, Bars HPBar,Bars ShieldBar) { //todo: change magics
         super(player.URL, WIDTH, HEIGHT,SPEED,player.spawner,null);
         setLayoutX(GameViewManager.WIDTH / 2 - getFitWidth() / 2);
-        setLayoutY(GameViewManager.HEIGHT / 2 - getFitHeight() / 2); //todo: howa leh msh fel center >.< ?
+        setLayoutY(GameViewManager.HEIGHT / 2 - getFitHeight() / 2); 
         HPRectangle = HPBar;
         ShieldRectangle = ShieldBar;
     }
@@ -28,9 +41,14 @@ public class Player extends Sprite {
 
 
 
+        primaryBtnHandler = new spellMaker(ProjectileType.BULLET,
+                spellMaker.buttons.PRIMARY,this, projArr);
+        secondaryBtnHandler = new spellMaker(ProjectileType.FIRE,
+                spellMaker.buttons.SECONDARY,this, projArr);
+    }
 
-    public void move(boolean upPressed, boolean downPressed,
-    boolean leftPressed, boolean rightPressed) { //todo can be coded more efficiently
+    private void move(boolean upPressed, boolean downPressed,
+                      boolean leftPressed, boolean rightPressed) { //todo can be coded more efficiently
         final double DIAGONAL_FACTOR = 1.5;
 
 
@@ -66,7 +84,7 @@ public class Player extends Sprite {
         }
     }
 
-    public void warp(){
+    private void warp(){
         setLayoutY((getLayoutY() < 0) ? (getLayoutY() + GameViewManager.HEIGHT) :(getLayoutY() % GameViewManager.HEIGHT));
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
     }
@@ -107,5 +125,27 @@ public class Player extends Sprite {
 
     public static double getMaxShield() {
         return MAX_SHIELD;
+    }
+
+    private double calculateRotation(Point2D mouseLocation) {
+        angle = Math.toDegrees(atan2(mouseLocation.getY() - getLayoutY(), mouseLocation.getX()  - getLayoutX()));
+        return angle;
+    }
+
+    public void control(boolean upPressed, boolean downPressed, //todo: change to an enum array keys pressed
+                        boolean leftPressed, boolean rightPressed,
+                        double mouseXPos, double mouseYPos)
+    {
+        setRotate(calculateRotation(new Point2D(mouseXPos, mouseYPos)));
+        move(upPressed, downPressed, leftPressed, rightPressed);
+        warp();
+        secondaryBtnHandler.update(angle);
+        primaryBtnHandler.update(angle);
+
+//                projectileHandler.setPowerUp(PowerUp.SCALE,3);
+//        projectileHandler.setRange(500);
+//        projectileHandler.setPowerUp(PowerUp.MULT,30);
+//                projectileHandler.setPowerUp(PowerUp.SPEED,30);
+
     }
 }

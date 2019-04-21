@@ -120,7 +120,20 @@
             <state relative-caret-position="408">
               <caret line="32" column="31" lean-forward="true" selection-start-line="32" selection-start-column="31" selection-end-line="32" selection-end-column="31" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="method#ViewManager#0;class#ViewManager#0" />
+                <element signature="method#setCursorHand#0;class#ViewManager#0" />
+                <element signature="method#CreateButtons#0;class#ViewManager#0" />
+                <element signature="method#createCenterHBox#0;class#ViewManager#0" />
+                <element signature="method#createBackground#0;class#ViewManager#0" />
+                <element signature="method#createLogo#0;class#ViewManager#0" />
+                <element signature="method#createLogoLabel#0;class#ViewManager#0" />
+                <element signature="method#createMenuBtnTilePane#0;class#ViewManager#0" />
+                <element signature="method#createHbxStart#0;class#ViewManager#0" />
+                <element signature="method#createScoreBtn#0;class#ViewManager#0" />
+                <element signature="method#creatHelpBtn#0;class#ViewManager#0" />
+                <element signature="method#createCreditsBtn#0;class#ViewManager#0" />
+                <element signature="method#createExitBtn#0;class#ViewManager#0" />
+                <element signature="method#fadeOnAction#0;class#ViewManager#0" />
               </folding>
             </state>
           </provider>
@@ -163,17 +176,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>spawn</find>
-      <find>syste</find>
-      <find>createn</find>
-      <find>spawner</find>
-      <find>mousemo</find>
-      <find>atan</find>
-      <find>system</find>
-      <find>coll</find>
-      <find>remo</find>
-      <find>mill</find>
-      <find>fire</find>
       <find>setOnMouse</find>
       <find>crea</find>
       <find>firepr</find>
@@ -193,6 +195,17 @@
       <find>bac</find>
       <find>rotat</find>
       <find>setB</find>
+      <find>calc</find>
+      <find>prima</find>
+      <find>seco</find>
+      <find>handler</find>
+      <find>loop</find>
+      <find>last</find>
+      <find>long</find>
+      <find>print</find>
+      <find>pla</find>
+      <find>full</find>
+      <find>uppre</find>
     </findStrings>
     <replaceStrings>
       <replace>getLayoutX()</replace>
@@ -238,9 +251,9 @@
         <option value="$PROJECT_DIR$/src/model/projectiles/MouseStationaryEvent.java" />
         <option value="$PROJECT_DIR$/src/model/projectiles/PowerUp.java" />
         <option value="$PROJECT_DIR$/src/model/projectiles/inputControl.java" />
-        <option value="$PROJECT_DIR$/src/model/projectiles/Projectile.java" />
-        <option value="$PROJECT_DIR$/src/model/Sprite.java" />
         <option value="$PROJECT_DIR$/src/model/projectiles/ProjectileType.java" />
+        <option value="$PROJECT_DIR$/src/model/projectiles/Projectile.java" />
+        <option value="$PROJECT_DIR$/src/model/player/Player.java" />
         <option value="$PROJECT_DIR$/src/model/projectiles/ProjectileHandler.java" />
         <option value="$PROJECT_DIR$/src/view/Bars.java" />
         <option value="$PROJECT_DIR$/src/model/player/Player.java" />
@@ -291,7 +304,6 @@
               <item name="top_down_shooter_java" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="player" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="top_down_shooter_java" type="b2602c69:ProjectViewProjectNode" />
@@ -467,8 +479,8 @@
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32394367" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.32719395" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.39934355" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.33041576" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.39869988" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.32822758" />
@@ -680,40 +692,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/projectiles/PROJECTILE.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="59" selection-start-line="59" selection-end-line="59" />
+        <state relative-caret-position="198">
+          <caret line="56" column="19" selection-start-line="56" selection-start-column="19" selection-end-line="56" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://I:/Program Files/Java/jdk1.8.0_05/javafx-src.zip!/javafx/scene/Node.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="5166" column="22" selection-start-line="5166" selection-start-column="22" selection-end-line="5166" selection-end-column="22" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#97791#97792#0" expanded="true" />
+            <element signature="e#97835#97836#0" expanded="true" />
+            <element signature="e#100693#100694#0" expanded="true" />
+            <element signature="e#100737#100738#0" expanded="true" />
+            <element signature="e#126309#126310#0" expanded="true" />
+            <element signature="e#126362#126363#0" expanded="true" />
+            <element signature="e#216756#216757#0" expanded="true" />
+            <element signature="e#216799#216800#0" expanded="true" />
+            <element signature="e#220214#220215#0" expanded="true" />
+            <element signature="e#220257#220258#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/projectiles/PowerUp.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/src.zip!/java/util/HashMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="137" column="13" selection-start-line="137" selection-start-column="13" selection-end-line="137" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/projectiles/ProjectileType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/projectiles/inputControl.java">
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/javafx-src.zip!/javafx/event/EventHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/player/PLAYERS.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+        <state relative-caret-position="357">
+          <caret line="44" column="9" selection-start-line="44" selection-start-column="9" selection-end-line="44" selection-end-column="9" />
         </state>
       </provider>
     </entry>
     <entry file="jar://I:/Program Files/Java/jdk1.8.0_05/javafx-src.zip!/javafx/scene/layout/BackgroundSize.java" />
     <entry file="file://$PROJECT_DIR$/src/view/ViewManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="505">
-          <caret line="122" column="34" lean-forward="true" selection-start-line="122" selection-start-column="34" selection-end-line="122" selection-end-column="34" />
+        <state relative-caret-position="222">
+          <caret line="130" column="21" lean-forward="true" selection-start-line="130" selection-start-column="21" selection-end-line="130" selection-end-column="21" />
           <folding>
             <element signature="method#ViewManager#0;class#ViewManager#0" />
             <element signature="method#setCursorHand#0;class#ViewManager#0" />
@@ -723,7 +751,6 @@
             <element signature="method#createLogo#0;class#ViewManager#0" />
             <element signature="method#createLogoLabel#0;class#ViewManager#0" />
             <element signature="method#createMenuBtnTilePane#0;class#ViewManager#0" />
-            <element signature="method#createStartBtn#0;class#ViewManager#0" />
             <element signature="method#createHbxStart#0;class#ViewManager#0" />
             <element signature="method#createScoreBtn#0;class#ViewManager#0" />
             <element signature="method#creatHelpBtn#0;class#ViewManager#0" />
@@ -754,16 +781,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/projectiles/ProjectileHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/model/projectiles/Projectile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+        <state relative-caret-position="315">
+          <caret line="46" column="25" selection-start-line="46" selection-start-column="25" selection-end-line="46" selection-end-column="25" />
           <folding>
-            <element signature="e#4715#4716#0" expanded="true" />
-            <element signature="e#4815#4816#0" expanded="true" />
-            <element signature="e#4926#4927#0" expanded="true" />
-            <element signature="e#5040#5041#0" expanded="true" />
-            <element signature="e#5359#5360#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/projectiles/spellMaker.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1106">
+          <caret line="101" column="40" lean-forward="true" selection-start-line="101" selection-start-column="40" selection-end-line="101" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4288#4289#0" expanded="true" />
+            <element signature="e#4320#4321#0" expanded="true" />
+            <element signature="e#4377#4378#0" expanded="true" />
+            <element signature="e#4416#4417#0" expanded="true" />
+            <element signature="e#4553#4554#0" expanded="true" />
+            <element signature="e#4588#4589#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -815,7 +854,12 @@
           <caret line="163" column="38" selection-start-line="163" selection-start-column="38" selection-end-line="163" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#createKeyListeners#0;class#GameViewManager#0" />
+            <element signature="e#4710#4711#0" expanded="true" />
+            <element signature="e#4781#4782#0" expanded="true" />
+            <element signature="e#5099#5777#0" expanded="true" />
+            <element signature="e#5776#5777#0" expanded="true" />
+            <element signature="e#6857#6858#0" expanded="true" />
+            <element signature="e#6935#6936#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -827,8 +871,8 @@
         <settings>
           <artifact-editor>
             <show-content>
-              <type id="library" />
               <type id="artifact" />
+              <type id="library" />
             </show-content>
           </artifact-editor>
           <last-edited>topDownShooter:jar</last-edited>
@@ -866,7 +910,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.8.0_5</last-edited>
+          <last-edited>1.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

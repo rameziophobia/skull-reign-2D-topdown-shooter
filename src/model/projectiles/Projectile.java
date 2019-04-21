@@ -36,6 +36,8 @@ public class Projectile extends Sprite {
         setSpriteX(getLayoutX() + speedX);
     }
 
+
+
     void addSpeed(double speed) {
         this.speed = this.speed + speed;
     }

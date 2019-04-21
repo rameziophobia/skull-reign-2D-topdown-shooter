@@ -12,15 +12,11 @@ import model.Enemies.Enemy;
 import model.Enemies.normalTank;
 import model.player.PLAYERS;
 import model.player.Player;
-import model.projectiles.PowerUp;
 import model.projectiles.Projectile;
-import model.projectiles.ProjectileHandler;
-import model.projectiles.ProjectileType;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-import static java.lang.Math.*;
 import static model.Enemies.EnemyType.TANK_SAND;
 import static model.obstacles.Obstacle.createRandomRotator;
 
@@ -33,21 +29,22 @@ public class GameViewManager {
     private Stage gameStage;
     private Stage menuStage;
     private Player player;
+
     private double mouseXPos;
     private double mouseYPos;
+
     private boolean upPressed;
     private boolean downPressed;
     private boolean rightPressed;
     private boolean leftPressed;
+
     private AnimationTimer gameTimer;
-    private double angle;
     private ArrayList<Projectile> projArr;
     private ArrayList<Enemy> enemyArrayList;
     private GridPane buildings;
     private int numberOfObstacles = 0;
     private int numberOfEnemies = 0;
     private double timer;
-    private ProjectileHandler projectileHandler;
     private GameViewUI GVUI;
     public static long nextRegenTime = 0;
     public static long regenerationTimeLimitms= 5000;
@@ -142,21 +139,20 @@ public class GameViewManager {
         this.menuStage.hide();
         gameStage.show();
         gameStage.setFullScreen(true);
+        projArr = new ArrayList<>();
 
         createUI();
         createPlayer(chosenPlayer);
         createEnemy();
         setMouseListeners();
-        gameLoop();
         initializeBuildings();
+        gameLoop();
 
-        projArr = new ArrayList<>();
-        projectileHandler = new ProjectileHandler(ProjectileType.BULLET,
-                ProjectileType.FIRE,player, projArr);
+
     }
 
     private void createPlayer(PLAYERS chosenPlayer) {
-        player = new Player(chosenPlayer,GVUI.getHPRectangle(),GVUI.getShieldRectangle());
+        player = new Player(chosenPlayer,projArr,GVUI.getHPRectangle(),GVUI.getShieldRectangle());
         gamePane.getChildren().add(player);
     }
 
@@ -191,20 +187,17 @@ public class GameViewManager {
                 createEnemies();
                 createObstacles();
 
-                player.setRotate(calculateRotation());
-                player.move(upPressed, downPressed, leftPressed, rightPressed);
-                player.warp();
+                player.control(upPressed, downPressed,
+                        leftPressed, rightPressed,
+                        mouseXPos,mouseYPos);
 
-                projectileHandler.moveProjectile();
-                projectileHandler.fireProjectile(angle);
-//                projectileHandler.setPowerUpPrimary(PowerUp.SCALE,3);
-                projectileHandler.setRange(500);
-                projectileHandler.setPowerUpSecondary(PowerUp.MULT,30);
-//                projectileHandler.setPowerUpSecondary(PowerUp.SPEED,30);
+//                player.setRotate(calculateRotation());
+//                player.move(upPressed, downPressed, leftPressed, rightPressed);
+//                player.warp();
 
-                projectileHandler.fireProjectile();
+
                 followPlayer();
-                checkCollision();
+                checkCollision(); //todo: 7otaha in gameObjects ( player, enemies etc) or in projectiles
 
             }
         };
@@ -232,18 +225,18 @@ public class GameViewManager {
     }
 
     private void setMouseListeners() {
-        gamePane.addEventFilter(MouseEvent.ANY,this::setMouseLocation);
+        gamePane.addEventFilter(MouseEvent.ANY,this::getMouseLocation);
     }
 
-    private void setMouseLocation(MouseEvent e) {
+    private void getMouseLocation(MouseEvent e) {
         mouseXPos = e.getX();
         mouseYPos = e.getY();
     }
 
-    private double calculateRotation() {
-        angle = Math.toDegrees(atan2(mouseYPos  - player.getLayoutY(), mouseXPos  - player.getLayoutX()));
-        return angle;
-    }
+//    private double calculateRotation() {
+//        angle = Math.toDegrees(atan2(mouseYPos  - player.getLayoutY(), mouseXPos  - player.getLayoutX()));
+//        return angle;
+//    }
 
     private void checkCollision() {//todo: enqueue & dequeue
         //todo: move collisions to a listener inside sprite classes
@@ -270,6 +263,7 @@ public class GameViewManager {
                 }
             }
         }
+
         gamePane.getChildren().removeAll(projArrRemove);//todo: this is stupid
         gamePane.getChildren().removeAll(enemyArrRemove);//todo: this is stupid
         enemyArrayList.removeAll(enemyArrRemove);
