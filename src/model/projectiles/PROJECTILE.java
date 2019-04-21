@@ -23,12 +23,6 @@ public class Projectile extends Sprite {
         this.angle = angle;
     }
 
-//    Projectile(Point2D spawner, ProjectileType projectileType, double angle, double[] bonus){
-//        this(spawner, projectileType, angle);
-//
-//    }
-
-
     private void spawnProjectile(Point2D spawner, double angle) {
         setSpriteX(spawner.getX());
         setSpriteY(spawner.getY());
@@ -63,4 +57,5 @@ public class Projectile extends Sprite {
     public double getDamage() {
         return proj.DAMAGE * (((getScale() - 1) * 2) + 1);
     }
+
 }

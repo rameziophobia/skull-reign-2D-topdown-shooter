@@ -193,8 +193,10 @@ public class GameViewManager {
                 projectileHandler.moveProjectile();
                 projectileHandler.fireProjectile(angle);
 //                projectileHandler.setPowerUpPrimary(PowerUp.SCALE,3);
+                projectileHandler.setRange(500);
                 projectileHandler.setPowerUpSecondary(PowerUp.MULT,30);
 //                projectileHandler.setPowerUpSecondary(PowerUp.SPEED,30);
+
                 projectileHandler.fireProjectile();
                 followPlayer();
                 checkCollision();

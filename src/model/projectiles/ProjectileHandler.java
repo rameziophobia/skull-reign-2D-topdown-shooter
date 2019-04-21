@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 public class ProjectileHandler {
 
-//    private static final int powerUpNum = 5;
     private static final Pane gamePane = GameViewManager.gamePane;
 
     private long[] lastFired;
@@ -23,12 +22,16 @@ public class ProjectileHandler {
     private Player playerFiring;
 
     private boolean mousePressed;
+
     private enum buttons {PRIMARY, SECONDARY}
+
     private buttons lastPressed;
 
-    private HashMap<String, Double> powerUpPrimary;
-    private HashMap<String, Double> powerUpSecondary;
+    private HashMap<PowerUp, Double> powerUpPrimary;
+    private HashMap<PowerUp, Double> powerUpSecondary;
 
+    private boolean rangeEnable = false;
+    private double range;
 
     public ProjectileHandler(ProjectileType primary, ProjectileType secondary, Player playerFiring,
                              ArrayList<Projectile> projArr) {
@@ -46,19 +49,20 @@ public class ProjectileHandler {
     }
 
     private void initializePowerUp() {
-        for(PowerUp pup: PowerUp.values()){
-            powerUpPrimary.put(pup.name(), (double) 0);
-            powerUpSecondary.put(pup.name(), (double) 0);
+        for (PowerUp pup : PowerUp.values()) {
+            powerUpPrimary.put(pup, (double) 0);
+            powerUpSecondary.put(pup, (double) 0);
         }
-        powerUpPrimary.put(PowerUp.MULT.name(), (double) 1);
-        powerUpSecondary.put(PowerUp.MULT.name(), (double) 1);
+        powerUpPrimary.put(PowerUp.MULT, (double) 1);
+        powerUpSecondary.put(PowerUp.MULT, (double) 1);
     }
 
     public void fireProjectile() {
-        if(mousePressed){
+        if (mousePressed) {
             detectTouchType();//todo: func name needs refactoring
         }
     }
+
     public void fireProjectile(double angle) {
 
         this.angle = angle;
@@ -68,8 +72,6 @@ public class ProjectileHandler {
         gamePane.setOnMousePressed(e -> mousePressed = true);
         gamePane.setOnMouseReleased(e -> mousePressed = false);
     }
-
-
 
     private void detectTouchType() {
         if (lastPressed == buttons.PRIMARY) {
@@ -89,17 +91,18 @@ public class ProjectileHandler {
         }
     }
 
-    private void createProjectile(int i, ProjectileType fire, HashMap<String, Double> powerUp) {
-        if (System.currentTimeMillis() > (lastFired[i] + 1000 / fire.FIRERATE)) {
-            System.out.println("yo");
-            for(int mult = 0; mult < powerUp.get(PowerUp.MULT.name()); mult++){
-                projArr.add(new Projectile(playerFiring.getSpawner(),
-                        fire, angle + mult * fire.MULTANGLE));
-                System.out.println("ysso");
-                lastFired[i] = System.currentTimeMillis();
+    private void createProjectile(int i, ProjectileType fire, HashMap<PowerUp, Double> powerUp) {
 
-                projArr.get(projArr.size() - 1).setScale(powerUp.get(PowerUp.SCALE.name()));
-                projArr.get(projArr.size() - 1).addSpeed(powerUp.get(PowerUp.SPEED.name()));
+        if (System.currentTimeMillis() > (lastFired[i] + 1000 / fire.FIRERATE)) {
+            for (int mult = 0; mult < powerUp.get(PowerUp.MULT); mult++) {
+
+                projArr.add(new Projectile(playerFiring.getSpawner(),
+                        fire, angle + mult * fire.MULTANGLE * Math.pow(-1, mult)));
+
+                projArr.get(projArr.size() - 1).setScale(powerUp.get(PowerUp.SCALE));
+                projArr.get(projArr.size() - 1).addSpeed(powerUp.get(PowerUp.SPEED));
+
+                lastFired[i] = System.currentTimeMillis();
                 gamePane.getChildren().add(projArr.get(projArr.size() - 1));
             }
 
@@ -115,11 +118,16 @@ public class ProjectileHandler {
             for (Projectile p : projArr) {
                 p.move();
                 //if the object crossed the boundary adds it to the remove list
-                if (p.getLayoutY() > GameViewManager.HEIGHT ||
-                        p.getLayoutY() < 0) {
+                if (p.getLayoutY() > GameViewManager.HEIGHT || p.getLayoutY() < 0 )
+                {
                     projArrRemove.add(p);
-                } else if (p.getLayoutX() > GameViewManager.WIDTH ||
-                        p.getLayoutX() < 0) {
+
+                } else if (p.getLayoutX() > GameViewManager.WIDTH || p.getLayoutX() < 0)
+                {
+                    projArrRemove.add(p);
+
+                } else if (rangeEnable && rangeTooFar(p))
+                {
                     projArrRemove.add(p);
                 }
             }
@@ -130,6 +138,10 @@ public class ProjectileHandler {
         }
     }
 
+    private boolean rangeTooFar(Projectile p) {
+        return Math.hypot(p.getLayoutX() - playerFiring.getLayoutX(), p.getLayoutY() - playerFiring.getLayoutY())
+                > range;
+    }
 
     public void setPrimary(ProjectileType primary) {
         this.primary = primary;
@@ -141,16 +153,24 @@ public class ProjectileHandler {
 
 
     public void setPowerUpPrimary(PowerUp key, double value) {
-        powerUpPrimary.put(key.name(), value);
+        powerUpPrimary.put(key, value);
     }
 
     public void setPowerUpSecondary(PowerUp key, double value) {
-        powerUpSecondary.put(key.name(), value);
+        powerUpSecondary.put(key, value);
     }
 
-    public void setPowerUpAll(PowerUp key,double value) {
+    public void setPowerUpAll(PowerUp key, double value) {
         setPowerUpPrimary(key, value);
         setPowerUpSecondary(key, value);
     }
 
+    public void setRange(double range) {
+        this.range = range;
+        rangeEnable = true;
+    }
+
+    public void disableRange() {
+        rangeEnable = false;
+    }
 }

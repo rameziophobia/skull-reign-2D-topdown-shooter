@@ -5,8 +5,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
-import static java.lang.Math.atan2;
-
 public class Sprite extends ImageView {
 
 
@@ -22,7 +20,6 @@ public class Sprite extends ImageView {
         this.width = width;
         this.speed = speed;
         this.spawner = spawner;
-//        initSpawner(spawner.getX(), spawner.getY(),angle);
     }
 
     protected void setSpriteY(double y){
@@ -34,44 +31,14 @@ public class Sprite extends ImageView {
     }
 
 
-    public Point2D getCenter(){
-        return new Point2D(getLayoutX() ,getLayoutY());
-    }
-
     public Rectangle getBounds() {
         return new Rectangle(getLayoutX(), getLayoutY(), width, height);
-    }
-
-//    public Point2D getSpawner(double angle){
-//
-//        c = new Circle(50);
-//        c.setCenterX(spawner.getX() + getLayoutX());
-//        c.setCenterY(spawner.getY() + getLayoutY());
-//        c.setLayoutX(spawner.getX() + getLayoutX());
-//        c.setLayoutY(spawner.getY() + getLayoutY());
-//        Rotate r = new Rotate(angle,getLayoutX(),getLayoutY());
-////        System.out.println("before: " + c.getLayoutX() + " " + c.getLayoutY() + " " + c.getCenterX() + " " + c.getCenterY());
-//        c.getTransforms().add(r);
-//        System.out.println(r.getPivotX() + " " + r.getPivotY());
-////        System.out.println("after: " + c.getLayoutX() + " " + c.getLayoutY() + " " + c.getCenterX() + " " + c.getCenterY());
-//        return new Point2D(c.getLayoutX(),c.getLayoutY());
-//
-//}
-
-    public double calcShootAngle(){
-//        return atan2(spawner.getY() - getLayoutY(),spawner.getX() - getLayoutX());
-        return atan2(spawner.getX(), spawner.getY());
     }
 
     public  double calcDistanceToSpawner(){
         return Math.hypot(spawner.getX() - 0, spawner.getY() - 0);
     }
 
-//    public Point2D getSpawner() {
-//        return getCenter().setRotat;
-//        return getCoordinate().add(
-//                new Point2D(calcDistanceToSpawner() * sin(calcShootAngle() + getRotate()),
-//                        calcDistanceToSpawner() * cos(calcShootAngle() + getRotate())));
 //    }
 
     public Point2D getSpawner() {
