@@ -4,9 +4,10 @@ import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import javafx.geometry.Point2D;
 import model.Sprite;
+import model.projectiles.PowerUp;
 import view.Bars;
 import model.projectiles.Projectile;
-import model.projectiles.spellMaker;
+import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
 import view.GameViewManager;
 
@@ -24,27 +25,22 @@ public class Player extends Sprite {
     private static final double MAX_SHIELD = 100;
     private Bars HPRectangle;
     private Bars ShieldRectangle;
-    private final spellMaker primaryBtnHandler;
-    private final spellMaker secondaryBtnHandler;
+    private final PlayerProjectileControl primaryBtnHandler;
+    private final PlayerProjectileControl secondaryBtnHandler;
     private double currentHp = MAX_HP;
     private double angle;
 
     //todo: change projArr to array containing array of projectiles for everyType????
-    public Player(PLAYERS player, ArrayList<Projectile> projArr, Bars HPBar,Bars ShieldBar) { //todo: change magics
-        super(player.URL, WIDTH, HEIGHT,SPEED,player.spawner,null);
-        setLayoutX(GameViewManager.WIDTH / 2 - getFitWidth() / 2);
-        setLayoutY(GameViewManager.HEIGHT / 2 - getFitHeight() / 2); 
+    public Player(PLAYERS player, Bars HPBar, Bars ShieldBar) { //todo: change magics
+        super(player.URL, WIDTH, HEIGHT, SPEED, player.spawner, null);
+        setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2);
+        setLayoutY((GameViewManager.HEIGHT >> 1) - getFitHeight() / 2);
         HPRectangle = HPBar;
         ShieldRectangle = ShieldBar;
-    }
-
-
-
-
-        primaryBtnHandler = new spellMaker(ProjectileType.BULLET,
-                spellMaker.buttons.PRIMARY,this, projArr);
-        secondaryBtnHandler = new spellMaker(ProjectileType.FIRE,
-                spellMaker.buttons.SECONDARY,this, projArr);
+        primaryBtnHandler = new PlayerProjectileControl(ProjectileType.BULLET,
+                PlayerProjectileControl.buttons.PRIMARY, this);
+        secondaryBtnHandler = new PlayerProjectileControl(ProjectileType.FIRE,
+                PlayerProjectileControl.buttons.SECONDARY, this);
     }
 
     private void move(boolean upPressed, boolean downPressed,
@@ -84,37 +80,37 @@ public class Player extends Sprite {
         }
     }
 
-    private void warp(){
-        setLayoutY((getLayoutY() < 0) ? (getLayoutY() + GameViewManager.HEIGHT) :(getLayoutY() % GameViewManager.HEIGHT));
+    private void warp() {
+        setLayoutY((getLayoutY() < 0) ? (getLayoutY() + GameViewManager.HEIGHT) : (getLayoutY() % GameViewManager.HEIGHT));
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
     }
+
     public void takeDmg(double damage) {
 
-        if(ShieldRectangle.getCurrentValue() > 0){
+        if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(damage);
             barScaleAnimator(ShieldRectangle);
             GameViewManager.nextRegenTime = System.currentTimeMillis() + GameViewManager.regenerationTimeLimitms;
-        }
-        else {
+        } else {
             HPRectangle.decreaseCurrent(damage);
             barScaleAnimator(HPRectangle);
         }
     }
 
-    public void increaseHP(double Value){
+    public void increaseHP(double Value) {
         HPRectangle.increaseCurrent(Value);
         barScaleAnimator(HPRectangle);
     }
 
-    public void regenerate(){
+    public void regenerate() {
         ShieldRectangle.regeneration();
         barScaleAnimator(ShieldRectangle);
     }
 
-    private void barScaleAnimator( Bars HP) {//todo change paramaters to Bars only
-        ScaleTransition HPAnimation = new ScaleTransition(Duration.seconds(0.1),HP);
+    private void barScaleAnimator(Bars HP) {//todo change paramaters to Bars only
+        ScaleTransition HPAnimation = new ScaleTransition(Duration.seconds(0.1), HP);
 
-        HPAnimation.setToX((HP.getCurrentValue())/MAX_HP);
+        HPAnimation.setToX((HP.getCurrentValue()) / MAX_HP);
 
         HPAnimation.play();
     }
@@ -128,24 +124,32 @@ public class Player extends Sprite {
     }
 
     private double calculateRotation(Point2D mouseLocation) {
-        angle = Math.toDegrees(atan2(mouseLocation.getY() - getLayoutY(), mouseLocation.getX()  - getLayoutX()));
+        angle = Math.toDegrees(atan2(mouseLocation.getY() - getLayoutY(), mouseLocation.getX() - getLayoutX()));
         return angle;
     }
 
     public void control(boolean upPressed, boolean downPressed, //todo: change to an enum array keys pressed
                         boolean leftPressed, boolean rightPressed,
-                        double mouseXPos, double mouseYPos)
-    {
+                        double mouseXPos, double mouseYPos) {
         setRotate(calculateRotation(new Point2D(mouseXPos, mouseYPos)));
         move(upPressed, downPressed, leftPressed, rightPressed);
         warp();
         secondaryBtnHandler.update(angle);
         primaryBtnHandler.update(angle);
 
-//                projectileHandler.setPowerUp(PowerUp.SCALE,3);
-//        projectileHandler.setRange(500);
-//        projectileHandler.setPowerUp(PowerUp.MULT,30);
+        primaryBtnHandler.setPowerUp(PowerUp.SCALE, 3);
+        primaryBtnHandler.setPowerUp(PowerUp.MULT, 3);
+        secondaryBtnHandler.setRange(400);
+        primaryBtnHandler.setRange(700);
+        secondaryBtnHandler.setPowerUp(PowerUp.MULT, 10);
 //                projectileHandler.setPowerUp(PowerUp.SPEED,30);
 
+    }
+
+    public ArrayList<Projectile> getProjArr() {
+        ArrayList<Projectile> projArr =  new ArrayList<Projectile>();
+        projArr.addAll(primaryBtnHandler.getProjArr());
+        projArr.addAll(secondaryBtnHandler.getProjArr());
+        return projArr;
     }
 }

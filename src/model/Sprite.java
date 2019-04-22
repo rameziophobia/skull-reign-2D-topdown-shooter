@@ -2,8 +2,6 @@ package model;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 public class Sprite extends ImageView {
 

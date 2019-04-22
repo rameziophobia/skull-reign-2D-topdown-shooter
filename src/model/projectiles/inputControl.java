@@ -1,6 +1,6 @@
 package model.projectiles;
 
-public class inputControl {
+public class InputControl {
 
 
 

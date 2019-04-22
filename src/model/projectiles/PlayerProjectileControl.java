@@ -9,7 +9,7 @@ import view.GameViewManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class spellMaker {
+public class PlayerProjectileControl {
 
     private static final Pane gamePane = GameViewManager.gamePane;
 
@@ -28,18 +28,20 @@ public class spellMaker {
 
     private HashMap<PowerUp, Double> powerUp;
 
-    private boolean rangeEnable = false;
-    private double range;
+    private boolean rangeEnable;
+    private double range = 2000; //bound akbar mn el shasha
+    private double lastFireLocationX;
+    private double lastFireLocationY;
 
-    public spellMaker(ProjectileType projectile, buttons projectileBtn, Player playerFiring,
-                      ArrayList<Projectile> projArr) {
+    public PlayerProjectileControl(ProjectileType projectile, buttons projectileBtn, Player playerFiring) {
 
         //todo: class needs renaming
         this.type = projectile;
         this.projectileBtn = projectileBtn;
-        this.projArr = projArr;
         this.playerFiring = playerFiring;
+        this.projArr = new ArrayList<>();
         this.powerUp = new HashMap<>();
+        rangeEnable = false;
         initializePowerUp();
 
     }
@@ -68,9 +70,10 @@ public class spellMaker {
 
     public void update(double angle){
         this.angle = angle;
-        moveProjectile();
-        fireProjectile();
         mouseEvents();
+        fireProjectile();
+        moveProjectile();
+
     }
 
     private void isProjectileBtnPressed() {
@@ -129,6 +132,8 @@ public class spellMaker {
                 }
             }
 
+            lastFireLocationX = playerFiring.getLayoutX();
+            lastFireLocationY = playerFiring.getLayoutY();
             gamePane.getChildren().removeAll(projArrRemove);
             projArr.removeAll(projArrRemove);
 
@@ -136,7 +141,7 @@ public class spellMaker {
     }
 
     private boolean rangeTooFar(Projectile p) {
-        return Math.hypot(p.getLayoutX() - playerFiring.getLayoutX(), p.getLayoutY() - playerFiring.getLayoutY())
+        return Math.hypot(lastFireLocationX - p.getLayoutX(), lastFireLocationY - p.getLayoutY())
                 > range;
     }
 
@@ -154,5 +159,9 @@ public class spellMaker {
 
     public void disableRange() {
         rangeEnable = false;
+    }
+
+    public ArrayList<Projectile> getProjArr() {
+        return projArr;
     }
 }

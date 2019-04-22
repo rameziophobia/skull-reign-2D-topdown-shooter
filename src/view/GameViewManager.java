@@ -152,7 +152,7 @@ public class GameViewManager {
     }
 
     private void createPlayer(PLAYERS chosenPlayer) {
-        player = new Player(chosenPlayer,projArr,GVUI.getHPRectangle(),GVUI.getShieldRectangle());
+        player = new Player(chosenPlayer,GVUI.getHPRectangle(),GVUI.getShieldRectangle());
         gamePane.getChildren().add(player);
     }
 
@@ -244,7 +244,7 @@ public class GameViewManager {
         ArrayList<Projectile> projArrRemove = new ArrayList<>();
         ArrayList<Enemy> enemyArrRemove = new ArrayList<>();
 
-        for (Projectile p : projArr) {
+        for (Projectile p : player.getProjArr()) {
             for (Enemy enemy : enemyArrayList) {
 
                 if (p.isIntersects(enemy)) {
