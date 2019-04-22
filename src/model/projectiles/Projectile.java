@@ -15,8 +15,8 @@ public class Projectile extends Sprite {
     }
 
     Projectile(Point2D spawner, ProjectileType projectileType, double angle) {
-        super(projectileType.URL, projectileType.WIDTH,
-                projectileType.HEIGHT, projectileType.SPEED, new Point2D(1, 1), null);
+        super(projectileType.URL, getImageWidth(projectileType.URL),
+                getImageHeight(projectileType.URL), projectileType.SPEED, new Point2D(1, 1), null);
 
         spawnProjectile(spawner, angle);
         proj = projectileType;

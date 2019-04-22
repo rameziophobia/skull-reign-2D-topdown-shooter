@@ -103,8 +103,11 @@ public class PlayerProjectileControl {
                 projectile.addSpeed(powerUp.get(PowerUp.SPEED));
 
                 projArr.add(projectile);
+                lastFireLocationX = playerFiring.getLayoutX();
+                lastFireLocationY = playerFiring.getLayoutY();
                 lastFireTime = System.currentTimeMillis();
                 gamePane.getChildren().add(projectile);
+                projectile.toBack();
             }
         }
     }
@@ -132,8 +135,6 @@ public class PlayerProjectileControl {
                 }
             }
 
-            lastFireLocationX = playerFiring.getLayoutX();
-            lastFireLocationY = playerFiring.getLayoutY();
             gamePane.getChildren().removeAll(projArrRemove);
             projArr.removeAll(projArrRemove);
 

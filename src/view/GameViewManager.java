@@ -154,6 +154,7 @@ public class GameViewManager {
     private void createPlayer(PLAYERS chosenPlayer) {
         player = new Player(chosenPlayer,GVUI.getHPRectangle(),GVUI.getShieldRectangle());
         gamePane.getChildren().add(player);
+        player.toFront();
     }
 
     private void createUI() {

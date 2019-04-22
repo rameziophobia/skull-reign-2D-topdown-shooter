@@ -37,6 +37,14 @@ public class Sprite extends ImageView {
         .add(new Point2D(getFitWidth() / 2, getFitHeight() / 2));
     }
 
+    protected static int getImageWidth(String url){
+        return Integer.valueOf(url.substring(url.lastIndexOf("-") + 1, url.lastIndexOf("x")));
+    }
+
+    protected static int getImageHeight(String url){
+        return Integer.valueOf(url.substring(url.lastIndexOf("x") + 1, url.lastIndexOf(".")));
+    }
+
     public boolean isIntersects(Sprite s) {
         return getBoundsInParent().intersects(s.getBoundsInParent());
     }//todo: ((Path)Shape.intersect(bullet, target)).getElements().size() > 0 better implementation??
