@@ -14,8 +14,7 @@ import model.player.Player;
 
 import java.util.Random;
 
-import static view.GameViewManager.HEIGHT;
-import static view.GameViewManager.WIDTH;
+import static view.GameViewManager.*;
 
 public class GameViewUI {
 
@@ -33,38 +32,11 @@ public class GameViewUI {
         createSpecialAttackBar();
     }
 
-    private static Group createSpecialAttackBar() {
-        Group randomRotator = new Group();
-        Random rand = new Random();
-        final int startX = rand.nextInt(WIDTH);
-        final int startY = rand.nextInt(HEIGHT);
-        final Circle circle = new Circle(startX, startY, 15);
-        circle.setFill(Color.DARKRED);
-
-        final Path path = new Path();
-        path.getElements().add(new MoveTo(startX, startY));
-        path.getElements().add(new QuadCurveTo(rand.nextInt(WIDTH) , rand.nextInt(HEIGHT) ,
-                rand.nextInt(WIDTH) , rand.nextInt(HEIGHT) ));
-
-        path.setOpacity(0);
-
-        final PathTransition pathTransition = new PathTransition();
-
-        pathTransition.setDuration(Duration.seconds(4.0));
-        pathTransition.setDelay(Duration.seconds(.5));
-        pathTransition.setPath(path);
-        pathTransition.setNode(circle);
-        pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pathTransition.setCycleCount(Timeline.INDEFINITE);
-        pathTransition.setAutoReverse(true);
-        pathTransition.play();
-
-        randomRotator.getChildren().add(path);
-        randomRotator.getChildren().add(circle);
-        return randomRotator;
+    private static void createSpecialAttackBar() {
     }
 
     private void createWeaponBar() {
+        gamePane.getChildren().add(new ProjectileUi());
     }
 
     private VBox createHPbar() {
@@ -75,9 +47,9 @@ public class GameViewUI {
         limitHP.setFill(Color.TRANSPARENT);
         limitHP.setStroke(Color.DARKRED);
         limitHP.setStrokeWidth(2);
-        HPRectangle = new Bars(7,Color.DARKRED,false,player.getMaxHp());
+        HPRectangle = new Bars(7,Color.DARKRED,false, Player.getMaxHp());
         HPRectangle.setHeight(20);
-        HPRectangle.setCurrentValue(player.getMaxHp());
+        HPRectangle.setCurrentValue(Player.getMaxHp());
         stackHP.getChildren().addAll(limitHP,HPRectangle);
 
         StackPane stackShield = new StackPane();
@@ -85,9 +57,9 @@ public class GameViewUI {
         limitShield.setFill(Color.TRANSPARENT);
         limitShield.setStroke(Color.LIGHTBLUE);
         limitShield.setStrokeWidth(2);
-        ShieldRectangle = new Bars(7,Color.LIGHTBLUE,true,player.getMaxShield());
+        ShieldRectangle = new Bars(7,Color.LIGHTBLUE,true, Player.getMaxShield());
         ShieldRectangle.setHeight(7);
-        ShieldRectangle.setCurrentValue(player.getMaxShield());
+        ShieldRectangle.setCurrentValue(Player.getMaxShield());
         stackShield.getChildren().addAll(limitShield,ShieldRectangle);
 
         HPVBox.setPadding(new Insets(5,10,0,5));

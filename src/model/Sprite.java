@@ -9,15 +9,21 @@ public class Sprite extends ImageView {
 
     protected int height;
     protected int width;
+    protected boolean animated;
     protected double speed;
     protected Point2D spawner;
 
-    public Sprite(String url,int width, int height,double speed,Point2D spawner,Point2D center) {
+    public Sprite(String url,double speed,Point2D spawner,Point2D center) {
         super(url);
-        this.height = height;
-        this.width = width;
         this.speed = speed;
         this.spawner = spawner;
+        height = getImageWidth(url);
+        width = getImageHeight(url);
+        animated = isAnimated(url);
+    }
+
+    public static boolean isAnimated(String url) {
+        return url.contains("animated");
     }
 
     protected void setSpriteY(double y){
@@ -39,6 +45,17 @@ public class Sprite extends ImageView {
     }
 
     public Rectangle getBounds() {
+        return new Rectangle(getLayoutX(), getLayoutY(), width, height);
+    }
+    public static int getImageWidth(String url){
+        return Integer.valueOf(url.substring(url.lastIndexOf("-") + 1, url.lastIndexOf("x")));
+    }
+
+    public static int getImageHeight(String url){
+        return Integer.valueOf(url.substring(url.lastIndexOf("x") + 1, url.lastIndexOf(".")));
+    }
+
+    private Rectangle getBounds() {
         return new Rectangle(getLayoutX(), getLayoutY(), width, height);
     }
     public boolean isIntersects(Sprite s) {
