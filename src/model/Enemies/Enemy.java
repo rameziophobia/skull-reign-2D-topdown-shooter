@@ -11,18 +11,11 @@ import static view.GameViewManager.WIDTH;
 
 public abstract class Enemy extends Sprite {
 
-
-    //    private final double SPEED = 2; //replaced in children
     private double angle;
     private EnemyType enemyType;
 
-
-//    public EnemyType getEnemyType() {
-//        return enemyType;
-//    }
-
     public Enemy(EnemyType enemyType, double playerXPos, double playerYPos) {
-        super(enemyType.URL,enemyType.SPEED,new Point2D(1,1),null);//todo change null
+        super(enemyType.URL,enemyType.SPEED,new Point2D(1,1));
         this.enemyType = enemyType; //todo: add shooting mechanic to enemies
 
         Random rand = new Random();

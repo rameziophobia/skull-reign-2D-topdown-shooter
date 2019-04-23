@@ -13,7 +13,7 @@ public class Sprite extends ImageView {
     protected double speed;
     protected Point2D spawner;
 
-    public Sprite(String url,double speed,Point2D spawner,Point2D center) {
+    public Sprite(String url,double speed,Point2D spawner) {
         super(url);
         this.speed = speed;
         this.spawner = spawner;
@@ -33,11 +33,6 @@ public class Sprite extends ImageView {
     protected void setSpriteX(double x){
         setLayoutX(x);
     }
-
-    public  double calcDistanceToSpawner(){
-        return Math.hypot(spawner.getX() - 0, spawner.getY() - 0);
-    }
-
 
     public Point2D getSpawner() {
         return new Point2D(getLayoutX(),getLayoutY())

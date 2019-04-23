@@ -20,6 +20,6 @@ public enum EnemyType {
     }
 
     private static class Constants{
-        static final String PATH_RESOURCES_SPRITES_ENEMY = Main.PATH_RESOURCES_SPRITES + "enenmy/";
+        static final String PATH_RESOURCES_SPRITES_ENEMY = Main.PATH_RESOURCES_SPRITES + "enemy/";
     }
 }

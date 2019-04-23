@@ -255,10 +255,6 @@ public class GameViewManager {
                         leftPressed, rightPressed,
                         mouseXPos,mouseYPos);
 
-//                player.setRotate(calculateRotation());
-//                player.move(upPressed, downPressed, leftPressed, rightPressed);
-//                player.warp();
-
                 Obstacle.update();
                 followPlayer();
                 checkCollision(); //todo: 7otaha in gameObjects ( player, enemies etc) or in projectiles
@@ -284,7 +280,6 @@ public class GameViewManager {
             gamePane.getChildren().add(createRandomRotator());
             numberOfObstacles++;
         }
-//        System.out.println(timer);
 
     }
 
@@ -296,11 +291,6 @@ public class GameViewManager {
         mouseXPos = e.getX();
         mouseYPos = e.getY();
     }
-
-//    private double calculateRotation() {
-//        angle = Math.toDegrees(atan2(mouseYPos  - player.getLayoutY(), mouseXPos  - player.getLayoutX()));
-//        return angle;
-//    }
 
     private void checkCollision() {//todo: enqueue & dequeue
         //todo: move collisions to a listener inside sprite classes
