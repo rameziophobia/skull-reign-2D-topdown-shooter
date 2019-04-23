@@ -12,11 +12,6 @@ public class Projectile extends Sprite {
     private ProjectileType proj;
     private double scale = 1;
 
-
-    public ProjectileType getProj() {
-        return proj;
-    }
-
     Projectile(Point2D spawner, ProjectileType projectileType, double angle) {
         super(projectileType.URL, projectileType.SPEED, new Point2D(1, 1));
 

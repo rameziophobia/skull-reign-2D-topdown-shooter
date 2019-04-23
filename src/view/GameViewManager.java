@@ -217,13 +217,13 @@ public class GameViewManager {
     }
 
     private void createPlayer(PLAYERS chosenPlayer) {
-        player = new Player(chosenPlayer,GVUI.getHPRectangle(),GVUI.getShieldRectangle());
+        player = new Player(chosenPlayer,GVUI.getHealthBars().getHPRectangle(),GVUI.getHealthBars().getShieldRectangle());
         gamePane.getChildren().add(player);
         player.toFront();
     }
 
     private void createUI() {
-        gamePane.getChildren().addAll(GVUI.getGroup(),GVUI.getVBox());
+        gamePane.getChildren().addAll(GVUI.getGroup(),GVUI.getHealthBars());
     }
 
     private void followPlayer() {

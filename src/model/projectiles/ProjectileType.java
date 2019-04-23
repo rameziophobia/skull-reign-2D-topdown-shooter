@@ -26,7 +26,6 @@ public enum ProjectileType {
     FLAMEBALL   (Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "/flameball-animated-32x32.png", 1.5,50, 6, 5,true),
     SHOCK   (Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "/shock-animated-64x13.png", 1.5,50, 6, 5,true),
     ICEICLE   (Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "/icicle-right-animated-64x11.png", 1.5,50, 6, 5,true),
-    FLAME   (Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "/flameball-32x32.png", 2,40, 7, 10,true), //todo: i edited the pic now it causes errors, replace ir
     ELECTRIC   (Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "/electric-animated-63x83.png", 2,40, 7, 10,true),
     CAT   (Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "/black-cat-animated-32x26.png", 1.3,40, 5, 10,true),
     WHIRLWIND   (Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "/whirlwind-animated-16x19.png", 2,40, 7, 5,true);
@@ -36,7 +35,7 @@ public enum ProjectileType {
     public final double FIRERATE;
     public final double DAMAGE;
     public final int SPEED;
-    public final double MULTANGLE; //probably not necessary
+    public final double MULTANGLE;
     public final boolean ANIMATED;
 
 

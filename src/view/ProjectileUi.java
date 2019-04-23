@@ -6,23 +6,23 @@ import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
 import static model.Sprite.*;
 
-public class ProjectileUi extends TilePane{
+public class ProjectileUi extends HBox {
 
     private static final int weaponSlotsNum = 4;
     private static final StackPane[] weapons = new StackPane[weaponSlotsNum];
     private static ImageView[] prevWeaponURLs = new ImageView[2];
 
     public ProjectileUi() {
-        setOrientation(Orientation.HORIZONTAL);
-        setHgap(10);
+        setSpacing(10);
         Image background = new Image("file:resources/sprites/ui/game/black-weapon-background-150x150.png",
                         60, 60 , true, true);
-        Image backgroundSmall = new Image("file:src/view/resources/black-weapon-background-150x150.png",
+        Image backgroundSmall = new Image("file:resources/sprites/ui/game/black-weapon-background-150x150.png",
                                 30, 30 , true, true);
 
         for(int i = 0; i < weaponSlotsNum; i++){

@@ -12,7 +12,7 @@ import static view.ViewManager.setCursorHand;
 
 public class subsceneTemp extends SubScene {
 
-    private final static String BACKGROUND_IMAGE = "file:src/model/resources/subscene.png";
+    private final static String BACKGROUND_IMAGE = "file:resources/sprites/ui/menu/subscene.png";
 
     public subsceneTemp() {
         super(new TilePane(), 800, 600);
