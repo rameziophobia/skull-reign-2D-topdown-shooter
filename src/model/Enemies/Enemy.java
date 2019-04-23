@@ -11,23 +11,16 @@ import static view.GameViewManager.WIDTH;
 
 public abstract class Enemy extends Sprite {
 
-
-    //    private final double SPEED = 2; //replaced in children
     private double angle;
     private EnemyType enemyType;
-
-
-//    public EnemyType getEnemyType() {
-//        return enemyType;
-//    }
 
     public Enemy(EnemyType enemyType, double playerXPos, double playerYPos) {
         super(enemyType.URL,enemyType.SPEED,new Point2D(1,1),null);//todo change null
         this.enemyType = enemyType; //todo: add shooting mechanic to enemies
 
         Random rand = new Random();
-        setSpriteY(rand.nextInt(HEIGHT));
-        setSpriteX(rand.nextInt(WIDTH));
+        setLayoutY(rand.nextInt(HEIGHT));
+        setLayoutX(rand.nextInt(WIDTH));
 
         updateDirection(playerXPos, playerYPos);
         setRotate(angle);
@@ -39,9 +32,6 @@ public abstract class Enemy extends Sprite {
         angle = Math.toDegrees(Math.atan2(diffY, diffX));
         setRotate(angle);
     }
-
-
-
 
     public abstract double getCurrentHp();
 

@@ -182,8 +182,10 @@ public class GameViewManager {
         gameScene = new Scene(gamePane, WIDTH, HEIGHT);
         gameStage = new Stage();
         gameStage.setScene(gameScene);
+
         createBackground();
         setCrosshair(gamePane);
+
         Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
         double width = resolution.getWidth();
         double height = resolution.getHeight();
@@ -258,10 +260,6 @@ public class GameViewManager {
                         leftPressed, rightPressed,
                         mouseXPos,mouseYPos);
 
-//                player.setRotate(calculateRotation());
-//                player.move(upPressed, downPressed, leftPressed, rightPressed);
-//                player.warp();
-
                 Obstacle.update();
                 followPlayer();
                 checkCollision(); //todo: 7otaha in gameObjects ( player, enemies etc) or in projectiles
@@ -287,7 +285,6 @@ public class GameViewManager {
             gamePane.getChildren().add(createRandomRotator());
             numberOfObstacles++;
         }
-//        System.out.println(timer);
 
     }
 
@@ -299,11 +296,6 @@ public class GameViewManager {
         mouseXPos = e.getX();
         mouseYPos = e.getY();
     }
-
-//    private double calculateRotation() {
-//        angle = Math.toDegrees(atan2(mouseYPos  - player.getLayoutY(), mouseXPos  - player.getLayoutX()));
-//        return angle;
-//    }
 
     private void checkCollision() {//todo: enqueue & dequeue
         //todo: move collisions to a listener inside sprite classes
@@ -334,7 +326,6 @@ public class GameViewManager {
         gamePane.getChildren().removeAll(projArrRemove);//todo: this is stupid
         gamePane.getChildren().removeAll(enemyArrRemove);//todo: this is stupid
         enemyArrayList.removeAll(enemyArrRemove);
-        enemyArrayList.removeAll(projArrRemove);
     }
 
 
@@ -344,8 +335,4 @@ public class GameViewManager {
                 image.getWidth() / 2,
                 image.getHeight() / 2));
     }
-
-//    public  double minDistance(double x1, double x2, double y1, double y2){
-//        return Math.hypot(x2 - x1, y2 - y1);
-//    }
 }

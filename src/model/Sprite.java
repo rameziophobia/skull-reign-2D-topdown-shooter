@@ -26,14 +26,6 @@ public class Sprite extends ImageView {
         return url.contains("animated");
     }
 
-    protected void setSpriteY(double y){
-        setLayoutY(y);
-    }
-
-    protected void setSpriteX(double x){
-        setLayoutX(x);
-    }
-
     public  double calcDistanceToSpawner(){
         return Math.hypot(spawner.getX() - 0, spawner.getY() - 0);
     }
@@ -53,10 +45,6 @@ public class Sprite extends ImageView {
 
     public static int getImageHeight(String url){
         return Integer.valueOf(url.substring(url.lastIndexOf("x") + 1, url.lastIndexOf(".")));
-    }
-
-    private Rectangle getBounds() {
-        return new Rectangle(getLayoutX(), getLayoutY(), width, height);
     }
     public boolean isIntersects(Sprite s) {
         return getBounds().intersects(s.getBounds().getX(),

@@ -32,16 +32,16 @@ public class Projectile extends Sprite {
     }
 
     private void spawnProjectile(Point2D spawner, double angle) {
-        setSpriteX(spawner.getX());
-        setSpriteY(spawner.getY());
+        setLayoutX(spawner.getX());
+        setLayoutY(spawner.getY());
         setRotate(angle);
     }
 
     void move() {
         double speedX = Math.cos(Math.toRadians(angle)) * speed;
         double speedY = Math.sin(Math.toRadians(angle)) * speed;
-        setSpriteY(getLayoutY() + speedY);
-        setSpriteX(getLayoutX() + speedX);
+        setLayoutY(getLayoutY() + speedY);
+        setLayoutX(getLayoutX() + speedX);
         if(animated) {
             animationClip.animate();
         }
