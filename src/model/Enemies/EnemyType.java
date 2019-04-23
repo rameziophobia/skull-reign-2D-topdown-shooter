@@ -1,25 +1,20 @@
 package model.Enemies;
 
 public enum EnemyType {
-    TANK_SAND ("file:src/model/resources/enemy/tank_sand.png",2,36, 42),
-    TANK_DARK ("file:src/model/resources/enemy/tank_dark.png",2,36, 42),
-    TANK_RED ("file:src/model/resources/enemy/tank_red.png", 2,36, 42),
-    TANK_BLUE ("file:src/model/resources/enemy/tank_blue.png", 2,36, 42),
-
-    TANK_HUGE ("file:src/model/resources/enemy/tank_huge.png",0.5,30,30),//todo change xy
-    TANK_DARK_LARGE ("file:src/model/resources/enemy/tank_darkLarge.png", 1,30,30);//todo change xy
+    TANK_SAND ("file:src/model/resources/enemy/tank_sand-42x42.png",2),
+    TANK_DARK ("file:src/model/resources/enemy/tank_dark-42x42.png",2),
+    TANK_RED ("file:src/model/resources/enemy/tank_red-38x38.png", 2),
+    TANK_BLUE ("file:src/model/resources/enemy/tank_blue-42x42.png", 2),
+    TANK_HUGE ("file:src/model/resources/enemy/tank_huge-62x60.png",0.5),
+    TANK_DARK_LARGE ("file:src/model/resources/enemy/tank_darkLarge-52x51.png",30);
 
 
     public String URL;
     public double SPEED;
-    public final int WIDTH;
-    public final int HEIGHT;
 
-    EnemyType(String s, double speed, int width, int height) {
+    EnemyType(String s, double speed) {
         URL = s;
         this.SPEED = speed;
-        this.WIDTH = width;
-        this.HEIGHT = height;
     }
 
 

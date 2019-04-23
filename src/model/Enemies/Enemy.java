@@ -22,8 +22,7 @@ public abstract class Enemy extends Sprite {
 //    }
 
     public Enemy(EnemyType enemyType, double playerXPos, double playerYPos) {
-        super(enemyType.URL, enemyType.WIDTH,
-                enemyType.HEIGHT,enemyType.SPEED,new Point2D(1,1),null);//todo change null
+        super(enemyType.URL,enemyType.SPEED,new Point2D(1,1),null);//todo change null
         this.enemyType = enemyType; //todo: add shooting mechanic to enemies
 
         Random rand = new Random();
