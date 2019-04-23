@@ -22,9 +22,9 @@ public abstract class Enemy extends Sprite {
     public Enemy(EnemyType enemyType, Player player) {
         super(enemyType.URL, enemyType.SPEED, new Point2D(1, 1));
         this.player = player;
-        this.enemyType = enemyType; //todo: add shooting mechanic to enemies
+        this.enemyType = enemyType; //todo: add shooting mechanic to enemies .. done bas u can add more patterns (functions fe projectileControl)
 
-        Random rand = new Random();//todo: spawn location
+        Random rand = new Random();//todo: spawn location p.s. sadek kan 3amal eno mygoosh gambak
         int startX = rand.nextInt(HEIGHT);
         int startY = rand.nextInt(WIDTH);
         setSpawner(new Point2D(startX,startY));
@@ -85,9 +85,9 @@ public abstract class Enemy extends Sprite {
     }
     public void update(double playerXPos, double playerYPos){
         Point2D playerLocation = new Point2D(playerXPos,  playerYPos);
-        followPlayer(playerLocation);//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
+        followPlayer(playerLocation);
 
-        projectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));
+        projectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
     }
 
 }

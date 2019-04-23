@@ -2,11 +2,12 @@ package model.projectiles;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
-import javafx.scene.layout.Pane;
 import model.player.Player;
-import view.GameViewManager;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import static view.GameViewManager.gamePane;
 import static view.ProjectileUi.setWeapon;
@@ -71,7 +72,7 @@ public class PlayerProjectileControl extends ProjectileControl{
 
     public void fireProjectile() {
         if (mousePressed) {
-            isProjectileBtnPressed();//todo: func name needs refactoring
+            isProjectileBtnPressed();//todo: functions name needs refactoring
         }
     }
 

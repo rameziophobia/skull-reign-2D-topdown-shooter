@@ -4,8 +4,6 @@ import javafx.geometry.Point2D;
 import model.Enemies.Enemy;
 import model.player.Player;
 
-import java.util.ArrayList;
-
 import static view.GameViewManager.gamePane;
 
 public class EnemyProjectileControl extends ProjectileControl {
@@ -16,7 +14,7 @@ public class EnemyProjectileControl extends ProjectileControl {
     private final double[] patternRate;
     private int angle1by1 = 0;
 
-    public enum patternRates {//todo fakesssssssssss
+    public enum patternRates {
         RING(0), RING1BY1(1), toPlayer(2);
         int index;
 
@@ -30,7 +28,6 @@ public class EnemyProjectileControl extends ProjectileControl {
     }
 
     private final ProjectileType type;
-    private double FireRate;
     private long[] lastFireTime;
 
 
@@ -55,7 +52,7 @@ public class EnemyProjectileControl extends ProjectileControl {
         int i = patternRates.RING.getIndex();
         final long timeNow = System.currentTimeMillis() / 1000;
         if (timeNow > lastFireTime[i] + patternRate[i]) {
-            for (int j = 0; j < 360; j += type.MULTANGLE * 3) {//todo: magic? multAngle
+            for (int j = 0; j < 360; j += type.MULTANGLE * 3) {//todo: magic? multAngle .. momkn yb2a variable
                 Projectile projectile = new Projectile(spawner, type, j);
                 gamePane.getChildren().add(projectile);
                 projArr.add(projectile);
@@ -116,8 +113,7 @@ public class EnemyProjectileControl extends ProjectileControl {
     }
 
 //    private void removeProjectiles() {
-    //todo: remove projectiles from projArray, gamepane if they pass screen limits or if enemy dies
-    //todo: or when it collides with a player
+    //todo: add collision w/ player
 //    }
 
     public void setSpawner(Point2D spawner) {

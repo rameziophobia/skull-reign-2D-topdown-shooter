@@ -1,7 +1,6 @@
 package view;
 
 import javafx.animation.AnimationTimer;
-import javafx.geometry.Point2D;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -20,7 +19,6 @@ import model.projectiles.ProjectileType;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Random;
 
 import static model.Enemies.EnemyType.TANK_DARK;
 import static model.Enemies.EnemyType.TANK_SAND;

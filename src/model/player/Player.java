@@ -1,14 +1,13 @@
 package model.player;
 
 import javafx.animation.ScaleTransition;
-import javafx.util.Duration;
 import javafx.geometry.Point2D;
+import javafx.util.Duration;
 import model.Sprite;
-import model.projectiles.PowerUp;
-import view.Bars;
-import model.projectiles.Projectile;
 import model.projectiles.PlayerProjectileControl;
+import model.projectiles.Projectile;
 import model.projectiles.ProjectileType;
+import view.Bars;
 import view.GameViewManager;
 
 import java.util.ArrayList;
@@ -30,9 +29,8 @@ public class Player extends Sprite {
     private double currentHp = MAX_HP;
     private double angle;
 
-    //todo: change projArr to array containing array of projectiles for everyType????
-    public Player(PLAYERS player, Bars HPBar, Bars ShieldBar) { //todo: change magics
-//        super(player.URL, WIDTH, HEIGHT, SPEED, player.spawner, null);
+
+    public Player(PLAYERS player, Bars HPBar, Bars ShieldBar) { //todo: change it to said's char mn 8er rotation
         super(player.URL, SPEED, player.spawner);
         setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2);
         setLayoutY((GameViewManager.HEIGHT >> 1) - getFitHeight() / 2);
@@ -45,7 +43,7 @@ public class Player extends Sprite {
     }
 
     private void move(boolean upPressed, boolean downPressed,
-                      boolean leftPressed, boolean rightPressed) { //todo can be coded more efficiently
+                      boolean leftPressed, boolean rightPressed) {
         final double DIAGONAL_FACTOR = 1.5;
 
 
@@ -145,6 +143,7 @@ public class Player extends Sprite {
         secondaryBtnHandler.update(angle);
         primaryBtnHandler.update(angle);
 
+        //available powerUps
 //        primaryBtnHandler.setPowerUp(PowerUp.SCALE, 3);
 //        primaryBtnHandler.setPowerUp(PowerUp.MULT, 3);
 //        secondaryBtnHandler.setRange(400);

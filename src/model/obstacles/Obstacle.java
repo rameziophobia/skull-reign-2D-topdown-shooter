@@ -25,7 +25,7 @@ import static view.GameViewManager.WIDTH;
         private static ArrayList<AnimationClip> tornadoAnimation = new ArrayList<>();
 
         //todo: bug spawns at the upper left corner of the screen
-        public static Group createRandomRotator() {//todo: add hitbox (bounds)
+        public static Group createRandomRotator() {//todo: add hitbox (bounds) .. 5alihom y3mlo 7aga ? xD
             Group randomRotator = new Group();
             Random rand = new Random();
             final int startX = rand.nextInt(WIDTH);
@@ -35,7 +35,7 @@ import static view.GameViewManager.WIDTH;
             final SpriteSheet spriteSheet = new SpriteSheet(FILE_TORNADO, 0);
             tornadoAnimation.add(new AnimationClip(spriteSheet,
                     spriteSheet.getFrameCount() * 2f,true,
-                    Integer.MAX_VALUE,tornadoImgView)); //TODO: indefinite repeats
+                    -1,tornadoImgView));
 
             final Path path = new Path();
             path.getElements().add(new MoveTo(startX, startY));
