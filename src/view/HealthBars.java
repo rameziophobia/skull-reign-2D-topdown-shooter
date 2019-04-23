@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.player.Player;
 
+import static view.GameViewManager.gamePane;
+
 public class HealthBars extends VBox {
     private Bars HPRectangle;
     private Bars ShieldRectangle;
@@ -19,9 +21,11 @@ public class HealthBars extends VBox {
         limitHP.setFill(Color.TRANSPARENT);
         limitHP.setStroke(Color.DARKRED);
         limitHP.setStrokeWidth(2);
+
         HPRectangle = new Bars(7, Color.DARKRED, false, Player.getMaxHp());
         HPRectangle.setHeight(20);
         HPRectangle.setCurrentValue(Player.getMaxHp());
+
         stackHP.getChildren().addAll(limitHP, HPRectangle);
 
         StackPane stackShield = new StackPane();
@@ -37,6 +41,7 @@ public class HealthBars extends VBox {
         HPVBox.setPadding(new Insets(5, 10, 0, 5));
         HPVBox.setSpacing(5);
         HPVBox.getChildren().addAll(stackHP, stackShield);
+        gamePane.getChildren().add(HPVBox);
     }
 
     public Bars getHPRectangle(){
