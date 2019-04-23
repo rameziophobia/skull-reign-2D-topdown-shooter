@@ -6,8 +6,10 @@ import javafx.scene.layout.Pane;
 import model.player.Player;
 import view.GameViewManager;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
+
+import static view.ProjectileUi.setWeapon;
+
 
 public class PlayerProjectileControl {
 
@@ -22,11 +24,26 @@ public class PlayerProjectileControl {
 
     private boolean mousePressed;
 
-    public enum buttons {PRIMARY, SECONDARY}
+    public enum buttons {
+        PRIMARY(0), SECONDARY(1);
+        int index;
+
+        buttons(int i) {
+            index = i;
+        }
+
+        public int getIndex() {
+            return index;
+        }
+    }
+
     private final buttons projectileBtn;
     private buttons lastPressed;
 
     private HashMap<PowerUp, Double> powerUp;
+    private LinkedHashMap<ProjectileType, HashMap<PowerUp, Double>> weaponSettings = new LinkedHashMap<>();
+    private LinkedList<ProjectileType> weaponList = new LinkedList<>();
+    //dictionary of weapons used with their respective powerUp dict
 
     private boolean rangeEnable;
     private double range = 2000; //bound akbar mn el shasha
@@ -39,18 +56,26 @@ public class PlayerProjectileControl {
         this.type = projectile;
         this.projectileBtn = projectileBtn;
         this.playerFiring = playerFiring;
-        this.projArr = new ArrayList<>();
-        this.powerUp = new HashMap<>();
-        rangeEnable = false;
-        initializePowerUp();
 
+        projArr = new ArrayList<>();
+        powerUp = new HashMap<>();
+
+        rangeEnable = false;
+        setWeapon(projectileBtn.getIndex(), projectile.URL);
+        powerUp = initializePowerUp();
+        weaponSettings.put(projectile, powerUp);
+        weaponList.add(type);
     }
 
-    private void initializePowerUp() {
+    //sets powerUp to zero
+    private HashMap<PowerUp, Double> initializePowerUp() {
+        HashMap<PowerUp, Double> power = new HashMap<>();
         for (PowerUp pup : PowerUp.values()) {
-            powerUp.put(pup, (double) 0);
+            power.put(pup, (double) 0);
         }
-        powerUp.put(PowerUp.MULT, (double) 1);
+        power.put(PowerUp.MULT, (double) 1);
+
+        return power;
     }
 
     public void fireProjectile() {
@@ -63,12 +88,12 @@ public class PlayerProjectileControl {
         gamePane.addEventFilter(MouseEvent.ANY, this::detectBtnType);
         gamePane.addEventFilter(TouchEvent.ANY, e -> isProjectileBtnPressed());//law el shasha touch xD
 
-        gamePane.addEventFilter(MouseEvent.MOUSE_PRESSED,e -> mousePressed = true);
-        gamePane.addEventFilter(MouseEvent.MOUSE_RELEASED,e -> mousePressed = false);
+        gamePane.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed = true);
+        gamePane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> mousePressed = false);
 
     }
 
-    public void update(double angle){
+    public void update(double angle) {
         this.angle = angle;
         mouseEvents();
         fireProjectile();
@@ -97,7 +122,7 @@ public class PlayerProjectileControl {
             for (int mult = 0; mult < powerUp.get(PowerUp.MULT); mult++) {
 
                 Projectile projectile = new Projectile(playerFiring.getSpawner(),
-                        type, angle + mult * type.MULTANGLE * Math.pow(-1, mult));
+                        type, angle + mult * type.MULTANGLE * Math.pow(-1, mult));//todo odd multiples look weird
 
                 projectile.setScale(powerUp.get(PowerUp.SCALE));
                 projectile.addSpeed(powerUp.get(PowerUp.SPEED));
@@ -121,16 +146,13 @@ public class PlayerProjectileControl {
             for (Projectile p : projArr) {
                 p.move();
                 //if the object crossed the boundary adds it to the remove list
-                if (p.getLayoutY() > GameViewManager.HEIGHT || p.getLayoutY() < 0 )
-                {
+                if (p.getLayoutY() > GameViewManager.HEIGHT || p.getLayoutY() < 0) {
                     projArrRemove.add(p);
 
-                } else if (p.getLayoutX() > GameViewManager.WIDTH || p.getLayoutX() < 0)
-                {
+                } else if (p.getLayoutX() > GameViewManager.WIDTH || p.getLayoutX() < 0) {
                     projArrRemove.add(p);
 
-                } else if (rangeEnable && rangeTooFar(p))
-                {
+                } else if (rangeEnable && rangeTooFar(p)) {
                     projArrRemove.add(p);
                 }
             }
@@ -146,13 +168,32 @@ public class PlayerProjectileControl {
                 > range;
     }
 
-    public void setType(ProjectileType type) {
+    public void addType(ProjectileType type, boolean special) {
         this.type = type;
+        weaponSettings.putIfAbsent(type, initializePowerUp());
+        this.powerUp = weaponSettings.get(type);
+
+        int weaponSlot = special ? 1:0;
+        setWeapon(weaponSlot,type.URL);
+        if (weaponList.size() < weaponSettings.size()){ //w8 a sec omal eh faydet el 2 slots if i can switch ? -.-
+            weaponList.add(type);
+        }
+    }
+
+    public void setToNextType(boolean special) {
+        weaponList.indexOf(type);
+        ProjectileType nextType = weaponList.get((weaponList.indexOf(type) + 1) % weaponList.size());
+        powerUp = weaponSettings.get(nextType);
+        type = nextType;
+
+        int weaponSlot = special ? 1:0;
+        setWeapon(weaponSlot, type.URL); //todo ui slot kda msh dynamic but screw it i need my brain cells ughhhh nvm this needs to be done
     }
 
     public void setPowerUp(PowerUp key, double value) {
         powerUp.put(key, value);
     }
+
     public void setRange(double range) {
         this.range = range;
         rangeEnable = true;

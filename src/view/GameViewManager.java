@@ -12,7 +12,9 @@ import model.Enemies.Enemy;
 import model.Enemies.normalTank;
 import model.player.PLAYERS;
 import model.player.Player;
+import model.projectiles.PowerUp;
 import model.projectiles.Projectile;
+import model.projectiles.ProjectileType;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -39,7 +41,6 @@ public class GameViewManager {
     private boolean leftPressed;
 
     private AnimationTimer gameTimer;
-    private ArrayList<Projectile> projArr;
     private ArrayList<Enemy> enemyArrayList;
     private GridPane buildings;
     private int numberOfObstacles = 0;
@@ -79,6 +80,58 @@ public class GameViewManager {
                     rightPressed = true;
                     break;
                 }
+                case DIGIT1: {
+                    player.getPrimaryBtnHandler().addType(ProjectileType.BLUELASER01,false);
+                    break;
+                }
+                case DIGIT2: {
+                    player.getSecondaryBtnHandler().addType(ProjectileType.LASERRED08,true);
+                    break;
+                }
+                case DIGIT3: {
+                    player.getPrimaryBtnHandler().addType(ProjectileType.BLUELASER03,false);
+                    break;
+                }
+                case DIGIT4: {
+                    player.getPrimaryBtnHandler().addType(ProjectileType.REDLASER01,false);
+                    break;
+                }
+                case DIGIT5: {
+                    player.getSecondaryBtnHandler().addType(ProjectileType.REDLASER02,true);
+                    break;
+                }
+                case DIGIT6: {
+                    player.getPrimaryBtnHandler().addType(ProjectileType.REDLASER03,false);
+                    break;
+                }
+                case DIGIT7: {
+                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER01,false);
+                    break;
+                }
+                case DIGIT8: {
+                    player.getSecondaryBtnHandler().addType(ProjectileType.GREENLASER02,true);
+                    break;
+                }
+                case DIGIT9: {
+                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER03,false);
+                    break;
+                }case Q: {
+                    player.getPrimaryBtnHandler().setToNextType(false);
+                    break;
+                }case E: {
+                    player.getSecondaryBtnHandler().setToNextType(true);
+                    break;
+                }case SHIFT: {
+                    player.getPrimaryBtnHandler().setPowerUp(PowerUp.SCALE, 3);
+                    player.getPrimaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
+                    player.getPrimaryBtnHandler().setRange(700);
+                    break;
+                }case SPACE: {
+                    player.getSecondaryBtnHandler().setRange(500);
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 4);
+                    break;
+                }
+
             }
 
         });
@@ -139,7 +192,6 @@ public class GameViewManager {
         this.menuStage.hide();
         gameStage.show();
         gameStage.setFullScreen(true);
-        projArr = new ArrayList<>();
 
         createUI();
         createPlayer(chosenPlayer);

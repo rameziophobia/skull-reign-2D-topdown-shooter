@@ -114,6 +114,13 @@ public class Player extends Sprite {
 
         HPAnimation.play();
     }
+    public PlayerProjectileControl getPrimaryBtnHandler() {
+        return primaryBtnHandler;
+    }
+
+    public PlayerProjectileControl getSecondaryBtnHandler() {
+        return secondaryBtnHandler;
+    }
 
     public static double getMaxHp() {
         return MAX_HP;
@@ -137,11 +144,11 @@ public class Player extends Sprite {
         secondaryBtnHandler.update(angle);
         primaryBtnHandler.update(angle);
 
-        primaryBtnHandler.setPowerUp(PowerUp.SCALE, 3);
-        primaryBtnHandler.setPowerUp(PowerUp.MULT, 3);
-        secondaryBtnHandler.setRange(400);
-        primaryBtnHandler.setRange(700);
-        secondaryBtnHandler.setPowerUp(PowerUp.MULT, 10);
+//        primaryBtnHandler.setPowerUp(PowerUp.SCALE, 3);
+//        primaryBtnHandler.setPowerUp(PowerUp.MULT, 3);
+//        secondaryBtnHandler.setRange(400);
+//        primaryBtnHandler.setRange(700);
+//        secondaryBtnHandler.setPowerUp(PowerUp.MULT, 10);
 //                projectileHandler.setPowerUp(PowerUp.SPEED,30);
 
     }

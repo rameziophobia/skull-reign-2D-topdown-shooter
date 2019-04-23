@@ -14,8 +14,7 @@ import model.player.Player;
 
 import java.util.Random;
 
-import static view.GameViewManager.HEIGHT;
-import static view.GameViewManager.WIDTH;
+import static view.GameViewManager.*;
 
 public class GameViewUI {
 
@@ -65,6 +64,7 @@ public class GameViewUI {
     }
 
     private void createWeaponBar() {
+        gamePane.getChildren().add(new ProjectileUi().projectileUiBar());
     }
 
     private VBox createHPbar() {
