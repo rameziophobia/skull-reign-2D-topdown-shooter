@@ -204,7 +204,7 @@ public class GameViewManager {
         this.menuStage = menuStage;
         this.menuStage.hide();
         gameStage.show();
-        gameStage.setFullScreen(true);
+//        gameStage.setFullScreen(true);
 
         createUI();
         createPlayer(chosenPlayer);
@@ -224,13 +224,6 @@ public class GameViewManager {
 
     private void createUI() {
         gamePane.getChildren().addAll(GVUI.getGroup(),GVUI.getHealthBars());
-    }
-
-    private void followPlayer() {
-        for (Enemy enemy : enemyArrayList) {
-            enemy.updateDirection(player.getLayoutX(), player.getLayoutY());
-            enemy.move();
-        }
     }
 
     private void createEnemy() {
@@ -258,7 +251,10 @@ public class GameViewManager {
                         mouseXPos,mouseYPos);
 
                 Obstacle.update();
-                followPlayer();
+
+                enemyArrayList.forEach(enemy ->
+                        enemy.update(player.getLayoutX(),player.getLayoutY(), timer));
+
                 checkCollision(); //todo: 7otaha in gameObjects ( player, enemies etc) or in projectiles
 
             }
@@ -267,18 +263,18 @@ public class GameViewManager {
     }
 
     private void createEnemies() {
-
         if (timer / 7 > numberOfEnemies) {
             Enemy enemy = new normalTank(TANK_SAND, player.getLayoutX(), player.getLayoutY());
             enemyArrayList.add(enemy);
             gamePane.getChildren().add(enemy);
             numberOfEnemies++;
+
         }
 
     }
 
     private void createObstacles() {//todo implement timer
-        if (timer / 3 > numberOfObstacles) {
+        if (timer / 10 > numberOfObstacles) {
             gamePane.getChildren().add(createRandomRotator());
             numberOfObstacles++;
         }
