@@ -15,46 +15,54 @@ public class ProjectileUi extends TilePane{
 
     private static final int weaponSlotsNum = 4;
     private static final StackPane[] weapons = new StackPane[weaponSlotsNum];
+    private static ImageView[] prevWeaponURLs = new ImageView[2];
 
     public ProjectileUi() {
         setOrientation(Orientation.HORIZONTAL);
         setHgap(10);
         Image background = new Image("file:resources/sprites/ui/game/black-weapon-background-150x150.png",
                         60, 60 , true, true);
+        Image backgroundSmall = new Image("file:src/view/resources/black-weapon-background-150x150.png",
+                                30, 30 , true, true);
 
         for(int i = 0; i < weaponSlotsNum; i++){
             weapons[i] = new StackPane(new ImageView(background));
         }
+        weapons[0] = new StackPane(new ImageView(backgroundSmall));
+        weapons[3] = new StackPane(new ImageView(backgroundSmall));
+        weapons[0].prefHeight(30);
+        weapons[0].prefWidth(30);
 
-        getChildren().addAll(weapons[1],weapons[2]);
-        setLayoutX(GameViewManager.WIDTH - 200);
+        getChildren().addAll(weapons);
+        setLayoutX(GameViewManager.WIDTH - 300);
         setLayoutY(GameViewManager.HEIGHT - 90);
     }
 
     public static void setWeapon(int index, String projectileURL){
-        index++;
-        System.out.println(index);
-        ImageView weaponImage;
 
-//        if(isAnimated(projectileURL)){
-//            weaponImage =  new ImageView(new Image(projectileURL,
-//                    getImageWidth(projectileURL),getImageHeight(projectileURL),
-//                    true,false));
-//        }else{
-//            weaponImage = new ImageView(projectileURL);
-//        }
+        ImageView weaponImage;
+        if(prevWeaponURLs[index] != null){
+            int i = (index == 0) ? 0:3 ;
+            ObservableList<Node> activeSlot = weapons[i].getChildren();
+            if (activeSlot.size() > 1){
+                activeSlot.remove(1);
+            }
+            prevWeaponURLs[index].setScaleX(0.5);
+            prevWeaponURLs[index].setScaleY(0.5);
+            activeSlot.add(prevWeaponURLs[index]);
+        }
+        index++;
 
         weaponImage = !isAnimated(projectileURL) ?
                 new ImageView(projectileURL) :
                 new ImageView(SpriteSheet.getFirstSprite(projectileURL));
-//new Image(projectileURL,
-//                getImageWidth(projectileURL), getImageHeight(projectileURL),
-//                true, false)
+
         weaponImage.setRotate(270);
         ObservableList<Node> currentSlot = weapons[index].getChildren();
         if (currentSlot.size() > 1){
             currentSlot.remove(1);
         }
         currentSlot.add(weaponImage);
+        prevWeaponURLs[--index] = weaponImage;
     }
 }

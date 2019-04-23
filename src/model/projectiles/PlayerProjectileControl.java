@@ -86,7 +86,7 @@ public class PlayerProjectileControl {
 
     public void mouseEvents() {
         gamePane.addEventFilter(MouseEvent.ANY, this::detectBtnType);
-        gamePane.addEventFilter(TouchEvent.ANY, e -> isProjectileBtnPressed());//law el shasha touch xD
+        gamePane.addEventFilter(TouchEvent.ANY, e -> isProjectileBtnPressed());
 
         gamePane.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed = true);
         gamePane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> mousePressed = false);
@@ -110,9 +110,9 @@ public class PlayerProjectileControl {
     private void detectBtnType(MouseEvent e) {
 
         if (e.isPrimaryButtonDown()) {
-            lastPressed = buttons.PRIMARY; //buttons da enum ana 3amlo
+            lastPressed = buttons.PRIMARY;
         } else if (e.isSecondaryButtonDown()) {
-            lastPressed = buttons.SECONDARY; //buttons da enum ana 3amlo
+            lastPressed = buttons.SECONDARY;
         }
     }
 
@@ -175,7 +175,7 @@ public class PlayerProjectileControl {
 
         int weaponSlot = special ? 1:0;
         setWeapon(weaponSlot,type.URL);
-        if (weaponList.size() < weaponSettings.size()){ //w8 a sec omal eh faydet el 2 slots if i can switch ? -.-
+        if (weaponList.size() < weaponSettings.size()){
             weaponList.add(type);
         }
     }

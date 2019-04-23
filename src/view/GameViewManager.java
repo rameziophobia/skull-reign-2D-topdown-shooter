@@ -181,8 +181,10 @@ public class GameViewManager {
         gameScene = new Scene(gamePane, WIDTH, HEIGHT);
         gameStage = new Stage();
         gameStage.setScene(gameScene);
+
         createBackground();
         setCrosshair(gamePane);
+
         Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
         double width = resolution.getWidth();
         double height = resolution.getHeight();
@@ -321,7 +323,6 @@ public class GameViewManager {
         gamePane.getChildren().removeAll(projArrRemove);//todo: this is stupid
         gamePane.getChildren().removeAll(enemyArrRemove);//todo: this is stupid
         enemyArrayList.removeAll(enemyArrRemove);
-        enemyArrayList.removeAll(projArrRemove);
     }
 
 
@@ -331,8 +332,4 @@ public class GameViewManager {
                 image.getWidth() / 2,
                 image.getHeight() / 2));
     }
-
-//    public  double minDistance(double x1, double x2, double y1, double y2){
-//        return Math.hypot(x2 - x1, y2 - y1);
-//    }
 }
