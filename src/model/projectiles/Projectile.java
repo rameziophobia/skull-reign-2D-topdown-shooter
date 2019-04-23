@@ -1,10 +1,13 @@
 package model.projectiles;
 
+import Control.animation.AnimationClip;
+import Control.animation.SpriteSheet;
 import javafx.geometry.Point2D;
 import model.Sprite;
 
 public class Projectile extends Sprite {
 
+    private AnimationClip animationClip;
     private double angle;
     private ProjectileType proj;
     private double scale = 1;
@@ -15,8 +18,13 @@ public class Projectile extends Sprite {
     }
 
     Projectile(Point2D spawner, ProjectileType projectileType, double angle) {
-        super(projectileType.URL, getImageWidth(projectileType.URL),
-                getImageHeight(projectileType.URL), projectileType.SPEED, new Point2D(1, 1), null);
+        super(projectileType.URL, projectileType.SPEED, new Point2D(1, 1), null);
+
+        if(projectileType.ANIMATED){
+            this.animated = true;
+            SpriteSheet spriteSheet = new SpriteSheet(projectileType.URL, 0);
+            animationClip = new AnimationClip(spriteSheet, spriteSheet.getFrameCount() * 1.2f, false, -1,  this);
+        }
 
         spawnProjectile(spawner, angle);
         proj = projectileType;
@@ -34,6 +42,9 @@ public class Projectile extends Sprite {
         double speedY = Math.sin(Math.toRadians(angle)) * speed;
         setSpriteY(getLayoutY() + speedY);
         setSpriteX(getLayoutX() + speedX);
+        if(animated) {
+            animationClip.animate();
+        }
     }
 
 

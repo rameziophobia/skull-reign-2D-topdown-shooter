@@ -1,5 +1,6 @@
 package view;
 
+import Control.animation.SpriteSheet;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
@@ -8,9 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
+import static Control.animation.SpriteSheet.getFirstSheet;
+import static model.Sprite.*;
+
 public class ProjectileUi extends TilePane{
 
-    private static final int weaponSlotsNum = 2;
+    private static final int weaponSlotsNum = 4;
     private static final StackPane[] weapons = new StackPane[weaponSlotsNum];
 
     public ProjectileUi() {
@@ -19,20 +23,34 @@ public class ProjectileUi extends TilePane{
         Image background = new Image("file:src/view/resources/black-weapon-background-150x150.png",
                         60, 60 , true, true);
 
-        weapons[0] = new StackPane(new ImageView(background));//todo momkn tet3ml for loop
-        weapons[1] = new StackPane(new ImageView(background));
-        getChildren().addAll(weapons);
+        for(int i = 0; i < weaponSlotsNum; i++){
+            weapons[i] = new StackPane(new ImageView(background));
+        }
+
+        getChildren().addAll(weapons[1],weapons[2]);
         setLayoutX(GameViewManager.WIDTH - 200);
         setLayoutY(GameViewManager.HEIGHT - 90);
     }
 
-    public TilePane projectileUiBar() {
-        return this;
-    }
-
     public static void setWeapon(int index, String projectileURL){
+        index++;
         System.out.println(index);
-        ImageView weaponImage = new ImageView(projectileURL);
+        ImageView weaponImage;
+
+//        if(isAnimated(projectileURL)){
+//            weaponImage =  new ImageView(new Image(projectileURL,
+//                    getImageWidth(projectileURL),getImageHeight(projectileURL),
+//                    true,false));
+//        }else{
+//            weaponImage = new ImageView(projectileURL);
+//        }
+
+        weaponImage = !isAnimated(projectileURL) ?
+                new ImageView(projectileURL) :
+                new ImageView(getFirstSheet(projectileURL));
+//new Image(projectileURL,
+//                getImageWidth(projectileURL), getImageHeight(projectileURL),
+//                true, false)
         weaponImage.setRotate(270);
         ObservableList<Node> currentSlot = weapons[index].getChildren();
         if (currentSlot.size() > 1){

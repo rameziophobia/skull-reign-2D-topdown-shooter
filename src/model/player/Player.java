@@ -32,7 +32,8 @@ public class Player extends Sprite {
 
     //todo: change projArr to array containing array of projectiles for everyType????
     public Player(PLAYERS player, Bars HPBar, Bars ShieldBar) { //todo: change magics
-        super(player.URL, WIDTH, HEIGHT, SPEED, player.spawner, null);
+//        super(player.URL, WIDTH, HEIGHT, SPEED, player.spawner, null);
+        super(player.URL, SPEED, player.spawner, null);
         setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2);
         setLayoutY((GameViewManager.HEIGHT >> 1) - getFitHeight() / 2);
         HPRectangle = HPBar;
@@ -131,7 +132,7 @@ public class Player extends Sprite {
     }
 
     private double calculateRotation(Point2D mouseLocation) {
-        angle = Math.toDegrees(atan2(mouseLocation.getY() - getLayoutY(), mouseLocation.getX() - getLayoutX()));
+        angle = Math.toDegrees(atan2(mouseLocation.getY() - getSpawner().getY(), mouseLocation.getX() - getSpawner().getX()));
         return angle;
     }
 
