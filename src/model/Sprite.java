@@ -2,6 +2,7 @@ package model;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 
 public class Sprite extends ImageView {
 
@@ -37,8 +38,15 @@ public class Sprite extends ImageView {
         .add(new Point2D(getFitWidth() / 2, getFitHeight() / 2));
     }
 
+    public Rectangle getBounds() {
+        return new Rectangle(getLayoutX(), getLayoutY(), width, height);
+    }
     public boolean isIntersects(Sprite s) {
-        return getBoundsInParent().intersects(s.getBoundsInParent());
+        return getBounds().intersects(s.getBounds().getX(),
+                s.getBounds().getY(),
+                s.getBounds().getWidth(),
+                s.getBounds().getHeight());
+//        return getBoundsInParent().intersects(s.getBoundsInParent());
     }//todo: ((Path)Shape.intersect(bullet, target)).getElements().size() > 0 better implementation??
 
 }
