@@ -1,4 +1,4 @@
-package model;
+package model.ui;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class smallLabel extends Label {
-
 
     private final static String FONT_PATH = "src/model/resources/kenvector_future_thin.ttf";
 

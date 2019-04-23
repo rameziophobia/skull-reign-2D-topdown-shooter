@@ -1,4 +1,4 @@
-package model;
+package model.ui;
 
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;
@@ -11,8 +11,8 @@ public class PlayerPicker extends VBox {
     private ImageView buttonImage;
     private ImageView playerImage;
 
-    private String buttonNotChosen = "file:src/model/resources/buttonSquare_grey.png";
-    private String buttonChosen = "file:src/model/resources/buttonSquare_blue_pressed.png";
+    private String buttonNotChosen = "file:resources/sprites/ui/menu/buttonSquare_grey.png";
+    private String buttonChosen = "file:resources/sprites/ui/menu/buttonSquare_blue_pressed.png";
 
     private PLAYERS player;
 

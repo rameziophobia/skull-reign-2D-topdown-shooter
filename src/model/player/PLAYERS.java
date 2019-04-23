@@ -1,13 +1,14 @@
 package model.player;
 
 import javafx.geometry.Point2D;
+import view.Main;
 
 public enum PLAYERS {
-    HITMAN("file:src/model/player/resources/Hitman 1/hitman1_gun-49x43.png", 45, 30),
-    BLUE("file:src/model/player/resources/Man Blue/manBlue_gun-49x43.png", 45, 30),
-    BROWN("file:src/model/player/resources/Man Brown/manBrown_gun-49x43.png", 45, 30),
-    ROBOT("file:src/model/player/resources/Robot 1/robot1_gun-49x43.png", 45, 30),
-    SOLDIER("file:src/model/player/resources/Soldier 1/soldier1_gun-52x43.png", 45, 30);
+    HITMAN(Constants.PATH_RESOURCES_SPRITES_PLAYER + "Hitman 1/hitman1_gun-49x43.png", 45, 30),
+    BLUE(Constants.PATH_RESOURCES_SPRITES_PLAYER + "Man Blue/manBlue_gun-49x43.png", 45, 30),
+    BROWN(Constants.PATH_RESOURCES_SPRITES_PLAYER + "Man Brown/manBrown_gun-49x43.png", 45, 30),
+    ROBOT(Constants.PATH_RESOURCES_SPRITES_PLAYER + "Robot 1/robot1_gun-49x43.png", 45, 30),
+    SOLDIER(Constants.PATH_RESOURCES_SPRITES_PLAYER + "Soldier 1/soldier1_gun-52x43.png", 45, 30);
     //todo: change assets
 
     public String URL;
@@ -21,6 +22,10 @@ public enum PLAYERS {
 
     public Point2D getSpawner() {
         return spawner;
+    }
+
+    private static class Constants{
+        static final String PATH_RESOURCES_SPRITES_PLAYER = Main.PATH_RESOURCES_SPRITES + "player/";
     }
 
 }

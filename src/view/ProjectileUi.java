@@ -19,7 +19,7 @@ public class ProjectileUi extends TilePane{
     public ProjectileUi() {
         setOrientation(Orientation.HORIZONTAL);
         setHgap(10);
-        Image background = new Image("file:src/view/resources/black-weapon-background-150x150.png",
+        Image background = new Image("file:resources/sprites/ui/game/black-weapon-background-150x150.png",
                         60, 60 , true, true);
 
         for(int i = 0; i < weaponSlotsNum; i++){

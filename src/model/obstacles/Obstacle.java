@@ -10,6 +10,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.QuadCurveTo;
 import javafx.util.Duration;
+import view.Main;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,7 +20,8 @@ import static view.GameViewManager.WIDTH;
 
     public class Obstacle {
 
-        private static final String tornadoUrl = "file:src/model/resources/obstacles/tornado-animated-64x64.png";
+        private static final String PATH_RESOURCES_SPRITES_OBSTACLES = Main.PATH_RESOURCES_SPRITES + "obstacles/";
+        private static final String FILE_TORNADO = PATH_RESOURCES_SPRITES_OBSTACLES + "tornado-animated-64x64.png";
         private static ArrayList<AnimationClip> tornadoAnimation = new ArrayList<>();
 
         //todo: bug spawns at the upper left corner of the screen
@@ -29,8 +31,8 @@ import static view.GameViewManager.WIDTH;
             final int startX = rand.nextInt(WIDTH);
             final int startY = rand.nextInt(HEIGHT);
 
-            ImageView tornadoImgView = new ImageView(tornadoUrl);
-            final SpriteSheet spriteSheet = new SpriteSheet(tornadoUrl, 0);
+            ImageView tornadoImgView = new ImageView(FILE_TORNADO);
+            final SpriteSheet spriteSheet = new SpriteSheet(FILE_TORNADO, 0);
             tornadoAnimation.add(new AnimationClip(spriteSheet,
                     spriteSheet.getFrameCount() * 2f,true,
                     Integer.MAX_VALUE,tornadoImgView)); //TODO: indefinite repeats

@@ -173,7 +173,6 @@ public class GameViewManager {
                 }
             }
         });
-
     }
 
 
@@ -191,12 +190,10 @@ public class GameViewManager {
         double h = height / HEIGHT;  //your window height
         Scale scale = new Scale(w, h, 0, 0);
         gamePane.getTransforms().add(scale);
-
     }
 
-
     private void createBackground() {
-        Image backgroundImage = new Image("file:src/view/resources/floor2.png");
+        Image backgroundImage = new Image("file:resources/sprites/tiles/floor2.png");
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         gamePane.setBackground(new Background(background));
     }
@@ -339,7 +336,7 @@ public class GameViewManager {
 
 
     private void setCrosshair(Pane pane) {
-        Image image = new Image("file:src/view/resources/crosshair/4.png");
+        Image image = new Image("file:resources/sprites/crosshair/4.png");
         pane.setCursor(new ImageCursor(image,
                 image.getWidth() / 2,
                 image.getHeight() / 2));

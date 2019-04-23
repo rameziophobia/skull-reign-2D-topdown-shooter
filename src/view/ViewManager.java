@@ -12,10 +12,10 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import model.smallLabel;
-import model.PlayerPicker;
-import model.BtnTemp;
-import model.subsceneTemp;
+import model.ui.smallLabel;
+import model.ui.PlayerPicker;
+import model.ui.BtnTemp;
+import model.ui.subsceneTemp;
 import model.player.PLAYERS;
 
 
@@ -49,7 +49,7 @@ public class ViewManager {
     }
 
     public static void setCursorHand(Pane pane) {
-        Image image = new Image("file:src/view/resources/cursorHand_blue.png");
+        Image image = new Image("file:resources/sprites/ui/cursorHand_blue.png");
         pane.setCursor(new ImageCursor(image,
                 image.getWidth() / 2,
                 image.getHeight() / 2));
@@ -85,13 +85,13 @@ public class ViewManager {
     }
 
     private void createBackground() {
-        Image backgroundImage = new Image("file:src/view/resources/floor2.png");
+        Image backgroundImage = new Image("file:resources/sprites/tiles/floor2.png");
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
         mainPane.setBackground(new Background(background));
     }
 
     private void createLogo() {
-        Image logoImage = new Image("file:src/view/resources/logo.png", 80, 80, true, false);
+        Image logoImage = new Image("file:resources/sprites/ui/logo.png", 80, 80, true, false);
         ImageView logo = new ImageView(logoImage);
         HBox hbx_logo = new HBox();
         hbx_logo.getChildren().add(logo);

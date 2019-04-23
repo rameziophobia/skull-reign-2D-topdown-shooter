@@ -1,4 +1,4 @@
-package model;
+package model.ui;
 
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
@@ -12,9 +12,7 @@ import static view.ViewManager.setCursorHand;
 
 public class subsceneTemp extends SubScene {
 
-    private final static String FONT_PATH = "src/model/resources/kenvector_future_thin.ttf";
     private final static String BACKGROUND_IMAGE = "file:src/model/resources/subscene.png";
-
 
     public subsceneTemp() {
         super(new TilePane(), 800, 600);
