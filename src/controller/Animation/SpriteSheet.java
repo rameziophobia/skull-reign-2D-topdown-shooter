@@ -1,4 +1,4 @@
-package Control.animation;
+package controller.Animation;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;
@@ -15,12 +15,14 @@ public class SpriteSheet {
                 extraFrames);
     }
 
-//    public SpriteSheet(Image image, int extraFrames) {
-//        this(image,
-//                Integer.valueOf(image.getUrl().substring(image.getUrl().lastIndexOf("-") + 1, image.getUrl().lastIndexOf("x"))),
-//                Integer.valueOf(image.getUrl().substring(image.getUrl().lastIndexOf("x") + 1, image.getUrl().lastIndexOf("."))),
-//                extraFrames);
-//    }
+    public SpriteSheet(Image image, int extraFrames) {
+        //impl_getUrl() was added to javafx 11
+        this(image,
+                Integer.valueOf(image.impl_getUrl().substring(image.impl_getUrl().lastIndexOf("-") + 1, image.impl_getUrl().lastIndexOf("x"))),
+                Integer.valueOf(image.impl_getUrl().substring(image.impl_getUrl().lastIndexOf("x") + 1, image.impl_getUrl().lastIndexOf("."))),
+                extraFrames);
+
+    }
 
     public SpriteSheet(Image image, int frameWidth, int frameHeight, int extraFrames) {
         final int columns = (int) image.getWidth() / frameWidth;
@@ -45,16 +47,12 @@ public class SpriteSheet {
         }
     }
 
-    private WritableImage getFrame(int frameWidth, int frameHeight, PixelReader pixelReader, int j, int i) {
+    private static WritableImage getFrame(int frameWidth, int frameHeight, PixelReader pixelReader, int j, int i) {
         return new WritableImage(pixelReader,
                 frameWidth * i,
                 frameHeight * j,
                 frameWidth,
                 frameHeight);
-    }
-
-    public static Image getFirstSheet(String path){//todo: do this the right way :D
-        return new SpriteSheet(path,0).getSheetAtIndex(0);
     }
 
     public Image getSheetAtIndex(int i) {
@@ -63,5 +61,14 @@ public class SpriteSheet {
 
     public int getFrameCount() {
         return frameCount;
+    }
+
+    public static Image getFirstSprite(String path) {
+        Image image = new Image(path);
+
+        return getFrame(Integer.valueOf(path.substring(path.lastIndexOf("-") + 1, path.lastIndexOf("x"))),
+                Integer.valueOf(path.substring(path.lastIndexOf("x") + 1, path.lastIndexOf("."))),
+                image.getPixelReader(),
+                0, 0);
     }
 }

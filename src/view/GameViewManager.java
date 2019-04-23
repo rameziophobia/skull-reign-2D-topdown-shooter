@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import static model.Enemies.EnemyType.TANK_SAND;
 import static model.obstacles.Obstacle.createRandomRotator;
 
-
 public class GameViewManager {
     public static final int HEIGHT = 1080;
     public static final int WIDTH = 1920;

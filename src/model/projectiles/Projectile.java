@@ -1,7 +1,7 @@
 package model.projectiles;
 
-import Control.animation.AnimationClip;
-import Control.animation.SpriteSheet;
+import controller.Animation.AnimationClip;
+import controller.Animation.SpriteSheet;
 import javafx.geometry.Point2D;
 import model.Sprite;
 

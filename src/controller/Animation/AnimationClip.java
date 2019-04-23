@@ -1,9 +1,11 @@
-package Control.animation;
+package controller.Animation;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class AnimationClip {
+
+    private static final int INF_REPEATS = -1;
 
     private final SpriteSheet spriteSheet;
     private final ImageView gameObject;
@@ -19,6 +21,7 @@ public class AnimationClip {
     public AnimationClip(SpriteSheet spriteSheet, float frameRate, ImageView gameObject) {
         this(spriteSheet, frameRate, false, 1, gameObject);
     }
+
 
     public AnimationClip(SpriteSheet spriteSheet, float frameRate, boolean autoReverse, int repeats, ImageView gameObject) {
         this.spriteSheet = spriteSheet;
@@ -51,7 +54,6 @@ public class AnimationClip {
                         if (repeats == 0) {
                             return null;
                         }
-
                         currentFrame = -1;
                     }
                 }

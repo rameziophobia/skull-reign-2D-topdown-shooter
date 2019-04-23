@@ -1,6 +1,6 @@
 package view;
 
-import Control.animation.SpriteSheet;
+import controller.Animation.SpriteSheet;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
 import javafx.scene.Node;
@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 
-import static Control.animation.SpriteSheet.getFirstSheet;
 import static model.Sprite.*;
 
 public class ProjectileUi extends TilePane{
@@ -47,7 +46,7 @@ public class ProjectileUi extends TilePane{
 
         weaponImage = !isAnimated(projectileURL) ?
                 new ImageView(projectileURL) :
-                new ImageView(getFirstSheet(projectileURL));
+                new ImageView(SpriteSheet.getFirstSprite(projectileURL));
 //new Image(projectileURL,
 //                getImageWidth(projectileURL), getImageHeight(projectileURL),
 //                true, false)
