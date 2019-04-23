@@ -2,29 +2,27 @@ package model.Enemies;
 
 import javafx.geometry.Point2D;
 import model.Sprite;
+import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
 
 import java.util.Random;
 
-import static view.GameViewManager.HEIGHT;
-import static view.GameViewManager.WIDTH;
+import static view.GameViewManager.*;
 
 
 public abstract class Enemy extends Sprite {
 
+    private final Player player;
     private double angle;
+    public boolean dead = false;
     private EnemyType enemyType;
     private EnemyProjectileControl projectileControl;
-//    private double playerXPos;
-//    private double playerYPos;
 
-    public Enemy(EnemyType enemyType, double playerXPos, double playerYPos) {
+    public Enemy(EnemyType enemyType, Player player) {
         super(enemyType.URL, enemyType.SPEED, new Point2D(1, 1));
+        this.player = player;
         this.enemyType = enemyType; //todo: add shooting mechanic to enemies
-
-//        this.playerXPos = playerXPos;
-//        this.playerYPos = playerYPos;
 
         Random rand = new Random();//todo: spawn location
         int startX = rand.nextInt(HEIGHT);
@@ -33,10 +31,10 @@ public abstract class Enemy extends Sprite {
         setLayoutX(startX);
         setLayoutY(startY);
 
-        projectileControl = new EnemyProjectileControl
-                (this, spawner, 5, ProjectileType.ICEICLE);//todo: change magics
+        projectileControl = new EnemyProjectileControl //todo zwd el vars ka param le constructor enemy
+                (this, spawner,Math.random() > 0.5 ? ProjectileType.ICEICLE:ProjectileType.FIREBALL,player,6,0.1,1);//todo: change magics
 
-        updateDirection(playerXPos, playerYPos);
+        updateDirection(new Point2D(player.getLayoutX(),  player.getLayoutY()));
         setRotate(angle);
     }
 
@@ -45,9 +43,9 @@ public abstract class Enemy extends Sprite {
     }
 
 
-    public void updateDirection(double playerXPos, double playerYPos) {//todo: msh lazem ye3mlo rotate
-        double diffX = playerXPos - getLayoutX();
-        double diffY = playerYPos - getLayoutY();
+    public void updateDirection(Point2D playerLocation) {//todo: msh lazem ye3mlo rotate
+        double diffX = playerLocation.getX() - getLayoutX();
+        double diffY = playerLocation.getY() - getLayoutY();
         angle = Math.toDegrees(Math.atan2(diffY, diffX));
         setRotate(angle);
     }
@@ -69,22 +67,27 @@ public abstract class Enemy extends Sprite {
         setSpawner(new Point2D(nextPosX,nextPosY));
     }
 
-//    public double getAngle() {
-//        return angle;
-//    }
+    public boolean isDead() {
+        return dead;
+    }
 
-    public void followPlayer(double playerXPos, double playerYPos) {//todo: mesh lazem kollo ye follow el player
-        updateDirection(playerXPos, playerYPos);
+    public void setDead(boolean dead) {
+        this.dead = dead;
+        if(dead){
+            gamePane.getChildren().removeAll(projectileControl.getProjArr());
+            projectileControl.getProjArr().removeAll(projectileControl.getProjArr());
+        }
+    }
+
+    public void followPlayer(Point2D playerLocation) {//todo: mesh lazem kollo ye follow el player
+        updateDirection(playerLocation);
         move();
     }
-    public void update(double playerXPos, double playerYPos,double time){
-        followPlayer(playerXPos,  playerYPos);
-        projectileControl.setTime(time);
-        projectileControl.spawnRing();
-        projectileControl.update(getLocation());
+    public void update(double playerXPos, double playerYPos){
+        Point2D playerLocation = new Point2D(playerXPos,  playerYPos);
+        followPlayer(playerLocation);//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
+
+        projectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));
     }
 
-    private Point2D getLocation() {
-        return new Point2D(getLayoutX(),getLayoutY());
-    }
 }

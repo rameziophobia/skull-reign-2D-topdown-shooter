@@ -8,21 +8,28 @@ import view.GameViewManager;
 
 import java.util.*;
 
+import static view.GameViewManager.gamePane;
 import static view.ProjectileUi.setWeapon;
 
 
-public class PlayerProjectileControl {
-
-    private static final Pane gamePane = GameViewManager.gamePane;
+public class PlayerProjectileControl extends ProjectileControl{
 
     private long lastFireTime;
-
-    private double angle;
     private ProjectileType type;
-    private ArrayList<Projectile> projArr;
-    private Player playerFiring;
 
     private boolean mousePressed;
+    private final buttons projectileBtn;
+    private buttons lastPressed;
+
+    private HashMap<PowerUp, Double> powerUp;
+    private LinkedHashMap<ProjectileType, HashMap<PowerUp, Double>> weaponSettings = new LinkedHashMap<>();
+    private LinkedList<ProjectileType> weaponList = new LinkedList<>();
+    //dictionary of weapons used with their respective powerUp dict
+
+    private boolean rangeEnable;
+    private double range = 2000; //bound akbar mn el shasha
+    private double lastFireLocationX;
+    private double lastFireLocationY;
 
     public enum buttons {
         PRIMARY(0), SECONDARY(1);
@@ -37,27 +44,11 @@ public class PlayerProjectileControl {
         }
     }
 
-    private final buttons projectileBtn;
-    private buttons lastPressed;
-
-    private HashMap<PowerUp, Double> powerUp;
-    private LinkedHashMap<ProjectileType, HashMap<PowerUp, Double>> weaponSettings = new LinkedHashMap<>();
-    private LinkedList<ProjectileType> weaponList = new LinkedList<>();
-    //dictionary of weapons used with their respective powerUp dict
-
-    private boolean rangeEnable;
-    private double range = 2000; //bound akbar mn el shasha
-    private double lastFireLocationX;
-    private double lastFireLocationY;
-
     public PlayerProjectileControl(ProjectileType projectile, buttons projectileBtn, Player playerFiring) {
 
-        //todo: class needs renaming
+        super(playerFiring);
         this.type = projectile;
         this.projectileBtn = projectileBtn;
-        this.playerFiring = playerFiring;
-
-        projArr = new ArrayList<>();
         powerUp = new HashMap<>();
 
         rangeEnable = false;
@@ -94,11 +85,10 @@ public class PlayerProjectileControl {
     }
 
     public void update(double angle) {
-        this.angle = angle;
+        super.update(angle);
         mouseEvents();
         fireProjectile();
         moveProjectile();
-
     }
 
     private void isProjectileBtnPressed() {
@@ -121,45 +111,32 @@ public class PlayerProjectileControl {
         if (System.currentTimeMillis() > (lastFireTime + 1000 / type.FIRERATE)) {
             for (int mult = 0; mult < powerUp.get(PowerUp.MULT); mult++) {
 
-                Projectile projectile = new Projectile(playerFiring.getSpawner(),
+                Projectile projectile = new Projectile(player.getSpawner(),
                         type, angle + mult * type.MULTANGLE * Math.pow(-1, mult));//todo odd multiples look weird
 
                 projectile.setScale(powerUp.get(PowerUp.SCALE));
                 projectile.addSpeed(powerUp.get(PowerUp.SPEED));
 
                 projArr.add(projectile);
-                lastFireLocationX = playerFiring.getLayoutX();
-                lastFireLocationY = playerFiring.getLayoutY();
+                lastFireLocationX = player.getLayoutX();
+                lastFireLocationY = player.getLayoutY();
                 lastFireTime = System.currentTimeMillis();
                 gamePane.getChildren().add(projectile);
                 projectile.toBack();
             }
         }
     }
-
-    public void moveProjectile() {
-
+    public void removeProjectile() {
+        super.removeProjectile();
         if (projArr.size() > 0) {
-
             ArrayList<Projectile> projArrRemove = new ArrayList<>();
-
             for (Projectile p : projArr) {
-                p.move();
-                //if the object crossed the boundary adds it to the remove list
-                if (p.getLayoutY() > GameViewManager.HEIGHT || p.getLayoutY() < 0) {
-                    projArrRemove.add(p);
-
-                } else if (p.getLayoutX() > GameViewManager.WIDTH || p.getLayoutX() < 0) {
-                    projArrRemove.add(p);
-
-                } else if (rangeEnable && rangeTooFar(p)) {
+                if (rangeEnable && rangeTooFar(p)) {
                     projArrRemove.add(p);
                 }
             }
-
             gamePane.getChildren().removeAll(projArrRemove);
             projArr.removeAll(projArrRemove);
-
         }
     }
 
@@ -203,7 +180,4 @@ public class PlayerProjectileControl {
         rangeEnable = false;
     }
 
-    public ArrayList<Projectile> getProjArr() {
-        return projArr;
-    }
 }

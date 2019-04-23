@@ -1,6 +1,7 @@
 package view;
 
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Point2D;
 import javafx.scene.ImageCursor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -19,7 +20,9 @@ import model.projectiles.ProjectileType;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
+import static model.Enemies.EnemyType.TANK_DARK;
 import static model.Enemies.EnemyType.TANK_SAND;
 import static model.obstacles.Obstacle.createRandomRotator;
 
@@ -41,14 +44,14 @@ public class GameViewManager {
     private boolean leftPressed;
 
     private AnimationTimer gameTimer;
-    private ArrayList<Enemy> enemyArrayList;
+    private ArrayList<Enemy> enemyArrayList = new ArrayList<>();
     private GridPane buildings;
     private int numberOfObstacles = 0;
     private int numberOfEnemies = 0;
     private double timer;
     private GameViewUI GVUI;
     public static long nextRegenTime = 0;
-    public static long regenerationTimeLimitms= 5000;
+    public static long regenerationTimeLimitms = 5000;
 
 
     public GameViewManager() {
@@ -81,66 +84,73 @@ public class GameViewManager {
                     break;
                 }
                 case DIGIT1: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.EYEBALL,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.EYEBALL, true);
                     break;
                 }
                 case DIGIT2: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.FIREBALL,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.FIREBALL, true);
                     break;
                 }
                 case DIGIT3: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.FLAMEBALL,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.FLAMEBALL, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
                     break;
                 }
                 case DIGIT4: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.SHOCK,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.SHOCK, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 4);
                     break;
                 }
                 case DIGIT5: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE, true);
                     break;
                 }
                 case DIGIT6: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 5);
                     break;
-                } case TAB: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.WHIRLWIND,true);
+                }
+                case TAB: {
+                    player.getSecondaryBtnHandler().addType(ProjectileType.WHIRLWIND, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
                     break;
-                } case CAPS: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ELECTRIC,true);
+                }
+                case CAPS: {
+                    player.getSecondaryBtnHandler().addType(ProjectileType.ELECTRIC, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
                     break;
                 }
                 case DIGIT7: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER01,false);
+                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER01, false);
                     break;
                 }
                 case DIGIT8: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.REDLASER02,false);
+                    player.getPrimaryBtnHandler().addType(ProjectileType.REDLASER02, false);
                     break;
                 }
                 case DIGIT9: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER03,false);
+                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER03, false);
                     break;
-                }case R: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.CAT,true);
+                }
+                case R: {
+                    player.getSecondaryBtnHandler().addType(ProjectileType.CAT, true);
                     break;
-                }case Q: {
+                }
+                case Q: {
                     player.getPrimaryBtnHandler().setToNextType(false);
                     break;
-                }case E: {
+                }
+                case E: {
                     player.getSecondaryBtnHandler().setToNextType(true);
                     break;
-                }case SHIFT: {
+                }
+                case SHIFT: {
                     player.getPrimaryBtnHandler().setPowerUp(PowerUp.SCALE, 3);
                     player.getPrimaryBtnHandler().setPowerUp(PowerUp.MULT, 4);
                     player.getPrimaryBtnHandler().setRange(700);
                     break;
-                }case SPACE: {
+                }
+                case SPACE: {
                     player.getSecondaryBtnHandler().setRange(500);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
                     break;
@@ -204,11 +214,10 @@ public class GameViewManager {
         this.menuStage = menuStage;
         this.menuStage.hide();
         gameStage.show();
-//        gameStage.setFullScreen(true);
+        gameStage.setFullScreen(true);
 
         createUI();
         createPlayer(chosenPlayer);
-        createEnemy();
         setMouseListeners();
         initializeBuildings();
         gameLoop();
@@ -217,20 +226,13 @@ public class GameViewManager {
     }
 
     private void createPlayer(PLAYERS chosenPlayer) {
-        player = new Player(chosenPlayer,GVUI.getHealthBars().getHPRectangle(),GVUI.getHealthBars().getShieldRectangle());
+        player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
         gamePane.getChildren().add(player);
         player.toFront();
     }
 
     private void createUI() {
-        gamePane.getChildren().addAll(GVUI.getGroup(),GVUI.getHealthBars());
-    }
-
-    private void createEnemy() {
-        enemyArrayList = new ArrayList<>();
-        Enemy sandTank = new normalTank(TANK_SAND, player.getLayoutX(), player.getLayoutY());
-        enemyArrayList.add(sandTank);
-        gamePane.getChildren().add(sandTank);
+        gamePane.getChildren().addAll(GVUI.getGroup(), GVUI.getHealthBars());
     }
 
     private void initializeBuildings() {//todo initialize random buildings with gridpane
@@ -248,12 +250,12 @@ public class GameViewManager {
 
                 player.control(upPressed, downPressed,
                         leftPressed, rightPressed,
-                        mouseXPos,mouseYPos);
+                        mouseXPos, mouseYPos);
 
                 Obstacle.update();
 
                 enemyArrayList.forEach(enemy ->
-                        enemy.update(player.getLayoutX(),player.getLayoutY(), timer));
+                        enemy.update(player.getLayoutX(), player.getLayoutY()));
 
                 checkCollision(); //todo: 7otaha in gameObjects ( player, enemies etc) or in projectiles
 
@@ -263,14 +265,12 @@ public class GameViewManager {
     }
 
     private void createEnemies() {
-        if (timer / 7 > numberOfEnemies) {
-            Enemy enemy = new normalTank(TANK_SAND, player.getLayoutX(), player.getLayoutY());
+        if (timer / 4 > numberOfEnemies) {
+            Enemy enemy = new normalTank(Math.random() > 0.5 ? TANK_SAND:TANK_DARK,  player);
             enemyArrayList.add(enemy);
             gamePane.getChildren().add(enemy);
             numberOfEnemies++;
-
         }
-
     }
 
     private void createObstacles() {//todo implement timer
@@ -282,7 +282,7 @@ public class GameViewManager {
     }
 
     private void setMouseListeners() {
-        gamePane.addEventFilter(MouseEvent.ANY,this::getMouseLocation);
+        gamePane.addEventFilter(MouseEvent.ANY, this::getMouseLocation);
     }
 
     private void getMouseLocation(MouseEvent e) {
@@ -298,7 +298,6 @@ public class GameViewManager {
 
         for (Projectile p : player.getProjArr()) {
             for (Enemy enemy : enemyArrayList) {
-
                 if (p.isIntersects(enemy)) {
                     //3ashan my3mlsh collisions abl ma yetshal
                     p.setLayoutY(-500);
@@ -309,6 +308,7 @@ public class GameViewManager {
 
                     if (enemy.getCurrentHp() <= 0) {
                         enemyArrRemove.add(enemy);
+                        enemy.setDead(true);
                         //todo: add points
                         //todo: respawn
                     }
@@ -328,4 +328,5 @@ public class GameViewManager {
                 image.getWidth() / 2,
                 image.getHeight() / 2));
     }
+
 }
