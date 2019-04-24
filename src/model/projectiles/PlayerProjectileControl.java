@@ -2,18 +2,15 @@ package model.projectiles;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
-import javafx.scene.layout.Pane;
 import model.player.Player;
 import view.GameViewManager;
 
 import java.util.*;
 
-import static view.ProjectileUi.setWeapon;
+import static view.game.ProjectileUI.setWeapon;
 
 
 public class PlayerProjectileControl {
-
-    private static final Pane gamePane = GameViewManager.gamePane;
 
     private long lastFireTime;
 
@@ -40,8 +37,8 @@ public class PlayerProjectileControl {
     private final buttons projectileBtn;
     private buttons lastPressed;
 
-    private HashMap<PowerUp, Double> powerUp;
-    private LinkedHashMap<ProjectileType, HashMap<PowerUp, Double>> weaponSettings = new LinkedHashMap<>();
+    private HashMap<PowerUpTypes, Float> powerUp;
+    private LinkedHashMap<ProjectileType, HashMap<PowerUpTypes, Float>> weaponSettings = new LinkedHashMap<>();
     private LinkedList<ProjectileType> weaponList = new LinkedList<>();
     //dictionary of weapons used with their respective powerUp dict
 
@@ -61,19 +58,19 @@ public class PlayerProjectileControl {
         powerUp = new HashMap<>();
 
         rangeEnable = false;
-        setWeapon(projectileBtn.getIndex(), projectile.URL);
+        setWeapon(projectileBtn.getIndex(), projectile.getURL());
         powerUp = initializePowerUp();
         weaponSettings.put(projectile, powerUp);
         weaponList.add(type);
     }
 
     //sets powerUp to zero
-    private HashMap<PowerUp, Double> initializePowerUp() {
-        HashMap<PowerUp, Double> power = new HashMap<>();
-        for (PowerUp pup : PowerUp.values()) {
-            power.put(pup, (double) 0);
+    private HashMap<PowerUpTypes, Float> initializePowerUp() {
+        HashMap<PowerUpTypes, Float> power = new HashMap<>();
+        for (PowerUpTypes powerUpTypes : PowerUpTypes.values()) {
+            power.put(powerUpTypes, 0f);
         }
-        power.put(PowerUp.MULT, (double) 1);
+        power.put(PowerUpTypes.MULT, 1f);
 
         return power;
     }
@@ -85,11 +82,11 @@ public class PlayerProjectileControl {
     }
 
     public void mouseEvents() {
-        gamePane.addEventFilter(MouseEvent.ANY, this::detectBtnType);
-        gamePane.addEventFilter(TouchEvent.ANY, e -> isProjectileBtnPressed());
+        GameViewManager.getGamePane().addEventFilter(MouseEvent.ANY, this::detectBtnType);
+        GameViewManager.getGamePane().addEventFilter(TouchEvent.ANY, e -> isProjectileBtnPressed());
 
-        gamePane.addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed = true);
-        gamePane.addEventFilter(MouseEvent.MOUSE_RELEASED, e -> mousePressed = false);
+        GameViewManager.getGamePane().addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed = true);
+        GameViewManager.getGamePane().addEventFilter(MouseEvent.MOUSE_RELEASED, e -> mousePressed = false);
 
     }
 
@@ -118,49 +115,29 @@ public class PlayerProjectileControl {
 
     private void createProjectile() {
 
-        if (System.currentTimeMillis() > (lastFireTime + 1000 / type.FIRERATE)) {
-            for (int mult = 0; mult < powerUp.get(PowerUp.MULT); mult++) {
+        if (System.currentTimeMillis() > (lastFireTime + 1000 / type.getFIRERATE())) {
+            for (int mult = 0; mult < powerUp.get(PowerUpTypes.MULT); mult++) {
 
                 Projectile projectile = new Projectile(playerFiring.getSpawner(),
-                        type, angle + mult * type.MULTANGLE * Math.pow(-1, mult));//todo odd multiples look weird
+                        type, angle + mult * type.getMULTANGLE() * Math.pow(-1, mult));//todo odd multiples look weird
 
-                projectile.setScale(powerUp.get(PowerUp.SCALE));
-                projectile.addSpeed(powerUp.get(PowerUp.SPEED));
+                projectile.setScale(powerUp.get(PowerUpTypes.SCALE));
+                projectile.addSpeed(powerUp.get(PowerUpTypes.SPEED));
 
                 projArr.add(projectile);
                 lastFireLocationX = playerFiring.getLayoutX();
                 lastFireLocationY = playerFiring.getLayoutY();
                 lastFireTime = System.currentTimeMillis();
-                gamePane.getChildren().add(projectile);
+                GameViewManager.addGameObjectTOScene(projectile);
                 projectile.toBack();
             }
         }
     }
 
     public void moveProjectile() {
-
-        if (projArr.size() > 0) {
-
-            ArrayList<Projectile> projArrRemove = new ArrayList<>();
-
-            for (Projectile p : projArr) {
-                p.move();
-                //if the object crossed the boundary adds it to the remove list
-                if (p.getLayoutY() > GameViewManager.HEIGHT || p.getLayoutY() < 0) {
-                    projArrRemove.add(p);
-
-                } else if (p.getLayoutX() > GameViewManager.WIDTH || p.getLayoutX() < 0) {
-                    projArrRemove.add(p);
-
-                } else if (rangeEnable && rangeTooFar(p)) {
-                    projArrRemove.add(p);
-                }
-            }
-
-            gamePane.getChildren().removeAll(projArrRemove);
-            projArr.removeAll(projArrRemove);
-
-        }
+//        if (rangeEnable && rangeTooFar(p)) {
+//            projArrRemove.add(p);
+//        }
     }
 
     private boolean rangeTooFar(Projectile p) {
@@ -173,9 +150,9 @@ public class PlayerProjectileControl {
         weaponSettings.putIfAbsent(type, initializePowerUp());
         this.powerUp = weaponSettings.get(type);
 
-        int weaponSlot = special ? 1:0;
-        setWeapon(weaponSlot,type.URL);
-        if (weaponList.size() < weaponSettings.size()){
+        int weaponSlot = special ? 1 : 0;
+        setWeapon(weaponSlot, type.getURL());
+        if (weaponList.size() < weaponSettings.size()) {
             weaponList.add(type);
         }
     }
@@ -186,11 +163,11 @@ public class PlayerProjectileControl {
         powerUp = weaponSettings.get(nextType);
         type = nextType;
 
-        int weaponSlot = special ? 1:0;
-        setWeapon(weaponSlot, type.URL); //todo ui slot kda msh dynamic but screw it i need my brain cells ughhhh nvm this needs to be done
+        int weaponSlot = special ? 1 : 0;
+        setWeapon(weaponSlot, type.getURL()); //todo ui slot kda msh dynamic but screw it i need my brain cells ughhhh nvm this needs to be done
     }
 
-    public void setPowerUp(PowerUp key, double value) {
+    public void setPowerUp(PowerUpTypes key, Float value) {
         powerUp.put(key, value);
     }
 

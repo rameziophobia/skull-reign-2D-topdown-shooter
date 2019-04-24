@@ -1,51 +1,59 @@
 package model.Enemies;
 
-import javafx.geometry.Point2D;
-import model.Sprite;
+import model.Entity;
+import view.GameViewManager;
 
 import java.util.Random;
 
 import static view.GameViewManager.HEIGHT;
 import static view.GameViewManager.WIDTH;
 
+public class Enemy extends Entity {
+    private static final double MAX_HP = 100;
 
-public abstract class Enemy extends Sprite {
-
-    private double angle;
     private EnemyType enemyType;
+    private double angle;
 
-    public Enemy(EnemyType enemyType, double playerXPos, double playerYPos) {
-        super(enemyType.URL,enemyType.SPEED,new Point2D(1,1));
-        this.enemyType = enemyType; //todo: add shooting mechanic to enemies
+    private double hp = MAX_HP;
+
+    public Enemy(EnemyType enemyType) {
+        super(enemyType.getURL(), enemyType.getSPEED());
+
+        this.enemyType = enemyType;
 
         Random rand = new Random();
         setLayoutY(rand.nextInt(HEIGHT));
         setLayoutX(rand.nextInt(WIDTH));
+    }
 
-        updateDirection(playerXPos, playerYPos);
+    @Override
+    public void takeDmg(double dmg) {
+        this.hp -= dmg;
+    }
+
+    @Override
+    public void heal(float amount) {
+        hp = Math.min(amount + hp, MAX_HP);
+    }
+
+    private void UpdateAngle() {
+        angle = Math.toDegrees(Math.atan2(GameViewManager.getPlayer().getLayoutY() - getLayoutY(),
+                GameViewManager.getPlayer().getLayoutX() - getLayoutX()));
+    }
+
+    private void move() {
+        setLayoutX(getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED());
+        setLayoutY(getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED());
+    }
+
+    @Override
+    public void update() {
+        UpdateAngle();
         setRotate(angle);
-    }
+        move();
 
-    public void updateDirection(double playerXPos, double playerYPos) {
-        double diffX = playerXPos - getLayoutX();
-        double diffY = playerYPos - getLayoutY();
-        angle = Math.toDegrees(Math.atan2(diffY, diffX));
-        setRotate(angle);
-    }
-
-    public abstract double getCurrentHp();
-
-    public abstract void setHp_current(double hp);
-
-    public void move(){
-        double angle = getAngle();
-        double speedX = Math.cos(Math.toRadians(angle)) * enemyType.SPEED;
-        double speedY = Math.sin(Math.toRadians(angle)) * enemyType.SPEED;
-        setLayoutY(getLayoutY() + speedY);
-        setLayoutX(getLayoutX() + speedX);
-    }
-
-    public double getAngle() {
-        return angle;
+        if (hp <= 0) {
+            GameViewManager.removeGameObjectFromScene(this);
+        }
     }
 }

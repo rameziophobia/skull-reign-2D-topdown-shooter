@@ -1,24 +1,23 @@
-package view;
+package view.game;
 
 import controller.Animation.SpriteSheet;
 import javafx.collections.ObservableList;
-import javafx.geometry.Orientation;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
+import view.GameViewManager;
 
-import static model.Sprite.*;
+import static model.GameObject.*;
 
-public class ProjectileUi extends HBox {
+public class ProjectileUI extends HBox {
 
     private static final int weaponSlotsNum = 4;
     private static final StackPane[] weapons = new StackPane[weaponSlotsNum];
     private static ImageView[] prevWeaponURLs = new ImageView[2];
 
-    public ProjectileUi() {
+    public ProjectileUI() {
         setSpacing(10);
         Image background = new Image("file:resources/sprites/ui/game/black-weapon-background-150x150.png",
                         60, 60 , true, true);

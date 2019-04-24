@@ -1,190 +1,60 @@
 package view;
 
 import javafx.animation.AnimationTimer;
-import javafx.scene.ImageCursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import model.Enemies.Enemy;
-import model.Enemies.normalTank;
-import model.obstacles.Obstacle;
-import model.player.PLAYERS;
+import model.GameObject;
+import model.player.PlayerType;
 import model.player.Player;
-import model.projectiles.PowerUp;
-import model.projectiles.Projectile;
-import model.projectiles.ProjectileType;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import static model.Enemies.EnemyType.TANK_SAND;
-import static model.obstacles.Obstacle.createRandomRotator;
 
 public class GameViewManager {
-    public static final int HEIGHT = 1080;
+    public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
     public static final int WIDTH = 1920;
-    public static AnchorPane gamePane;
-    private Scene gameScene;
-    private Stage gameStage;
+    private static AnchorPane gamePane = new AnchorPane();
+    private Scene gameScene = new Scene(gamePane, WIDTH, HEIGHT);
+    private Stage gameStage = new Stage();
     private Stage menuStage;
-    private Player player;
+    private static Player player;
 
-    private double mouseXPos;
-    private double mouseYPos;
-
-    private boolean upPressed;
-    private boolean downPressed;
-    private boolean rightPressed;
-    private boolean leftPressed;
-
-    private AnimationTimer gameTimer;
-    private ArrayList<Enemy> enemyArrayList;
-    private GridPane buildings;
-    private int numberOfObstacles = 0;
-    private int numberOfEnemies = 0;
-    private double timer;
     private GameViewUI GVUI;
-    public static long nextRegenTime = 0;
-    public static long regenerationTimeLimitms= 5000;
-
 
     public GameViewManager() {
-        initializeStage();
-        createKeyListeners();
+        gameStage.setScene(gameScene);
+
+        GameUI.createBackground(gamePane);
+        GameUI.setCrosshair(gamePane);
+
+        setWindowScaling();
+
         GVUI = new GameViewUI();
     }
 
-    private void createKeyListeners() {
-        gameScene.setOnKeyPressed(event -> {
-            switch (event.getCode()) {
-                case W:
-                case UP: {
-                    upPressed = true;
-                    break;
-                }
-                case A:
-                case LEFT: {
-                    leftPressed = true;
-                    break;
-                }
-                case S:
-                case DOWN: {
-                    downPressed = true;
-                    break;
-                }
-                case D:
-                case RIGHT: {
-                    rightPressed = true;
-                    break;
-                }
-                case DIGIT1: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.EYEBALL,true);
-                    break;
-                }
-                case DIGIT2: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.FIREBALL,true);
-                    break;
-                }
-                case DIGIT3: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.FLAMEBALL,true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
-                    break;
-                }
-                case DIGIT4: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.SHOCK,true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 4);
-                    break;
-                }
-                case DIGIT5: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE,true);
-                    break;
-                }
-                case DIGIT6: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE,true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 5);
-                    break;
-                } case TAB: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.WHIRLWIND,true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
-                    break;
-                } case CAPS: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ELECTRIC,true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
-                    break;
-                }
-                case DIGIT7: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER01,false);
-                    break;
-                }
-                case DIGIT8: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.REDLASER02,false);
-                    break;
-                }
-                case DIGIT9: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER03,false);
-                    break;
-                }case R: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.CAT,true);
-                    break;
-                }case Q: {
-                    player.getPrimaryBtnHandler().setToNextType(false);
-                    break;
-                }case E: {
-                    player.getSecondaryBtnHandler().setToNextType(true);
-                    break;
-                }case SHIFT: {
-                    player.getPrimaryBtnHandler().setPowerUp(PowerUp.SCALE, 3);
-                    player.getPrimaryBtnHandler().setPowerUp(PowerUp.MULT, 4);
-                    player.getPrimaryBtnHandler().setRange(700);
-                    break;
-                }case SPACE: {
-                    player.getSecondaryBtnHandler().setRange(500);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
-                    break;
-                }
-
-            }
-
-        });
-        gameScene.setOnKeyReleased(event -> {
-            switch (event.getCode()) {
-                case W:
-                case UP: {
-                    upPressed = false;
-                    break;
-                }
-                case A:
-                case LEFT: {
-                    leftPressed = false;
-                    break;
-                }
-                case S:
-                case DOWN: {
-                    downPressed = false;
-                    break;
-                }
-                case D:
-                case RIGHT: {
-                    rightPressed = false;
-                    break;
-                }
-            }
-        });
+    public static Player getPlayer() {
+        return player;
     }
 
+    public static void removeGameObjectFromScene(GameObject gameObject) {
+        gamePane.getChildren().remove(gameObject);
+    }
 
-    private void initializeStage() {
-        gamePane = new AnchorPane();
-        gameScene = new Scene(gamePane, WIDTH, HEIGHT);
-        gameStage = new Stage();
-        gameStage.setScene(gameScene);
+    public static void addGameObjectTOScene(Node node) {
+        gamePane.getChildren().add(node);
+    }
 
-        createBackground();
-        setCrosshair(gamePane);
+    public static AnchorPane getGamePane() {
+        return gamePane;
+    }
 
+    private void setWindowScaling() {
         Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
         double width = resolution.getWidth();
         double height = resolution.getHeight();
@@ -194,13 +64,7 @@ public class GameViewManager {
         gamePane.getTransforms().add(scale);
     }
 
-    private void createBackground() {
-        Image backgroundImage = new Image("file:resources/sprites/tiles/floor2.png");
-        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        gamePane.setBackground(new Background(background));
-    }
-
-    public void createNewGame(Stage menuStage, PLAYERS chosenPlayer) {
+    public void createNewGame(Stage menuStage, PlayerType chosenPlayer) {
         this.menuStage = menuStage;
         this.menuStage.hide();
         gameStage.show();
@@ -208,128 +72,46 @@ public class GameViewManager {
 
         createUI();
         createPlayer(chosenPlayer);
-        createEnemy();
-        setMouseListeners();
-        initializeBuildings();
-        gameLoop();
 
+        InputManager.setPlayer(player);
+        InputManager.setKeyListener(gameScene);
+        InputManager.setMouseListeners(gamePane);
 
+        startGameLoop();
     }
 
-    private void createPlayer(PLAYERS chosenPlayer) {
-        player = new Player(chosenPlayer,GVUI.getHealthBars().getHPRectangle(),GVUI.getHealthBars().getShieldRectangle());
-        gamePane.getChildren().add(player);
-        player.toFront();
+    private void createPlayer(PlayerType chosenPlayer) {
+        player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
+        addGameObjectTOScene(player);
+        player.toFront();//todo walls ?
     }
 
     private void createUI() {
-        gamePane.getChildren().addAll(GVUI.getGroup(),GVUI.getHealthBars());
+        gamePane.getChildren().addAll(GVUI.getGroup(), GVUI.getHealthBars());
     }
 
-    private void followPlayer() {
-        for (Enemy enemy : enemyArrayList) {
-            enemy.updateDirection(player.getLayoutX(), player.getLayoutY());
-            enemy.move();
-        }
-    }
+    private void startGameLoop() {
+        gameStart();
 
-    private void createEnemy() {
-        enemyArrayList = new ArrayList<>();
-        Enemy sandTank = new normalTank(TANK_SAND, player.getLayoutX(), player.getLayoutY());
-        enemyArrayList.add(sandTank);
-        gamePane.getChildren().add(sandTank);
-    }
-
-    private void initializeBuildings() {//todo initialize random buildings with gridpane
-    }
-
-
-    private void gameLoop() {
-        gameTimer = new AnimationTimer() {
+       new AnimationTimer() {
             @Override
             public void handle(long now) {
-                timer += 0.016;
-
-                createEnemies();
-                createObstacles();
-
-                player.control(upPressed, downPressed,
-                        leftPressed, rightPressed,
-                        mouseXPos,mouseYPos);
-
-                Obstacle.update();
-                followPlayer();
-                checkCollision(); //todo: 7otaha in gameObjects ( player, enemies etc) or in projectiles
-
+                gameUpdate();
             }
-        };
-        gameTimer.start();
+        }.start();
     }
 
-    private void createEnemies() {
-
-        if (timer / 7 > numberOfEnemies) {
-            Enemy enemy = new normalTank(TANK_SAND, player.getLayoutX(), player.getLayoutY());
-            enemyArrayList.add(enemy);
-            gamePane.getChildren().add(enemy);
-            numberOfEnemies++;
-        }
+    private void gameStart() {
 
     }
 
-    private void createObstacles() {//todo implement timer
-        if (timer / 3 > numberOfObstacles) {
-            gamePane.getChildren().add(createRandomRotator());
-            numberOfObstacles++;
-        }
+    private void gameUpdate() {
+        LevelManager.createEnemies();
+        LevelManager.createObstacles();
 
-    }
-
-    private void setMouseListeners() {
-        gamePane.addEventFilter(MouseEvent.ANY,this::getMouseLocation);
-    }
-
-    private void getMouseLocation(MouseEvent e) {
-        mouseXPos = e.getX();
-        mouseYPos = e.getY();
-    }
-
-    private void checkCollision() {//todo: enqueue & dequeue
-        //todo: move collisions to a listener inside sprite classes
-
-        ArrayList<Projectile> projArrRemove = new ArrayList<>();
-        ArrayList<Enemy> enemyArrRemove = new ArrayList<>();
-
-        for (Projectile p : player.getProjArr()) {
-            for (Enemy enemy : enemyArrayList) {
-
-                if (p.isIntersects(enemy)) {
-                    //3ashan my3mlsh collisions abl ma yetshal
-                    p.setLayoutY(-500);
-
-                    enemy.setHp_current(enemy.getCurrentHp() - p.getDamage());
-
-                    projArrRemove.add(p);
-
-                    if (enemy.getCurrentHp() <= 0) {
-                        enemyArrRemove.add(enemy);
-                        //todo: add points
-                        //todo: respawn
-                    }
-                }
-            }
-        }
-
-        gamePane.getChildren().removeAll(projArrRemove);//todo: this is stupid
-        gamePane.getChildren().removeAll(enemyArrRemove);//todo: this is stupid
-        enemyArrayList.removeAll(enemyArrRemove);
-    }
-
-
-    private void setCrosshair(Pane pane) {
-        Image image = new Image("file:resources/sprites/crosshair/4.png");
-        pane.setCursor(new ImageCursor(image,
-                image.getWidth() / 2,
-                image.getHeight() / 2));
+        List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
+            (GameObject) n
+        ).collect(Collectors.toList());
+        gameObjects.forEach(GameObject::update);
     }
 }

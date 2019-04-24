@@ -1,4 +1,4 @@
-package model.ui;
+package model.ui.mainmenu;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;

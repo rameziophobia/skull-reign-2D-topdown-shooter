@@ -1,4 +1,4 @@
-package view;
+package view.game.stats;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.StackPane;
@@ -6,14 +6,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.player.Player;
-
-import static view.GameViewManager.gamePane;
+import view.GameViewManager;
 
 public class HealthBars extends VBox {
-    private Bars HPRectangle;
-    private Bars ShieldRectangle;
+    private StatBar HPRectangle;
+    private StatBar ShieldRectangle;
 
-    HealthBars() {
+    public HealthBars() {
         VBox HPVBox = new VBox();
 
         StackPane stackHP = new StackPane();
@@ -22,7 +21,7 @@ public class HealthBars extends VBox {
         limitHP.setStroke(Color.DARKRED);
         limitHP.setStrokeWidth(2);
 
-        HPRectangle = new Bars(7, Color.DARKRED, false, Player.getMaxHp());
+        HPRectangle = new StatBar(7, Color.DARKRED, false, Player.getMaxHp());
         HPRectangle.setHeight(20);
         HPRectangle.setCurrentValue(Player.getMaxHp());
 
@@ -33,7 +32,7 @@ public class HealthBars extends VBox {
         limitShield.setFill(Color.TRANSPARENT);
         limitShield.setStroke(Color.LIGHTBLUE);
         limitShield.setStrokeWidth(2);
-        ShieldRectangle = new Bars(7, Color.LIGHTBLUE, true, Player.getMaxShield());
+        ShieldRectangle = new StatBar(7, Color.LIGHTBLUE, true, Player.getMaxShield());
         ShieldRectangle.setHeight(7);
         ShieldRectangle.setCurrentValue(Player.getMaxShield());
         stackShield.getChildren().addAll(limitShield, ShieldRectangle);
@@ -41,13 +40,13 @@ public class HealthBars extends VBox {
         HPVBox.setPadding(new Insets(5, 10, 0, 5));
         HPVBox.setSpacing(5);
         HPVBox.getChildren().addAll(stackHP, stackShield);
-        gamePane.getChildren().add(HPVBox);
+        GameViewManager.addGameObjectTOScene(HPVBox);
     }
 
-    public Bars getHPRectangle(){
+    public StatBar getHPRectangle(){
         return HPRectangle;
     }
-    public Bars getShieldRectangle(){
+    public StatBar getShieldRectangle(){
         return ShieldRectangle;
     }
 }

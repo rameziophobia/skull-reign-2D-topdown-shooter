@@ -1,4 +1,4 @@
-package model.ui;
+package model.ui.mainmenu;
 
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;

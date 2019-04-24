@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 
 public class AnimationClip {
 
-    private static final int INF_REPEATS = -1;
+    public static final int INF_REPEATS = -1;
 
     private final SpriteSheet spriteSheet;
     private final ImageView gameObject;

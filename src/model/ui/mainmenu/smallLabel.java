@@ -1,4 +1,4 @@
-package model.ui;
+package model.ui.mainmenu;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;

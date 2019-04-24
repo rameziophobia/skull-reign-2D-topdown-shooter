@@ -1,20 +1,13 @@
 package view;
 
-import javafx.geometry.Insets;
 import javafx.scene.Group;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
-import model.player.Player;
-
-import static view.GameViewManager.*;
+import view.game.ProjectileUI;
+import view.game.stats.HealthBars;
 
 public class GameViewUI {
 
-    Group group = new Group();
-    HealthBars healthBars = new HealthBars();
+    private Group group = new Group();
+    private HealthBars healthBars = new HealthBars();
 
     public GameViewUI(){
         createWeaponBar();
@@ -24,8 +17,8 @@ public class GameViewUI {
     private static void createSpecialAttackBar() {
     }
 
-    private void createWeaponBar() {
-        gamePane.getChildren().add(new ProjectileUi());
+    private static void createWeaponBar() {
+        GameViewManager.addGameObjectTOScene(new ProjectileUI());
     }
 
 

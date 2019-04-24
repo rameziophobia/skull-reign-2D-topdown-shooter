@@ -12,11 +12,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import model.ui.smallLabel;
-import model.ui.PlayerPicker;
-import model.ui.BtnTemp;
-import model.ui.subsceneTemp;
-import model.player.PLAYERS;
+import model.ui.mainmenu.smallLabel;
+import model.ui.mainmenu.PlayerPicker;
+import model.ui.mainmenu.BtnTemp;
+import model.ui.mainmenu.subsceneTemp;
+import model.player.PlayerType;
 
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class ViewManager {
     private StackPane stkPane;
     private subsceneTemp currentSubScene;
     private ArrayList<PlayerPicker> playerList;
-    private PLAYERS chosenPlayer;
+    private PlayerType chosenPlayer;
 
     public ViewManager() {
         mainPane = new BorderPane();
@@ -137,7 +137,7 @@ public class ViewManager {
         HBox hbx_start = new HBox();
         hbx_start.setSpacing(20);
         playerList = new ArrayList<>();
-        for (PLAYERS p : PLAYERS.values()) {
+        for (PlayerType p : PlayerType.values()) {
             PlayerPicker pp = new PlayerPicker(p);
             hbx_start.getChildren().add(pp);
             playerList.add(pp);

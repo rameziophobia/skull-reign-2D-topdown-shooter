@@ -1,6 +1,6 @@
 package model.projectiles;
 
-public enum PowerUp {
+public enum PowerUpTypes {
     MULT,
     SCALE,
     SPEED,
