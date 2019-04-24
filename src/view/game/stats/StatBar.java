@@ -13,6 +13,7 @@ public class StatBar extends Rectangle {
         super(WIDTH, height, fill);
         this.canRegenerate = canRegenerate;
         this.maxValue = max;
+        setCurrentValue(maxValue);
     }
 
     public void setCurrentValue(double currentValue) {

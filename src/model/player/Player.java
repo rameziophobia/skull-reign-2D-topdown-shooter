@@ -12,7 +12,6 @@ import view.InputManager;
 import static java.lang.Math.atan2;
 
 public class Player extends Entity {
-    private final double DIAGONAL_FACTOR = 1.5; //todo warning ?
 
     private static final float SPEED = 4;
     private static final double MAX_HP = 100;
@@ -65,6 +64,8 @@ public class Player extends Entity {
     }
 
     private void move() { //todo can be coded more efficiently
+        //todo warning ?
+        double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
             if (rightPressed || leftPressed) {
                 setLayoutY(getLayoutY() - SPEED / DIAGONAL_FACTOR); // to avoid moving fast diagonally
