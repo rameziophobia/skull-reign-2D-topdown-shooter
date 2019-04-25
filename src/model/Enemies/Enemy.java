@@ -2,6 +2,7 @@ package model.Enemies;
 
 import model.Entity;
 import view.GameViewManager;
+import view.LevelManager;
 
 import java.util.Random;
 
@@ -54,6 +55,7 @@ public class Enemy extends Entity {
 
         if (hp <= 0) {
             GameViewManager.removeGameObjectFromScene(this);
+            LevelManager.removeEnemy(this);
         }
     }
 }

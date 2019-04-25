@@ -31,8 +31,8 @@ public class Projectile extends GameObject {
                     false,
                     AnimationClip.INF_REPEATS,
                     this);
+            animationClip.animate();
         }
-
         spawnProjectile(spawnPoint, angle);
     }
 
@@ -85,7 +85,6 @@ public class Projectile extends GameObject {
         if (animated) { //todo everything should be animated
             animationClip.animate();
         }
-
         checkCollision_player();
         checkCollision_border();
     }

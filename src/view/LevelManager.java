@@ -41,4 +41,8 @@ public class LevelManager {//todo temp static
             GameViewManager.addGameObjectTOScene(new Obstacle());
         }
     }
+
+    public static void removeEnemy(Enemy enemy) {
+        enemyArrayList.remove(enemy);
+    }
 }
