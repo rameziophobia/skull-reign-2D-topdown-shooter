@@ -21,7 +21,12 @@ public class Obstacle extends GameObject {
     private static final String PATH_RESOURCES_SPRITES_OBSTACLES = Main.PATH_RESOURCES_SPRITES + "obstacles/";
     private static final String FILE_TORNADO = PATH_RESOURCES_SPRITES_OBSTACLES + "tornado-animated-64x64.png";
 
-    private AnimationClip animationClip;
+        //todo: bug spawns at the upper left corner of the screen
+        public static Group createRandomRotator() {//todo: add hitbox (bounds) .. 5alihom y3mlo 7aga ? xD
+            Group randomRotator = new Group();
+            Random rand = new Random();
+            final int startX = rand.nextInt(WIDTH);
+            final int startY = rand.nextInt(HEIGHT);
 
     //todo: bug spawns at the upper left corner of the screen
     public Obstacle() {

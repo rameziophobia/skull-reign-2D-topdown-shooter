@@ -3,23 +3,35 @@ package model.projectiles;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
 import model.player.Player;
-import view.GameViewManager;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import static view.game.ProjectileUI.setWeapon;
+import static view.GameViewManager.gamePane;
+import static view.ProjectileUi.setWeapon;
 
 
-public class PlayerProjectileControl {
+public class PlayerProjectileControl extends ProjectileControl{
 
     private long lastFireTime;
-
-    private double angle;
     private ProjectileType type;
-    private ArrayList<Projectile> projArr;
-    private Player playerFiring;
 
     private boolean mousePressed;
+    private final buttons projectileBtn;
+    private buttons lastPressed;
+
+    private HashMap<PowerUp, Double> powerUp;
+    private LinkedHashMap<ProjectileType, HashMap<PowerUp, Double>> weaponSettings = new LinkedHashMap<>();
+    private LinkedList<ProjectileType> weaponList = new LinkedList<>();
+    //dictionary of weapons used with their respective powerUp dict
+
+    private boolean rangeEnable;
+    private double range = 2000; //bound akbar mn el shasha
+    private double lastFireLocationX;
+    private double lastFireLocationY;
 
     public enum buttons {
         PRIMARY(0), SECONDARY(1);
@@ -34,6 +46,7 @@ public class PlayerProjectileControl {
         }
     }
 
+    //metkarar
     private final buttons projectileBtn;
     private buttons lastPressed;
 
@@ -49,12 +62,9 @@ public class PlayerProjectileControl {
 
     public PlayerProjectileControl(ProjectileType projectile, buttons projectileBtn, Player playerFiring) {
 
-        //todo: class needs renaming
+        super(playerFiring);
         this.type = projectile;
         this.projectileBtn = projectileBtn;
-        this.playerFiring = playerFiring;
-
-        projArr = new ArrayList<>();
         powerUp = new HashMap<>();
 
         rangeEnable = false;
@@ -77,7 +87,7 @@ public class PlayerProjectileControl {
 
     public void fireProjectile() {
         if (mousePressed) {
-            isProjectileBtnPressed();//todo: func name needs refactoring
+            isProjectileBtnPressed();//todo: functions name needs refactoring
         }
     }
 
@@ -91,11 +101,10 @@ public class PlayerProjectileControl {
     }
 
     public void update(double angle) {
-        this.angle = angle;
+        super.update(angle);
         mouseEvents();
         fireProjectile();
         moveProjectile();
-
     }
 
     private void isProjectileBtnPressed() {
@@ -125,8 +134,8 @@ public class PlayerProjectileControl {
                 projectile.addSpeed(powerUp.get(PowerUpTypes.SPEED));
 
                 projArr.add(projectile);
-                lastFireLocationX = playerFiring.getLayoutX();
-                lastFireLocationY = playerFiring.getLayoutY();
+                lastFireLocationX = player.getLayoutX();
+                lastFireLocationY = player.getLayoutY();
                 lastFireTime = System.currentTimeMillis();
                 GameViewManager.addGameObjectTOScene(projectile);
                 projectile.toBack();
@@ -134,10 +143,19 @@ public class PlayerProjectileControl {
         }
     }
 
-    public void moveProjectile() {
-//        if (rangeEnable && rangeTooFar(p)) {
-//            projArrRemove.add(p);
-//        }
+//conflict till 192
+    public void removeProjectile() {
+        super.removeProjectile();
+        if (projArr.size() > 0) {
+            ArrayList<Projectile> projArrRemove = new ArrayList<>();
+            for (Projectile p : projArr) {
+                if (rangeEnable && rangeTooFar(p)) {
+                    projArrRemove.add(p);
+                }
+            }
+            gamePane.getChildren().removeAll(projArrRemove);
+            projArr.removeAll(projArrRemove);
+        }
     }
 
     private boolean rangeTooFar(Projectile p) {
@@ -180,7 +198,4 @@ public class PlayerProjectileControl {
         rangeEnable = false;
     }
 
-    public ArrayList<Projectile> getProjArr() {
-        return projArr;
-    }
 }

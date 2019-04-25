@@ -4,8 +4,13 @@ import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import model.Entity;
 import view.game.stats.StatBar;
+import javafx.geometry.Point2D;
+import javafx.util.Duration;
+import model.Sprite;
 import model.projectiles.PlayerProjectileControl;
+import model.projectiles.Projectile;
 import model.projectiles.ProjectileType;
+import view.Bars;
 import view.GameViewManager;
 import view.InputManager;
 
@@ -31,8 +36,8 @@ public class Player extends Entity {
     private boolean leftPressed;
     private boolean rightPressed;
 
-    //todo: change projArr to array containing array of projectiles for everyType????
-    public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change magics
+    public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change it to said's char mn 8er rotation
+        super(player.URL, SPEED, player.spawner);
         super(player.getURL(), SPEED);
 
         setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2);

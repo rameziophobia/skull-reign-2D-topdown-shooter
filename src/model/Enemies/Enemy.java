@@ -3,11 +3,15 @@ package model.Enemies;
 import model.Entity;
 import view.GameViewManager;
 import view.LevelManager;
+import javafx.geometry.Point2D;
+import model.Sprite;
+import model.player.Player;
+import model.projectiles.EnemyProjectileControl;
+import model.projectiles.ProjectileType;
 
 import java.util.Random;
 
-import static view.GameViewManager.HEIGHT;
-import static view.GameViewManager.WIDTH;
+import static view.GameViewManager.*;
 
 public class Enemy extends Entity {
     private static final double MAX_HP = 100;
@@ -58,4 +62,24 @@ public class Enemy extends Entity {
             LevelManager.removeEnemy(this);
         }
     }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+        if(dead){
+            gamePane.getChildren().removeAll(projectileControl.getProjArr());
+            projectileControl.getProjArr().removeAll(projectileControl.getProjArr());
+        }
+    }
+
+    public void followPlayer(Point2D playerLocation) {//todo: mesh lazem kollo ye follow el player
+        updateDirection(playerLocation);
+        move();
+    }
+    public void update(double playerXPos, double playerYPos){
+        Point2D playerLocation = new Point2D(playerXPos,  playerYPos);
+        followPlayer(playerLocation);
+
+        projectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
+    }
+
 }
