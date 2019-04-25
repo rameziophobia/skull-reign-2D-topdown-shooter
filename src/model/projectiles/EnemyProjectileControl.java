@@ -2,13 +2,13 @@ package model.projectiles;
 
 import javafx.geometry.Point2D;
 import model.Enemies.Enemy;
-import model.player.Player;
 
-import static view.GameViewManager.gamePane;
+import static view.GameViewManager.addGameObjectTOScene;
+
 
 public class EnemyProjectileControl extends ProjectileControl {
 
-    private final Enemy enemy;
+    private final Enemy enemy; //todo da e da we by3ml eh hna ?
     private Point2D spawner;
 
     private final double[] patternRate;
@@ -31,16 +31,15 @@ public class EnemyProjectileControl extends ProjectileControl {
     private long[] lastFireTime;
 
 
-    public EnemyProjectileControl(Enemy enemy, Point2D spawner, ProjectileType type, Player player,
+    public EnemyProjectileControl(Enemy enemy, ProjectileType type,
                                   double ringRate, double ringRate1by1, double toPlayerRate) {
-        this(enemy, spawner, type, player, new double[]{ringRate, ringRate1by1, toPlayerRate});
+        this(enemy, type, new double[]{ringRate, ringRate1by1, toPlayerRate});
     }
 
-    public EnemyProjectileControl(Enemy enemy, Point2D spawner, ProjectileType type, Player player, double[] patternRate) {
-        super(player);
+    public EnemyProjectileControl(Enemy enemy , ProjectileType type, double[] patternRate) {
+        super();
         this.patternRate = patternRate;
         this.enemy = enemy;
-        this.spawner = spawner;
         this.type = type;
         lastFireTime = new long[patternRate.length];
         for(int i = 0; i < lastFireTime.length; i++){
@@ -52,9 +51,9 @@ public class EnemyProjectileControl extends ProjectileControl {
         int i = patternRates.RING.getIndex();
         final long timeNow = System.currentTimeMillis() / 1000;
         if (timeNow > lastFireTime[i] + patternRate[i]) {
-            for (int j = 0; j < 360; j += type.MULTANGLE * 3) {//todo: magic? multAngle .. momkn yb2a variable
-                Projectile projectile = new Projectile(spawner, type, j);
-                gamePane.getChildren().add(projectile);
+            for (int j = 0; j < 360; j += type.getMULTANGLE() * 3) {//todo: magic? multAngle .. momkn yb2a variable
+                Projectile projectile = new Projectile(spawner, type, j, true);
+                addGameObjectTOScene(projectile);
                 projArr.add(projectile);
             }
             lastFireTime[i] = timeNow;
@@ -68,9 +67,9 @@ public class EnemyProjectileControl extends ProjectileControl {
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] * 1000) {
             System.out.println(System.currentTimeMillis() / 1000 + " " + lastFireTime[i]);
-            angle1by1 += type.MULTANGLE;
-            Projectile projectile = new Projectile(spawner, type, angle + angle1by1);
-            gamePane.getChildren().add(projectile);
+            angle1by1 += type.getMULTANGLE();
+            Projectile projectile = new Projectile(spawner, type, angle + angle1by1,true);
+            addGameObjectTOScene(projectile);
             projArr.add(projectile);
             lastFireTime[i] = timeNow;
         }
@@ -81,20 +80,10 @@ public class EnemyProjectileControl extends ProjectileControl {
 
         final long timeNow = System.currentTimeMillis() / 1000;
         if (timeNow > lastFireTime[i] + patternRate[i]) {
-            Projectile projectile = new Projectile(spawner, type, angle);
-            gamePane.getChildren().add(projectile);
+            Projectile projectile = new Projectile(spawner, type, angle, true);
+            addGameObjectTOScene(projectile);
             projArr.add(projectile);
             lastFireTime[i] = timeNow;
-        }
-    }
-
-    public void removeProjectile() {
-        super.removeProjectile();
-        if (projArr.size() > 0) {
-            if (enemy.isDead()) {
-                gamePane.getChildren().removeAll(projArr);
-                projArr.removeAll(projArr);
-            }
         }
     }
 
@@ -107,6 +96,7 @@ public class EnemyProjectileControl extends ProjectileControl {
         spawnToPlayer();
         moveProjectile();//todo: if moved to projectile control's update bt3ml bug fel animation ?? why
     }
+
 
     protected void update(double angle) {
         super.update(angle);

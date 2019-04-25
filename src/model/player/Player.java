@@ -4,13 +4,8 @@ import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import model.Entity;
 import view.game.stats.StatBar;
-import javafx.geometry.Point2D;
-import javafx.util.Duration;
-import model.Sprite;
 import model.projectiles.PlayerProjectileControl;
-import model.projectiles.Projectile;
 import model.projectiles.ProjectileType;
-import view.Bars;
 import view.GameViewManager;
 import view.InputManager;
 
@@ -37,7 +32,6 @@ public class Player extends Entity {
     private boolean rightPressed;
 
     public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change it to said's char mn 8er rotation
-        super(player.URL, SPEED, player.spawner);
         super(player.getURL(), SPEED);
 
         setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2);
@@ -47,9 +41,9 @@ public class Player extends Entity {
         ShieldRectangle = ShieldBar;
 
         primaryBtnHandler = new PlayerProjectileControl(ProjectileType.BULLET,
-                PlayerProjectileControl.buttons.PRIMARY, this);
+                PlayerProjectileControl.buttons.PRIMARY);
         secondaryBtnHandler = new PlayerProjectileControl(ProjectileType.FIRE,
-                PlayerProjectileControl.buttons.SECONDARY, this);
+                PlayerProjectileControl.buttons.SECONDARY);
     }
 
     public void setUpPressed(boolean upPressed) {

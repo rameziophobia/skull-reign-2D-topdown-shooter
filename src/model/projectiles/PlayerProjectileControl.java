@@ -2,16 +2,12 @@ package model.projectiles;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
-import model.player.Player;
-
-import java.util.ArrayList;
+import view.GameViewManager;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
+import static view.GameViewManager.getPlayer;
 import static view.game.ProjectileUI.setWeapon;
-import static view.GameViewManager.gamePane;
-import static view.ProjectileUi.setWeapon;
 
 
 public class PlayerProjectileControl extends ProjectileControl{
@@ -23,8 +19,8 @@ public class PlayerProjectileControl extends ProjectileControl{
     private final buttons projectileBtn;
     private buttons lastPressed;
 
-    private HashMap<PowerUp, Double> powerUp;
-    private LinkedHashMap<ProjectileType, HashMap<PowerUp, Double>> weaponSettings = new LinkedHashMap<>();
+    private HashMap<PowerUpTypes, Float> powerUp;
+    private HashMap<ProjectileType, HashMap<PowerUpTypes, Float>> weaponSettings = new HashMap<>();
     private LinkedList<ProjectileType> weaponList = new LinkedList<>();
     //dictionary of weapons used with their respective powerUp dict
 
@@ -46,23 +42,8 @@ public class PlayerProjectileControl extends ProjectileControl{
         }
     }
 
-    //metkarar
-    private final buttons projectileBtn;
-    private buttons lastPressed;
+    public PlayerProjectileControl(ProjectileType projectile, buttons projectileBtn) {
 
-    private HashMap<PowerUpTypes, Float> powerUp;
-    private LinkedHashMap<ProjectileType, HashMap<PowerUpTypes, Float>> weaponSettings = new LinkedHashMap<>();
-    private LinkedList<ProjectileType> weaponList = new LinkedList<>();
-    //dictionary of weapons used with their respective powerUp dict
-
-    private boolean rangeEnable;
-    private double range = 2000; //bound akbar mn el shasha
-    private double lastFireLocationX;
-    private double lastFireLocationY;
-
-    public PlayerProjectileControl(ProjectileType projectile, buttons projectileBtn, Player playerFiring) {
-
-        super(playerFiring);
         this.type = projectile;
         this.projectileBtn = projectileBtn;
         powerUp = new HashMap<>();
@@ -127,34 +108,21 @@ public class PlayerProjectileControl extends ProjectileControl{
         if (System.currentTimeMillis() > (lastFireTime + 1000 / type.getFIRERATE())) {
             for (int mult = 0; mult < powerUp.get(PowerUpTypes.MULT); mult++) {
 
-                Projectile projectile = new Projectile(playerFiring.getSpawner(),
-                        type, angle + mult * type.getMULTANGLE() * Math.pow(-1, mult));//todo odd multiples look weird
+                Projectile projectile = new Projectile(getPlayer().getSpawner(),
+                        type,
+                        angle + mult * type.getMULTANGLE() * Math.pow(-1, mult),
+                        false);//todo odd multiples look weird
 
                 projectile.setScale(powerUp.get(PowerUpTypes.SCALE));
                 projectile.addSpeed(powerUp.get(PowerUpTypes.SPEED));
 
                 projArr.add(projectile);
-                lastFireLocationX = player.getLayoutX();
-                lastFireLocationY = player.getLayoutY();
+                lastFireLocationX = getPlayer().getLayoutX();
+                lastFireLocationY = getPlayer().getLayoutY();
                 lastFireTime = System.currentTimeMillis();
                 GameViewManager.addGameObjectTOScene(projectile);
                 projectile.toBack();
             }
-        }
-    }
-
-//conflict till 192
-    public void removeProjectile() {
-        super.removeProjectile();
-        if (projArr.size() > 0) {
-            ArrayList<Projectile> projArrRemove = new ArrayList<>();
-            for (Projectile p : projArr) {
-                if (rangeEnable && rangeTooFar(p)) {
-                    projArrRemove.add(p);
-                }
-            }
-            gamePane.getChildren().removeAll(projArrRemove);
-            projArr.removeAll(projArrRemove);
         }
     }
 

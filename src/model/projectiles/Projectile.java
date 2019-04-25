@@ -14,14 +14,16 @@ public class Projectile extends GameObject {
     private double angle;
     private double scale = 1.0;
     private AnimationClip animationClip;
+    private Boolean enemyProjectile;
 
     private float speed;
 
-    Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle) {
+    Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile) {
         super(projectileType.getURL());
         this.projectileType = projectileType;
         this.speed = projectileType.getSPEED();
         this.angle = angle;
+        this.enemyProjectile = enemyProjectile;
 
         if (projectileType.isANIMATED()) {
             this.animated = true;
@@ -62,11 +64,15 @@ public class Projectile extends GameObject {
         setLayoutX(getLayoutX() + Math.cos(Math.toRadians(angle)) * speed);
     }
 
-    private void checkCollision_player() {
-        for (Enemy enemy : LevelManager.getEnemyArrayList()) {
-            if (isIntersects(enemy)) {
-                enemy.takeDmg(getDamage());
-                GameViewManager.removeGameObjectFromScene(this);
+    private void checkCollision_entity() {
+        if(enemyProjectile){
+            //todo check collision w/player
+        }else{
+            for (Enemy enemy : LevelManager.getEnemyArrayList()) {
+                if (isIntersects(enemy)) {
+                    enemy.takeDmg(getDamage());
+                    GameViewManager.removeGameObjectFromScene(this);
+                }
             }
         }
     }
@@ -85,8 +91,9 @@ public class Projectile extends GameObject {
         if (animated) { //todo everything should be animated
             animationClip.animate();
         }
-        checkCollision_player();
+        checkCollision_entity();
         checkCollision_border();
+        //todo: check range
     }
 
 

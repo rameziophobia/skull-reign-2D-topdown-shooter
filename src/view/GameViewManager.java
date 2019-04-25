@@ -3,7 +3,6 @@ package view;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -14,10 +13,6 @@ import model.player.Player;
 import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static model.Enemies.EnemyType.TANK_DARK;
-import static model.Enemies.EnemyType.TANK_SAND;
-import static model.obstacles.Obstacle.createRandomRotator;
 
 public class GameViewManager {
     public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)

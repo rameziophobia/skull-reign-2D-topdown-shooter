@@ -1,13 +1,11 @@
 package model.Enemies;
 
-import model.Entity;
-import view.GameViewManager;
-import view.LevelManager;
 import javafx.geometry.Point2D;
-import model.Sprite;
-import model.player.Player;
+import model.Entity;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
+import view.GameViewManager;
+import view.LevelManager;
 
 import java.util.Random;
 
@@ -21,6 +19,8 @@ public class Enemy extends Entity {
 
     private double hp = MAX_HP;
 
+    private EnemyProjectileControl enemyProjectileControl;
+
     public Enemy(EnemyType enemyType) {
         super(enemyType.getURL(), enemyType.getSPEED());
 
@@ -29,6 +29,8 @@ public class Enemy extends Entity {
         Random rand = new Random();
         setLayoutY(rand.nextInt(HEIGHT));
         setLayoutX(rand.nextInt(WIDTH));
+        enemyProjectileControl = new EnemyProjectileControl
+                (this /*, spawner */,Math.random() > 0.5 ? ProjectileType.ICEICLE:ProjectileType.FIREBALL,6,0.1,1);//todo: change magics
     }
 
     @Override
@@ -51,35 +53,29 @@ public class Enemy extends Entity {
         setLayoutY(getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED());
     }
 
+    private void removeProjectiles() {
+        //todo
+
+    }
+
     @Override
     public void update() {
         UpdateAngle();
         setRotate(angle);
         move();
+        removeProjectiles();
+        enemyProjectileControl.setSpawner(new Point2D(getLayoutX(), getLayoutY()));
+        enemyProjectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
 
         if (hp <= 0) {
+            if(!enemyProjectileControl.getProjArr().isEmpty()){
+                enemyProjectileControl.getProjArr().removeAll(enemyProjectileControl.getProjArr());
+            }
             GameViewManager.removeGameObjectFromScene(this);
             LevelManager.removeEnemy(this);
         }
     }
 
-    public void setDead(boolean dead) {
-        this.dead = dead;
-        if(dead){
-            gamePane.getChildren().removeAll(projectileControl.getProjArr());
-            projectileControl.getProjArr().removeAll(projectileControl.getProjArr());
-        }
-    }
 
-    public void followPlayer(Point2D playerLocation) {//todo: mesh lazem kollo ye follow el player
-        updateDirection(playerLocation);
-        move();
-    }
-    public void update(double playerXPos, double playerYPos){
-        Point2D playerLocation = new Point2D(playerXPos,  playerYPos);
-        followPlayer(playerLocation);
-
-        projectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
-    }
 
 }
