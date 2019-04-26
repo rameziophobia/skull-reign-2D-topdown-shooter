@@ -68,9 +68,6 @@ public class Enemy extends Entity {
         enemyProjectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
 
         if (hp <= 0) {
-            if(!enemyProjectileControl.getProjArr().isEmpty()){
-                enemyProjectileControl.getProjArr().removeAll(enemyProjectileControl.getProjArr());
-            }
             GameViewManager.removeGameObjectFromScene(this);
             LevelManager.removeEnemy(this);
         }

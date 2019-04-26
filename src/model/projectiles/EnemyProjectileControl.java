@@ -66,7 +66,7 @@ public class EnemyProjectileControl extends ProjectileControl {
 
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] * 1000) {
-            System.out.println(System.currentTimeMillis() / 1000 + " " + lastFireTime[i]);
+            System.out.println(timeNow + " " + lastFireTime[i]);
             angle1by1 += type.getMULTANGLE();
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1,true);
             addGameObjectTOScene(projectile);
