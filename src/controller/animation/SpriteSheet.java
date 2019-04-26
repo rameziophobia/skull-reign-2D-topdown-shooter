@@ -1,4 +1,4 @@
-package controller.Animation;
+package controller.animation;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.PixelReader;

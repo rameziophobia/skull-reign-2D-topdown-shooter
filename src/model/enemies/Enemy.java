@@ -1,4 +1,4 @@
-package model.Enemies;
+package model.enemies;
 
 import javafx.geometry.Point2D;
 import model.Entity;

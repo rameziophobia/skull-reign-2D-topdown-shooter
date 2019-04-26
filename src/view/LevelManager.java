@@ -1,11 +1,11 @@
 package view;
 
-import model.Enemies.Enemy;
+import model.enemies.Enemy;
 import model.obstacles.Obstacle;
 
 import java.util.ArrayList;
 
-import static model.Enemies.EnemyType.TANK_SAND;
+import static model.enemies.EnemyType.TANK_SAND;
 
 public class LevelManager {//todo temp static
 

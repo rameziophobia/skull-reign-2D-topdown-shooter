@@ -1,9 +1,9 @@
 package model.projectiles;
 
-import controller.Animation.AnimationClip;
-import controller.Animation.SpriteSheet;
+import controller.animation.AnimationClip;
+import controller.animation.SpriteSheet;
 import javafx.geometry.Point2D;
-import model.Enemies.Enemy;
+import model.enemies.Enemy;
 import model.GameObject;
 import view.GameViewManager;
 import view.LevelManager;

@@ -1,4 +1,4 @@
-package model.Enemies;
+package model.enemies;
 
 import view.Main;
 

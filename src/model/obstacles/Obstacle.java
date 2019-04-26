@@ -1,7 +1,7 @@
 package model.obstacles;
 
-import controller.Animation.AnimationClip;
-import controller.Animation.SpriteSheet;
+import controller.animation.AnimationClip;
+import controller.animation.SpriteSheet;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.scene.shape.MoveTo;

@@ -1,6 +1,6 @@
 package view.game;
 
-import controller.Animation.SpriteSheet;
+import controller.animation.SpriteSheet;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
