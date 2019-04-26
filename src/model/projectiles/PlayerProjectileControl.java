@@ -3,6 +3,7 @@ package model.projectiles;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
 import view.GameViewManager;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -10,7 +11,7 @@ import static view.GameViewManager.getPlayer;
 import static view.game.ProjectileUI.setWeapon;
 
 
-public class PlayerProjectileControl extends ProjectileControl{
+public class PlayerProjectileControl {
 
     private long lastFireTime;
     private ProjectileType type;
@@ -28,6 +29,7 @@ public class PlayerProjectileControl extends ProjectileControl{
     private double range = 2000; //bound akbar mn el shasha
     private double lastFireLocationX;
     private double lastFireLocationY;
+    private double angle;
 
     public enum buttons {
         PRIMARY(0), SECONDARY(1);
@@ -82,7 +84,7 @@ public class PlayerProjectileControl extends ProjectileControl{
     }
 
     public void update(double angle) {
-        super.update(angle);
+        this.angle = angle;
         mouseEvents();
         fireProjectile();
     }
@@ -109,7 +111,6 @@ public class PlayerProjectileControl extends ProjectileControl{
                 projectile.setScale(powerUp.get(PowerUpTypes.SCALE));
                 projectile.addSpeed(powerUp.get(PowerUpTypes.SPEED));
 
-                projArr.add(projectile);
                 lastFireLocationX = getPlayer().getLayoutX();
                 lastFireLocationY = getPlayer().getLayoutY();
                 lastFireTime = System.currentTimeMillis();

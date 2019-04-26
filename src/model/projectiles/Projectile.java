@@ -65,9 +65,9 @@ public class Projectile extends GameObject {
     }
 
     private void checkCollision_entity() {
-        if(enemyProjectile){
+        if (enemyProjectile) {
             //todo check collision w/player
-        }else{
+        } else {
             for (Enemy enemy : LevelManager.getEnemyArrayList()) {
                 if (isIntersects(enemy)) {
                     enemy.takeDmg(getDamage());
@@ -79,7 +79,7 @@ public class Projectile extends GameObject {
 
     private void checkCollision_border() {
         if ((getLayoutY() > GameViewManager.HEIGHT || getLayoutY() < 0)
-        && (getLayoutX() > GameViewManager.WIDTH || getLayoutX() < 0)) {
+                && (getLayoutX() > GameViewManager.WIDTH || getLayoutX() < 0)) {
             GameViewManager.removeGameObjectFromScene(this);
         }
     }

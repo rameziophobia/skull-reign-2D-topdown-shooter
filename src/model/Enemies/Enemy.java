@@ -30,7 +30,7 @@ public class Enemy extends Entity {
         setLayoutY(rand.nextInt(HEIGHT));
         setLayoutX(rand.nextInt(WIDTH));
         enemyProjectileControl = new EnemyProjectileControl
-                (this ,Math.random() > 0.5 ? ProjectileType.ICEICLE:ProjectileType.FIREBALL,
+                (Math.random() > 0.5 ? ProjectileType.ICEICLE:ProjectileType.FIREBALL,
                         6,0.1,0.3);//todo: change magics
     }
 
@@ -65,7 +65,7 @@ public class Enemy extends Entity {
         setRotate(angle);
         move();
         removeProjectiles();
-        enemyProjectileControl.setSpawner(new Point2D(getLayoutX(), getLayoutY()));
+
         enemyProjectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
 
         if (hp <= 0) {
