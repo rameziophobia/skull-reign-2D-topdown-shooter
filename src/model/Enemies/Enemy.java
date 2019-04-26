@@ -30,7 +30,8 @@ public class Enemy extends Entity {
         setLayoutY(rand.nextInt(HEIGHT));
         setLayoutX(rand.nextInt(WIDTH));
         enemyProjectileControl = new EnemyProjectileControl
-                (this /*, spawner */,Math.random() > 0.5 ? ProjectileType.ICEICLE:ProjectileType.FIREBALL,6,0.1,1);//todo: change magics
+                (this ,Math.random() > 0.5 ? ProjectileType.ICEICLE:ProjectileType.FIREBALL,
+                        6,0.1,0.3);//todo: change magics
     }
 
     @Override

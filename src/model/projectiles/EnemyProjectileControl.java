@@ -6,9 +6,9 @@ import model.Enemies.Enemy;
 import static view.GameViewManager.addGameObjectTOScene;
 
 
-public class EnemyProjectileControl extends ProjectileControl {
+public class EnemyProjectileControl extends  ProjectileControl{
 
-    private final Enemy enemy; //todo da e da we by3ml eh hna ?
+    private final Enemy enemy; //todo da eh da we by3ml eh hna ?
     private Point2D spawner;
 
     private final double[] patternRate;
@@ -67,7 +67,7 @@ public class EnemyProjectileControl extends ProjectileControl {
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] * 1000) {
             System.out.println(timeNow + " " + lastFireTime[i]);
-            angle1by1 += type.getMULTANGLE();
+            angle1by1 += type.getMULTANGLE() * 2; //todo: magicNum
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1,true);
             addGameObjectTOScene(projectile);
             projArr.add(projectile);
@@ -93,9 +93,7 @@ public class EnemyProjectileControl extends ProjectileControl {
 
         spawnRing();
         spawnRing1by1();
-        spawnToPlayer();
-        moveProjectile();//todo: if moved to projectile control's update bt3ml bug fel animation ?? why
-    }
+        spawnToPlayer(); }
 
 
     protected void update(double angle) {

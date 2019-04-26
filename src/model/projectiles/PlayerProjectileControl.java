@@ -67,14 +67,14 @@ public class PlayerProjectileControl extends ProjectileControl{
     }
 
     public void fireProjectile() {
-        if (mousePressed) {
-            isProjectileBtnPressed();//todo: functions name needs refactoring
+        if (mousePressed && lastPressed == projectileBtn) {
+            createProjectile();//todo: functions name needs refactoring
         }
     }
 
     public void mouseEvents() {
         GameViewManager.getGamePane().addEventFilter(MouseEvent.ANY, this::detectBtnType);
-        GameViewManager.getGamePane().addEventFilter(TouchEvent.ANY, e -> isProjectileBtnPressed());
+        GameViewManager.getGamePane().addEventFilter(TouchEvent.ANY, e -> fireProjectile());
 
         GameViewManager.getGamePane().addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed = true);
         GameViewManager.getGamePane().addEventFilter(MouseEvent.MOUSE_RELEASED, e -> mousePressed = false);
@@ -85,13 +85,6 @@ public class PlayerProjectileControl extends ProjectileControl{
         super.update(angle);
         mouseEvents();
         fireProjectile();
-        moveProjectile();
-    }
-
-    private void isProjectileBtnPressed() {
-        if (lastPressed == projectileBtn) {
-            createProjectile();
-        }
     }
 
     private void detectBtnType(MouseEvent e) {
