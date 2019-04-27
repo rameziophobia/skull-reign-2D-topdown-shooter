@@ -73,6 +73,6 @@ public enum ProjectileType {
     }
 
     private static class Constants {
-        static final String PATH_RESOURCES_SPRITES_PROJECTILES = Main.PATH_RESOURCES_SPRITES + "projectiles/";
+        private static final String PATH_RESOURCES_SPRITES_PROJECTILES = Main.PATH_RESOURCES_SPRITES + "projectiles/";
     }
 }

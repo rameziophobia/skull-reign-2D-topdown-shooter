@@ -44,9 +44,9 @@ public class Enemy extends Entity {
         hp = Math.min(amount + hp, MAX_HP);
     }
 
-    private void UpdateAngle() {
-        angle = Math.toDegrees(Math.atan2(GameViewManager.getPlayer().getLayoutY() - getLayoutY(),
-                GameViewManager.getPlayer().getLayoutX() - getLayoutX()));
+    private void updateAngle() {
+        angle = Math.toDegrees(Math.atan2(getPlayer().getLayoutY() - getLayoutY(),
+                getPlayer().getLayoutX() - getLayoutX()));
     }
 
     private void move() {
@@ -61,7 +61,7 @@ public class Enemy extends Entity {
 
     @Override
     public void update() {
-        UpdateAngle();
+        updateAngle();
         setRotate(angle);
         move();
         removeProjectiles();
@@ -69,7 +69,7 @@ public class Enemy extends Entity {
         enemyProjectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
 
         if (hp <= 0) {
-            GameViewManager.removeGameObjectFromScene(this);
+            removeGameObjectFromScene(this);
             LevelManager.removeEnemy(this);
         }
     }

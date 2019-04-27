@@ -44,7 +44,7 @@ public class Projectile extends GameObject {
         setRotate(angle);
     }
 
-    void addSpeed(float speed) {
+    public void addSpeed(float speed) {
         this.speed = this.speed + speed;
     }
 

@@ -89,7 +89,7 @@ public class GameViewManager {
     }
 
     private void startGameLoop() {
-        gameStart();
+//        gameStart();
 
        new AnimationTimer() {
             @Override
@@ -99,9 +99,9 @@ public class GameViewManager {
         }.start();
     }
 
-    private void gameStart() {
-
-    }
+//    private void gameStart() { //todo: do we need that ?
+//
+//    }
 
     private void gameUpdate() {
         LevelManager.createEnemies();

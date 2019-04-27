@@ -69,7 +69,7 @@ public class PlayerProjectileControl {
     }
 
     public void fireProjectile() {
-        if (mousePressed && lastPressed == projectileBtn) {
+        if (mousePressed && lastPressed.equals(projectileBtn)) {
             createProjectile();//todo: functions name needs refactoring
         }
     }

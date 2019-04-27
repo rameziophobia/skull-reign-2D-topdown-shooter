@@ -118,10 +118,13 @@ public class InputManager {//todo temp static ?
                     player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
                     break;
                 }
-
             }
-
         });
+
+        addReleaseKeyListners(gameScene);
+    }
+
+    private static void addReleaseKeyListners(Scene gameScene) {
         gameScene.setOnKeyReleased(event -> {
             switch (event.getCode()) {
                 case W:

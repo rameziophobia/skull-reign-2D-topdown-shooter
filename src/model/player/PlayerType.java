@@ -21,7 +21,7 @@ public enum PlayerType {
     }
 
     private static class Constants {
-        static final String PATH_RESOURCES_SPRITES_PLAYER = Main.PATH_RESOURCES_SPRITES + "player/";
+        private static final String PATH_RESOURCES_SPRITES_PLAYER = Main.PATH_RESOURCES_SPRITES + "player/";
     }
 
 }
