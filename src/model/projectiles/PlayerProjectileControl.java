@@ -108,7 +108,7 @@ public class PlayerProjectileControl {
                         angle + mult * type.getMULTANGLE() * Math.pow(-1, mult),
                         false);//todo odd multiples look weird
 
-                projectile.setScale(powerUp.get(PowerUpTypes.SCALE));
+                projectile.setDmgScale(powerUp.get(PowerUpTypes.SCALE));
                 projectile.addSpeed(powerUp.get(PowerUpTypes.SPEED));
 
                 lastFireLocationX = getPlayer().getLayoutX();

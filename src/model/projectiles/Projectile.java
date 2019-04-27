@@ -48,7 +48,7 @@ public class Projectile extends GameObject {
         this.speed = this.speed + speed;
     }
 
-    void setScale(double scale) {
+    public void setDmgScale(double scale) {
         this.scale = 1 + scale / 100;
         setScaleX(this.scale);
         setScaleY(this.scale);
@@ -59,7 +59,7 @@ public class Projectile extends GameObject {
 //        return projectileType.getDAMAGE() * (2*scale - 2); //todo wot ?
     }
 
-    void move() {
+    private void move() {
         setLayoutY(getLayoutY() + Math.sin(Math.toRadians(angle)) * speed);
         setLayoutX(getLayoutX() + Math.cos(Math.toRadians(angle)) * speed);
     }
