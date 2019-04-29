@@ -265,6 +265,10 @@ public class GameViewManager {
                 Obstacle.update();
                 followPlayer();
                 checkCollision(); //todo: 7otaha in gameObjects ( player, enemies etc) or in projectiles
+                if (nextRegenTime < System.currentTimeMillis()) {
+                    nextRegenTime = System.currentTimeMillis() + regenerationTimeLimitms;
+                    player.regenerate();
+                }
 
             }
         };
