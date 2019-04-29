@@ -145,7 +145,9 @@ public class GameViewManager {
                     player.getSecondaryBtnHandler().setPowerUp(PowerUp.MULT, 3);
                     break;
                 }
-
+                case U:{
+                    player.takeDmg(20);
+                }
             }
 
         });

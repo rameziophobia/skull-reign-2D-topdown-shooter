@@ -43,24 +43,26 @@ public class GameViewUI {
 
     private VBox createHPbar() {
         HPVBox = new VBox();
-        StackPane stackHP = createStackBar(300,20,Color.DARKRED,Player.getMaxHp());
+        HPRectangle = new Bars(20,Color.DARKRED,true,Player.getMaxHp());
+        StackPane stackHP = createStackBar(HPRectangle,300,20,Color.DARKRED,Player.getMaxHp());
         ImageView HPImage = addImage("/model/resources/edited_HPBar_png.png",325,35);
         stackHP.getChildren().addAll(HPImage);
         HPImage.toBack();
 
-        StackPane stackShield = createStackBar(300,7,Color.LIGHTBLUE,Player.getMaxShield());
+        ShieldRectangle = new Bars(7,Color.LIGHTBLUE,true,Player.getMaxShield());
+        StackPane stackShield = createStackBar(ShieldRectangle, 300,7,Color.LIGHTBLUE,Player.getMaxShield());
         HPVBox.setPadding(new Insets(5,10,0,5));
         HPVBox.setSpacing(5);
         HPVBox.getChildren().addAll(stackHP,stackShield);
         return HPVBox;
     }
-    private StackPane createStackBar(double rectangleWidth,double rectangleHeight,Color fill,double MaxValue){
+    private StackPane createStackBar(Bars rectangleBar,double rectangleWidth,double rectangleHeight,Color fill,double MaxValue){
         StackPane stack = new StackPane();
         Rectangle rectangle = new Rectangle(rectangleWidth,rectangleHeight);
         rectangle.setFill(Color.TRANSPARENT);
         rectangle.setStroke(fill);
         rectangle.setStrokeWidth(2);
-        Bars rectangleBar = new Bars(rectangleHeight,fill,true,MaxValue);
+
         rectangleBar.setCurrentValue(MaxValue);
         stack.getChildren().addAll(rectangle,rectangleBar);
         return stack;
