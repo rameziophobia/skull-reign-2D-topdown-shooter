@@ -4,6 +4,8 @@ import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -41,31 +43,36 @@ public class GameViewUI {
 
     private VBox createHPbar() {
         HPVBox = new VBox();
+        StackPane stackHP = createStackBar(300,20,Color.DARKRED,Player.getMaxHp());
+        ImageView HPImage = addImage("/model/resources/edited_HPBar_png.png",325,35);
+        stackHP.getChildren().addAll(HPImage);
+        HPImage.toBack();
 
-        StackPane stackHP = new StackPane();
-        Rectangle limitHP = new Rectangle(300,20);
-        limitHP.setFill(Color.TRANSPARENT);
-        limitHP.setStroke(Color.DARKRED);
-        limitHP.setStrokeWidth(2);
-        HPRectangle = new Bars(7,Color.DARKRED,false, Player.getMaxHp());
-        HPRectangle.setHeight(20);
-        HPRectangle.setCurrentValue(Player.getMaxHp());
-        stackHP.getChildren().addAll(limitHP,HPRectangle);
-
-        StackPane stackShield = new StackPane();
-        Rectangle limitShield = new Rectangle(300,7);
-        limitShield.setFill(Color.TRANSPARENT);
-        limitShield.setStroke(Color.LIGHTBLUE);
-        limitShield.setStrokeWidth(2);
-        ShieldRectangle = new Bars(7,Color.LIGHTBLUE,true, Player.getMaxShield());
-        ShieldRectangle.setHeight(7);
-        ShieldRectangle.setCurrentValue(Player.getMaxShield());
-        stackShield.getChildren().addAll(limitShield,ShieldRectangle);
-
+        StackPane stackShield = createStackBar(300,7,Color.LIGHTBLUE,Player.getMaxShield());
         HPVBox.setPadding(new Insets(5,10,0,5));
         HPVBox.setSpacing(5);
         HPVBox.getChildren().addAll(stackHP,stackShield);
         return HPVBox;
+    }
+    private StackPane createStackBar(double rectangleWidth,double rectangleHeight,Color fill,double MaxValue){
+        StackPane stack = new StackPane();
+        Rectangle rectangle = new Rectangle(rectangleWidth,rectangleHeight);
+        rectangle.setFill(Color.TRANSPARENT);
+        rectangle.setStroke(fill);
+        rectangle.setStrokeWidth(2);
+        Bars rectangleBar = new Bars(rectangleHeight,fill,true,MaxValue);
+        rectangleBar.setCurrentValue(MaxValue);
+        stack.getChildren().addAll(rectangle,rectangleBar);
+        return stack;
+    }
+    private ImageView addImage(String url,double width,double height){
+        Image image = new Image(url);
+        ImageView viewer = new ImageView();
+        viewer.setImage(image);
+        viewer.setFitHeight(height);
+        viewer.setFitWidth(width);
+        viewer.setSmooth(true);
+        return viewer;
     }
     public VBox getVBox(){
         return HPVBox;
