@@ -8,6 +8,8 @@ import model.GameObject;
 import view.GameViewManager;
 import view.LevelManager;
 
+import static view.GameViewManager.*;
+
 public class Projectile extends GameObject {
 
     private ProjectileType projectileType;
@@ -65,7 +67,10 @@ public class Projectile extends GameObject {
 
     private void checkCollision_entity() {
         if (enemyProjectile) {
-            //todo check collision w/player
+            if(isIntersects(getPlayer())){
+                getPlayer().takeDmg(projectileType.getDAMAGE());
+                removeGameObjectFromScene(this);
+            }
         } else {
             for (Enemy enemy : LevelManager.getEnemyArrayList()) {
                 if (isIntersects(enemy)) {
