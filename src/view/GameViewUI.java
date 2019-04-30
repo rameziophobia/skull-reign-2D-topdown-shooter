@@ -10,6 +10,7 @@ import model.player.Player;
 import view.game.ProjectileUI;
 
 import static view.GameViewManager.*;
+import static view.Main.PATH_RESOURCES_SPRITES;
 
 public class GameViewUI {
 
@@ -33,11 +34,11 @@ public class GameViewUI {
     }
 
     private VBox createHPbar() {
-        HPRectangle = new Bars(20, Color.DARKRED, true, Player.getMaxHp(), "/model/resources/edited_HPBar_png.png");
+        HPRectangle = new Bars(20, Color.DARKRED, true, Player.getMaxHp(), PATH_RESOURCES_SPRITES +"ui/game/edited_HPBar_png.png");
         ImageView HPImage = HPRectangle.addImage(325, 35);
         StackPane stackHP = HPRectangle.createStackBar(300, 20, Color.DARKRED, Player.getMaxHp(), HPImage);
 
-        ShieldRectangle = new Bars(7, Color.LIGHTBLUE, true, Player.getMaxShield(), "/model/resources/edited_HPBar_png.png");
+        ShieldRectangle = new Bars(7, Color.LIGHTBLUE, true, Player.getMaxShield(), PATH_RESOURCES_SPRITES +"ui/game/edited_HPBar_png.png");
         ImageView ShieldImage = ShieldRectangle.addImage(325, 20);
         StackPane stackShield = ShieldRectangle.createStackBar(300, 7, Color.LIGHTBLUE, Player.getMaxShield(), ShieldImage);
 
