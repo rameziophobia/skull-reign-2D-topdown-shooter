@@ -17,8 +17,7 @@ public class BtnTemp extends Button {
     private final static String BUTTON_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('file:resources/sprites/ui/menu/buttonLong_blue_pressed.png') ";
     private final static String BUTTON_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('file:resources/sprites/ui/menu/buttonLong_blue.png')";
 
-    public BtnTemp(String text)
-    {
+    public BtnTemp(String text) {
         setText(text);
         setButtonFont();
         setPrefWidth(190);
@@ -27,40 +26,38 @@ public class BtnTemp extends Button {
         initializeBtnListeners();
     }
 
-    private void setButtonFont()
-    {
+    private void setButtonFont() {
         try {
             setFont(Font.loadFont(new FileInputStream(FONT_PATH), 23));
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             setFont(Font.font("Verdana", 23));
         }
     }
 
-    private void setButtonPressedStyle()
-    {
+    private void setButtonPressedStyle() {
         setStyle(BUTTON_PRESSED_STYLE);
         setPrefHeight(4);
         setLayoutY(getLayoutY() + 4);
     }
-    private void setButtonFreeStyle()
-    {
+
+    private void setButtonFreeStyle() {
         setStyle(BUTTON_FREE_STYLE);
         setPrefHeight(49);
         setLayoutY(getLayoutY() - 4);
     }
-    private void initializeBtnListeners()
-    {
+
+    private void initializeBtnListeners() {
         setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY))
+                if (event.getButton().equals(MouseButton.PRIMARY))
                     setButtonPressedStyle();
             }
         });
         setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY))
+                if (event.getButton().equals(MouseButton.PRIMARY))
                     setButtonFreeStyle();
             }
         });

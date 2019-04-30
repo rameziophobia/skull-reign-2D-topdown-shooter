@@ -20,11 +20,11 @@ public class ProjectileUI extends HBox {
     public ProjectileUI() {
         setSpacing(10);
         Image background = new Image("file:resources/sprites/ui/game/black-weapon-background-150x150.png",
-                        60, 60 , true, true);
+                60, 60, true, true);
         Image backgroundSmall = new Image("file:resources/sprites/ui/game/black-weapon-background-150x150.png",
-                                30, 30 , true, true);
+                30, 30, true, true);
 
-        for(int i = 0; i < weaponSlotsNum; i++){
+        for (int i = 0; i < weaponSlotsNum; i++) {
             weapons[i] = new StackPane(new ImageView(background));
         }
         weapons[0] = new StackPane(new ImageView(backgroundSmall));
@@ -37,13 +37,13 @@ public class ProjectileUI extends HBox {
         setLayoutY(GameViewManager.HEIGHT - 90);
     }
 
-    public static void setWeapon(int index, String projectileURL){
+    public static void setWeapon(int index, String projectileURL) {
 
         ImageView weaponImage;
-        if(prevWeaponURLs[index] != null){
-            int i = (index == 0) ? 0:3 ;
+        if (prevWeaponURLs[index] != null) {
+            int i = (index == 0) ? 0 : 3;
             ObservableList<Node> activeSlot = weapons[i].getChildren();
-            if (activeSlot.size() > 1){
+            if (activeSlot.size() > 1) {
                 activeSlot.remove(1);
             }
             prevWeaponURLs[index].setScaleX(0.5);
@@ -58,7 +58,7 @@ public class ProjectileUI extends HBox {
 
         weaponImage.setRotate(270);
         ObservableList<Node> currentSlot = weapons[index].getChildren();
-        if (currentSlot.size() > 1){
+        if (currentSlot.size() > 1) {
             currentSlot.remove(1);
         }
         currentSlot.add(weaponImage);

@@ -19,8 +19,7 @@ public class PlayerPicker extends VBox {
     private boolean isChosen;
 
 
-    public PlayerPicker(PlayerType player)
-    {
+    public PlayerPicker(PlayerType player) {
         this.player = player;
         buttonImage = new ImageView(buttonNotChosen);
         playerImage = new ImageView(player.getURL());

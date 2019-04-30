@@ -18,7 +18,6 @@ public class Player extends Entity {
     private static final double MAX_SHIELD = 100;
     private static final long REGENERATION_TIME_CD_MS = 5000;
 
-    private long NEXT_REGEN_TIME = 0; // todo ?????????????????????????????????????????????????????????????????????
     private StatBar HPRectangle;
     private StatBar ShieldRectangle;
     private final PlayerProjectileControl primaryBtnHandler;
@@ -63,7 +62,6 @@ public class Player extends Entity {
     }
 
     private void move() { //todo can be coded more efficiently
-        //todo warning ?
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
             if (rightPressed || leftPressed) {
@@ -103,7 +101,6 @@ public class Player extends Entity {
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
             barScaleAnimator(ShieldRectangle);
-            NEXT_REGEN_TIME = System.currentTimeMillis() + REGENERATION_TIME_CD_MS;
         } else {
             HPRectangle.decreaseCurrent(dmg);
             barScaleAnimator(HPRectangle);

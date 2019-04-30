@@ -91,7 +91,7 @@ public class GameViewManager {
     private void startGameLoop() {
 //        gameStart();
 
-       new AnimationTimer() {
+        new AnimationTimer() {
             @Override
             public void handle(long now) {
                 gameUpdate();
@@ -108,7 +108,7 @@ public class GameViewManager {
         LevelManager.createObstacles();
 
         List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
-            (GameObject) n
+                (GameObject) n
         ).collect(Collectors.toList());
         gameObjects.forEach(GameObject::update);
     }

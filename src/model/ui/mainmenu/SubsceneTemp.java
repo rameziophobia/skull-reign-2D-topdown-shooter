@@ -10,11 +10,11 @@ import javafx.util.Duration;
 
 import static view.ViewManager.setCursorHand;
 
-public class subsceneTemp extends SubScene {
+public class SubsceneTemp extends SubScene {
 
     private final static String BACKGROUND_IMAGE = "file:resources/sprites/ui/menu/subscene.png";
 
-    public subsceneTemp() {
+    public SubsceneTemp() {
         super(new TilePane(), 800, 600);
         TilePane vbx = (TilePane) this.getRoot();
         prefHeight(600);

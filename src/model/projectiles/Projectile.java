@@ -55,8 +55,7 @@ public class Projectile extends GameObject {
     }
 
     public double getDamage() {
-        return projectileType.getDAMAGE() * (((scale - 1) * 2) + 1); //todo wot ?
-//        return projectileType.getDAMAGE() * (2*scale - 2); //todo wot ?
+        return projectileType.getDAMAGE() * (2 * scale - 1);
     }
 
     private void move() {

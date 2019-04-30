@@ -17,21 +17,21 @@ public class HealthBars extends VBox {
     private static final Color HP_COLOR = Color.DARKRED;
     private static final Color SHIELD_COLOR = Color.LIGHTBLUE;
 
-    private ArrayList <StatBar> statRectangles = new ArrayList<>(); //0 for HP, 1 for Shield
+    private ArrayList<StatBar> statRectangles = new ArrayList<>(); //0 for HP, 1 for Shield
 
     public HealthBars() {
         VBox HPVBox = new VBox();
         HPVBox.setSpacing(5);
         HPVBox.setPadding(new Insets(5, 10, 0, 5));
 
-        StackPane stackHP = getStackPane(HP_HEIGHT, HP_COLOR,false,Player.getMaxHp());
-        StackPane stackShield = getStackPane(SHIELD_HEIGHT, SHIELD_COLOR,true,Player.getMaxShield());
+        StackPane stackHP = getStackPane(HP_HEIGHT, HP_COLOR, false, Player.getMaxHp());
+        StackPane stackShield = getStackPane(SHIELD_HEIGHT, SHIELD_COLOR, true, Player.getMaxShield());
 
         HPVBox.getChildren().addAll(stackHP, stackShield);
         GameViewManager.addGameObjectTOScene(HPVBox);
     }
 
-    private StackPane getStackPane(int height, Color color,boolean regen, double maxHP) {
+    private StackPane getStackPane(int height, Color color, boolean regen, double maxHP) {
         StackPane stack = new StackPane();
         Rectangle limit = getLimitRectangle(height, color);
         StatBar rectangle = new StatBar(height, color, regen, maxHP);
@@ -48,10 +48,11 @@ public class HealthBars extends VBox {
         return limitHP;
     }
 
-    public StatBar getHPRectangle(){
+    public StatBar getHPRectangle() {
         return statRectangles.get(0);
     }
-    public StatBar getShieldRectangle(){
+
+    public StatBar getShieldRectangle() {
         return statRectangles.get(1);
     }
 }

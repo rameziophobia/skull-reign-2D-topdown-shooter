@@ -4,7 +4,6 @@ import javafx.geometry.Point2D;
 
 import static view.GameViewManager.addGameObjectTOScene;
 
-
 public class EnemyProjectileControl {
 
     private Point2D spawner;
@@ -63,7 +62,6 @@ public class EnemyProjectileControl {
 
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] * 1000) {
-            System.out.println(timeNow + " " + lastFireTime[i]);
             angle1by1 += type.getMULTANGLE() * 2; //todo: magicNum
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1, true);
             addGameObjectTOScene(projectile);

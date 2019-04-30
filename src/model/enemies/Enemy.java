@@ -4,7 +4,6 @@ import javafx.geometry.Point2D;
 import model.Entity;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
-import view.GameViewManager;
 import view.LevelManager;
 
 import java.util.Random;
@@ -30,8 +29,8 @@ public class Enemy extends Entity {
         setLayoutY(rand.nextInt(HEIGHT));
         setLayoutX(rand.nextInt(WIDTH));
         enemyProjectileControl = new EnemyProjectileControl
-                (Math.random() > 0.5 ? ProjectileType.ICEICLE:ProjectileType.FIREBALL,
-                        6,0.1,0.3);//todo: change magics
+                (Math.random() > 0.5 ? ProjectileType.ICEICLE : ProjectileType.FIREBALL,
+                        6, 0.1, 0.3);//todo: change magics
     }
 
     @Override
@@ -66,14 +65,13 @@ public class Enemy extends Entity {
         move();
         removeProjectiles();
 
-        enemyProjectileControl.update(angle,new Point2D(getLayoutX(),getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
+        enemyProjectileControl.update(angle, new Point2D(getLayoutX(), getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
 
         if (hp <= 0) {
             removeGameObjectFromScene(this);
             LevelManager.removeEnemy(this);
         }
     }
-
 
 
 }

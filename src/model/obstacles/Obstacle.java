@@ -40,7 +40,6 @@ public class Obstacle extends GameObject {
         final PathTransition pathTransition = new PathTransition();
 
         pathTransition.setDuration(Duration.seconds(4.0));
-//        pathTransition.setDelay(Duration.seconds(.5));
         pathTransition.setPath(getRandPath());
         pathTransition.setNode(this);
         pathTransition.setCycleCount(Timeline.INDEFINITE);

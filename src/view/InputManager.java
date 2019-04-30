@@ -14,7 +14,7 @@ public class InputManager {//todo temp static ?
     private static double mouseYPos;
     private static double mouseXPos;
 
-    private InputManager(){
+    private InputManager() {
 
     }
 
@@ -54,66 +54,73 @@ public class InputManager {//todo temp static ?
                     break;
                 }
                 case DIGIT1: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.EYEBALL,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.EYEBALL, true);
                     break;
                 }
                 case DIGIT2: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.FIREBALL,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.FIREBALL, true);
                     break;
                 }
                 case DIGIT3: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.FLAMEBALL,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.FLAMEBALL, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
                     break;
                 }
                 case DIGIT4: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.SHOCK,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.SHOCK, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 4f);//todo Magic Number
                     break;
                 }
                 case DIGIT5: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE, true);
                     break;
                 }
                 case DIGIT6: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE,true);
+                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 5f);//todo Magic Number
                     break;
-                } case TAB: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.WHIRLWIND,true);
+                }
+                case TAB: {
+                    player.getSecondaryBtnHandler().addType(ProjectileType.WHIRLWIND, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
                     break;
-                } case CAPS: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ELECTRIC,true);
+                }
+                case CAPS: {
+                    player.getSecondaryBtnHandler().addType(ProjectileType.ELECTRIC, true);
                     player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
                     break;
                 }
                 case DIGIT7: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER01,false);
+                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER01, false);
                     break;
                 }
                 case DIGIT8: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.REDLASER02,false);
+                    player.getPrimaryBtnHandler().addType(ProjectileType.REDLASER02, false);
                     break;
                 }
                 case DIGIT9: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER03,false);
+                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER03, false);
                     break;
-                }case R: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.CAT,true);
+                }
+                case R: {
+                    player.getSecondaryBtnHandler().addType(ProjectileType.CAT, true);
                     break;
-                }case Q: {
+                }
+                case Q: {
                     player.getPrimaryBtnHandler().setToNextType(false);
                     break;
-                }case E: {
+                }
+                case E: {
                     player.getSecondaryBtnHandler().setToNextType(true);
                     break;
-                }case SHIFT: {
+                }
+                case SHIFT: {
                     player.getPrimaryBtnHandler().setPowerUp(PowerUpTypes.SCALE, 3f);//todo Magic Number
                     player.getPrimaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 4f);//todo Magic Number
                     player.getPrimaryBtnHandler().setRange(700);//todo Magic Number
                     break;
-                }case SPACE: {
+                }
+                case SPACE: {
                     player.getSecondaryBtnHandler().setRange(500);//todo Magic Number
                     player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
                     break;

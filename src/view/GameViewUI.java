@@ -9,7 +9,7 @@ public class GameViewUI {
     private Group group = new Group();
     private HealthBars healthBars = new HealthBars();
 
-    public GameViewUI(){
+    public GameViewUI() {
         createWeaponBar();
         createSpecialAttackBar();
     }

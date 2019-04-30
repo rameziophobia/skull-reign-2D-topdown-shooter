@@ -26,7 +26,7 @@ public class LevelManager {//todo temp static
 
     public static void createEnemies() {
         if (nextEnemySpawnTime < System.currentTimeMillis()) {
-            nextEnemySpawnTime =  System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
+            nextEnemySpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
 
             Enemy enemy = new Enemy(TANK_SAND);
             enemyArrayList.add(enemy);
@@ -36,7 +36,7 @@ public class LevelManager {//todo temp static
 
     public static void createObstacles() {//todo implement timer
         if (nextObstaclesSpawnTime < System.currentTimeMillis()) {
-            nextObstaclesSpawnTime =  System.currentTimeMillis() + (long) (SPAWN_CD_OBSTACLES);
+            nextObstaclesSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_OBSTACLES);
 
             GameViewManager.addGameObjectTOScene(new Obstacle());
         }
