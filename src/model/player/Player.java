@@ -86,35 +86,23 @@ public class Player extends Sprite {
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
     }
 
+    //HP and Shield controllers
     public void takeDmg(double damage) {
 
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(damage);
-            barScaleAnimator(ShieldRectangle);
             GameViewManager.nextRegenTime = System.currentTimeMillis() + GameViewManager.regenerationTimeLimitms;
         } else {
             HPRectangle.decreaseCurrent(damage);
-            barScaleAnimator(HPRectangle);
         }
     }
-
     public void increaseHP(double Value) {
         HPRectangle.increaseCurrent(Value);
-        barScaleAnimator(HPRectangle);
     }
-
     public void regenerate() {
         ShieldRectangle.regeneration();
-        barScaleAnimator(ShieldRectangle);
     }
 
-    private void barScaleAnimator(Bars HP) {//todo change paramaters to Bars only
-        ScaleTransition HPAnimation = new ScaleTransition(Duration.seconds(0.1), HP);
-
-        HPAnimation.setToX((HP.getCurrentValue()) / MAX_HP);
-
-        HPAnimation.play();
-    }
     public PlayerProjectileControl getPrimaryBtnHandler() {
         return primaryBtnHandler;
     }

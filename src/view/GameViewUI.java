@@ -28,7 +28,7 @@ public class GameViewUI {
     VBox HPVBox;
     Player player;
 
-    public GameViewUI(){
+    public GameViewUI() {
         createHPbar();
         createWeaponBar();
         createSpecialAttackBar();
@@ -42,48 +42,35 @@ public class GameViewUI {
     }
 
     private VBox createHPbar() {
-        HPVBox = new VBox();
-        HPRectangle = new Bars(20,Color.DARKRED,true,Player.getMaxHp());
-        StackPane stackHP = createStackBar(HPRectangle,300,20,Color.DARKRED,Player.getMaxHp());
-        ImageView HPImage = addImage("/model/resources/edited_HPBar_png.png",325,35);
-        stackHP.getChildren().addAll(HPImage);
-        HPImage.toBack();
+        HPRectangle = new Bars(20, Color.DARKRED, true, Player.getMaxHp(), "/model/resources/edited_HPBar_png.png");
+        ImageView HPImage = HPRectangle.addImage(325, 35);
+        StackPane stackHP = HPRectangle.createStackBar(300, 20, Color.DARKRED, Player.getMaxHp(), HPImage);
 
-        ShieldRectangle = new Bars(7,Color.LIGHTBLUE,true,Player.getMaxShield());
-        StackPane stackShield = createStackBar(ShieldRectangle, 300,7,Color.LIGHTBLUE,Player.getMaxShield());
-        HPVBox.setPadding(new Insets(5,10,0,5));
-        HPVBox.setSpacing(5);
-        HPVBox.getChildren().addAll(stackHP,stackShield);
-        return HPVBox;
-    }
-    private StackPane createStackBar(Bars rectangleBar,double rectangleWidth,double rectangleHeight,Color fill,double MaxValue){
-        StackPane stack = new StackPane();
-        Rectangle rectangle = new Rectangle(rectangleWidth,rectangleHeight);
-        rectangle.setFill(Color.TRANSPARENT);
-        rectangle.setStroke(fill);
-        rectangle.setStrokeWidth(2);
+        ShieldRectangle = new Bars(7, Color.LIGHTBLUE, true, Player.getMaxShield(), "/model/resources/edited_HPBar_png.png");
+        ImageView ShieldImage = ShieldRectangle.addImage(325, 20);
+        StackPane stackShield = ShieldRectangle.createStackBar(300, 7, Color.LIGHTBLUE, Player.getMaxShield(), ShieldImage);
 
-        rectangleBar.setCurrentValue(MaxValue);
-        stack.getChildren().addAll(rectangle,rectangleBar);
-        return stack;
-    }
-    private ImageView addImage(String url,double width,double height){
-        Image image = new Image(url);
-        ImageView viewer = new ImageView();
-        viewer.setImage(image);
-        viewer.setFitHeight(height);
-        viewer.setFitWidth(width);
-        viewer.setSmooth(true);
-        return viewer;
-    }
-    public VBox getVBox(){
+        HPVBox = createVBox();
+        HPVBox.getChildren().addAll(stackHP, stackShield);
         return HPVBox;
     }
 
-    public Bars getHPRectangle(){
+    private VBox createVBox() {
+        VBox vbx = new VBox();
+        vbx.setPadding(new Insets(5, 10, 0, 5));
+        vbx.setSpacing(5);
+        return vbx;
+    }
+
+    public VBox getVBox() {
+        return HPVBox;
+    }
+
+    public Bars getHPRectangle() {
         return HPRectangle;
     }
-    public Bars getShieldRectangle(){
+
+    public Bars getShieldRectangle() {
         return ShieldRectangle;
     }
 
