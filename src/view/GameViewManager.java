@@ -111,6 +111,11 @@ public class GameViewManager {
                 (GameObject) n
         ).collect(Collectors.toList());
         gameObjects.forEach(GameObject::update);
+        
+        if (nextRegenTime < System.currentTimeMillis()) { //todo masheeh mn hna
+            nextRegenTime = System.currentTimeMillis() + regenerationTimeLimitms;
+            player.regenerate();
+        }
     }
 
 }

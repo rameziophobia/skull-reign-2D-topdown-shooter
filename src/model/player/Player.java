@@ -96,35 +96,25 @@ public class Player extends Entity {
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
     }
 
+    //HP and Shield controllers
     @Override
-    public void takeDmg(double dmg) {
+    public void takeDmg(double damage) {
+
         if (ShieldRectangle.getCurrentValue() > 0) {
-            ShieldRectangle.decreaseCurrent(dmg);
-            barScaleAnimator(ShieldRectangle);
+            ShieldRectangle.decreaseCurrent(damage);
+            GameViewManager.nextRegenTime = System.currentTimeMillis() + GameViewManager.regenerationTimeLimitms;
         } else {
-            HPRectangle.decreaseCurrent(dmg);
-            barScaleAnimator(HPRectangle);
+            HPRectangle.decreaseCurrent(damage);
         }
     }
 
     @Override
     public void heal(float amount) {
         HPRectangle.increaseCurrent(amount);
-        barScaleAnimator(HPRectangle);
     }
 
     public void shieldRegen() {
         ShieldRectangle.regeneration();
-        barScaleAnimator(ShieldRectangle);
-    }
-
-    private void barScaleAnimator(StatBar HP) {//todo change paramaters to StatBar only
-        //todo this shouldn't be here
-        ScaleTransition HPAnimation = new ScaleTransition(Duration.seconds(0.1), HP);
-
-        HPAnimation.setToX((HP.getCurrentValue()) / MAX_HP);
-
-        HPAnimation.play();
     }
 
     public PlayerProjectileControl getPrimaryBtnHandler() {
