@@ -10,12 +10,14 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import model.Enemies.Enemy;
 import model.Enemies.normalTank;
+import model.Sprite;
 import model.obstacles.Obstacle;
 import model.player.PLAYERS;
 import model.player.Player;
 import model.projectiles.PowerUp;
 import model.projectiles.Projectile;
 import model.projectiles.ProjectileType;
+import model.walls.Wall;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -40,8 +42,15 @@ public class GameViewManager {
     private boolean rightPressed;
     private boolean leftPressed;
 
+    private boolean obUp = false;
+    private boolean obDown = false;
+    private boolean obRight = false;
+    private boolean obLeft = false;
+
     private AnimationTimer gameTimer;
+    private Wall rectangle;
     private ArrayList<Enemy> enemyArrayList;
+    private ArrayList<Wall> wallArrayList;
     private GridPane buildings;
     private int numberOfObstacles = 0;
     private int numberOfEnemies = 0;
@@ -62,22 +71,46 @@ public class GameViewManager {
             switch (event.getCode()) {
                 case W:
                 case UP: {
-                    upPressed = true;
-                    break;
-                }
-                case A:
-                case LEFT: {
-                    leftPressed = true;
-                    break;
-                }
-                case S:
-                case DOWN: {
-                    downPressed = true;
+                    if(!obUp){
+                        upPressed = true;
+                        obDown = false;
+                        obRight = false;
+                        obLeft = false;
+                    }
                     break;
                 }
                 case D:
                 case RIGHT: {
-                    rightPressed = true;
+                    if(!obRight){
+                        rightPressed = true;
+                        obLeft = false;
+                        obDown = false;
+                        obUp = false;
+                    }
+                    break;
+
+
+                }
+
+                case S:
+                case DOWN: {
+                    if(!obDown){
+                        downPressed = true;
+                        obLeft = false;
+                        obRight = false;
+                        obUp = false;
+
+                    }
+                    break;
+                }
+                case A:
+                case LEFT: {
+                    if(!obLeft){
+                        leftPressed = true;
+                        obDown = false;
+                        obRight = false;
+                        obUp = false;
+                    }
                     break;
                 }
                 case DIGIT1: {
@@ -176,6 +209,103 @@ public class GameViewManager {
 
     }
 
+    private void dontMove() {
+
+        if(upPressed){
+            if(shouldNtMoveUp(player)){
+                upPressed = false;
+                obUp = true;
+            }
+        }
+        else if(rightPressed){
+            if(shouldNtMoveRight(player)){
+                rightPressed = false;
+                obRight = true;
+            }
+        }
+        else if(downPressed){
+            if(shouldNtMoveDown(player)){
+                downPressed = false;
+                obDown = true;
+            }
+        }
+        else if(leftPressed){
+            if(shouldNtMoveLeft(player)){
+                leftPressed = false;
+                obLeft = true;
+            }
+        }
+
+
+        if(player.atTopBorder()) {
+            if(upPressed){
+                upPressed = false;
+                obUp = true;
+            }
+        }
+        if(player.atBottomBorder()) {
+            if(downPressed){
+                downPressed = false;
+                obDown = true;
+            }
+        }
+        if(player.atLeftBorder()) {
+            if(leftPressed){
+                leftPressed = false;
+                obLeft = true;
+            }
+        }
+        if(player.atRightBorder()) {
+            if(rightPressed){
+                rightPressed = false;
+                obRight = true;
+            }
+        }
+
+    }
+
+    public boolean shouldNtMoveUp(Sprite object){
+        for(Wall wall: wallArrayList) {
+            if (wall.getBoundsInParent().intersects(object.getBoundsInParent())) {
+                if (Math.abs(player.getLayoutY()  - wall.getLayoutY() -60) < 6) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean shouldNtMoveDown(Sprite object){
+        for(Wall wall: wallArrayList) {
+            if (wall.getBoundsInParent().intersects(object.getBoundsInParent())) {
+                if (Math.abs(player.getLayoutY() + 43 - wall.getLayoutY())< 6) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    public boolean shouldNtMoveLeft(Sprite object){
+        for(Wall wall: wallArrayList) {
+            if (wall.getBoundsInParent().intersects(object.getBoundsInParent())) {
+
+                if (Math.abs(player.getLayoutX()  - wall.getLayoutX() -  250)< 6) {
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+    public boolean shouldNtMoveRight(Sprite object){
+        for(Wall wall: wallArrayList) {
+            if (wall.getBoundsInParent().intersects(object.getBoundsInParent())) {
+                if (Math.abs(player.getLayoutX() + 49 - wall.getLayoutX()) < 8) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     private void initializeStage() {
         gamePane = new AnchorPane();
@@ -212,6 +342,7 @@ public class GameViewManager {
         createUI();
         createPlayer(chosenPlayer);
         createEnemy();
+        createWall();
         setMouseListeners();
         initializeBuildings();
         gameLoop();
@@ -242,6 +373,12 @@ public class GameViewManager {
         enemyArrayList.add(sandTank);
         gamePane.getChildren().add(sandTank);
     }
+    private void createWall() {
+        rectangle = new Wall(1000,200);
+        wallArrayList = new ArrayList<>();
+        wallArrayList.add(rectangle);
+        gamePane.getChildren().addAll(rectangle);
+    }
 
     private void initializeBuildings() {//todo initialize random buildings with gridpane
     }
@@ -262,6 +399,7 @@ public class GameViewManager {
 
                 Obstacle.update();
                 followPlayer();
+                dontMove();
                 checkCollision(); //todo: 7otaha in gameObjects ( player, enemies etc) or in projectiles
 
             }
@@ -321,6 +459,18 @@ public class GameViewManager {
                     }
                 }
             }
+        }
+        for (Projectile p : player.getProjArr()) {
+
+
+            if (rectangle.getBoundsInParent().intersects(p.getBoundsInParent())) {
+                p.setLayoutY(-500);
+
+
+                projArrRemove.add(p);
+
+            }
+
         }
 
         gamePane.getChildren().removeAll(projArrRemove);//todo: this is stupid

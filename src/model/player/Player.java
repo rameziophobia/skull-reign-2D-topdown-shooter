@@ -86,6 +86,23 @@ public class Player extends Sprite {
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
     }
 
+    public boolean atRightBorder(){
+        return( getLayoutX() >= GameViewManager.WIDTH - 49);
+
+    }
+    public boolean atLeftBorder(){
+        return( getLayoutX() < 0);
+
+    }
+    public boolean atBottomBorder(){
+        return( getLayoutY()  >= GameViewManager.HEIGHT - 43);
+
+    }
+    public boolean atTopBorder(){
+        return( getLayoutY() < 0);
+
+    }
+
     public void takeDmg(double damage) {
 
         if (ShieldRectangle.getCurrentValue() > 0) {
@@ -141,7 +158,6 @@ public class Player extends Sprite {
                         double mouseXPos, double mouseYPos) {
         setRotate(calculateRotation(new Point2D(mouseXPos, mouseYPos)));
         move(upPressed, downPressed, leftPressed, rightPressed);
-        warp();
         secondaryBtnHandler.update(angle);
         primaryBtnHandler.update(angle);
 
