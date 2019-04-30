@@ -12,11 +12,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import model.smallLabel;
-import model.PlayerPicker;
-import model.BtnTemp;
-import model.subsceneTemp;
-import model.player.PLAYERS;
+import model.ui.mainmenu.SmallLabel;
+import model.ui.mainmenu.SubsceneTemp;
+import model.ui.mainmenu.PlayerPicker;
+import model.ui.mainmenu.BtnTemp;
+import model.player.PlayerType;
 
 
 import java.util.ArrayList;
@@ -33,9 +33,9 @@ public class ViewManager {
     private TilePane menuButtons;
     private HBox centerHbx;
     private StackPane stkPane;
-    private subsceneTemp currentSubScene;
+    private SubsceneTemp currentSubScene;
     private ArrayList<PlayerPicker> playerList;
-    private PLAYERS chosenPlayer;
+    private PlayerType chosenPlayer;
 
     public ViewManager() {
         mainPane = new BorderPane();
@@ -49,7 +49,7 @@ public class ViewManager {
     }
 
     public static void setCursorHand(Pane pane) {
-        Image image = new Image("file:src/view/resources/cursorHand_blue.png");
+        Image image = new Image("file:resources/sprites/ui/cursorHand_blue.png");
         pane.setCursor(new ImageCursor(image,
                 image.getWidth() / 2,
                 image.getHeight() / 2));
@@ -85,13 +85,13 @@ public class ViewManager {
     }
 
     private void createBackground() {
-        Image backgroundImage = new Image("file:src/view/resources/floor2.png");
+        Image backgroundImage = new Image("file:resources/sprites/tiles/floor2.png");
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
         mainPane.setBackground(new Background(background));
     }
 
     private void createLogo() {
-        Image logoImage = new Image("file:src/view/resources/logo.png", 80, 80, true, false);
+        Image logoImage = new Image("file:resources/sprites/ui/logo.png", 80, 80, true, false);
         ImageView logo = new ImageView(logoImage);
         HBox hbx_logo = new HBox();
         hbx_logo.getChildren().add(logo);
@@ -101,7 +101,7 @@ public class ViewManager {
     }
 
     private void createLogoLabel(HBox hbx_logo) {
-        final smallLabel lbl_logo = new smallLabel("El Game");
+        final SmallLabel lbl_logo = new SmallLabel("El Game");
         lbl_logo.setFont(Font.font("Cambria", 32));
         lbl_logo.setTextFill(Color.WHITE);
         lbl_logo.setOnMouseEntered(e -> lbl_logo.setEffect(new Glow(2)));
@@ -123,7 +123,7 @@ public class ViewManager {
     private void createStartBtn() {
         BtnTemp btn = new BtnTemp("Play");
         menuButtons.getChildren().add(btn);
-        subsceneTemp subscene = new subsceneTemp();
+        SubsceneTemp subscene = new SubsceneTemp();
         stkPane.getChildren().add(subscene);
         fadeOnAction(btn, subscene);
         HBox hbx_start = createHbxStart();
@@ -137,7 +137,7 @@ public class ViewManager {
         HBox hbx_start = new HBox();
         hbx_start.setSpacing(20);
         playerList = new ArrayList<>();
-        for (PLAYERS p : PLAYERS.values()) {
+        for (PlayerType p : PlayerType.values()) {
             PlayerPicker pp = new PlayerPicker(p);
             hbx_start.getChildren().add(pp);
             playerList.add(pp);
@@ -155,7 +155,7 @@ public class ViewManager {
     private void createScoreBtn() {
         BtnTemp btn = new BtnTemp("Score");
         menuButtons.getChildren().add(btn);
-        subsceneTemp subscene = new subsceneTemp();
+        SubsceneTemp subscene = new SubsceneTemp();
         stkPane.getChildren().add(subscene);
         fadeOnAction(btn, subscene);
     }
@@ -163,7 +163,7 @@ public class ViewManager {
     private void creatHelpBtn() {
         BtnTemp btn = new BtnTemp("Help");
         menuButtons.getChildren().add(btn);
-        subsceneTemp subscene = new subsceneTemp();
+        SubsceneTemp subscene = new SubsceneTemp();
         stkPane.getChildren().add(subscene);
         fadeOnAction(btn, subscene);
     }
@@ -171,7 +171,7 @@ public class ViewManager {
     private void createCreditsBtn() {
         BtnTemp btn = new BtnTemp("Credits");
         menuButtons.getChildren().add(btn);
-        subsceneTemp subscene = new subsceneTemp();
+        SubsceneTemp subscene = new SubsceneTemp();
         stkPane.getChildren().add(subscene);
         fadeOnAction(btn, subscene);
     }
@@ -182,7 +182,7 @@ public class ViewManager {
         btn.setOnAction(event -> mainStage.close());
     }
 
-    private void fadeOnAction(BtnTemp btn, subsceneTemp subscene) {
+    private void fadeOnAction(BtnTemp btn, SubsceneTemp subscene) {
 
 
         btn.setOnAction(e -> {

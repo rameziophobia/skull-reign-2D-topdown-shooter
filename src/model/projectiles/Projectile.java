@@ -1,74 +1,104 @@
 package model.projectiles;
 
-import controller.Animation.AnimationClip;
-import controller.Animation.SpriteSheet;
+import controller.animation.AnimationClip;
+import controller.animation.SpriteSheet;
 import javafx.geometry.Point2D;
-import model.Sprite;
+import model.enemies.Enemy;
+import model.GameObject;
+import view.GameViewManager;
+import view.LevelManager;
 
-public class Projectile extends Sprite {
+import static view.GameViewManager.*;
 
-    private AnimationClip animationClip;
+public class Projectile extends GameObject {
+
+    private ProjectileType projectileType;
     private double angle;
-    private ProjectileType proj;
-    private double scale = 1;
+    private double scale = 1.0;
+    private AnimationClip animationClip;
+    private Boolean enemyProjectile;
 
+    private float speed;
 
-    public ProjectileType getProj() {
-        return proj;
-    }
-
-    Projectile(Point2D spawner, ProjectileType projectileType, double angle) {
-        super(projectileType.URL, projectileType.SPEED, new Point2D(1, 1), null);
-
-        if(projectileType.ANIMATED){
-            this.animated = true;
-            SpriteSheet spriteSheet = new SpriteSheet(projectileType.URL, 0);
-            animationClip = new AnimationClip(spriteSheet, spriteSheet.getFrameCount() * 1.2f, false, -1,  this);
-        }
-
-        spawnProjectile(spawner, angle);
-        proj = projectileType;
+    Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile) {
+        super(projectileType.getURL());
+        this.projectileType = projectileType;
+        this.speed = projectileType.getSPEED();
         this.angle = angle;
+        this.enemyProjectile = enemyProjectile;
+
+        if (projectileType.isANIMATED()) {
+            this.animated = true;
+            SpriteSheet spriteSheet = new SpriteSheet(projectileType.getURL(), 0);
+            animationClip = new AnimationClip(spriteSheet,
+                    spriteSheet.getFrameCount() * 1.2f,
+                    false,
+                    AnimationClip.INF_REPEATS,
+                    this);
+            animationClip.animate();
+        }
+        spawnProjectile(spawnPoint, angle);
     }
 
-    private void spawnProjectile(Point2D spawner, double angle) {
-        setLayoutX(spawner.getX());
-        setLayoutY(spawner.getY());
+    private void spawnProjectile(Point2D spawnPoint, double angle) {
+        setLayoutX(spawnPoint.getX());
+        setLayoutY(spawnPoint.getY());
         setRotate(angle);
     }
 
-    void move() {
-        double speedX = Math.cos(Math.toRadians(angle)) * speed;
-        double speedY = Math.sin(Math.toRadians(angle)) * speed;
-        setLayoutY(getLayoutY() + speedY);
-        setLayoutX(getLayoutX() + speedX);
-        if(animated) {
-            animationClip.animate();
-        }
-    }
-
-
-
-    void addSpeed(double speed) {
+    public void addSpeed(float speed) {
         this.speed = this.speed + speed;
     }
 
-    void setScale(double scale) {
+    public void setDmgScale(double scale) {
         this.scale = 1 + scale / 100;
         setScaleX(this.scale);
         setScaleY(this.scale);
     }
 
-    public double getScale() {
-        return scale;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
     public double getDamage() {
-        return proj.DAMAGE * (((getScale() - 1) * 2) + 1);
+        return projectileType.getDAMAGE() * (2 * scale - 1);
     }
+
+    private void move() {
+        setLayoutY(getLayoutY() + Math.sin(Math.toRadians(angle)) * speed);
+        setLayoutX(getLayoutX() + Math.cos(Math.toRadians(angle)) * speed);
+    }
+
+    private void checkCollision_entity() {
+        if (enemyProjectile) {
+            if(isIntersects(getPlayer())){
+                getPlayer().takeDmg(projectileType.getDAMAGE());
+                removeGameObjectFromScene(this);
+            }
+        } else {
+            for (Enemy enemy : LevelManager.getEnemyArrayList()) {
+                if (isIntersects(enemy)) {
+                    enemy.takeDmg(getDamage());
+                    GameViewManager.removeGameObjectFromScene(this);
+                }
+            }
+        }
+    }
+
+    private void checkCollision_border() {
+        if ((getLayoutY() > GameViewManager.HEIGHT || getLayoutY() < 0)
+                && (getLayoutX() > GameViewManager.WIDTH || getLayoutX() < 0)) {
+            GameViewManager.removeGameObjectFromScene(this);
+        }
+    }
+
+    @Override
+    public void update() {
+        move();
+
+        if (animated) { //todo everything should be animated
+            animationClip.animate();
+        }
+        checkCollision_entity();
+        checkCollision_border();
+        //todo: check range
+    }
+
 
 }
