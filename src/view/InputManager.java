@@ -125,6 +125,9 @@ public class InputManager {//todo temp static ?
                     player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
                     break;
                 }
+                case U: {
+                    player.takeDmg(20);
+                }
             }
         });
 

@@ -3,6 +3,7 @@ package model.player;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import model.Entity;
+import view.Bars;
 import view.game.stats.StatBar;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
@@ -18,8 +19,10 @@ public class Player extends Entity {
     private static final double MAX_SHIELD = 200;
     private static final long REGENERATION_TIME_CD_MS = 5000;
 
-    private StatBar HPRectangle;
-    private StatBar ShieldRectangle;
+    private Bars HPRectangle;
+    private Bars ShieldRectangle;
+    private double nextRegenTime;
+
     private final PlayerProjectileControl primaryBtnHandler;
     private final PlayerProjectileControl secondaryBtnHandler;
     private double currentHp = MAX_HP;
@@ -30,7 +33,7 @@ public class Player extends Entity {
     private boolean leftPressed;
     private boolean rightPressed;
 
-    public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change it to said's char mn 8er rotation
+    public Player(PlayerType player, Bars HPBar, Bars ShieldBar) { //todo: change it to said's char mn 8er rotation
         super(player.getURL(), SPEED);
 
         setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2);
@@ -102,7 +105,7 @@ public class Player extends Entity {
 
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(damage);
-            GameViewManager.nextRegenTime = System.currentTimeMillis() + GameViewManager.regenerationTimeLimitms;
+            nextRegenTime = System.currentTimeMillis() + REGENERATION_TIME_CD_MS;
         } else {
             HPRectangle.decreaseCurrent(damage);
         }
@@ -114,7 +117,10 @@ public class Player extends Entity {
     }
 
     public void shieldRegen() {
-        ShieldRectangle.regeneration();
+        if (nextRegenTime < System.currentTimeMillis()) { //todo masheeh mn hna
+            nextRegenTime = System.currentTimeMillis() + REGENERATION_TIME_CD_MS;
+            ShieldRectangle.regeneration();
+        }
     }
 
     public PlayerProjectileControl getPrimaryBtnHandler() {

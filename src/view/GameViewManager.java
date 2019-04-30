@@ -79,13 +79,13 @@ public class GameViewManager {
     }
 
     private void createPlayer(PlayerType chosenPlayer) {
-        player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
+        player = new Player(chosenPlayer, GVUI.getHPRectangle(), GVUI.getShieldRectangle());
         addGameObjectTOScene(player);
         player.toFront();//todo walls ?
     }
 
     private void createUI() {
-        gamePane.getChildren().addAll(GVUI.getGroup(), GVUI.getHealthBars());
+        gamePane.getChildren().addAll(GVUI.getGroup(), GVUI.getVBox());
     }
 
     private void startGameLoop() {
@@ -111,11 +111,7 @@ public class GameViewManager {
                 (GameObject) n
         ).collect(Collectors.toList());
         gameObjects.forEach(GameObject::update);
-        
-        if (nextRegenTime < System.currentTimeMillis()) { //todo masheeh mn hna
-            nextRegenTime = System.currentTimeMillis() + regenerationTimeLimitms;
-            player.regenerate();
-        }
+
     }
 
 }

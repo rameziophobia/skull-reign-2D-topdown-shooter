@@ -7,15 +7,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import model.player.Player;
+import view.game.ProjectileUI;
+
 import static view.GameViewManager.*;
 
 public class GameViewUI {
 
 //    private HealthBars healthBars = new HealthBars(); //todo: zabat da
     private Group group = new Group();
-    Bars HPRectangle;
-    Bars ShieldRectangle;
-    VBox HPVBox;
+    private Bars HPRectangle;
+    private Bars ShieldRectangle;
+    private VBox HPVBox;
 
     public GameViewUI() {
         createHPbar();
