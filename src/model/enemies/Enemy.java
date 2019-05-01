@@ -20,7 +20,7 @@ public class Enemy extends Entity {
 
     private EnemyProjectileControl enemyProjectileControl;
 
-    public Enemy(EnemyType enemyType) {
+    public Enemy(EnemyType enemyType, ProjectileType projectileType, double ringRate, double ringRate1by1, double toPlayerRate) {
         super(enemyType.getURL(), enemyType.getSPEED());
 
         this.enemyType = enemyType;
@@ -28,9 +28,12 @@ public class Enemy extends Entity {
         Random rand = new Random();
         setLayoutY(rand.nextInt(HEIGHT));
         setLayoutX(rand.nextInt(WIDTH));
+        setProjectileControl(projectileType,ringRate,ringRate1by1, toPlayerRate);
+    }
+
+    private void setProjectileControl(ProjectileType type, double ringRate, double ringRate1by1, double toPlayerRate) {
         enemyProjectileControl = new EnemyProjectileControl
-                (Math.random() > 0.5 ? ProjectileType.ICEICLE : ProjectileType.FIREBALL,
-                        6, 0.1, 0.3);//todo: change magics
+                (type, ringRate, ringRate1by1, toPlayerRate);
     }
 
     @Override

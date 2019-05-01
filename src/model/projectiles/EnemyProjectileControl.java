@@ -47,7 +47,7 @@ public class EnemyProjectileControl {
     public void spawnRing() {
         int i = patternRates.RING.getIndex();
         final long timeNow = System.currentTimeMillis() / 1000;
-        if (timeNow > lastFireTime[i] + patternRate[i]) {
+        if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != -1) {
             for (int j = 0; j < 360; j += type.getMULTANGLE() * 3) {//todo: magic? multAngle .. momkn yb2a variable
                 Projectile projectile = new Projectile(spawner, type, j, true);
                 addGameObjectTOScene(projectile);
@@ -61,7 +61,7 @@ public class EnemyProjectileControl {
         int i = patternRates.RING1BY1.getIndex();
 
         final long timeNow = System.currentTimeMillis();
-        if (timeNow > lastFireTime[i] + patternRate[i] * 1000) {
+        if (timeNow > lastFireTime[i] + patternRate[i] * 1000 && patternRate[i] != -1) {
             angle1by1 += type.getMULTANGLE() * 2; //todo: magicNum
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1, true);
             addGameObjectTOScene(projectile);
@@ -73,7 +73,7 @@ public class EnemyProjectileControl {
         int i = patternRates.toPlayer.getIndex();
 
         final long timeNow = System.currentTimeMillis() / 1000;
-        if (timeNow > lastFireTime[i] + patternRate[i]) {
+        if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != -1) {
             Projectile projectile = new Projectile(spawner, type, angle, true);
             addGameObjectTOScene(projectile);
             lastFireTime[i] = timeNow;

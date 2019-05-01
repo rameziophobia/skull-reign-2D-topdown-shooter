@@ -14,6 +14,8 @@ import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static view.LevelManager.start_levels;
+
 public class GameViewManager {
     public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
     public static final int WIDTH = 1920;
@@ -104,8 +106,7 @@ public class GameViewManager {
 //    }
 
     private void gameUpdate() {
-        LevelManager.createEnemies();
-        LevelManager.createObstacles();
+        start_levels();
 
         List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
                 (GameObject) n
