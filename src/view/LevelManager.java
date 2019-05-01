@@ -166,12 +166,16 @@ public class LevelManager {//todo temp static
                 Math.random() > 0.5 ?  ProjectileType.ICEICLE : ProjectileType.ELECTRIC,
                 4,-1,-1, 5);
 
-        createEnemies(1000 * 9f, TANK_DARK_LARGE,
-                        Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC,
-                        3,-1,1, 6);
+        ProjectileType largeTankProjectile = Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC;
 
         createEnemies(1000 * 9f, TANK_DARK_LARGE,
-                        Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC,
+                largeTankProjectile,
+                        3,-1,1, 6);
+
+        largeTankProjectile = Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC;
+        
+        createEnemies(1000 * 9f, TANK_DARK_LARGE,
+                largeTankProjectile,
                         3,-1,1, 7);
 
         LevelManager.createObstacles(1000 * 10f);
