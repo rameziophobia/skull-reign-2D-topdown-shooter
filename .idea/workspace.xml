@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="fix: when player moved diagonally who could pass through the wall&#10;&#10;-Changed else if to if in dontMove() &#10;-Moved ShouldntMove functions to the Wall class&#10;-Changed the shouldntMove functions to avoid duplicated code">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/model/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/player/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/walls/Wall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/walls/Wall.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/view/GameViewManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/view/GameViewManager.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -14,8 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DefaultGradleProjectSettings">
-    <option name="testRunner" value="GRADLE" />
-    <option name="delegatedBuild" value="true" />
+    <option name="isMigrated" value="true" />
   </component>
   <component name="FavoritesManager">
     <favorites_list name="JavaFxApplication" />
@@ -25,52 +25,35 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/walls/Wall.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="12" selection-start-line="12" selection-end-line="12" />
+            <state relative-caret-position="810">
+              <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/view/GameViewManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1444">
+              <caret line="186" column="38" lean-forward="true" selection-start-line="186" selection-start-column="38" selection-end-line="186" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="19" column="1" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/view/GameViewManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="533">
-              <caret line="473" column="9" selection-start-line="473" selection-start-column="9" selection-end-line="473" selection-end-column="9" />
-              <folding>
-                <element signature="method#createKeyListeners#0;class#GameViewManager#0" />
-                <element signature="method#dontMove#0;class#GameViewManager#0" />
-                <element signature="e#8288#8641#0" />
-                <element signature="e#8646#9000#0" />
-                <element signature="e#9005#9364#0" />
-                <element signature="e#9369#9870#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../ASU19_Prog2Project-master/src/view/GameViewManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="511" column="8" selection-start-line="511" selection-start-column="8" selection-end-line="522" selection-end-column="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/model/player/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="587">
-              <caret line="159" column="64" selection-start-line="159" selection-start-column="64" selection-end-line="159" selection-end-column="64" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../ASU19_Prog2Project-master/src/model/player/Player.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="89" column="4" selection-start-line="89" selection-start-column="4" selection-end-line="104" selection-end-column="5" />
+            <state relative-caret-position="2052">
+              <caret line="114" column="17" lean-forward="true" selection-start-line="114" selection-start-column="17" selection-end-line="114" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -138,10 +121,10 @@
         <option value="$PROJECT_DIR$/src/model/Enemies/Enemy.java" />
         <option value="$PROJECT_DIR$/src/model/projectiles/Projectile.java" />
         <option value="$PROJECT_DIR$/src/model/obstacles/Obstacle.java" />
-        <option value="$PROJECT_DIR$/src/model/walls/Wall.java" />
         <option value="$PROJECT_DIR$/../ASU19_Prog2Project-master/src/view/GameViewManager.java" />
-        <option value="$PROJECT_DIR$/src/model/player/Player.java" />
         <option value="$PROJECT_DIR$/src/view/GameViewManager.java" />
+        <option value="$PROJECT_DIR$/src/model/walls/Wall.java" />
+        <option value="$PROJECT_DIR$/src/model/player/Player.java" />
       </list>
     </option>
   </component>
@@ -175,6 +158,12 @@
               <item name="Top Down Shooter" type="b2602c69:ProjectViewProjectNode" />
               <item name="Top Down Shooter" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Top Down Shooter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Top Down Shooter" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -195,7 +184,8 @@
               <item name="Top Down Shooter" type="b2602c69:ProjectViewProjectNode" />
               <item name="Top Down Shooter" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="META-INF" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="walls" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Top Down Shooter" type="b2602c69:ProjectViewProjectNode" />
@@ -265,6 +255,14 @@
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
     </task>
+    <task id="LOCAL-00001" summary="fix: ReportSameh">
+      <created>1556663262898</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1556663262898</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -272,7 +270,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Designer" order="0" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.6703755" visible="true" weight="0.13219616" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.6703755" visible="true" weight="0.13432837" />
       <window_info id="Structure" order="2" weight="0.24895833" />
       <window_info id="Favorites" order="3" weight="0.32905984" />
       <window_info id="Image Layers" order="4" />
@@ -282,13 +280,13 @@
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32394367" />
-      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.33152762" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.33152762" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.3943662" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" weight="0.32719395" />
       <window_info anchor="bottom" id="Application Servers" order="8" />
-      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.32936078" />
       <window_info anchor="bottom" id="Problems" order="10" />
       <window_info anchor="bottom" id="Changes" order="11" />
       <window_info anchor="bottom" id="Profiler" order="12" />
@@ -348,6 +346,8 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <MESSAGE value="fix: ReportSameh" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: ReportSameh" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -475,13 +475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/player/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="587">
-          <caret line="159" column="64" selection-start-line="159" selection-start-column="64" selection-end-line="159" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/model/Sprite.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="468">
@@ -510,6 +503,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../ASU19_Prog2Project-master/src/view/GameViewManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="511" column="8" selection-start-line="511" selection-start-column="8" selection-end-line="522" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/sample/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -519,30 +519,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/walls/Wall.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../ASU19_Prog2Project-master/src/view/GameViewManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="511" column="8" selection-start-line="511" selection-start-column="8" selection-end-line="522" selection-end-column="9" />
+        <state relative-caret-position="810">
+          <caret line="45" lean-forward="true" selection-start-line="45" selection-end-line="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/GameViewManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="533">
-          <caret line="473" column="9" selection-start-line="473" selection-start-column="9" selection-end-line="473" selection-end-column="9" />
-          <folding>
-            <element signature="method#createKeyListeners#0;class#GameViewManager#0" />
-            <element signature="method#dontMove#0;class#GameViewManager#0" />
-            <element signature="e#8288#8641#0" />
-            <element signature="e#8646#9000#0" />
-            <element signature="e#9005#9364#0" />
-            <element signature="e#9369#9870#0" />
-          </folding>
+        <state relative-caret-position="-1444">
+          <caret line="186" column="38" lean-forward="true" selection-start-line="186" selection-start-column="38" selection-end-line="186" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/player/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2052">
+          <caret line="114" column="17" lean-forward="true" selection-start-line="114" selection-start-column="17" selection-end-line="114" selection-end-column="17" />
         </state>
       </provider>
     </entry>

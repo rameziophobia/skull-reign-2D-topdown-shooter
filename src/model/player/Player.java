@@ -4,7 +4,6 @@ import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import javafx.geometry.Point2D;
 import model.Sprite;
-import model.projectiles.PowerUp;
 import view.Bars;
 import model.projectiles.Projectile;
 import model.projectiles.PlayerProjectileControl;
@@ -81,6 +80,7 @@ public class Player extends Sprite {
         }
     }
 
+
     private void warp() {
         setLayoutY((getLayoutY() < 0) ? (getLayoutY() + GameViewManager.HEIGHT) : (getLayoutY() % GameViewManager.HEIGHT));
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
@@ -102,6 +102,7 @@ public class Player extends Sprite {
         return( getLayoutY() < 0);
 
     }
+
 
     public void takeDmg(double damage) {
 

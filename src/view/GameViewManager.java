@@ -10,7 +10,6 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import model.Enemies.Enemy;
 import model.Enemies.normalTank;
-import model.Sprite;
 import model.obstacles.Obstacle;
 import model.player.PLAYERS;
 import model.player.Player;
@@ -42,10 +41,12 @@ public class GameViewManager {
     private boolean rightPressed;
     private boolean leftPressed;
 
-    private boolean obUp = false;
-    private boolean obDown = false;
-    private boolean obRight = false;
-    private boolean obLeft = false;
+    private boolean wallUp = false;
+    private boolean wallDown = false;
+    private boolean wallRight = false;
+    private boolean wallLeft = false;
+
+
 
     private AnimationTimer gameTimer;
     private Wall rectangle;
@@ -71,21 +72,21 @@ public class GameViewManager {
             switch (event.getCode()) {
                 case W:
                 case UP: {
-                    if(!obUp){
+                    if(!wallUp){
                         upPressed = true;
-                        obDown = false;
-                        obRight = false;
-                        obLeft = false;
+                        wallDown = false;
+                        wallRight = false;
+                        wallLeft = false;
                     }
                     break;
                 }
                 case D:
                 case RIGHT: {
-                    if(!obRight){
+                    if(!wallRight){
                         rightPressed = true;
-                        obLeft = false;
-                        obDown = false;
-                        obUp = false;
+                        wallLeft = false;
+                        wallDown = false;
+                        wallUp = false;
                     }
                     break;
 
@@ -94,22 +95,22 @@ public class GameViewManager {
 
                 case S:
                 case DOWN: {
-                    if(!obDown){
+                    if(!wallDown){
                         downPressed = true;
-                        obLeft = false;
-                        obRight = false;
-                        obUp = false;
+                        wallLeft = false;
+                        wallRight = false;
+                        wallUp = false;
 
                     }
                     break;
                 }
                 case A:
                 case LEFT: {
-                    if(!obLeft){
+                    if(!wallLeft){
                         leftPressed = true;
-                        obDown = false;
-                        obRight = false;
-                        obUp = false;
+                        wallDown = false;
+                        wallRight = false;
+                        wallUp = false;
                     }
                     break;
                 }
@@ -209,30 +210,31 @@ public class GameViewManager {
 
     }
 
+
     private void dontMove() {
 
         if(upPressed){
-            if(shouldNtMoveUp(player)){
+            if(Wall.shouldNtMoveUp(player,wallArrayList)){
                 upPressed = false;
-                obUp = true;
+                wallUp = true;
             }
         }
-        else if(rightPressed){
-            if(shouldNtMoveRight(player)){
+        if(rightPressed){
+            if(Wall.shouldNtMoveRight(player,wallArrayList)){
                 rightPressed = false;
-                obRight = true;
+                wallRight = true;
             }
         }
-        else if(downPressed){
-            if(shouldNtMoveDown(player)){
+        if(downPressed){
+            if(Wall.shouldNtMoveDown(player,wallArrayList)){
                 downPressed = false;
-                obDown = true;
+                wallDown = true;
             }
         }
-        else if(leftPressed){
-            if(shouldNtMoveLeft(player)){
+        if(leftPressed){
+            if(Wall.shouldNtMoveLeft(player,wallArrayList)){
                 leftPressed = false;
-                obLeft = true;
+                wallLeft = true;
             }
         }
 
@@ -240,72 +242,30 @@ public class GameViewManager {
         if(player.atTopBorder()) {
             if(upPressed){
                 upPressed = false;
-                obUp = true;
+                wallUp = true;
             }
         }
         if(player.atBottomBorder()) {
             if(downPressed){
                 downPressed = false;
-                obDown = true;
+                wallDown = true;
             }
         }
         if(player.atLeftBorder()) {
             if(leftPressed){
                 leftPressed = false;
-                obLeft = true;
+                wallLeft = true;
             }
         }
         if(player.atRightBorder()) {
             if(rightPressed){
                 rightPressed = false;
-                obRight = true;
+                wallRight = true;
             }
         }
 
     }
 
-    public boolean shouldNtMoveUp(Sprite object){
-        for(Wall wall: wallArrayList) {
-            if (wall.getBoundsInParent().intersects(object.getBoundsInParent())) {
-                if (Math.abs(player.getLayoutY()  - wall.getLayoutY() -60) < 6) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    public boolean shouldNtMoveDown(Sprite object){
-        for(Wall wall: wallArrayList) {
-            if (wall.getBoundsInParent().intersects(object.getBoundsInParent())) {
-                if (Math.abs(player.getLayoutY() + 43 - wall.getLayoutY())< 6) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    public boolean shouldNtMoveLeft(Sprite object){
-        for(Wall wall: wallArrayList) {
-            if (wall.getBoundsInParent().intersects(object.getBoundsInParent())) {
-
-                if (Math.abs(player.getLayoutX()  - wall.getLayoutX() -  250)< 6) {
-                    return true;
-                }
-            }
-
-        }
-        return false;
-    }
-    public boolean shouldNtMoveRight(Sprite object){
-        for(Wall wall: wallArrayList) {
-            if (wall.getBoundsInParent().intersects(object.getBoundsInParent())) {
-                if (Math.abs(player.getLayoutX() + 49 - wall.getLayoutX()) < 8) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     private void initializeStage() {
         gamePane = new AnchorPane();
@@ -390,13 +350,12 @@ public class GameViewManager {
             public void handle(long now) {
                 timer += 0.016;
 
-                createEnemies();
-                createObstacles();
+//                createEnemies();
+//                createObstacles();
 
                 player.control(upPressed, downPressed,
                         leftPressed, rightPressed,
                         mouseXPos,mouseYPos);
-
                 Obstacle.update();
                 followPlayer();
                 dontMove();
