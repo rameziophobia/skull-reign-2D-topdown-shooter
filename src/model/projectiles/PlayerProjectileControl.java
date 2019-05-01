@@ -7,6 +7,7 @@ import view.GameViewManager;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import static controller.audiomanager.AudioManager.playAudio;
 import static view.GameViewManager.getPlayer;
 import static view.game.ProjectileUI.setWeapon;
 
@@ -107,7 +108,6 @@ public class PlayerProjectileControl {
                         type,
                         angle + mult * type.getMULTANGLE() * Math.pow(-1, mult),
                         false);//todo odd multiples look weird
-
                 projectile.setDmgScale(powerUp.get(PowerUpTypes.SCALE));
                 projectile.addSpeed(powerUp.get(PowerUpTypes.SPEED));
 

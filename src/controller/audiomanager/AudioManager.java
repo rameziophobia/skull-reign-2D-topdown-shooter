@@ -30,6 +30,10 @@ public class AudioManager {
     public static void playAudio(AudioFile audioFile) {
         playAudio(audioFile, 1.0);
     }
+    public static void playAudioStopPrev(AudioFile audioFile) {
+        stopAudio(audioFile);
+        playAudio(audioFile, 1.0);
+    }
 
     public static void playAudio(AudioFile audioFile, double volume) {
         AUDIO_MIXER_HASH_MAP.get(audioFile.getMixer()).playAudio(audioFile, volume);

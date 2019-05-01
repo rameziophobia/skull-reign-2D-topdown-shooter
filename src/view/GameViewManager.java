@@ -1,5 +1,6 @@
 package view;
 
+import controller.audiomanager.AudioManager;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -75,6 +76,7 @@ public class GameViewManager {
         InputManager.setKeyListener(gameScene);
         InputManager.setMouseListeners(gamePane);
 
+        AudioManager.init();
         startGameLoop();
     }
 

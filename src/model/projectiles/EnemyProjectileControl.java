@@ -2,6 +2,7 @@ package model.projectiles;
 
 import javafx.geometry.Point2D;
 
+import static controller.audiomanager.AudioManager.playAudio;
 import static view.GameViewManager.addGameObjectTOScene;
 
 public class EnemyProjectileControl {
@@ -77,6 +78,7 @@ public class EnemyProjectileControl {
             Projectile projectile = new Projectile(spawner, type, angle, true);
             addGameObjectTOScene(projectile);
             lastFireTime[i] = timeNow;
+            playAudio(type.getSound());
         }
     }
 
