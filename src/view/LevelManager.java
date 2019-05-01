@@ -28,8 +28,8 @@ public class LevelManager {//todo temp static
         return enemyArrayList;
     }
 
-    public static void createEnemies(float spawn_cd, EnemyType enemyType, ProjectileType projectileType,
-                                     double ringRate, double ringRate1by1, double toPlayerRate, int id) {
+    private static void createEnemies(float spawn_cd, EnemyType enemyType, ProjectileType projectileType,
+                                      double ringRate, double ringRate1by1, double toPlayerRate, int id) {
 
         nextEnemySpawnTime.putIfAbsent(id,(long)spawn_cd + System.currentTimeMillis());
 
@@ -46,7 +46,7 @@ public class LevelManager {//todo temp static
         }
     }
 
-    public static void createObstacles(float spawn_cd) {
+    private static void createObstacles(float spawn_cd) {
         if (nextObstaclesSpawnTime < System.currentTimeMillis()) {
             nextObstaclesSpawnTime = System.currentTimeMillis() + (long) (spawn_cd);
 
@@ -58,7 +58,7 @@ public class LevelManager {//todo temp static
         enemyArrayList.remove(enemy);
     }
 
-    public static void start_levels() {//todo not the best idea to switch levels
+    public static void startLevels() {//todo not the best idea to switch levels
 
         switch (level){
             case 1:
@@ -76,6 +76,7 @@ public class LevelManager {//todo temp static
                 level3();
                 break;
             }
+            default:
             case  4:
             {
                 level4();
@@ -168,6 +169,7 @@ public class LevelManager {//todo temp static
         createEnemies(1000 * 9f, TANK_DARK_LARGE,
                         Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC,
                         3,-1,1, 6);
+
         createEnemies(1000 * 9f, TANK_DARK_LARGE,
                         Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC,
                         3,-1,1, 7);

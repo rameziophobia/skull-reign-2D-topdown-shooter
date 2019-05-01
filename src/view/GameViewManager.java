@@ -14,7 +14,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static view.LevelManager.start_levels;
+import static view.LevelManager.startLevels;
 
 public class GameViewManager {
     public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
@@ -106,7 +106,7 @@ public class GameViewManager {
 //    }
 
     private void gameUpdate() {
-        start_levels();
+        startLevels();
 
         List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
                 (GameObject) n
