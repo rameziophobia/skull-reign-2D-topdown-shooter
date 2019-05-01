@@ -11,12 +11,12 @@ import java.util.Random;
 import static view.GameViewManager.*;
 
 public class Enemy extends Entity {
-    private static final double MAX_HP = 100;
+    private final double MAX_HP;
 
     private EnemyType enemyType;
     private double angle;
 
-    private double hp = MAX_HP;
+    private double hp;
 
     private EnemyProjectileControl enemyProjectileControl;
 
@@ -24,6 +24,8 @@ public class Enemy extends Entity {
         super(enemyType.getURL(), enemyType.getSPEED());
 
         this.enemyType = enemyType;
+        this.MAX_HP = enemyType.getHP();
+        hp = MAX_HP;
 
         Random rand = new Random();
         setLayoutY(rand.nextInt(HEIGHT));
@@ -56,17 +58,11 @@ public class Enemy extends Entity {
         setLayoutY(getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED());
     }
 
-    private void removeProjectiles() {
-        //todo
-
-    }
-
     @Override
     public void update() {
         updateAngle();
         setRotate(angle);
         move();
-        removeProjectiles();
 
         enemyProjectileControl.update(angle, new Point2D(getLayoutX(), getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
 
