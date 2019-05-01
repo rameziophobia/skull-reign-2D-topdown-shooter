@@ -4,7 +4,7 @@ import view.Main;
 
 public enum ProjectileType {
     BULLET(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "bullet-13x3.png",
-            15, 1, 10, 3, false),
+            15, 2, 10, 3, false),
     FIRE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fire-32x12.png",
             1, 35, 6, 1, false),
     REDLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserRed01-9x54.png", 3, 15, 15, 3, false),
@@ -25,7 +25,7 @@ public enum ProjectileType {
     FIREBALL(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fireball_0 -animated-64x16.png", 1.5, 50, 6, 5, true),
     FLAMEBALL(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "flameball-animated-32x32.png", 1.5, 50, 6, 5, true),
     SHOCK(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "shock-animated-64x13.png", 1.5, 50, 6, 5, true),
-    ICEICLE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "icicle-right-animated-64x11.png", 1.5, 50, 6, 5, true),
+    ICEICLE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "icicle-right-animated-64x11.png", 1.5, 50, 7, 5, true),
     ELECTRIC(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "electric-animated-63x83.png", 2, 40, 7, 10, true),
     CAT(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "black-cat-animated-32x26.png", 1.3, 40, 5, 10, true),
     WHIRLWIND(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "whirlwind-animated-16x19.png", 2, 40, 7, 5, true);

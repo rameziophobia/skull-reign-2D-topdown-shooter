@@ -16,9 +16,10 @@ public class LevelManager {//todo temp static
 //    private static final float SPAWN_CD_OBSTACLES = 1000 * 5f;
 
     private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
-    private static HashMap<EnemyType, Long> nextEnemySpawnTime = new HashMap<>();
+    private static HashMap<Integer, Long> nextEnemySpawnTime = new HashMap<>();
     private static long nextObstaclesSpawnTime; //todo dup code
     private static int level = 1;
+    private static int enemiesSpawned = 0; //todo this is stupid
 
     private LevelManager() {
     }
@@ -28,18 +29,20 @@ public class LevelManager {//todo temp static
     }
 
     public static void createEnemies(float spawn_cd, EnemyType enemyType, ProjectileType projectileType,
-                                     double ringRate, double ringRate1by1, double toPlayerRate) {
+                                     double ringRate, double ringRate1by1, double toPlayerRate, int id) {
 
-        nextEnemySpawnTime.putIfAbsent(enemyType,(long)spawn_cd + System.currentTimeMillis());
+        nextEnemySpawnTime.putIfAbsent(id,(long)spawn_cd + System.currentTimeMillis());
 
-        if (nextEnemySpawnTime.get(enemyType) < System.currentTimeMillis()) {
-            nextEnemySpawnTime.put(enemyType,System.currentTimeMillis() + (long) (spawn_cd));
+        if (nextEnemySpawnTime.get(id) < System.currentTimeMillis()) {
+            nextEnemySpawnTime.put(id,System.currentTimeMillis() + (long) (spawn_cd));
 
             Enemy enemy = new Enemy(enemyType, projectileType,
                     ringRate,ringRate1by1, toPlayerRate);
 
             enemyArrayList.add(enemy);
             GameViewManager.addGameObjectTOScene(enemy);
+            enemiesSpawned++;
+            System.out.println(enemiesSpawned);
         }
     }
 
@@ -55,28 +58,124 @@ public class LevelManager {//todo temp static
         enemyArrayList.remove(enemy);
     }
 
-    public static void start_levels() {
+    public static void start_levels() {//todo not the best idea to switch levels
 
         switch (level){
             case 1:
             {
-                level = level1();
+                level1();
+                break;
+            }
+            case  2:
+            {
+                level2();
+                break;
+            }
+            case  3:
+            {
+                level3();
+                break;
+            }
+            case  4:
+            {
+                level4();
                 break;
             }
         }
     }
 
 
-    public static int level1(){
-        createEnemies(1000 * 4f, TANK_SAND,ProjectileType.ICEICLE,
-                -1,-1,0.5);
+    private static void level1(){
+
+        createEnemies(1000 * 5f, TANK_SAND,ProjectileType.REDLASER01,
+                -1,-1,0.7, 1);
+
+        if (enemiesSpawned > 4){
+            createEnemies(1000 * 5f, TANK_SAND,ProjectileType.REDLASER01,
+                    -1,-1,0.7, 2);
+        }
+
+        LevelManager.createObstacles(1000 * 15f);
+
+        if (enemiesSpawned > 10) {
+            level++;
+//            nextEnemySpawnTime.keySet().forEach(k ->
+//                    nextEnemySpawnTime.put(k, nextEnemySpawnTime.get(k) + 1000 * 1000L) ); //todo break been el levels
+            //todo open gate to the next level ama el player yod5ol feha regains HP, n3ml lvl++
+            //todo we hna tb el commented code
+        }
+    }
+    private static void level2(){
+
+        createEnemies(1000 * 4f, TANK_SAND,ProjectileType.REDLASER01,
+                -1,-1,0.6, 1);
+
+        createEnemies(1000 * 4f, TANK_SAND,ProjectileType.REDLASER01,
+                -1,-1,0.6, 2);
 
         createEnemies(1000 * 7f, TANK_RED,ProjectileType.FIREBALL,
-                -1,0.2,-1);
+                -1,0.2,-1, 3);
 
-        createEnemies(1000 * 10f, TANK_DARK,ProjectileType.SHOCK,
-                5,-1,-1);
-        LevelManager.createObstacles(1000 * 5f);
-        return 1;
+        createEnemies(1000 * 12f, TANK_DARK,ProjectileType.SHOCK,
+                5,-1,-1, 4);
+
+        LevelManager.createObstacles(1000 * 15f);
+
+        if (enemiesSpawned > 80) {
+            level++;
+        }
+    }
+
+    private static void level3(){
+        createEnemies(1000 * 4f, TANK_SAND,ProjectileType.REDLASER01,
+                -1,-1,0.6, 1);
+
+        createEnemies(1000 * 4f, TANK_SAND,ProjectileType.REDLASER01,
+                -1,-1,0.6, 2);
+
+        createEnemies(1000 * 7f, TANK_RED,ProjectileType.FIREBALL,
+                -1,0.13,-1, 3);
+
+        createEnemies(1000 * 10f,TANK_DARK,
+                Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC,
+                4,-1,-1, 4);
+
+        createEnemies(1000 * 10f, TANK_DARK,
+                Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC,
+                4,-1,-1, 5);
+
+        LevelManager.createObstacles(1000 * 10f);
+
+        if (enemiesSpawned > 140) {
+            level++;
+        }
+    }
+    private static void level4(){
+        createEnemies(1000 * 5, TANK_SAND,ProjectileType.REDLASER01,
+                -1,-1,0.5, 1);
+
+        createEnemies(1000 * 7f, TANK_RED,ProjectileType.FIREBALL,
+                -1,0.13,-1, 3);
+
+        createEnemies(1000 * 8f,TANK_DARK,
+                Math.random() > 0.5 ?  ProjectileType.ICEICLE : ProjectileType.ELECTRIC,
+                4,-1,-1, 4);
+
+        createEnemies(1000 * 8f, TANK_DARK,
+                Math.random() > 0.5 ?  ProjectileType.ICEICLE : ProjectileType.ELECTRIC,
+                4,-1,-1, 5);
+
+        createEnemies(1000 * 9f, TANK_DARK_LARGE,
+                        Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC,
+                        3,-1,1, 6);
+        createEnemies(1000 * 9f, TANK_DARK_LARGE,
+                        Math.random() > 0.5 ?  ProjectileType.SHOCK : ProjectileType.ELECTRIC,
+                        3,-1,1, 7);
+
+        LevelManager.createObstacles(1000 * 10f);
+
+        if (enemiesSpawned > 220) {
+            level++;
+        }
     }
 }
