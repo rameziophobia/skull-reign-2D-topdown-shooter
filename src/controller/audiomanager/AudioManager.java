@@ -11,7 +11,7 @@ public class AudioManager {
     }
 
     public static void setMasterVolume(double masterVolume) {
-        AudioManager.masterVolume = Math.max(Math.min(masterVolume, 0), 1.0);
+        AudioManager.masterVolume = Math.min(Math.max(masterVolume, 0), 1.0);
     }
 
     public static double getMasterVolume() {
@@ -20,8 +20,8 @@ public class AudioManager {
 
     public static void init() {
         for (AudioFile audioFile : AudioFile.values()) {
-            if (!AUDIO_MIXER_HASH_MAP.containsKey(audioFile.getMixer()))
-                AUDIO_MIXER_HASH_MAP.put(audioFile.getMixer(), new AudioMixer(1.0));
+
+            AUDIO_MIXER_HASH_MAP.putIfAbsent(audioFile.getMixer(), new AudioMixer(1.0));
 
             AUDIO_MIXER_HASH_MAP.get(audioFile.getMixer()).addAudio(audioFile);
         }

@@ -50,6 +50,6 @@ public enum AudioFile {
 
     private static class Constants {
         private static final String PATH_RESOURCES_AUDIO = "file:resources/audio/";
-        public static final String PATH_RESOURCES_AUDIO_SFX = PATH_RESOURCES_AUDIO + "sfx/";
+        private static final String PATH_RESOURCES_AUDIO_SFX = PATH_RESOURCES_AUDIO + "sfx/";
     }
 }
