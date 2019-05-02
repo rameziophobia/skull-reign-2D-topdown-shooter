@@ -5,6 +5,7 @@ import controller.animation.SpriteSheet;
 import javafx.geometry.Point2D;
 import model.enemies.Enemy;
 import model.GameObject;
+import model.walls.Wall;
 import view.GameViewManager;
 import view.LevelManager;
 
@@ -87,6 +88,13 @@ public class Projectile extends GameObject {
             GameViewManager.removeGameObjectFromScene(this);
         }
     }
+    private void checkCollision_wall(){
+        for(Wall wall: LevelManager.getWallArrayList()){
+            if(isIntersects(wall)){
+                GameViewManager.removeGameObjectFromScene(this);
+            }
+        }
+    }
 
     @Override
     public void update() {
@@ -97,6 +105,7 @@ public class Projectile extends GameObject {
         }
         checkCollision_entity();
         checkCollision_border();
+        checkCollision_wall();
         //todo: check range
     }
 

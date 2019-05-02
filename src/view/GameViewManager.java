@@ -106,6 +106,8 @@ public class GameViewManager {
     private void gameUpdate() {
         LevelManager.createEnemies();
         LevelManager.createObstacles();
+        LevelManager.createWall();
+        LevelManager.createPowerUp();
 
         List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
                 (GameObject) n

@@ -20,8 +20,8 @@ public class PlayerProjectileControl {
     private final buttons projectileBtn;
     private buttons lastPressed;
 
-    private HashMap<PowerUpTypes, Float> powerUp;
-    private HashMap<ProjectileType, HashMap<PowerUpTypes, Float>> weaponSettings = new HashMap<>();
+    private HashMap<PowerUpType, Float> powerUp;
+    private HashMap<ProjectileType, HashMap<PowerUpType, Float>> weaponSettings = new HashMap<>();
     private LinkedList<ProjectileType> weaponList = new LinkedList<>();
     //dictionary of weapons used with their respective powerUp dict
 
@@ -58,12 +58,12 @@ public class PlayerProjectileControl {
     }
 
     //sets powerUp to zero
-    private HashMap<PowerUpTypes, Float> initializePowerUp() {
-        HashMap<PowerUpTypes, Float> power = new HashMap<>();
-        for (PowerUpTypes powerUpTypes : PowerUpTypes.values()) {
+    private HashMap<PowerUpType, Float> initializePowerUp() {
+        HashMap<PowerUpType, Float> power = new HashMap<>();
+        for (PowerUpType powerUpTypes : PowerUpType.values()) {
             power.put(powerUpTypes, 0f);
         }
-        power.put(PowerUpTypes.MULT, 1f);
+        power.put(PowerUpType.MULT, 1f);
 
         return power;
     }
@@ -101,15 +101,15 @@ public class PlayerProjectileControl {
     private void createProjectile() {
 
         if (System.currentTimeMillis() > (lastFireTime + 1000 / type.getFIRERATE())) {
-            for (int mult = 0; mult < powerUp.get(PowerUpTypes.MULT); mult++) {
+            for (int mult = 0; mult < powerUp.get(PowerUpType.MULT); mult++) {
 
                 Projectile projectile = new Projectile(getPlayer().getSpawner(),
                         type,
                         angle + mult * type.getMULTANGLE() * Math.pow(-1, mult),
                         false);//todo odd multiples look weird
 
-                projectile.setDmgScale(powerUp.get(PowerUpTypes.SCALE));
-                projectile.addSpeed(powerUp.get(PowerUpTypes.SPEED));
+                projectile.setDmgScale(powerUp.get(PowerUpType.SCALE));
+                projectile.addSpeed(powerUp.get(PowerUpType.SPEEDUP));
 
                 lastFireLocationX = getPlayer().getLayoutX();
                 lastFireLocationY = getPlayer().getLayoutY();
@@ -147,7 +147,7 @@ public class PlayerProjectileControl {
         setWeapon(weaponSlot, type.getURL()); //todo ui slot kda msh dynamic but screw it i need my brain cells ughhhh nvm this needs to be done
     }
 
-    public void setPowerUp(PowerUpTypes key, Float value) {
+    public void setPowerUp(PowerUpType key, Float value) {
         powerUp.put(key, value);
     }
 

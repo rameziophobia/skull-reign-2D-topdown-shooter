@@ -3,6 +3,8 @@ package model.player;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import model.Entity;
+import model.walls.Wall;
+import view.LevelManager;
 import view.game.stats.StatBar;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
@@ -13,7 +15,8 @@ import static java.lang.Math.atan2;
 
 public class Player extends Entity {
 
-    private static final float SPEED = 4;
+
+    private static float SPEED = 4;
     private static final double MAX_HP = 200;
     private static final double MAX_SHIELD = 200;
     private static final long REGENERATION_TIME_CD_MS = 5000;
@@ -64,36 +67,62 @@ public class Player extends Entity {
     private void move() { //todo can be coded more efficiently
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
-            if (rightPressed || leftPressed) {
-                setLayoutY(getLayoutY() - SPEED / DIAGONAL_FACTOR); // to avoid moving fast diagonally
-            } else {
-                setLayoutY(getLayoutY() - SPEED);
+            if(Wall.shouldNtMoveUp(this, LevelManager.getWallArrayList())&& !atTopBorder()){
+                if (rightPressed || leftPressed) {
+                    setLayoutY(getLayoutY() - SPEED / DIAGONAL_FACTOR); // to avoid moving fast diagonally
+                } else {
+                    setLayoutY(getLayoutY() - SPEED);
+                }
             }
         } else if (downPressed) {
-            if (rightPressed || leftPressed) {
-                setLayoutY(getLayoutY() + SPEED / DIAGONAL_FACTOR);
-            } else {
-                setLayoutY(getLayoutY() + SPEED);
+            if(Wall.shouldNtMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()){
+                if (rightPressed || leftPressed) {
+                    setLayoutY(getLayoutY() + SPEED / DIAGONAL_FACTOR);
+                } else {
+                    setLayoutY(getLayoutY() + SPEED);
+                }
             }
         }
         if (rightPressed) {
-            if (upPressed || downPressed) {
-                setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
-            } else {
-                setLayoutX(getLayoutX() + SPEED);
+            if(Wall.shouldNtMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()){
+                if (upPressed || downPressed) {
+                    setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
+                } else {
+                    setLayoutX(getLayoutX() + SPEED);
+                }
             }
+
         } else if (leftPressed) {
-            if (upPressed || downPressed) {
-                setLayoutX(getLayoutX() - SPEED / DIAGONAL_FACTOR);
-            } else {
-                setLayoutX(getLayoutX() - SPEED);
+            if(Wall.shouldNtMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()){
+                if (upPressed || downPressed) {
+                    setLayoutX(getLayoutX() - SPEED / DIAGONAL_FACTOR);
+                } else {
+                    setLayoutX(getLayoutX() - SPEED);
+                }
             }
         }
+
     }
 
     private void warp() {
         setLayoutY((getLayoutY() < 0) ? (getLayoutY() + GameViewManager.HEIGHT) : (getLayoutY() % GameViewManager.HEIGHT));
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
+    }
+    private boolean atRightBorder(){
+        return( getLayoutX() >= GameViewManager.WIDTH - 49);
+
+    }
+    private boolean atLeftBorder(){
+        return( getLayoutX() < 0);
+
+    }
+    private boolean atBottomBorder(){
+        return( getLayoutY()  >= GameViewManager.HEIGHT - 43);
+
+    }
+    private boolean atTopBorder(){
+        return( getLayoutY() < 0);
+
     }
 
     @Override
@@ -134,7 +163,9 @@ public class Player extends Entity {
     public PlayerProjectileControl getSecondaryBtnHandler() {
         return secondaryBtnHandler;
     }
+    public void dash(){
 
+    }
     public static double getMaxHp() {
         return MAX_HP;
     }
@@ -142,6 +173,10 @@ public class Player extends Entity {
     public static double getMaxShield() {
         return MAX_SHIELD;
     }
+    public static void setSPEED(float SPEED) {
+        Player.SPEED = Player.SPEED * SPEED;
+    }
+
 
     private void updateAngle(double x, double y) {
         angle = Math.toDegrees(atan2(y - getSpawner().getY(), x - getSpawner().getX()));
@@ -153,7 +188,6 @@ public class Player extends Entity {
         setRotate(angle);
 
         move();
-        warp();
 
         secondaryBtnHandler.update(angle);
         primaryBtnHandler.update(angle);

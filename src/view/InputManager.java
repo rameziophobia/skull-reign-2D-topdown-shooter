@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.player.Player;
-import model.projectiles.PowerUpTypes;
+import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
 
 public class InputManager {//todo temp static ?
@@ -63,12 +63,12 @@ public class InputManager {//todo temp static ?
                 }
                 case DIGIT3: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.FLAMEBALL, true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);//todo Magic Number
                     break;
                 }
                 case DIGIT4: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.SHOCK, true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 4f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 4f);//todo Magic Number
                     break;
                 }
                 case DIGIT5: {
@@ -77,17 +77,17 @@ public class InputManager {//todo temp static ?
                 }
                 case DIGIT6: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE, true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 5f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 5f);//todo Magic Number
                     break;
                 }
                 case TAB: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.WHIRLWIND, true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);//todo Magic Number
                     break;
                 }
                 case CAPS: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.ELECTRIC, true);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);//todo Magic Number
                     break;
                 }
                 case DIGIT7: {
@@ -114,15 +114,18 @@ public class InputManager {//todo temp static ?
                     player.getSecondaryBtnHandler().setToNextType(true);
                     break;
                 }
+                case T:{
+                    player.dash();
+                }
                 case SHIFT: {
-                    player.getPrimaryBtnHandler().setPowerUp(PowerUpTypes.SCALE, 3f);//todo Magic Number
-                    player.getPrimaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 4f);//todo Magic Number
+                    player.getPrimaryBtnHandler().setPowerUp(PowerUpType.SCALE, 3f);//todo Magic Number
+                    player.getPrimaryBtnHandler().setPowerUp(PowerUpType.MULT, 4f);//todo Magic Number
                     player.getPrimaryBtnHandler().setRange(700);//todo Magic Number
                     break;
                 }
                 case SPACE: {
                     player.getSecondaryBtnHandler().setRange(500);//todo Magic Number
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpTypes.MULT, 3f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);//todo Magic Number
                     break;
                 }
             }
