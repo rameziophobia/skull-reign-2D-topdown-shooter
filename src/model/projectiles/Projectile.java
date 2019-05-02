@@ -89,6 +89,14 @@ public class Projectile extends GameObject {
         }
     }
 
+    private void checkCollision_wall(){
+        for(Wall wall: LevelManager.getWallArrayList()){
+            if(isIntersects(wall)){
+                GameViewManager.removeGameObjectFromScene(this);
+            }
+        }
+    }
+
 
     @Override
     public void update() {
@@ -99,6 +107,7 @@ public class Projectile extends GameObject {
         }
         checkCollision_entity();
         checkCollision_border();
+//        checkCollision_wall();
         //todo: check range
     }
 
