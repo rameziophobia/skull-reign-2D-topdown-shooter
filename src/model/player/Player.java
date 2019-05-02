@@ -66,7 +66,7 @@ public class Player extends Entity {
     private void move() { //todo can be coded more efficiently
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
-            if(Wall.shouldNtMoveUp(this, LevelManager.getWallArrayList())&& !atTopBorder()){
+            if(Wall.canMoveUp(this, LevelManager.getWallArrayList())&& !atTopBorder()){
                 if (rightPressed || leftPressed) {
                     setLayoutY(getLayoutY() - SPEED / DIAGONAL_FACTOR); // to avoid moving fast diagonally
                 } else {
@@ -74,7 +74,7 @@ public class Player extends Entity {
                 }
             }
         } else if (downPressed) {
-            if(Wall.shouldNtMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()){
+            if(Wall.canMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()){
                 if (rightPressed || leftPressed) {
                     setLayoutY(getLayoutY() + SPEED / DIAGONAL_FACTOR);
                 } else {
@@ -83,7 +83,7 @@ public class Player extends Entity {
             }
         }
         if (rightPressed) {
-            if(Wall.shouldNtMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()){
+            if(Wall.canMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()){
                 if (upPressed || downPressed) {
                     setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
                 } else {
@@ -92,7 +92,7 @@ public class Player extends Entity {
             }
 
         } else if (leftPressed) {
-            if(Wall.shouldNtMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()){
+            if(Wall.canMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()){
                 if (upPressed || downPressed) {
                     setLayoutX(getLayoutX() - SPEED / DIAGONAL_FACTOR);
                 } else {
