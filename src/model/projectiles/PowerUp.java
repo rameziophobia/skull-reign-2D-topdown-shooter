@@ -2,6 +2,8 @@ package model.projectiles;
 
 
 import model.GameObject;
+import model.walls.Wall;
+import view.LevelManager;
 
 
 import java.util.Random;
@@ -19,8 +21,12 @@ public class PowerUp extends GameObject {
         this.powerUpType = powerUpType;
 
         Random rand = new Random();
-        setLayoutY(rand.nextInt(HEIGHT-5));
-        setLayoutX(rand.nextInt(WIDTH-5));
+        do{
+            setLayoutY(rand.nextInt((HEIGHT-50)));
+            setLayoutX(rand.nextInt((WIDTH-50)));
+        }
+        while (Wall.canMove(this, LevelManager.getWallArrayList(),false,0));
+
     }
     private void checkCollision() {
 

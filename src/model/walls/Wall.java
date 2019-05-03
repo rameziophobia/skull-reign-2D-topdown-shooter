@@ -14,33 +14,36 @@ public class Wall extends GameObject { //todo if needed
         this.setLayoutY(y);
         this.setLayoutX(x);
     }
-    public static boolean shouldNtMoveUp(Entity player, ArrayList<Wall> wallArrayList){
-        return shouldNtMove(player,wallArrayList,false,-60);
+    public static boolean canMoveUp(Entity entity, ArrayList<Wall> wallArrayList){
+        return canMove(entity,wallArrayList,false,-60);
     }
-    public static boolean shouldNtMoveDown(Entity player,ArrayList<Wall> wallArrayList){
-        return shouldNtMove(player,wallArrayList,false,43);
+    public static boolean canMoveDown(Entity entity, ArrayList<Wall> wallArrayList){
+        return canMove(entity,wallArrayList,false,43);
     }
-    public static boolean shouldNtMoveLeft(Entity player,ArrayList<Wall> wallArrayList){
-        return shouldNtMove(player,wallArrayList,true,-250);
+    public static boolean canMoveLeft(Entity entity, ArrayList<Wall> wallArrayList){
+        return canMove(entity,wallArrayList,true,-250);
     }
-    public static boolean shouldNtMoveRight(Entity player,ArrayList<Wall> wallArrayList){
-        return shouldNtMove(player,wallArrayList,true,49);
+    public static boolean canMoveRight(Entity entity, ArrayList<Wall> wallArrayList){
+        return canMove(entity,wallArrayList,true,49);
     }
 
 
-    private static boolean shouldNtMove(Entity player, ArrayList<Wall> wallArrayList, boolean horizontal, int offset){
+    public static boolean canMove(GameObject gameObject, ArrayList<Wall> wallArrayList, boolean horizontal, int offset){
         for(Wall wall: wallArrayList) {
-            if (wall.getBoundsInParent().intersects(player.getBoundsInParent())) {
+            if (wall.getBoundsInParent().intersects(gameObject.getBoundsInParent())) {
                 if (horizontal) {
-                    if(Math.abs(player.getLayoutX() + offset - wall.getLayoutX() ) < 8){
+                    if(Math.abs(gameObject.getLayoutX() + offset - wall.getLayoutX() ) < 8){
                         return false;
                     }
                 }
                 else{
-                    if(Math.abs(player.getLayoutY() + offset - wall.getLayoutY() ) < 8){
+                    if(Math.abs(gameObject.getLayoutY() + offset - wall.getLayoutY() ) < 8){
                         return false;
                     }
                 }
+            }
+            if(offset == 0){
+                return wall.getBoundsInParent().intersects(gameObject.getBoundsInParent());
             }
         }
         return true;

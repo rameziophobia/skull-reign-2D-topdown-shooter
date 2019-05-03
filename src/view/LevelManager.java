@@ -14,7 +14,7 @@ public class LevelManager {//todo temp static
 
     private static final float SPAWN_CD_ENEMY = 1000 * 10;
     private static final float SPAWN_CD_OBSTACLES = 1000 * 5f;
-    private static final float SPAWN_CD_POWERUPS = 1000 * 3f;
+    private static final float SPAWN_CD_POWERUPS = 1000 * 7f;
 
     private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
 
