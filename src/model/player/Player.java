@@ -16,9 +16,11 @@ import static java.lang.Math.atan2;
 public class Player extends Entity {
 
 
+
+
     private static float SPEED = 4;
-    private static final double MAX_HP = 200;
-    private static final double MAX_SHIELD = 200;
+    private static final double MAX_HP = 500;
+    private static final double MAX_SHIELD = 500;
     private static final long REGENERATION_TIME_CD_MS = 5000;
 
     private StatBar HPRectangle;
@@ -163,9 +165,6 @@ public class Player extends Entity {
     public PlayerProjectileControl getSecondaryBtnHandler() {
         return secondaryBtnHandler;
     }
-    public void dash(){
-
-    }
     public static double getMaxHp() {
         return MAX_HP;
     }
@@ -173,10 +172,18 @@ public class Player extends Entity {
     public static double getMaxShield() {
         return MAX_SHIELD;
     }
-    public static void setSPEED(float SPEED) {
-        Player.SPEED = Player.SPEED * SPEED;
-    }
+    public static void setSPEED(float speed) {
+        if(speed !=0){
+            Player.SPEED *= speed;
+        }
+        else{
+            Player.SPEED = 4;
+        }
 
+    }
+    public static float getSPEED() {
+        return SPEED;
+    }
 
     private void updateAngle(double x, double y) {
         angle = Math.toDegrees(atan2(y - getSpawner().getY(), x - getSpawner().getX()));

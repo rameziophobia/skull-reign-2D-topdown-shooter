@@ -6,7 +6,7 @@ public enum ProjectileType {
     BULLET(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "bullet-13x3.png",
             15, 1, 10, 3, false),
     FIRE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fire-32x12.png",
-            1, 35, 6, 1, false),
+            1, 35, 6, 3, false),
     REDLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserRed01-9x54.png", 3, 15, 15, 3, false),
     GREENLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserGreen01-9x54.png", 3, 15, 15, 3, false),
     BLUELASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserBlue01-9x54.png", 3, 15, 15, 3, false),
@@ -37,6 +37,7 @@ public enum ProjectileType {
     private final int SPEED;
     private final double MULTANGLE;
     private final boolean ANIMATED;
+
 
 
     ProjectileType(String type, double fireRate, float damage, int speed, double multAngle, boolean animated) {

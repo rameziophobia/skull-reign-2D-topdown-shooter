@@ -25,6 +25,13 @@ public class PlayerProjectileControl {
     private LinkedList<ProjectileType> weaponList = new LinkedList<>();
     //dictionary of weapons used with their respective powerUp dict
 
+    private final static int MAX_MULT = 6;
+    private final int MAX_SPEED;
+
+    private float currentMult = 1;
+    private float currentScale = 1;
+    private float currentProjSpeed;
+
     private boolean rangeEnable;
     private double range = 2000; //bound akbar mn el shasha
     private double lastFireLocationX;
@@ -48,6 +55,8 @@ public class PlayerProjectileControl {
 
         this.type = projectile;
         this.projectileBtn = projectileBtn;
+        currentProjSpeed = this.type.getSPEED();
+        MAX_SPEED = (int)(currentProjSpeed *1.5);
         powerUp = new HashMap<>();
 
         rangeEnable = false;
@@ -109,7 +118,7 @@ public class PlayerProjectileControl {
                         false);//todo odd multiples look weird
 
                 projectile.setDmgScale(powerUp.get(PowerUpType.SCALE));
-                projectile.addSpeed(powerUp.get(PowerUpType.SPEEDUP));
+                projectile.addSpeed(powerUp.get(PowerUpType.SPEEDPROJECTILE));
 
                 lastFireLocationX = getPlayer().getLayoutX();
                 lastFireLocationY = getPlayer().getLayoutY();
@@ -148,7 +157,19 @@ public class PlayerProjectileControl {
     }
 
     public void setPowerUp(PowerUpType key, Float value) {
-        powerUp.put(key, value);
+        if(key==PowerUpType.MULT && currentMult < MAX_MULT){
+            currentMult += value;
+            powerUp.put(key, currentMult);
+        }
+        else if(key == PowerUpType.SCALE && currentScale <= 40){
+            currentScale += value;
+            powerUp.put(key, currentScale);
+        }
+        else if(key == PowerUpType.SPEEDPROJECTILE && currentProjSpeed <= MAX_SPEED){
+            currentProjSpeed += value;
+            powerUp.put(key, currentProjSpeed);
+        }
+
     }
 
     public void setRange(double range) {

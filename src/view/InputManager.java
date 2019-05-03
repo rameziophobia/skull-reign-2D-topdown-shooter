@@ -114,9 +114,6 @@ public class InputManager {//todo temp static ?
                     player.getSecondaryBtnHandler().setToNextType(true);
                     break;
                 }
-                case T:{
-                    player.dash();
-                }
                 case SHIFT: {
                     player.getPrimaryBtnHandler().setPowerUp(PowerUpType.SCALE, 3f);//todo Magic Number
                     player.getPrimaryBtnHandler().setPowerUp(PowerUpType.MULT, 4f);//todo Magic Number

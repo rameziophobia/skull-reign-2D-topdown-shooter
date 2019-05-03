@@ -2,10 +2,7 @@ package model.projectiles;
 
 
 import model.GameObject;
-import model.enemies.Enemy;
-import model.player.Player;
-import view.GameViewManager;
-import view.LevelManager;
+
 
 import java.util.Random;
 
@@ -22,21 +19,25 @@ public class PowerUp extends GameObject {
         this.powerUpType = powerUpType;
 
         Random rand = new Random();
-        setLayoutY(rand.nextInt(HEIGHT));
-        setLayoutX(rand.nextInt(WIDTH));
+        setLayoutY(rand.nextInt(HEIGHT-5));
+        setLayoutX(rand.nextInt(WIDTH-5));
     }
-    private void checkCollision_entity() {
+    private void checkCollision() {
 
         if(isIntersects(getPlayer())){
-            getPlayer().setSPEED(powerUpType.getSPEED());
+            getPlayer().setSPEED(powerUpType.getSpeed());
 
+
+
+            getPlayer().getSecondaryBtnHandler().setPowerUp(powerUpType,powerUpType.getScale());
             removeGameObjectFromScene(this);
         }
 
     }
     @Override
     public void update() {
-        checkCollision_entity();
+
+        checkCollision();
 
     }
 }

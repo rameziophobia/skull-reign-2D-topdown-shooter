@@ -89,7 +89,7 @@ public class GameViewManager {
     }
 
     private void startGameLoop() {
-//        gameStart();
+        gameStart();
 
         new AnimationTimer() {
             @Override
@@ -99,14 +99,13 @@ public class GameViewManager {
         }.start();
     }
 
-//    private void gameStart() { //todo: do we need that ?
-//
-//    }
+    private void gameStart() { //todo: do we need that ?
+        LevelManager.createWall();
+    }
 
     private void gameUpdate() {
         LevelManager.createEnemies();
         LevelManager.createObstacles();
-        LevelManager.createWall();
         LevelManager.createPowerUp();
 
         List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->

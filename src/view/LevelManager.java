@@ -14,7 +14,7 @@ public class LevelManager {//todo temp static
 
     private static final float SPAWN_CD_ENEMY = 1000 * 10;
     private static final float SPAWN_CD_OBSTACLES = 1000 * 5f;
-    private static final float SPAWN_CD_POWERUPS = 1000 * 50f;
+    private static final float SPAWN_CD_POWERUPS = 1000 * 3f;
 
     private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
 
@@ -59,7 +59,7 @@ public class LevelManager {//todo temp static
         if (nextPowerUpSpawnTime < System.currentTimeMillis()) {
             nextPowerUpSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_POWERUPS);
 
-            PowerUp powerUp = new PowerUp(PowerUpType.SPEEDUP);
+            PowerUp powerUp = new PowerUp(PowerUpType.SCALE);
             GameViewManager.addGameObjectTOScene(powerUp);
         }
     }
