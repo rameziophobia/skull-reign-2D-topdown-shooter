@@ -16,6 +16,7 @@ public class LevelManager {//todo temp static
 //    private static final float SPAWN_CD_OBSTACLES = 1000 * 5f;
 
     private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
+    private static ArrayList<Wall> wallArrayList = new ArrayList<>();
     private static HashMap<Integer, Long> nextEnemySpawnTime = new HashMap<>();
     private static long nextObstaclesSpawnTime; //todo dup code
     private static int level = 1;
@@ -27,6 +28,10 @@ public class LevelManager {//todo temp static
 
     public static ArrayList<Enemy> getEnemyArrayList() {
         return enemyArrayList;
+    }
+
+    public static ArrayList<Wall> getWallArrayList() {
+        return wallArrayList;
     }
 
     private static void createEnemies(float spawn_cd, EnemyType enemyType, ProjectileType projectileType,
@@ -86,6 +91,9 @@ public class LevelManager {//todo temp static
     private static void level1() {
 
         if (initLevel) {
+            Wall rectangle = new Wall(1200,200);
+            wallArrayList.add(rectangle);
+            GameViewManager.addGameObjectTOScene(rectangle);
             initLevel = false;
         }
         createEnemies(1000 * 5f, TANK_SAND, ProjectileType.REDLASER01,

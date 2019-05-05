@@ -3,6 +3,8 @@ package model.player;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import model.Entity;
+import model.walls.Wall;
+import view.LevelManager;
 import view.game.stats.StatBar;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
@@ -64,38 +66,56 @@ public class Player extends Entity {
     private void move() { //todo can be coded more efficiently
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
-            if (rightPressed || leftPressed) {
-                setLayoutY(getLayoutY() - SPEED / DIAGONAL_FACTOR); // to avoid moving fast diagonally
-            } else {
-                setLayoutY(getLayoutY() - SPEED);
+            if(Wall.canMoveUp(this, LevelManager.getWallArrayList())&& !atTopBorder()){
+                if (rightPressed || leftPressed) {
+                    setLayoutY(getLayoutY() - SPEED / DIAGONAL_FACTOR); // to avoid moving fast diagonally
+                } else {
+                    setLayoutY(getLayoutY() - SPEED);
+                }
             }
-        } else if (downPressed) {
+        } else if(downPressed && Wall.canMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()){
             if (rightPressed || leftPressed) {
                 setLayoutY(getLayoutY() + SPEED / DIAGONAL_FACTOR);
             } else {
                 setLayoutY(getLayoutY() + SPEED);
             }
-        }
-        if (rightPressed) {
-            if (upPressed || downPressed) {
-                setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
-            } else {
-                setLayoutX(getLayoutX() + SPEED);
+        } if (rightPressed) {
+            if(Wall.canMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()){
+                if (upPressed || downPressed) {
+                    setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
+                } else {
+                    setLayoutX(getLayoutX() + SPEED);
+                }
             }
-        } else if (leftPressed) {
+        } else if(leftPressed && Wall.canMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()) {
             if (upPressed || downPressed) {
                 setLayoutX(getLayoutX() - SPEED / DIAGONAL_FACTOR);
             } else {
                 setLayoutX(getLayoutX() - SPEED);
             }
         }
+
     }
 
     private void warp() {
         setLayoutY((getLayoutY() < 0) ? (getLayoutY() + GameViewManager.HEIGHT) : (getLayoutY() % GameViewManager.HEIGHT));
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
     }
+    private boolean atRightBorder(){
+        return( getLayoutX() >= GameViewManager.WIDTH - 49);
 
+    }
+    private boolean atLeftBorder(){
+        return( getLayoutX() < 1);
+
+    }
+    private boolean atBottomBorder(){
+        return( getLayoutY()  >= GameViewManager.HEIGHT - 43);
+
+    }
+    private boolean atTopBorder(){
+        return( getLayoutY() < 3);
+    }
     @Override
     public void takeDmg(double dmg) {
         if (ShieldRectangle.getCurrentValue() > 0) {
