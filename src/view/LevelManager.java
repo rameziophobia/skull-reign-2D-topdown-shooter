@@ -4,6 +4,7 @@ import model.enemies.Enemy;
 import model.enemies.EnemyType;
 import model.obstacles.Obstacle;
 import model.projectiles.ProjectileType;
+import model.walls.Wall;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,9 +92,9 @@ public class LevelManager {//todo temp static
     private static void level1() {
 
         if (initLevel) {
-            Wall rectangle = new Wall(1200,200);
-            wallArrayList.add(rectangle);
-            GameViewManager.addGameObjectTOScene(rectangle);
+            Wall wall = new Wall(1200,200);
+            wallArrayList.add(wall);
+            GameViewManager.addGameObjectTOScene(wall);
             initLevel = false;
         }
         createEnemies(1000 * 5f, TANK_SAND, ProjectileType.REDLASER01,
@@ -107,8 +108,8 @@ public class LevelManager {//todo temp static
         LevelManager.createObstacles(1000 * 15f);
 
         if (enemiesSpawned > 10) {
-            level++;
             initLevel = true;
+            level++;
 //            nextEnemySpawnTime.keySet().forEach(k ->
 //                    nextEnemySpawnTime.put(k, nextEnemySpawnTime.get(k) + 1000 * 1000L) ); //todo break been el levels
             //todo open gate to the next level ama el player yod5ol feha regains HP, n3ml lvl++
@@ -119,6 +120,7 @@ public class LevelManager {//todo temp static
     private static void level2() {
 
         if (initLevel) {
+            clearLevel();
             initLevel = false;
         }
         createEnemies(1000 * 4f, TANK_SAND, ProjectileType.REDLASER01,
@@ -206,5 +208,12 @@ public class LevelManager {//todo temp static
         if (enemiesSpawned > 220) {
             level++;
         }
+    }
+
+    private static void clearLevel(){
+        for (Wall wall:wallArrayList ) {
+            GameViewManager.removeGameObjectFromScene(wall);
+        }
+        wallArrayList.clear();
     }
 }
