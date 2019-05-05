@@ -102,7 +102,6 @@ public class GameViewManager {
     }
 
     private void gameStart() {
-        LevelManager.createWall();
     }
 
     private void gameUpdate() {
