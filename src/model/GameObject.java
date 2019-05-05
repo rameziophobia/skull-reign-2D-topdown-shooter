@@ -1,6 +1,7 @@
 package model;
 
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
@@ -10,10 +11,13 @@ public abstract class GameObject extends ImageView {
     protected boolean animated;
 
     public GameObject(String url) {
-        super(url);
-        height = getImageWidth(url);
-        width = getImageHeight(url);
-        animated = isAnimated(url);
+        this(new Image(url));
+    }
+    public GameObject(Image image){
+        super(image);
+        height = getImageWidth(image.impl_getUrl());
+        width = getImageHeight(image.impl_getUrl());
+        animated = isAnimated(image.impl_getUrl());
     }
 
     public static boolean isAnimated(String url) {
