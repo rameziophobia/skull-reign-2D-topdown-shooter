@@ -1,6 +1,9 @@
 package model.projectiles;
 
 import javafx.geometry.Point2D;
+import view.GameViewManager;
+
+import java.util.ArrayList;
 
 import static view.GameViewManager.addGameObjectTOScene;
 
@@ -47,12 +50,16 @@ public class EnemyProjectileControl {
     public void spawnRing() {
         int i = patternRates.RING.getIndex();
         final long timeNow = System.currentTimeMillis() / 1000;
+
+        ArrayList<Projectile> projArrTest = new ArrayList<>();
+
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != -1) {
             for (int j = 0; j < 360; j += type.getMULTANGLE() * 3) {//todo: magic? multAngle .. momkn yb2a variable
                 Projectile projectile = new Projectile(spawner, type, j, true);
-                addGameObjectTOScene(projectile);
+                projArrTest.add(projectile);
             }
             lastFireTime[i] = timeNow;
+            projArrTest.forEach(GameViewManager::addGameObjectTOScene);
         }
 
     }
