@@ -1,6 +1,7 @@
 package model.enemies;
 
 import javafx.geometry.Point2D;
+import javafx.scene.shape.Path;
 import model.Entity;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
@@ -11,6 +12,7 @@ import java.util.Random;
 import static view.GameViewManager.*;
 
 public class Enemy extends Entity {
+    private final MoveMode mode;
     private final double MAX_HP;
 
     private EnemyType enemyType;
@@ -20,9 +22,17 @@ public class Enemy extends Entity {
 
     private EnemyProjectileControl enemyProjectileControl;
 
-    public Enemy(EnemyType enemyType, ProjectileType projectileType, double ringRate, double ringRate1by1, double toPlayerRate) {
+    private Path path = new Path();
+    public enum MoveMode {stationary, followPlayer, path}
+
+    public Enemy(EnemyType enemyType, ProjectileType projectileType, Point2D start, Point2D end) {
+        this(enemyType, projectileType, MoveMode.path);//todo implement path
+    }
+
+    public Enemy(EnemyType enemyType, ProjectileType projectileType, MoveMode mode) {
         super(enemyType.getURL(), enemyType.getSPEED());
 
+        this.mode = mode;
         this.enemyType = enemyType;
         this.MAX_HP = enemyType.getHP();
         hp = MAX_HP;
@@ -30,12 +40,11 @@ public class Enemy extends Entity {
         Random rand = new Random();
         setLayoutY(rand.nextInt(HEIGHT));
         setLayoutX(rand.nextInt(WIDTH));
-        setProjectileControl(projectileType,ringRate,ringRate1by1, toPlayerRate);
+        enemyProjectileControl = new EnemyProjectileControl(projectileType);
     }
 
-    private void setProjectileControl(ProjectileType type, double ringRate, double ringRate1by1, double toPlayerRate) {
-        enemyProjectileControl = new EnemyProjectileControl
-                (type, ringRate, ringRate1by1, toPlayerRate);
+    public EnemyProjectileControl getEnemyProjectileControl() {
+        return enemyProjectileControl;
     }
 
     @Override
@@ -54,8 +63,20 @@ public class Enemy extends Entity {
     }
 
     private void move() {
-        setLayoutX(getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED());
-        setLayoutY(getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED());
+
+        switch (mode){
+            case path:{
+
+            }
+            case followPlayer:{
+                setLayoutX(getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED());
+                setLayoutY(getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED());
+            }
+            default:
+            case stationary:{
+                break;
+            }
+        }
     }
 
     @Override
