@@ -2,9 +2,12 @@ package model.enemies;
 
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Path;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import model.Entity;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
+import view.GameViewManager;
 import view.LevelManager;
 
 import java.util.Random;
@@ -14,6 +17,7 @@ import static view.GameViewManager.*;
 public class Enemy extends Entity {
     private final MoveMode mode;
     private final double MAX_HP;
+    private final Text damageTxt = new Text("");
 
     private EnemyType enemyType;
     private double angle;
@@ -36,6 +40,12 @@ public class Enemy extends Entity {
         this.enemyType = enemyType;
         this.MAX_HP = enemyType.getHP();
         hp = MAX_HP;
+
+        GameViewManager.addGameObjectTOScene(damageTxt);
+//        damageTxt.layoutXProperty().bind(this.layoutXProperty());//todo outputs an error
+//        damageTxt.layoutYProperty().bind(this.layoutYProperty());//todo bt3ml bug fel weapon slots
+        damageTxt.toFront();
+//        damageTxt.setFont(Font.loadFont());
 
         Random rand = new Random();
         setLayoutY(rand.nextInt(HEIGHT));
@@ -66,11 +76,12 @@ public class Enemy extends Entity {
 
         switch (mode){
             case path:{
-
+                break;
             }
             case followPlayer:{
                 setLayoutX(getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED());
                 setLayoutY(getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED());
+                break;
             }
             default:
             case stationary:{
