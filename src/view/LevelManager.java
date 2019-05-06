@@ -1,15 +1,14 @@
 package view;
 
-        import model.enemies.Enemy;
-        import model.enemies.EnemyType;
-        import model.obstacles.Obstacle;
-        import model.projectiles.ProjectileType;
-        import model.walls.Wall;
+import model.enemies.Enemy;
+import model.obstacles.Obstacle;
+import model.projectiles.ProjectileType;
+import model.walls.Wall;
 
-        import java.util.ArrayList;
-        import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-        import static model.enemies.EnemyType.*;
+import static model.enemies.EnemyType.*;
 
 public class LevelManager {//todo temp static
 
@@ -69,7 +68,7 @@ public class LevelManager {//todo temp static
                 break;
             }
             case 2: {
-//                level2();
+                level2();
                 break;
             }
             case 3: {
@@ -116,28 +115,44 @@ public class LevelManager {//todo temp static
             //todo we hna tb el commented code
         }
     }
-//
-//    private static void level2() {
-//
-//        if (initLevel) {
-//            clearLevel();
-//            initLevel = false;
-//        }
-//        addEnemy(1000 * 4f, TANK_SAND, ProjectileType.REDLASER01, 1);
-//
-//        addEnemy(1000 * 4f, TANK_SAND, ProjectileType.REDLASER01, 2);
-//
-//        addEnemy(1000 * 7f, TANK_RED, ProjectileType.FIREBALL,3);
-//
-//        addEnemy(1000 * 12f, TANK_DARK, ProjectileType.SHOCK, 4);
-//
-//        LevelManager.createObstacles(1000 * 15f);
-//
-//        if (enemiesSpawned > 80) {
-//            level++;
-//        }
-//    }
-//
+
+    private static void level2() {
+
+        if (initLevel) {
+            clearLevel();
+            initLevel = false;
+        }
+        Enemy sandT = new Enemy(TANK_SAND,
+                ProjectileType.BLUELASER01, Enemy.MoveMode.followPlayer);
+        sandT.getEnemyProjectileControl().addSpawnToPlayer(400);
+
+        addEnemy(1000 * 4f, sandT, 1);
+
+        Enemy sandT2 = new Enemy(TANK_SAND,
+                ProjectileType.REDLASER01, Enemy.MoveMode.followPlayer);
+        sandT2.getEnemyProjectileControl().addSpawnToPlayer(500);
+
+        addEnemy(1000 * 4f, sandT2, 2);
+
+        Enemy redT = new Enemy(TANK_RED,
+                ProjectileType.FIREBALL, Enemy.MoveMode.followPlayer);
+        redT.getEnemyProjectileControl().addRing1by1(250,30);
+
+        addEnemy(1000 * 7f, redT,3);
+
+        Enemy darkT = new Enemy(TANK_DARK,
+                ProjectileType.SHOCK, Enemy.MoveMode.stationary);
+        darkT.getEnemyProjectileControl().addSpawnRing(2000,60);
+
+        addEnemy(1000 * 12f, darkT, 4);
+
+        LevelManager.createObstacles(1000 * 15f);
+
+        if (enemiesSpawned > 80) {
+            level++;
+        }
+    }
+
 //    private static void level3() {
 //
 //        if (initLevel) {
