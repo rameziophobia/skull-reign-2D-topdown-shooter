@@ -48,11 +48,6 @@ public class EnemyProjectileControl {
         patternRate[pattern.getIndex()] = rate;
     }
 
-    public void addSpawnRing(long rate, float ringAngle){
-        setPatternRate(PatternRate.RING,rate);
-        this.ringAngle =  ringAngle;
-    }
-
     public void addRing1by1(long rate, float ringAngle1by1){
         setPatternRate(PatternRate.RING1BY1,rate);
         this.ringAngle1by1 =  ringAngle1by1;
@@ -60,6 +55,13 @@ public class EnemyProjectileControl {
 
     public void addSpawnToPlayer(long rate){
         setPatternRate(PatternRate.toPlayer,rate);
+    }
+
+    public void addSpawnRing(long rate, float ringAngle){
+        setPatternRate(PatternRate.RING,rate);
+        this.ringAngle =  ringAngle;
+        //todo e3ml circular list gowaha projectiles esmaha ringPool
+        //todo int ringPointer = 0; //field
     }
 
     public void spawnRing() {
@@ -70,10 +72,16 @@ public class EnemyProjectileControl {
 
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
             for (int j = (int) angle; j < 360 + (int) angle; j += ringAngle) {
+                //todo lastP = ringPointer;
+                //todo for pointer ringPointer in el ringPool setAngle
+                //todo for pointer ringPointer in el ringPool setSpawner
+                //todo p++
                 Projectile projectile = new Projectile(spawner, type, j, true);
                 projArrTest.add(projectile);
             }
             lastFireTime[i] = timeNow;
+            //todo addGame object men lastP to ringPointer
+            //todo lastP = ringPointer
             projArrTest.forEach(GameViewManager::addGameObjectTOScene);
         }
 
