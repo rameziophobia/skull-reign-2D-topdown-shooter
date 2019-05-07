@@ -14,19 +14,26 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import view.Main;
+import view.menu.mainmenu.MenuScene;
 
 import java.util.Random;
 
 public class MenuButton extends StackPane {
 
-    private static final String FILE_RESOURCES_SPRITES_UI_BUTTON_BUTTON_BACKGROUND = "file:resources/sprites/ui/menu/button/Button_Background.png";
+    private static final String FILE_RESOURCES_SPRITES_UI_BUTTON_BUTTON_BACKGROUND = MenuScene.PATH_RESOURCES_SPRITES_UI + "menu/button/Button_Background.png";
     private static final Insets LABEL_MARGIN = new Insets(0, 0, 0, 40);
 
     private static final Duration TRANSITION_DURATION = Duration.seconds(0.5);
     protected static final int TRANSLATE_TRANSITION_AMOUNT = 3;
 
+    private static final String FILE_FLAMEBALL = Main.PATH_RESOURCES_SPRITES + "flameball-32x32.png";
+    private static SpriteSheet fireSpriteSheet = new SpriteSheet(FILE_FLAMEBALL, 0);
+
     private static final Font FONT = new Font(15);
     private static final Color COLOR_WHITE = Color.WHITE;
+
+    private static double buttonScale = 1;
 
     private Action onAnimationEndAction;
 
@@ -37,9 +44,17 @@ public class MenuButton extends StackPane {
     private ImageView imgV_fireLeft;
     private ImageView imageView;
 
+    public MenuButton(String text) {
+        this(text, buttonScale);
+    }
+
     public MenuButton(String text, double scale) {
         this(text, scale, () -> {
         });
+    }
+
+    public MenuButton(String text, Action onAnimationEndAction) {
+        this(text, buttonScale, onAnimationEndAction);
     }
 
     public MenuButton(String text, double scale, Action onAnimationEndAction) {
@@ -53,6 +68,14 @@ public class MenuButton extends StackPane {
         setOnMouseClick();
 
         setOnMouseEnterAndExit();
+    }
+
+    public static double getButtonScale() {
+        return buttonScale;
+    }
+
+    public static void setButtonScale(double buttonScale) {
+        MenuButton.buttonScale = buttonScale;
     }
 
     private void setOnMouseEnterAndExit() {
@@ -76,7 +99,7 @@ public class MenuButton extends StackPane {
 
     private void createContent(String text, double scale) {
         final Label label = new Label(text);
-        label.setTextFill(COLOR_WHITE);//todo user defined ?
+        label.setTextFill(COLOR_WHITE);
         label.setFont(FONT);
         StackPane.setMargin(label, LABEL_MARGIN);
 
@@ -93,9 +116,7 @@ public class MenuButton extends StackPane {
         Random random = new Random();
 
         ColorAdjust colorAdjust = new ColorAdjust();
-        colorAdjust.setHue(random.nextFloat() * (random.nextBoolean() ? 1 : -1));//todo that check
-
-        SpriteSheet fireSpriteSheet = new SpriteSheet("file:resources/sprites/flameball-32x32.png", 0); //todo static
+        colorAdjust.setHue(random.nextFloat() * (random.nextBoolean() ? 1 : -1));
 
         imgV_fireRight = createFire(colorAdjust, new Insets(0, 0, 0, imageView.getFitWidth() - 32 - 10));
 
@@ -136,7 +157,7 @@ public class MenuButton extends StackPane {
     }
 
     private ParallelTransition createFadeOutTransition() {
-        final TranslateTransition translateTransition = new TranslateTransition();//todo maybe static ?
+        final TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setDuration(TRANSITION_DURATION);
         translateTransition.setByY(TRANSLATE_TRANSITION_AMOUNT);
 

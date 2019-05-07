@@ -14,8 +14,8 @@ public class NewGameMenu extends Menu {
 
         addNodeAll(
                 lbl_newGameMenu,
-                new MenuButton("New Campaign", MenuScene.BUTTON_SCALE),
-                new MenuButton("Endless", MenuScene.BUTTON_SCALE),
-                new MenuButtonTransition("Back", MenuScene.BUTTON_SCALE, this, "Main"));
+                new MenuButton("New Campaign"),
+                new MenuButton("Endless"),
+                new MenuButtonTransition("Back", this, Menus.Main));
     }
 }

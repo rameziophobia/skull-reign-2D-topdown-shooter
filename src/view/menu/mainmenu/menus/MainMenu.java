@@ -15,10 +15,10 @@ public class MainMenu extends Menu {
 
         addNodeAll(
                 lbl_mainMenu,
-                new MenuButtonTransition("New Game", MenuScene.BUTTON_SCALE, this, "NewGame"), //todo scale is repeated
-                new MenuButtonTransition("Load Game", MenuScene.BUTTON_SCALE, this, "LoadGame"),
-                new MenuButtonTransition("Hall of Fame", MenuScene.BUTTON_SCALE, this, "HallOfFame"),
-                new MenuButtonTransition("Settings", MenuScene.BUTTON_SCALE, this, "Settings"),
-                new MenuButton("Exit", MenuScene.BUTTON_SCALE, () -> Main.getStage().close()));
+                new MenuButtonTransition("New Game", this, Menus.NewGame),
+                new MenuButtonTransition("Load Game", this, Menus.LoadGame),
+                new MenuButtonTransition("Hall of Fame", this, Menus.HallOfFame),
+                new MenuButtonTransition("Settings", this, Menus.Settings),
+                new MenuButton("Exit", Main::exit));
     }
 }

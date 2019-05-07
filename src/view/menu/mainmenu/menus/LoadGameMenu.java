@@ -14,7 +14,7 @@ public class LoadGameMenu extends Menu {
 
         addNodeAll(
                 lbl_loadGameMenu,
-                new MenuButton("Load", MenuScene.BUTTON_SCALE),
-                new MenuButtonTransition("Back", MenuScene.BUTTON_SCALE, this, "Main"));
+                new MenuButton("Load"),
+                new MenuButtonTransition("Back", this, Menus.Main));
     }
 }

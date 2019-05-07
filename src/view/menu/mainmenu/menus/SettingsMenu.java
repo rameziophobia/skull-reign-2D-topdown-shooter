@@ -14,7 +14,7 @@ public class SettingsMenu extends Menu {
 
         addNodeAll(
                 lbl_settingsMenu,
-                new MenuButton("Save", MenuScene.BUTTON_SCALE),
-                new MenuButtonTransition("Back", MenuScene.BUTTON_SCALE, this, "Main"));
+                new MenuButton("Save"),
+                new MenuButtonTransition("Back", this, Menus.Main));
     }
 }

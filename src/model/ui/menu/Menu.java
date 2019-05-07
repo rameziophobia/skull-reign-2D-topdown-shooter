@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import view.menu.mainmenu.MenuScene;
+import view.menu.mainmenu.menus.Menus;
 
 public class Menu extends VBox {
 
@@ -49,7 +50,7 @@ public class Menu extends VBox {
         fadeInFadeTrans.setDuration(FADE_IN_DURATION);
         fadeInFadeTrans.setToValue(1);
 
-        ParallelTransition parallelTransition = new ParallelTransition(this, fadeInTranslateTrans, fadeInFadeTrans);
+        final ParallelTransition parallelTransition = new ParallelTransition(this, fadeInTranslateTrans, fadeInFadeTrans);
         parallelTransition.setDelay(FADE_IN_DELAY);
 
         return parallelTransition;
@@ -78,7 +79,7 @@ public class Menu extends VBox {
         }
     }
 
-    public void transition(String nextMenuKey,  MenuButtonTransition menuButtonTransition) {
+    public void transition(Menus nextMenuKey, MenuButtonTransition menuButtonTransition) {
         setMouseTransparent(true);
 
         fadeOutParallelTransition.setOnFinished(e -> {

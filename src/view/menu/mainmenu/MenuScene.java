@@ -12,19 +12,23 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 import model.ui.menu.Menu;
 import model.ui.menu.MenuButton;
+import view.Main;
 import view.menu.mainmenu.menus.*;
 
 import java.util.HashMap;
 
 public class MenuScene extends Scene {
 
-    public static final double BUTTON_SCALE = 0.8;
+    public static final String PATH_RESOURCES_SPRITES_UI = Main.PATH_RESOURCES_SPRITES + "ui/";
+    private static final double BUTTON_SCALE = 0.8;
 
     private static final Font TITLE_FONT_SIZE = new Font(40);
-    private HashMap<String, Menu> menuHashMap = new HashMap<>();
+
+    private HashMap<Menus, Menu> menuHashMap = new HashMap<>();
     private StackPane stackPane;
 
     private StackPane stp_menus;
@@ -38,7 +42,7 @@ public class MenuScene extends Scene {
 
     private void createScene() {
 
-        Rectangle blackScreen = new Rectangle(1280, 720, Color.BLACK);
+        Rectangle blackScreen = new Rectangle(1280, 720, Color.BLACK);//todo width and height
         blackScreen.setOpacity(0);
         blackScreen.setMouseTransparent(true);
 
@@ -48,26 +52,26 @@ public class MenuScene extends Scene {
         fadeToBlack.setDelay(Duration.seconds(0.2));
         fadeToBlack.setNode(blackScreen);
 
-        ImageView imgV_logo = new ImageView("file:resources/sprites/ui/placeholder-logo-2.png");
+        ImageView imgV_logo = new ImageView(PATH_RESOURCES_SPRITES_UI + "placeholder-logo-2.png");
         HBox hbx_logo = new HBox(imgV_logo);
         hbx_logo.setAlignment(Pos.CENTER);
 
+        MenuButton.setButtonScale(BUTTON_SCALE);
+
         Menu mainMenu = new MainMenu(this);
-        menuHashMap.put("Main", mainMenu);
+        menuHashMap.put(Menus.Main, mainMenu);
 
         Menu newGameMenu = new NewGameMenu(this);
-        menuHashMap.put("NewGame", newGameMenu);
+        menuHashMap.put(Menus.NewGame, newGameMenu);
 
         Menu loadGameMenu = new LoadGameMenu(this);
-        menuHashMap.put("LoadGame", loadGameMenu);
+        menuHashMap.put(Menus.LoadGame, loadGameMenu);
 
         Menu hallOfFameMenu = new HallOfFameMenu(this);
-        menuHashMap.put("HallOfFame", hallOfFameMenu);
+        menuHashMap.put(Menus.HallOfFame, hallOfFameMenu);
 
         Menu settingsMenu = new SettingsMenu(this);
-        menuHashMap.put("Settings", settingsMenu);
-
-        mainMenu.fadeIn();
+        menuHashMap.put(Menus.Settings, settingsMenu);
 
         stp_menus = new StackPane(mainMenu, newGameMenu, loadGameMenu, hallOfFameMenu, settingsMenu);
 
@@ -77,6 +81,8 @@ public class MenuScene extends Scene {
         stackPane.getChildren().addAll(
                 vbx_main,
                 blackScreen);
+
+        mainMenu.fadeIn();
     }
 
     public static Label createMenuTitle(String text) {
@@ -86,7 +92,7 @@ public class MenuScene extends Scene {
         return lbl_title;
     }
 
-    public void menuTransition(String key) {
+    public void menuTransition(Menus key) {
         if (menuHashMap.containsKey(key)) {
             menuHashMap.get(key).fadeIn();
         } else {
