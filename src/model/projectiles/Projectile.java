@@ -24,7 +24,7 @@ public class Projectile extends GameObject {
     Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile) {
         super(projectileType.getURL());
         this.projectileType = projectileType;
-        this.speed = projectileType.getSPEED();
+        this.speed = projectileType.getSpeed();
         this.angle = angle;
         this.enemyProjectile = enemyProjectile;
 

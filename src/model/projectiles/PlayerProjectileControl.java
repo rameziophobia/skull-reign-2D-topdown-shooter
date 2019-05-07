@@ -26,11 +26,9 @@ public class PlayerProjectileControl {
     //dictionary of weapons used with their respective powerUp dict
 
     private final static int MAX_MULT = 6;
+    private final static int MAX_SCALE = 20;
     private final int MAX_SPEED;
 
-    private float currentMult = 1;
-    private float currentScale = 1;
-    private float currentProjSpeed;
 
     private boolean rangeEnable;
     private double range = 2000; //bound akbar mn el shasha
@@ -55,8 +53,7 @@ public class PlayerProjectileControl {
 
         this.type = projectile;
         this.projectileBtn = projectileBtn;
-        currentProjSpeed = this.type.getSPEED();
-        MAX_SPEED = (int)(currentProjSpeed *1.5);
+        MAX_SPEED = (int)(this.type.getSpeed() *1.5);
         powerUp = new HashMap<>();
 
         rangeEnable = false;
@@ -157,17 +154,17 @@ public class PlayerProjectileControl {
     }
 
     public void setPowerUp(PowerUpType key, Float value) {
-        if(key==PowerUpType.MULT && currentMult < MAX_MULT){
-            currentMult += value;
-            powerUp.put(key, currentMult);
+        if(key==PowerUpType.MULT && type.getCurrentMult() < MAX_MULT){
+             type.incCurrentMult(value);
+            powerUp.put(key, type.getCurrentMult());
         }
-        else if(key == PowerUpType.SCALE && currentScale <= 40){
-            currentScale += value;
-            powerUp.put(key, currentScale);
+        else if(key == PowerUpType.SCALE && type.getCurrentScale() <= MAX_SCALE){
+            type.incCurrentScale(value);
+            powerUp.put(key, type.getCurrentScale());
         }
-        else if(key == PowerUpType.SPEEDPROJECTILE && currentProjSpeed <= MAX_SPEED){
-            currentProjSpeed += value;
-            powerUp.put(key, currentProjSpeed);
+        else if(key == PowerUpType.SPEEDPROJECTILE && type.getSpeed() <= MAX_SPEED){
+            type.incCurrentSpeed(value);
+            powerUp.put(key, (float)type.getSpeed());
         }
 
     }
