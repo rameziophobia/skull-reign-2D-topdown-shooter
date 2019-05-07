@@ -63,7 +63,7 @@ public class Player extends Entity {
         this.rightPressed = rightPressed;
     }
 
-    private void move() { //todo can be coded more efficiently
+    private void move() {
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
             if(Wall.canMoveUp(this, LevelManager.getWallArrayList())&& !atTopBorder()){

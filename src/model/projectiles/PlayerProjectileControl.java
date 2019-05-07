@@ -70,7 +70,7 @@ public class PlayerProjectileControl {
 
     public void fireProjectile() {
         if (mousePressed && lastPressed.equals(projectileBtn)) {
-            createProjectile();//todo: functions name needs refactoring
+            createProjectile();
         }
     }
 
@@ -147,7 +147,7 @@ public class PlayerProjectileControl {
         type = nextType;
         if(weaponList.size() > 1){
             int weaponSlot = special ? 1 : 0;
-            setWeapon(weaponSlot, type.getURL()); //todo ui slot kda msh dynamic but screw it i need my brain cells ughhhh nvm this needs to be done
+            setWeapon(weaponSlot, type.getURL());
         }
     }
 

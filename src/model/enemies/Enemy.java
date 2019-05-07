@@ -96,7 +96,7 @@ public class Enemy extends Entity {
         setRotate(angle);
         move();
 
-        enemyProjectileControl.update(angle, new Point2D(getLayoutX(), getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
+        enemyProjectileControl.update(angle, new Point2D(getLayoutX(), getLayoutY()));
 
         if (hp <= 0) {
             removeGameObjectFromScene(this);
