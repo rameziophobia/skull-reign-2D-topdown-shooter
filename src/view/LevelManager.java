@@ -59,7 +59,7 @@ public class LevelManager {//todo temp static
         if (nextPowerUpSpawnTime < System.currentTimeMillis()) {
             nextPowerUpSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_POWERUPS);
 
-            PowerUp powerUp = new PowerUp(PowerUpType.MULT);
+            PowerUp powerUp = new PowerUp(PowerUpType.ELECTRIC);
             GameViewManager.addGameObjectTOScene(powerUp);
         }
     }
