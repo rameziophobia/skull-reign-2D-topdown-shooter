@@ -8,50 +8,59 @@ import java.util.ArrayList;
 
 public class ScoreBoard {
     private final int MAX_DIGITS = 5;
-    private final String FILE_PATH = "resources/savedata/";
+    private final String FILE_PATH = "resources/savedata";
     private final String FILE_NAME = "highscores.dat";
     private ArrayList<String> data;
     private ObservableList<HighScores> sorted;
     //score data format --> SCORE:NAME
     private File scoreFile;
+    private File dir;
 
     public ScoreBoard() {
-        scoreFile = new File(FILE_PATH,FILE_NAME);
-            try {
-                if (scoreFile.createNewFile()) {
-                    System.out.println("File created");
-                }
-                else {
-                    System.out.println("File exists");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
+        scoreFile = new File(FILE_PATH + '/', FILE_NAME);
+        dir = new File(FILE_PATH);
+        if (!dir.exists()) {
+            System.out.println(dir.mkdirs() + "the directory is created");
+        }
+        try {
+            if (scoreFile.createNewFile()) {
+                System.out.println("File created");
+            } else {
+                System.out.println("File exists");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         data = new ArrayList<>();
         loadScoreData();
         sorted = createList();
     }
-    private ObservableList<HighScores> createList(){
+
+    private ObservableList<HighScores> createList() {
         ObservableList<HighScores> list = FXCollections.observableArrayList();
-        for(String s: data){
+        for (String s : data) {
             list.add(new HighScores(s));
         }
         return list;
     }
+
     private void loadScoreData() {
-        FileReader fileReader;
-        BufferedReader reader;
-        try {
-            fileReader = new FileReader(scoreFile);
-            reader = new BufferedReader(fileReader);
-            String line;
-            while ((line = reader.readLine()) != null) {
-                data.add(line);
+        if (scoreFile.exists()) {
+            FileReader fileReader;
+            BufferedReader reader;
+            try {
+                fileReader = new FileReader(scoreFile);
+                reader = new BufferedReader(fileReader);
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    data.add(line);
+                }
+                reader.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } else
+            System.out.println("file does not exist anymore");
     }
 
     private void addToData(String name, String score) {
@@ -95,15 +104,17 @@ public class ScoreBoard {
                 e.printStackTrace();
             }
     }
-    public void addNewScore(String Name,int highScore){
+
+    public void addNewScore(String Name, int highScore) {
         String scoreString = String.valueOf(highScore);
-        while(scoreString.length()<MAX_DIGITS){
-            scoreString='0'+scoreString;
+        while (scoreString.length() < MAX_DIGITS) {
+            scoreString = '0' + scoreString;
         }
-        addToData(Name,scoreString);
+        addToData(Name, scoreString);
         loadScoreData();
     }
-    public ObservableList<HighScores> getHighScores(){
+
+    public ObservableList<HighScores> getHighScores() {
 
         return sorted;
     }
