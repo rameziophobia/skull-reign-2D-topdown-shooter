@@ -173,8 +173,8 @@ public class Player extends Entity {
         return MAX_SHIELD;
     }
     public static void setSPEED(float speed) {
-        if((Player.SPEED * speed) >8){
-            Player.SPEED = 8;
+        if((Player.SPEED * speed) >MAX_SPEED){
+            Player.SPEED = MAX_SPEED    ;
         }
         else if(speed != 0){
             Player.SPEED *= speed;

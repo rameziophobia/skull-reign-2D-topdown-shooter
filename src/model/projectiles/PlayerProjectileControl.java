@@ -94,7 +94,8 @@ public class PlayerProjectileControl {
         mouseEvents();
         fireProjectile();
     }
-    HashMap getWeaponSettings(){
+
+    protected HashMap getWeaponSettings(){
         return weaponSettings;
     }
 
