@@ -2,6 +2,8 @@ package model.ui.menu;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
@@ -63,6 +65,8 @@ public class MenuButton extends StackPane {
             isFireShown = true;
             imgV_fireRight.setOpacity(1);
             imgV_fireLeft.setOpacity(1);
+
+            AudioManager.playAudio(AudioFile.FIRE, 0.5);
         });
         setOnMouseExited(e -> {
             imageView.setScaleX(1);
@@ -71,6 +75,8 @@ public class MenuButton extends StackPane {
             isFireShown = false;
             imgV_fireRight.setOpacity(0);
             imgV_fireLeft.setOpacity(0);
+
+            AudioManager.stopAudio(AudioFile.FIRE);
         });
     }
 

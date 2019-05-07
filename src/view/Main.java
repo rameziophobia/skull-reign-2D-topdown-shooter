@@ -1,5 +1,6 @@
 package view;
 
+import controller.audiomanager.AudioManager;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ public class Main extends Application {
 
         stage = primaryStage;
         MenuScene menuScene = new MenuScene(1280, 720);
+        AudioManager.init();
         stage.setScene(menuScene);
 
         AnimationTimer tempAnimationTimer = new AnimationTimer() {
