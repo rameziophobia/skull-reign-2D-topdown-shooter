@@ -3,6 +3,7 @@ package model.projectiles;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.geometry.Point2D;
+import javafx.scene.transform.Rotate;
 import model.enemies.Enemy;
 import model.GameObject;
 import model.walls.Wall;
@@ -44,7 +45,8 @@ public class Projectile extends GameObject {
     private void spawnProjectile(Point2D spawnPoint, double angle) {
         setLayoutX(spawnPoint.getX());
         setLayoutY(spawnPoint.getY());
-        setRotate(angle);
+        Rotate rotate = new Rotate(angle, 0, 0);
+        getTransforms().add(rotate);
     }
 
     public void addSpeed(float speed) {
@@ -68,7 +70,7 @@ public class Projectile extends GameObject {
 
     private void checkCollision_entity() {
         if (enemyProjectile) {
-            if(isIntersects(getPlayer())){
+            if (isIntersects(getPlayer())) {
                 getPlayer().takeDmg(projectileType.getDAMAGE());
                 removeGameObjectFromScene(this);
             }
@@ -89,9 +91,9 @@ public class Projectile extends GameObject {
         }
     }
 
-    private void checkCollision_wall(){
-        for(Wall wall: LevelManager.getWallArrayList()){
-            if(isIntersects(wall)){
+    private void checkCollision_wall() {
+        for (Wall wall : LevelManager.getWallArrayList()) {
+            if (isIntersects(wall)) {
                 GameViewManager.removeGameObjectFromScene(this);
             }
         }

@@ -48,6 +48,7 @@ public class GameViewManager {
 
     public static void addGameObjectTOScene(Node node) {
         gamePane.getChildren().add(node);
+        node.toBack();
     }
 
     public static AnchorPane getGamePane() {
@@ -83,7 +84,7 @@ public class GameViewManager {
     private void createPlayer(PlayerType chosenPlayer) {
         player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
         addGameObjectTOScene(player);
-        player.toFront();
+        player.toBack();
     }
 
     private void createUI() {

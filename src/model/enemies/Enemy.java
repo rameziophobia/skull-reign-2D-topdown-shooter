@@ -27,6 +27,7 @@ public class Enemy extends Entity {
     private EnemyProjectileControl enemyProjectileControl;
 
     private Path path = new Path();
+
     public enum MoveMode {stationary, followPlayer, path}
 
     public Enemy(EnemyType enemyType, ProjectileType projectileType, Point2D start, Point2D end) {
@@ -96,7 +97,7 @@ public class Enemy extends Entity {
         setRotate(angle);
         move();
 
-        enemyProjectileControl.update(angle, new Point2D(getLayoutX(), getLayoutY()));
+        enemyProjectileControl.update(angle, getSpawner());
 
         if (hp <= 0) {
             removeGameObjectFromScene(this);

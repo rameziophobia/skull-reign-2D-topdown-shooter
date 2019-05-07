@@ -25,8 +25,7 @@ public abstract class GameObject extends ImageView {
     }
 
     public Point2D getSpawner() {
-        return new Point2D(getLayoutX(), getLayoutY())
-                .add(new Point2D(getFitWidth() / 2, getFitHeight() / 2));
+        return new Point2D(getLayoutX() + (width >> 1), getLayoutY() + (height >> 1));
     }
 
     public Rectangle getBounds() {
