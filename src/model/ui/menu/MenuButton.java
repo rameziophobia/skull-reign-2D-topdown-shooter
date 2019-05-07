@@ -2,6 +2,8 @@ package model.ui.menu;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
@@ -151,6 +153,7 @@ public class MenuButton extends StackPane {
         final ParallelTransition parallelTransition = createFadeOutTransition();
 
         setOnMouseClicked(e -> {
+            AudioManager.playAudio(AudioFile.BUTTON_CLICK);
             parallelTransition.setOnFinished(event -> onAnimationEndAction.run());
             parallelTransition.play();
         });

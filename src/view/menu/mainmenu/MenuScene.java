@@ -1,5 +1,6 @@
 package view.menu.mainmenu;
 
+import controller.audiomanager.AudioManager;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -41,6 +42,8 @@ public class MenuScene extends Scene {
     }
 
     private void createScene() {
+
+        AudioManager.init();
 
         Rectangle blackScreen = new Rectangle(1280, 720, Color.BLACK);//todo width and height
         blackScreen.setOpacity(0);
