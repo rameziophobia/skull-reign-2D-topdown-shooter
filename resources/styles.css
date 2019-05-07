@@ -1,0 +1,25 @@
+.NoFocus {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}
+.NoFocus:focused {
+    -fx-border-width: 0;
+    -fx-border-color: none;
+}
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:empty .table-cell {
+    -fx-border-width: 0px;
+}
+.table-row-cell {
+    -fx-background-color: white;
+}
+.table-row-cell .text {
+       -fx-fill: black ;
+}
+#highScore .table-column {
+  -fx-alignment: CENTER;
+}

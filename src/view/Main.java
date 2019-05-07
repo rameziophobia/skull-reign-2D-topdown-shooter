@@ -9,6 +9,7 @@ public class Main extends Application {
 
     public static final String PATH_RESOURCES = "file:resources/";
     public static final String PATH_RESOURCES_SPRITES = PATH_RESOURCES + "sprites/";
+    public static final String PATH_RESOURCES_SAVES = PATH_RESOURCES + "savedata/";
 
     private static Stage stage;
 
