@@ -17,8 +17,8 @@ import view.menu.mainmenu.MenuScene;
 
 public class HallOfFameMenu extends Menu {
     private TableView<HighScores> highScoreTable;
-    private ObservableList<HighScores> nameList;
-    ScoreBoard leaderBoards;
+    private static ObservableList<HighScores> nameList;
+    private static ScoreBoard leaderBoards;
     public HallOfFameMenu(MenuScene menuScene) {
         super(menuScene);
         menuScene.getStylesheets().add( Main.PATH_RESOURCES+"styles.css");
@@ -53,11 +53,11 @@ public class HallOfFameMenu extends Menu {
 
         VBox.setMargin(highScoreTable, new Insets(0, 0, 0, 10));
     }
-    public void updateTableUI(){
+    public static void updateTableUI(){
         nameList.clear();
         nameList = leaderBoards.getHighScores();
     }
-    public void setANewRecord(String Name,int Score){
+    public static void setNewRecord(String Name,int Score){
         leaderBoards.addNewScore(Name,Score);
         updateTableUI();
     }
