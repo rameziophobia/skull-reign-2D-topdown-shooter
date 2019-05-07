@@ -38,5 +38,17 @@ public class AudioManager {
     public static void stopAudio(AudioFile audioFile) {
         AUDIO_MIXER_HASH_MAP.get(audioFile.getMixer()).stopAudio(audioFile);
     }
+
+    public static void setMixerVolume(MixerType mixerVolume, double volume) {
+        if (AUDIO_MIXER_HASH_MAP.containsKey(mixerVolume)) {
+            AUDIO_MIXER_HASH_MAP.get(mixerVolume).setMixerVolume(volume);
+        }
+    }
+    public static double getMixerVolume(MixerType mixerVolume) {
+        if (AUDIO_MIXER_HASH_MAP.containsKey(mixerVolume)) {
+            return AUDIO_MIXER_HASH_MAP.get(mixerVolume).getMixerVolume();
+        }
+        return 1;
+    }
 }
 

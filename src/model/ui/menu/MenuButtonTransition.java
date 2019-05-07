@@ -5,17 +5,19 @@ import view.menu.mainmenu.menus.Menus;
 public class MenuButtonTransition extends MenuButton {
 
     public MenuButtonTransition(String text, Menu parentMenu, Menus nextMenuKey) {
+        this(text, parentMenu, nextMenuKey, () -> {});
+    }
+
+    public MenuButtonTransition(String text, Menu parentMenu, Menus nextMenuKey, Action onAnimationEndAction) {
         super(text);
-        addEndAction(parentMenu, nextMenuKey);
+        addEndAction(parentMenu, nextMenuKey, onAnimationEndAction);
     }
 
-    public MenuButtonTransition(String text, double scale, Menu parentMenu, Menus nextMenuKey) {
-        super(text, scale);
-        addEndAction(parentMenu, nextMenuKey);
-    }
-
-    private void addEndAction(Menu parentMenu, Menus nextMenuKey) {
-        setOnAnimationEndAction(() -> parentMenu.transition(nextMenuKey, this));
+    private void addEndAction(Menu parentMenu, Menus nextMenuKey, Action onAnimationEndAction) {
+        setOnAnimationEndAction(() -> {
+            parentMenu.transition(nextMenuKey, this);
+            onAnimationEndAction.run();
+        });
     }
 
     public void reset() {
