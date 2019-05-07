@@ -25,7 +25,7 @@ public class ScoreBoard {
                     System.out.println("File exists");
                 }
             } catch (Exception e) {
-                System.out.println(e+": Line31");
+                e.printStackTrace();
             }
         data = new ArrayList<>();
         loadScoreData();
@@ -46,14 +46,12 @@ public class ScoreBoard {
             reader = new BufferedReader(fileReader);
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
                 data.add(line);
             }
             reader.close();
         } catch (Exception e) {
-            System.out.println(e+": Line52");
+            e.printStackTrace();
         }
-        System.out.println(data);
     }
 
     private void addToData(String name, String score) {
@@ -69,13 +67,13 @@ public class ScoreBoard {
             writeFile = new FileWriter(scoreFile);
             writer = new BufferedWriter(writeFile);
         } catch (Exception e) {
-            System.out.println(e+": Line70");
+            e.printStackTrace();
         }
         if (!scoreFile.exists()) {
             try {
                 scoreFile.createNewFile();
             } catch (IOException e) {
-                System.out.println(e+": Line76");
+                e.printStackTrace();
             }
         }
         int i = 0;
@@ -86,7 +84,7 @@ public class ScoreBoard {
                 writer.newLine();
 
             } catch (Exception e) {
-                System.out.println(e +": Line87");
+                e.printStackTrace();
             }
             i++;
         }
@@ -94,7 +92,7 @@ public class ScoreBoard {
             try {
                 writer.close();
             } catch (Exception e) {
-                System.out.println(e +": Line95");
+                e.printStackTrace();
             }
     }
     public void addNewScore(String Name,int highScore){
