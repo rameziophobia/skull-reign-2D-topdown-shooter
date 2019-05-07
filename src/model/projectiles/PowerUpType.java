@@ -2,6 +2,10 @@ package model.projectiles;
 
 import view.Main;
 
+import java.util.Random;
+import static view.GameViewManager.*;
+
+
 public enum PowerUpType {
     MULT(Constants.PATH_RESOURCES_SPRITES_POWERUPS + "blue-40x40.png",1,1,null,false),
     SCALE(Constants.PATH_RESOURCES_SPRITES_POWERUPS + "red-40x40.png",1,4,null,false),
@@ -52,4 +56,14 @@ public enum PowerUpType {
         private static final String PATH_RESOURCES_SPRITES_POWERUPS = Main.PATH_RESOURCES_SPRITES + "powerups/";
         private static final String PATH_RESOURCES_SPRITES_PROJECTILES = Main.PATH_RESOURCES_SPRITES + "projectiles/";
     }
+    public static PowerUpType getRandomPowerUpType() {
+        Random random = new Random();
+        PowerUpType power;
+        do{
+            power = values()[random.nextInt(values().length)];
+        }
+        while(getPlayer().getSecondaryBtnHandler().getWeaponSettings().containsKey(power.projectileType));
+        return power;
+    }
+
 }

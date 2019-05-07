@@ -94,6 +94,9 @@ public class PlayerProjectileControl {
         mouseEvents();
         fireProjectile();
     }
+    HashMap getWeaponSettings(){
+        return weaponSettings;
+    }
 
     private void detectBtnType(MouseEvent e) {
 
