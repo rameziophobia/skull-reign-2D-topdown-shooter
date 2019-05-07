@@ -7,9 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -61,26 +59,27 @@ public class MenuScene extends Scene {
 
         MenuButton.setButtonScale(BUTTON_SCALE);
 
-        Menu mainMenu = new MainMenu(this);
+        final Menu mainMenu = new MainMenu(this);
         menuHashMap.put(Menus.Main, mainMenu);
 
-        Menu newGameMenu = new NewGameMenu(this);
+        final Menu newGameMenu = new NewGameMenu(this);
         menuHashMap.put(Menus.NewGame, newGameMenu);
 
-        Menu loadGameMenu = new LoadGameMenu(this);
+        final Menu loadGameMenu = new LoadGameMenu(this);
         menuHashMap.put(Menus.LoadGame, loadGameMenu);
 
-        Menu hallOfFameMenu = new HallOfFameMenu(this);
+        final Menu hallOfFameMenu = new HallOfFameMenu(this);
         menuHashMap.put(Menus.HallOfFame, hallOfFameMenu);
 
-        Menu settingsMenu = new SettingsMenu(this);
+        final Menu settingsMenu = new SettingsMenu(this);
         menuHashMap.put(Menus.Settings, settingsMenu);
 
         stp_menus = new StackPane(mainMenu, newGameMenu, loadGameMenu, hallOfFameMenu, settingsMenu);
 
-        VBox vbx_main = new VBox(hbx_logo, stp_menus);
+        final VBox vbx_main = new VBox(hbx_logo, stp_menus);
         vbx_main.setPadding(new Insets(10, 0, 10, 0));
 
+        stackPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         stackPane.getChildren().addAll(
                 vbx_main,
                 blackScreen);
@@ -89,9 +88,10 @@ public class MenuScene extends Scene {
     }
 
     public static Label createMenuTitle(String text) {
-        Label lbl_title = new Label(text);
+        final Label lbl_title = new Label(text);
         lbl_title.setFont(TITLE_FONT_SIZE);
-        VBox.setMargin(lbl_title, new Insets(10, 10, 10, 10));
+        lbl_title.setTextFill(Color.WHITE);
+        VBox.setMargin(lbl_title, new Insets(10));
         return lbl_title;
     }
 
