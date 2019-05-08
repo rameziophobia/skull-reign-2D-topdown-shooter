@@ -56,6 +56,19 @@ public class PowerUp extends GameObject {
         }
 
     }
+    public static void  disableSpeed(){
+        Player.setSPEED(0);
+    }
+    public static void disableScale(){
+        getPlayer().getSecondaryBtnHandler().setPowerUp(PowerUpType.SCALE,0f);
+    }
+    public static void disableMult(){
+        getPlayer().getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT,0f );
+    }
+    public static void disableSpeedProjectile(){
+        getPlayer().getSecondaryBtnHandler().setPowerUp(PowerUpType.SPEEDPROJECTILE,0f);
+    }
+
     @Override
     public void update() {
         if(animated){

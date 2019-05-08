@@ -26,7 +26,7 @@ public class PlayerProjectileControl {
     //dictionary of weapons used with their respective powerUp dict
 
     private final static int MAX_MULT = 6;
-    private final static int MAX_SCALE = 20;
+    private final static int MAX_SCALE = 50;
     private final int MAX_SPEED;
 
 
@@ -158,8 +158,11 @@ public class PlayerProjectileControl {
     }
 
     public void setPowerUp(PowerUpType key, Float value) {
-        if(key==PowerUpType.MULT && type.getCurrentMult() < MAX_MULT){
-             type.incCurrentMult(value);
+        if (value == 0){
+            powerUp.put(key, 1f);
+        }
+        else if(key==PowerUpType.MULT && type.getCurrentMult() < MAX_MULT ){
+            type.incCurrentMult(value);
             powerUp.put(key, type.getCurrentMult());
         }
         else if(key == PowerUpType.SCALE && type.getCurrentScale() <= MAX_SCALE){

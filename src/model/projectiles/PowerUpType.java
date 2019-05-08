@@ -8,7 +8,7 @@ import static view.GameViewManager.*;
 
 public enum PowerUpType {
     MULT(Constants.PATH_RESOURCES_SPRITES_POWERUPS + "blue-40x40.png",1,1,null,false),
-    SCALE(Constants.PATH_RESOURCES_SPRITES_POWERUPS + "red-40x40.png",1,4,null,false),
+    SCALE(Constants.PATH_RESOURCES_SPRITES_POWERUPS + "red-40x40.png",1,6,null,false),
     SPEEDPROJECTILE(Constants.PATH_RESOURCES_SPRITES_POWERUPS + "yellow-40x40.png",1,1.3f,null,false),
     SPEEDUP(Constants.PATH_RESOURCES_SPRITES_POWERUPS + "yellow-40x40.png",1.2f   ,1,null,false),
     GREENLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserGreen01-9x54.png",1,1,ProjectileType.GREENLASER01,false),
