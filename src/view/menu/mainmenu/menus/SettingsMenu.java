@@ -12,8 +12,6 @@ import view.menu.mainmenu.MenuScene;
 
 public class SettingsMenu extends Menu {
 
-    private static final Insets SLIDER_PADDING = new Insets(10);
-
     private final SettingsSlider masterVolumeSlider;
     private final SettingsSlider sfxVolumeSlider;
     private final SettingsSlider musicVolumeSlider;
@@ -25,16 +23,12 @@ public class SettingsMenu extends Menu {
         Label lbl_settingsMenu = MenuScene.createMenuTitle("Settings");
 
         masterVolumeSlider = new SettingsSlider("Master Volume", AudioManager.getMasterVolume() * 100);
-        masterVolumeSlider.setPadding(SLIDER_PADDING);
 
         sfxVolumeSlider = new SettingsSlider("SFX Volume", AudioManager.getMixerVolume(MixerType.SFX) * 100);
-        sfxVolumeSlider.setPadding(SLIDER_PADDING);
 
         musicVolumeSlider = new SettingsSlider("Music Volume", AudioManager.getMixerVolume(MixerType.MUSIC) * 100);
-        musicVolumeSlider.setPadding(SLIDER_PADDING);
 
         ambientVolumeSlider = new SettingsSlider("Ambient Volume", AudioManager.getMixerVolume(MixerType.AMBIENT) * 100);
-        ambientVolumeSlider.setPadding(SLIDER_PADDING);
 
         addNodeAll(
                 lbl_settingsMenu,
