@@ -2,7 +2,8 @@ package controller.audiomanager;
 
 public enum AudioFile {
     FOOTSTEPS(Constants.PATH_RESOURCES_AUDIO_SFX  + "336598__inspectorj__footsteps-concrete-a.wav", MixerType.SFX, 0.85),
-    BUTTON_CLICK(Constants.PATH_RESOURCES_AUDIO_SFX_MENU  + "tap-crisp.aif", MixerType.SFX, 0.7, 1);
+    BUTTON_CLICK(Constants.PATH_RESOURCES_AUDIO_SFX_MENU  + "tap-crisp.aif", MixerType.SFX, 0.7, 1),
+    FIRE(Constants.PATH_RESOURCES_AUDIO_SFX  + "fire.mp3", MixerType.SFX, 0.15);
 
     private String path;
     private MixerType mixer;
