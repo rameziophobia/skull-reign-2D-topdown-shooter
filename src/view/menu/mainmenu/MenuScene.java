@@ -1,6 +1,5 @@
 package view.menu.mainmenu;
 
-import controller.audiomanager.AudioManager;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,9 +10,9 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.transform.Scale;
 import javafx.util.Duration;
 import model.ui.menu.Menu;
+import model.ui.menu.MenuBackground;
 import model.ui.menu.MenuButton;
 import view.Main;
 import view.menu.mainmenu.menus.*;
@@ -31,6 +30,7 @@ public class MenuScene extends Scene {
     private StackPane stackPane;
 
     private StackPane stp_menus;
+    private MenuBackground menuBackground;
 
     public MenuScene(double width, double height) {
         super(new StackPane(), width, height);//todo width and height
@@ -40,8 +40,7 @@ public class MenuScene extends Scene {
     }
 
     private void createScene() {
-
-        AudioManager.init();
+        menuBackground = new MenuBackground();
 
         Rectangle blackScreen = new Rectangle(1280, 720, Color.BLACK);//todo width and height
         blackScreen.setOpacity(0);
@@ -81,6 +80,7 @@ public class MenuScene extends Scene {
 
         stackPane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         stackPane.getChildren().addAll(
+                menuBackground,
                 vbx_main,
                 blackScreen);
 
@@ -101,6 +101,14 @@ public class MenuScene extends Scene {
         } else {
             throw new IllegalArgumentException("Invalid Menu key");
         }
+    }
+
+    public void openDoor(){
+        menuBackground.openDoor();
+    }
+
+    public void closeDoor(){
+        menuBackground.closeDoor();
     }
 
     public void update() {

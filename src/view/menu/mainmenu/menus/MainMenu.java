@@ -15,7 +15,7 @@ public class MainMenu extends Menu {
 
         addNodeAll(
                 lbl_mainMenu,
-                new MenuButtonTransition("New Game", this, Menus.NewGame),
+                new MenuButtonTransition("New Game", this, Menus.NewGame, menuScene::openDoor),
                 new MenuButtonTransition("Load Game", this, Menus.LoadGame),
                 new MenuButtonTransition("Hall of Fame", this, Menus.HallOfFame),
                 new MenuButtonTransition("Settings", this, Menus.Settings),

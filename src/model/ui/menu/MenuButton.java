@@ -89,7 +89,7 @@ public class MenuButton extends StackPane {
             imgV_fireRight.setOpacity(1);
             imgV_fireLeft.setOpacity(1);
 
-            AudioManager.playAudio(AudioFile.FIRE, 0.5);
+            AudioManager.playAudio(AudioFile.FIRE);
         });
         setOnMouseExited(e -> {
             imageView.setScaleX(1);
@@ -127,12 +127,12 @@ public class MenuButton extends StackPane {
         imgV_fireRight = createFire(colorAdjust, new Insets(0, 0, 0, imageView.getFitWidth() - 32 - 10));
 
         fireRightAnimationClip = new AnimationClip(fireSpriteSheet,
-                8, false, -1, imgV_fireRight);
+                8, false, AnimationClip.INF_REPEATS, imgV_fireRight);
 
         imgV_fireLeft = createFire(colorAdjust, new Insets(0, 0, 0, 10));
 
         fireLeftAnimationClip = new AnimationClip(fireSpriteSheet,
-                8, false, -1, imgV_fireLeft);
+                8, false, AnimationClip.INF_REPEATS, imgV_fireLeft);
     }
 
     private ImageView createFire(ColorAdjust colorAdjust, Insets marginInset) {

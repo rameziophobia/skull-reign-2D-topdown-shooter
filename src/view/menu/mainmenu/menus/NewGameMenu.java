@@ -16,6 +16,6 @@ public class NewGameMenu extends Menu {
                 lbl_newGameMenu,
                 new MenuButton("New Campaign"),
                 new MenuButton("Endless"),
-                new MenuButtonTransition("Back", this, Menus.Main));
+                new MenuButtonTransition("Back", this, Menus.Main, menuScene::closeDoor));
     }
 }
