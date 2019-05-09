@@ -18,7 +18,7 @@ public class SettingsSlider extends HBox {
         setAlignment(Pos.CENTER_LEFT);
         setPadding(PADDING);
 
-        Label lbl_option = new Label(optionText);
+        final Label lbl_option = new Label(optionText);
         lbl_option.setFont(Font.font(20));
         lbl_option.setTextFill(Color.WHITE);
         lbl_option.setPrefWidth(200);
@@ -31,7 +31,7 @@ public class SettingsSlider extends HBox {
 
         slider.setPrefWidth(400);
 
-        Label lbl_sliderHover = new Label();
+        final Label lbl_sliderHover = new Label();
         lbl_sliderHover.textProperty().bind(slider.valueProperty().asString("%.0f%%"));
         lbl_sliderHover.setTextFill(Color.WHITE);
 

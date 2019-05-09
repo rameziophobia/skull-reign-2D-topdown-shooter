@@ -153,7 +153,7 @@ public class ViewManager {
     }
 
     private void createScoreBtn() {
-        BtnTemp btn = new BtnTemp("Score");
+        BtnTemp btn = new BtnTemp("score");
         menuButtons.getChildren().add(btn);
         SubsceneTemp subscene = new SubsceneTemp();
         stkPane.getChildren().add(subscene);

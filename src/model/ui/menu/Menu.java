@@ -29,12 +29,12 @@ public class Menu extends VBox {
     public Menu(MenuScene menuScene) {
         this.menuScene = menuScene;
 
-        setPadding(PADDING);
-        setSpacing(SPACING);
+        this.setPadding(PADDING);
+        this.setSpacing(SPACING);
 
-        setOpacity(0);
-        setTranslateY(-FADE_IN_TRANSLATE_AMOUNT);
-        setMouseTransparent(true);
+        this.setOpacity(0);
+        this.setTranslateY(-FADE_IN_TRANSLATE_AMOUNT);
+        this.setMouseTransparent(true);
 
         fadeOutParallelTransition = createFadeOutTrans();
 

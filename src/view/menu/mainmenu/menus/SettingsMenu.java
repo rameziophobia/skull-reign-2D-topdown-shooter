@@ -21,11 +21,8 @@ public class SettingsMenu extends Menu {
         Label lbl_settingsMenu = MenuScene.createMenuTitle("Settings");
 
         masterVolumeSlider = new SettingsSlider("Master Volume", AudioManager.getMasterVolume() * 100);
-
         sfxVolumeSlider = new SettingsSlider("SFX Volume", AudioManager.getMixerVolume(MixerType.SFX) * 100);
-
         musicVolumeSlider = new SettingsSlider("Music Volume", AudioManager.getMixerVolume(MixerType.MUSIC) * 100);
-
         ambientVolumeSlider = new SettingsSlider("Ambient Volume", AudioManager.getMixerVolume(MixerType.AMBIENT) * 100);
 
         addNodeAll(

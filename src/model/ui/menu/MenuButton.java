@@ -27,12 +27,12 @@ public class MenuButton extends StackPane {
     private static final Insets LABEL_MARGIN = new Insets(0, 0, 0, 40);
 
     private static final Duration TRANSITION_DURATION = Duration.seconds(0.5);
-    protected static final int TRANSLATE_TRANSITION_AMOUNT = 3;
+    private static final int TRANSLATE_TRANSITION_AMOUNT = 3;
 
     private static final String FILE_FLAMEBALL = Main.PATH_RESOURCES_SPRITES + "flameball-32x32.png";
     private static SpriteSheet fireSpriteSheet = new SpriteSheet(FILE_FLAMEBALL, 0);
 
-    private static final Font FONT = new Font(15);
+    private static final Font FONT = Font.font(15);
     private static final Color COLOR_WHITE = Color.WHITE;
 
     private static double buttonScale = 1;
@@ -42,8 +42,8 @@ public class MenuButton extends StackPane {
     private boolean isFireShown;
     private AnimationClip fireRightAnimationClip;
     private AnimationClip fireLeftAnimationClip;
-    private ImageView imgV_fireRight;
-    private ImageView imgV_fireLeft;
+    private ImageView img_fireRight;
+    private ImageView img_fireLeft;
     private ImageView imageView;
 
     public MenuButton(String text) {
@@ -72,10 +72,6 @@ public class MenuButton extends StackPane {
         setOnMouseEnterAndExit();
     }
 
-    public static double getButtonScale() {
-        return buttonScale;
-    }
-
     public static void setButtonScale(double buttonScale) {
         MenuButton.buttonScale = buttonScale;
     }
@@ -86,20 +82,20 @@ public class MenuButton extends StackPane {
             imageView.setScaleY(1.1);
 
             isFireShown = true;
-            imgV_fireRight.setOpacity(1);
-            imgV_fireLeft.setOpacity(1);
+            img_fireRight.setOpacity(1);
+            img_fireLeft.setOpacity(1);
 
-            AudioManager.playAudio(AudioFile.FIRE);
+//            AudioManager.playAudio(AudioFile.FIRE);
         });
         setOnMouseExited(e -> {
             imageView.setScaleX(1);
             imageView.setScaleY(1);
 
             isFireShown = false;
-            imgV_fireRight.setOpacity(0);
-            imgV_fireLeft.setOpacity(0);
+            img_fireRight.setOpacity(0);
+            img_fireLeft.setOpacity(0);
 
-            AudioManager.stopAudio(AudioFile.FIRE);
+//            AudioManager.stopAudio(AudioFile.FIRE);
         });
     }
 
@@ -115,7 +111,7 @@ public class MenuButton extends StackPane {
 
         createAnimatedFire();
 
-        getChildren().addAll(imageView, label, imgV_fireLeft, imgV_fireRight);
+        getChildren().addAll(imageView, label, img_fireLeft, img_fireRight);
     }
 
     private void createAnimatedFire() {
@@ -124,29 +120,27 @@ public class MenuButton extends StackPane {
         ColorAdjust colorAdjust = new ColorAdjust();
         colorAdjust.setHue(random.nextFloat() * (random.nextBoolean() ? 1 : -1));
 
-        imgV_fireRight = createFire(colorAdjust, new Insets(0, 0, 0, imageView.getFitWidth() - 32 - 10));
+        img_fireRight = createFire(colorAdjust, new Insets(0, 0, 0, imageView.getFitWidth() - 32 - 10));
 
         fireRightAnimationClip = new AnimationClip(fireSpriteSheet,
-                8, false, AnimationClip.INF_REPEATS, imgV_fireRight);
+                8, false, AnimationClip.INF_REPEATS, img_fireRight);
 
-        imgV_fireLeft = createFire(colorAdjust, new Insets(0, 0, 0, 10));
+        img_fireLeft = createFire(colorAdjust, new Insets(0, 0, 0, 10));
 
         fireLeftAnimationClip = new AnimationClip(fireSpriteSheet,
-                8, false, AnimationClip.INF_REPEATS, imgV_fireLeft);
+                8, false, AnimationClip.INF_REPEATS, img_fireLeft);
     }
 
     private ImageView createFire(ColorAdjust colorAdjust, Insets marginInset) {
         ImageView imageView = new ImageView();
-
-        imageView.setScaleX(1.25);
-        imageView.setScaleY(1.25);
+        imageView.setScaleX(1.25); //todo scale it using a software
+        imageView.setScaleY(1.25); //todo scale it using a software
+        imageView.setOpacity(0);
 
         StackPane.setAlignment(imageView, Pos.CENTER_LEFT);
         StackPane.setMargin(imageView, marginInset);
 
         imageView.setEffect(colorAdjust);
-
-        imageView.setOpacity(0);
 
         imageView.setMouseTransparent(true);
 

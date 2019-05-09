@@ -9,9 +9,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import model.ui.menu.Menu;
 import model.ui.menu.MenuButtonTransition;
-import view.HighScores;
+import view.score.HighScores;
 import view.Main;
-import view.ScoreBoard;
+import view.score.ScoreBoard;
 import view.menu.mainmenu.MenuScene;
 
 public class HallOfFameMenu extends Menu {
@@ -40,7 +40,7 @@ public class HallOfFameMenu extends Menu {
 
         nameList = leaderBoards.getHighScores();
 
-        TableColumn<HighScores, String> scoreColumn = new TableColumn<>("High Score");
+        TableColumn<HighScores, String> scoreColumn = new TableColumn<>("High score");
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
 
         highScoreTable.setItems(nameList);

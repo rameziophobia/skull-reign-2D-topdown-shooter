@@ -1,4 +1,4 @@
-package view;
+package view.score;
 
 public class HighScores {
     private String name;

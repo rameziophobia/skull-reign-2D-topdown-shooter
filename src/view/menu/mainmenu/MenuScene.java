@@ -1,5 +1,6 @@
 package view.menu.mainmenu;
 
+import controller.animation.AnimationClip;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -117,5 +118,6 @@ public class MenuScene extends Scene {
                 ((MenuButton) node1).update();
             }
         }));
+        menuBackground.getAnimationClips().forEach(AnimationClip::animate);
     }
 }
