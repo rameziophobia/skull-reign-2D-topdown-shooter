@@ -42,11 +42,11 @@ public class SettingsSlider extends HBox {
         );
     }
 
-    public void setValue(double value){
+    public void setValue(double value) {
         slider.setValue(value);
     }
 
-    public double getValue(){
+    public double getValue() {
         return slider.getValue();
     }
 }

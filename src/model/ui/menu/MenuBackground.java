@@ -74,8 +74,8 @@ public class MenuBackground extends Pane {
         img_doorClosed.setLayoutX(450);
         img_doorClosed.setLayoutY(220);
 
-        img_Light.setLayoutX(450 + (5.5*16*4));
-        img_Light.setLayoutY(220 + (3*16*4));
+        img_Light.setLayoutX(450 + (5.5 * 16 * 4));
+        img_Light.setLayoutY(220 + (3 * 16 * 4));
 
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1.25), img_Light);
         fadeTransition.setFromValue(0);
@@ -100,12 +100,12 @@ public class MenuBackground extends Pane {
 
     }
 
-    public void openDoor(){
+    public void openDoor() {
         img_doorClosed.setOpacity(0);
         img_doorOpen.setOpacity(1);
     }
 
-    public void closeDoor(){
+    public void closeDoor() {
         img_doorClosed.setOpacity(1);
         img_doorOpen.setOpacity(0);
     }

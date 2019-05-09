@@ -103,11 +103,11 @@ public class MenuScene extends Scene {
         }
     }
 
-    public void openDoor(){
+    public void openDoor() {
         menuBackground.openDoor();
     }
 
-    public void closeDoor(){
+    public void closeDoor() {
         menuBackground.closeDoor();
     }
 

@@ -9,7 +9,8 @@ public class MenuButtonTransition extends MenuButton {
     private Menu parentMenu;
 
     public MenuButtonTransition(String text, Menu parentMenu, Menus nextMenuKey) {
-        this(text, parentMenu, nextMenuKey, () -> {});
+        this(text, parentMenu, nextMenuKey, () -> {
+        });
     }
 
     public MenuButtonTransition(String text, Menu parentMenu, Menus nextMenuKey, Action onAnimationEndAction) {
@@ -31,7 +32,7 @@ public class MenuButtonTransition extends MenuButton {
 
         EventHandler<? super MouseEvent> eventHandler = getOnMouseClicked();
 
-        setOnMouseClicked(e ->{
+        setOnMouseClicked(e -> {
             parentMenu.disableMenu();
             eventHandler.handle(e);
         });

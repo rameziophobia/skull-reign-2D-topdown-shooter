@@ -80,7 +80,7 @@ public class Menu extends VBox {
         }
     }
 
-    public void disableMenu(){
+    public void disableMenu() {
         this.setMouseTransparent(true);
     }
 

@@ -2,10 +2,8 @@ package view.menu.mainmenu.menus;
 
 import controller.audiomanager.AudioManager;
 import controller.audiomanager.MixerType;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import model.ui.menu.Menu;
-import model.ui.menu.MenuButton;
 import model.ui.menu.MenuButtonTransition;
 import model.ui.menu.SettingsSlider;
 import view.menu.mainmenu.MenuScene;
