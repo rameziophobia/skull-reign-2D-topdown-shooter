@@ -2,6 +2,7 @@ package view;
 
 import model.enemies.Enemy;
 import model.obstacles.Obstacle;
+import model.walls.Wall;
 
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class LevelManager {//todo temp static
     private static final float SPAWN_CD_OBSTACLES = 1000 * 5f;
 
     private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
+    private static ArrayList<Wall> wallArrayList = new ArrayList<>();
 
     private static long nextEnemySpawnTime;
     private static long nextObstaclesSpawnTime; //todo dup code
@@ -22,6 +24,9 @@ public class LevelManager {//todo temp static
 
     public static ArrayList<Enemy> getEnemyArrayList() {
         return enemyArrayList;
+    }
+    public static ArrayList<Wall> getWallArrayList() {
+        return wallArrayList;
     }
 
     public static void createEnemies() {
@@ -40,6 +45,11 @@ public class LevelManager {//todo temp static
 
             GameViewManager.addGameObjectTOScene(new Obstacle());
         }
+    }
+    public static void createWall(){
+        Wall rectangle = new Wall(1200,200);
+        wallArrayList.add(rectangle);
+        GameViewManager.addGameObjectTOScene(rectangle);
     }
 
     public static void removeEnemy(Enemy enemy) {
