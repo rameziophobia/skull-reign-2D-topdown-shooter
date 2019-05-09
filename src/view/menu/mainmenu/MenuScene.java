@@ -1,6 +1,7 @@
 package view.menu.mainmenu;
 
 import controller.animation.AnimationClip;
+import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -32,6 +33,7 @@ public class MenuScene extends Scene {
 
     private StackPane stp_menus;
     private MenuBackground menuBackground;
+    private AnimationTimer animationTimer;
 
     public MenuScene(double width, double height) {
         super(new StackPane(), width, height);//todo width and height
@@ -86,7 +88,11 @@ public class MenuScene extends Scene {
                 blackScreen);
 
         mainMenu.fadeIn();
+
+        startLoop();
     }
+
+
 
     public static Label createMenuTitle(String text) {
         final Label lbl_title = new Label(text);
@@ -112,12 +118,29 @@ public class MenuScene extends Scene {
         menuBackground.closeDoor();
     }
 
-    public void update() {
+    private void update() {
         stp_menus.getChildren().forEach(node -> ((Menu) node).getChildren().forEach(node1 -> {
             if (node1 instanceof MenuButton) {
                 ((MenuButton) node1).update();
             }
         }));
         menuBackground.getAnimationClips().forEach(AnimationClip::animate);
+    }
+
+    public void stopLoop(){
+        animationTimer.stop();
+        menuBackground.pausePulse();
+
+    }
+    private void startLoop() {
+        animationTimer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                update();
+            }
+        };
+        animationTimer.start();
+
+        menuBackground.startPulse();
     }
 }

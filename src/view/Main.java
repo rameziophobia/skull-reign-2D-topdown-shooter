@@ -23,14 +23,6 @@ public class Main extends Application {
         AudioManager.init();
         stage.setScene(menuScene);
 
-        AnimationTimer tempAnimationTimer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                menuScene.update();
-            }
-        };
-        tempAnimationTimer.start();
-
         primaryStage.show();
     }
 

@@ -17,6 +17,7 @@ public class MenuBackground extends Pane {
     private final ImageView img_doorClosed;
 
     private final List<AnimationClip> animationClips;
+    private FadeTransition fadeTransition;
 
     public MenuBackground() {
         animationClips = new ArrayList<>();
@@ -82,12 +83,12 @@ public class MenuBackground extends Pane {
     }
 
     private void startPentPulse(ImageView img_pulsingPent) {
-        final FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1.25), img_pulsingPent);
+        fadeTransition = new FadeTransition(Duration.seconds(1.25), img_pulsingPent);
         fadeTransition.setFromValue(0);
         fadeTransition.setToValue(1);
         fadeTransition.setAutoReverse(true);
         fadeTransition.setCycleCount(Transition.INDEFINITE);
-        fadeTransition.play();
+
     }
 
     public List<AnimationClip> getAnimationClips() {
@@ -102,5 +103,13 @@ public class MenuBackground extends Pane {
     public void closeDoor() {
         img_doorClosed.setOpacity(1);
         img_doorOpen.setOpacity(0);
+    }
+
+    public void startPulse(){
+        fadeTransition.play();
+    }
+
+    public void pausePulse(){
+        fadeTransition.pause();
     }
 }
