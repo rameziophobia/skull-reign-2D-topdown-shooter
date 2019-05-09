@@ -52,6 +52,7 @@ public class Menu extends VBox {
 
         final ParallelTransition parallelTransition = new ParallelTransition(this, fadeInTranslateTrans, fadeInFadeTrans);
         parallelTransition.setDelay(FADE_IN_DELAY);
+        parallelTransition.setOnFinished(e -> setMouseTransparent(false));
 
         return parallelTransition;
     }
@@ -79,9 +80,11 @@ public class Menu extends VBox {
         }
     }
 
-    public void transition(Menus nextMenuKey, MenuButtonTransition menuButtonTransition) {
-        setMouseTransparent(true);
+    public void disableMenu(){
+        this.setMouseTransparent(true);
+    }
 
+    public void transition(Menus nextMenuKey, MenuButtonTransition menuButtonTransition) {
         fadeOutParallelTransition.setOnFinished(e -> {
             menuScene.menuTransition(nextMenuKey);
             menuButtonTransition.reset();
@@ -90,7 +93,6 @@ public class Menu extends VBox {
     }
 
     public void fadeIn() {
-        setMouseTransparent(false);
         fadeInParallelTransition.play();
     }
 }

@@ -153,7 +153,7 @@ public class MenuButton extends StackPane {
         return imageView;
     }
 
-    private void setOnMouseClick() {
+    protected void setOnMouseClick() {
         final ParallelTransition parallelTransition = createFadeOutTransition();
 
         setOnMouseClicked(e -> {
