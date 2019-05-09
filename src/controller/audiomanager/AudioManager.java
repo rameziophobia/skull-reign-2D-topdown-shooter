@@ -20,8 +20,7 @@ public class AudioManager {
 
     public static void init() {
         for (AudioFile audioFile : AudioFile.values()) {
-
-            AUDIO_MIXER_HASH_MAP.putIfAbsent(audioFile.getMixer(), new AudioMixer(1.0));
+            AUDIO_MIXER_HASH_MAP.putIfAbsent(audioFile.getMixer(), new AudioMixer());
 
             AUDIO_MIXER_HASH_MAP.get(audioFile.getMixer()).addAudio(audioFile);
         }
