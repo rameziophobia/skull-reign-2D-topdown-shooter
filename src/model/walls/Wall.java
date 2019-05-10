@@ -40,7 +40,7 @@ public class Wall extends GameObject {
         for(Wall wall: wallArrayList) {
             if (wall.getBoundsInParent().intersects(gameObject.getBoundsInParent())) {
                 if (horizontal) {
-                    if(Math.abs(gameObject.getLayoutX() + offset - wall.getLayoutX() ) < 8){
+                    if(Math.abs(gameObject.getLayoutX() + offset - wall.getLayoutX() ) < MARGIN){
                         return false;
                     }
                 }
