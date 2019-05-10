@@ -10,11 +10,16 @@ import javafx.scene.text.Font;
 
 public class SettingsSlider extends HBox {
     private static final Insets PADDING = new Insets(10);
+    private static final int SPACING = 10;
 
     private final Slider slider;
 
+    public SettingsSlider(String optionText) {
+        this(optionText, 100);
+    }
+
     public SettingsSlider(String optionText, double value) {
-        setSpacing(10);
+        setSpacing(SPACING);
         setAlignment(Pos.CENTER_LEFT);
         setPadding(PADDING);
 

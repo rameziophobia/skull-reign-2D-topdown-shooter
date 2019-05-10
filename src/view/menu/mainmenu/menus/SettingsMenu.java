@@ -1,5 +1,6 @@
 package view.menu.mainmenu.menus;
 
+import controller.SettingsManager;
 import controller.audiomanager.AudioManager;
 import controller.audiomanager.MixerType;
 import javafx.scene.control.Label;
@@ -20,28 +21,38 @@ public class SettingsMenu extends Menu {
 
         Label lbl_settingsMenu = MenuScene.createMenuTitle("Settings");
 
-        masterVolumeSlider = new SettingsSlider("Master Volume", AudioManager.getMasterVolume() * 100);
-        sfxVolumeSlider = new SettingsSlider("SFX Volume", AudioManager.getMixerVolume(MixerType.SFX) * 100);
-        musicVolumeSlider = new SettingsSlider("Music Volume", AudioManager.getMixerVolume(MixerType.MUSIC) * 100);
-        ambientVolumeSlider = new SettingsSlider("Ambient Volume", AudioManager.getMixerVolume(MixerType.AMBIENT) * 100);
+        masterVolumeSlider = new SettingsSlider("Master Volume");
+        sfxVolumeSlider = new SettingsSlider("SFX Volume");
+        ambientVolumeSlider = new SettingsSlider("Ambient Volume");
+        musicVolumeSlider = new SettingsSlider("Music Volume");
+
+        resetSliders();
 
         addNodeAll(
                 lbl_settingsMenu,
                 masterVolumeSlider,
                 sfxVolumeSlider,
-                musicVolumeSlider,
                 ambientVolumeSlider,
-                new MenuButtonTransition("Save", this, Menus.Main, this::saveVolumeSettings),
-                new MenuButtonTransition("Back", this, Menus.Main));
+                musicVolumeSlider,
+                new MenuButtonTransition("Save", this, Menus.Main, () -> {
+                    this.applyVolumeSettings();
+                    SettingsManager.saveAudiSettings();
+                }),
+                new MenuButtonTransition("Back", this, Menus.Main, this::resetSliders));
     }
 
-    private void saveVolumeSettings() {
+    private void resetSliders() {
+        masterVolumeSlider.setValue(AudioManager.getMasterVolume() * 100);
+        sfxVolumeSlider.setValue(AudioManager.getMixerVolume(MixerType.SFX) * 100);
+        ambientVolumeSlider.setValue(AudioManager.getMixerVolume(MixerType.AMBIENT) * 100);
+        musicVolumeSlider.setValue(AudioManager.getMixerVolume(MixerType.MUSIC) * 100);
+    }
+
+    private void applyVolumeSettings() {
         AudioManager.setMasterVolume(masterVolumeSlider.getValue() / 100);
 
         AudioManager.setMixerVolume(MixerType.SFX, sfxVolumeSlider.getValue() / 100);
-        AudioManager.setMixerVolume(MixerType.MUSIC, musicVolumeSlider.getValue() / 100);
         AudioManager.setMixerVolume(MixerType.AMBIENT, ambientVolumeSlider.getValue() / 100);
-
-        //todo save settings
+        AudioManager.setMixerVolume(MixerType.MUSIC, musicVolumeSlider.getValue() / 100);
     }
 }

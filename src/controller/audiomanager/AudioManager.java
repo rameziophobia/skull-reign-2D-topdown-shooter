@@ -19,10 +19,10 @@ public class AudioManager {
     }
 
     public static void init() {
+        for (MixerType mixerType : MixerType.values()) {
+            AUDIO_MIXER_HASH_MAP.put(mixerType, new AudioMixer(1.0));
+        }
         for (AudioFile audioFile : AudioFile.values()) {
-
-            AUDIO_MIXER_HASH_MAP.putIfAbsent(audioFile.getMixer(), new AudioMixer(1.0));
-
             AUDIO_MIXER_HASH_MAP.get(audioFile.getMixer()).addAudio(audioFile);
         }
     }
@@ -40,15 +40,11 @@ public class AudioManager {
     }
 
     public static void setMixerVolume(MixerType mixerVolume, double volume) {
-        if (AUDIO_MIXER_HASH_MAP.containsKey(mixerVolume)) {
-            AUDIO_MIXER_HASH_MAP.get(mixerVolume).setMixerVolume(volume);
-        }
+        AUDIO_MIXER_HASH_MAP.get(mixerVolume).setMixerVolume(volume);
     }
+
     public static double getMixerVolume(MixerType mixerVolume) {
-        if (AUDIO_MIXER_HASH_MAP.containsKey(mixerVolume)) {
-            return AUDIO_MIXER_HASH_MAP.get(mixerVolume).getMixerVolume();
-        }
-        return 1;
+        return AUDIO_MIXER_HASH_MAP.get(mixerVolume).getMixerVolume();
     }
 }
 

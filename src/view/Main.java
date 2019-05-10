@@ -1,7 +1,7 @@
 package view;
 
+import controller.SettingsManager;
 import controller.audiomanager.AudioManager;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import view.menu.mainmenu.MenuScene;
@@ -17,10 +17,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
 //        ViewManager manager = new ViewManager();
 //        primaryStage = manager.getMainStage();
+        AudioManager.init();
+        SettingsManager.init();
 
         stage = primaryStage;
         MenuScene menuScene = new MenuScene(1280, 720);
-        AudioManager.init();
         stage.setScene(menuScene);
 
         primaryStage.show();
