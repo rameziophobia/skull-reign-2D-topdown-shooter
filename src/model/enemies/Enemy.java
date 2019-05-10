@@ -57,6 +57,12 @@ public class Enemy extends Entity {
         //todo
 
     }
+    private void checkIfAlive() {
+        if (hp <= 0) {
+            removeGameObjectFromScene(this);
+            LevelManager.removeEnemy(this);
+        }
+    }
 
     @Override
     public void update() {
@@ -67,11 +73,6 @@ public class Enemy extends Entity {
 
         enemyProjectileControl.update(angle, new Point2D(getLayoutX(), getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
 
-        if (hp <= 0) {
-            removeGameObjectFromScene(this);
-            LevelManager.removeEnemy(this);
-        }
+        checkIfAlive();
     }
-
-
 }

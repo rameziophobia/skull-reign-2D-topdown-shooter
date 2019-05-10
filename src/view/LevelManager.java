@@ -3,7 +3,7 @@ package view;
 import javafx.geometry.Point2D;
 import model.enemies.Enemy;
 import model.obstacles.Obstacle;
-import model.spawners.Spawner;
+import model.spawner.Spawner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class LevelManager {//todo temp static
     }
 
     private static void initialize() {
-        spawner = new Spawner(true);
+        spawner = new Spawner(2, 5000, 1, 5, true);
 
         final List<Point2D> spawnPoints = spawner.getSpawnPoints();
         spawnPoints.add(new Point2D(250, 250));
@@ -61,7 +61,13 @@ public class LevelManager {//todo temp static
         }
     }
 
+    public static void addEnemy(Enemy enemy){
+        GameViewManager.addGameObjectTOScene(enemy);
+        enemyArrayList.add(enemy);
+    }
+
     public static void removeEnemy(Enemy enemy) {
         enemyArrayList.remove(enemy);
+        spawner.removeEnemy(enemy);
     }
 }
