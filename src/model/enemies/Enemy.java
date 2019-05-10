@@ -2,6 +2,7 @@ package model.enemies;
 
 import javafx.geometry.Point2D;
 import model.Entity;
+import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
 import view.LevelManager;
@@ -70,6 +71,8 @@ public class Enemy extends Entity {
         if (hp <= 0) {
             removeGameObjectFromScene(this);
             LevelManager.removeEnemy(this);
+            Player.increasePlayerCurrentScore(enemyType.getEnemyscore());
+            updateScorelbl();
         }
     }
 

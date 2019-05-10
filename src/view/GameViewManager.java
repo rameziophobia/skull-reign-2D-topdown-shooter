@@ -1,14 +1,18 @@
 package view;
 
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import model.GameObject;
 import model.player.PlayerType;
 import model.player.Player;
+import javafx.scene.control.Label;
 
 import java.awt.*;
 import java.util.List;
@@ -22,6 +26,7 @@ public class GameViewManager {
     private Stage gameStage = new Stage();
     private Stage menuStage;
     private static Player player;
+    private static Label playerScorelbl;
 
     private GameViewUI GVUI;
 
@@ -31,9 +36,20 @@ public class GameViewManager {
         GameUI.createBackground(gamePane);
         GameUI.setCrosshair(gamePane);
 
+        gamePane.getChildren().add(createScoreLbl());
+
         setWindowScaling();
 
         GVUI = new GameViewUI();
+    }
+
+    private Label createScoreLbl(){
+        playerScorelbl = new Label("Get Gud");
+        playerScorelbl.setTextFill(Color.YELLOW);
+        playerScorelbl.setStyle("-fx-font-size:20px;-fx-font-weight: bold;");
+        playerScorelbl.setPrefWidth(WIDTH);
+        playerScorelbl.setAlignment(Pos.TOP_CENTER);
+        return playerScorelbl;
     }
 
     public static Player getPlayer() {
@@ -115,4 +131,7 @@ public class GameViewManager {
         gameObjects.forEach(GameObject::update);
     }
 
+    public static void updateScorelbl(){
+        playerScorelbl.setText("Current Score: "+Player.getCurrentScore());
+    }
 }
