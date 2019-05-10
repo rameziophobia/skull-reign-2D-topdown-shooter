@@ -1,10 +1,10 @@
 package view;
 
 import model.enemies.Enemy;
-import model.obstacles.Obstacle;
 import model.projectiles.PowerUp;
 import model.projectiles.PowerUpType;
 import model.walls.Wall;
+import model.obstacles.Obstacle;
 
 import java.util.ArrayList;
 
@@ -18,12 +18,12 @@ public class LevelManager {//todo temp static
 
 
     private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
-
     private static ArrayList<Wall> wallArrayList = new ArrayList<>();
 
     private static long nextEnemySpawnTime;
     private static long nextObstaclesSpawnTime; //todo dup code
     private static long nextPowerUpSpawnTime;
+
 
     private LevelManager() {
     }
@@ -35,7 +35,6 @@ public class LevelManager {//todo temp static
     public static ArrayList<Wall> getWallArrayList() {
         return wallArrayList;
     }
-
 
     public static void createEnemies() {
         if (nextEnemySpawnTime < System.currentTimeMillis()) {

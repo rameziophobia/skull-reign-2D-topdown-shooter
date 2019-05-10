@@ -76,16 +76,14 @@ public class Player extends Entity {
                     setLayoutY(getLayoutY() - SPEED);
                 }
             }
-        } else if (downPressed) {
-            if(Wall.canMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()){
-                if (rightPressed || leftPressed) {
-                    setLayoutY(getLayoutY() + SPEED / DIAGONAL_FACTOR);
-                } else {
-                    setLayoutY(getLayoutY() + SPEED);
-                }
+        } else if(downPressed && Wall.canMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()){
+            if (rightPressed || leftPressed) {
+                setLayoutY(getLayoutY() + SPEED / DIAGONAL_FACTOR);
+            } else {
+                setLayoutY(getLayoutY() + SPEED);
             }
-        }
-        if (rightPressed) {
+        } if (rightPressed) {
+
             if(Wall.canMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()){
                 if (upPressed || downPressed) {
                     setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
@@ -93,14 +91,11 @@ public class Player extends Entity {
                     setLayoutX(getLayoutX() + SPEED);
                 }
             }
-
-        } else if (leftPressed) {
-            if(Wall.canMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()){
-                if (upPressed || downPressed) {
-                    setLayoutX(getLayoutX() - SPEED / DIAGONAL_FACTOR);
-                } else {
-                    setLayoutX(getLayoutX() - SPEED);
-                }
+        } else if(leftPressed && Wall.canMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()) {
+            if (upPressed || downPressed) {
+                setLayoutX(getLayoutX() - SPEED / DIAGONAL_FACTOR);
+            } else {
+                setLayoutX(getLayoutX() - SPEED);
             }
         }
 
@@ -115,7 +110,7 @@ public class Player extends Entity {
 
     }
     private boolean atLeftBorder(){
-        return( getLayoutX() < 0);
+        return( getLayoutX() < 1);
 
     }
     private boolean atBottomBorder(){
@@ -123,10 +118,8 @@ public class Player extends Entity {
 
     }
     private boolean atTopBorder(){
-        return( getLayoutY() < 0);
-
+        return( getLayoutY() < 3);
     }
-
     @Override
     public void takeDmg(double dmg) {
         if (ShieldRectangle.getCurrentValue() > 0) {
