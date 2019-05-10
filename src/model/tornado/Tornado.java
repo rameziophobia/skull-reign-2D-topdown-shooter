@@ -1,4 +1,4 @@
-package model.obstacles;
+package model.tornado;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
@@ -16,14 +16,14 @@ import java.util.Random;
 import static view.GameViewManager.HEIGHT;
 import static view.GameViewManager.WIDTH;
 
-public class Obstacle extends GameObject {
+public class Tornado extends GameObject {
 
-    private static final String PATH_RESOURCES_SPRITES_OBSTACLES = Main.PATH_RESOURCES_SPRITES + "obstacles/";
+    private static final String PATH_RESOURCES_SPRITES_OBSTACLES = Main.PATH_RESOURCES_SPRITES + "tornado/";
     private static final String FILE_TORNADO = PATH_RESOURCES_SPRITES_OBSTACLES + "tornado-animated-64x64.png";
     private AnimationClip animationClip;
 
     //todo: bug spawns at the upper left corner of the screen
-    public Obstacle() {
+    public Tornado() {
         super(FILE_TORNADO);
 
         setUpRandMov();

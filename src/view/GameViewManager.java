@@ -95,6 +95,7 @@ public class GameViewManager {
             @Override
             public void handle(long now) {
                 gameUpdate();
+                LevelManager.update();
             }
         }.start();
     }
@@ -104,8 +105,8 @@ public class GameViewManager {
 //    }
 
     private void gameUpdate() {
-        LevelManager.createEnemies();
-        LevelManager.createObstacles();
+//        LevelManager.createEnemies();
+//        LevelManager.createObstacles();
 
         List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
                 (GameObject) n
