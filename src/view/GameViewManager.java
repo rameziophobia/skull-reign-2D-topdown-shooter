@@ -3,12 +3,12 @@ package view;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import model.GameObject;
-import model.player.PlayerType;
 import model.player.Player;
+import model.player.PlayerType;
 
 import java.awt.*;
 import java.util.List;

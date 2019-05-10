@@ -12,12 +12,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.player.PlayerType;
+import model.ui.mainmenu.BtnTemp;
+import model.ui.mainmenu.PlayerPicker;
 import model.ui.mainmenu.SmallLabel;
 import model.ui.mainmenu.SubsceneTemp;
-import model.ui.mainmenu.PlayerPicker;
-import model.ui.mainmenu.BtnTemp;
-import model.player.PlayerType;
-
 
 import java.util.ArrayList;
 

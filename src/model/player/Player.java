@@ -3,11 +3,11 @@ package model.player;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import model.Entity;
-import view.game.stats.StatBar;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
 import view.GameViewManager;
 import view.InputManager;
+import view.game.stats.StatBar;
 
 import static java.lang.Math.atan2;
 

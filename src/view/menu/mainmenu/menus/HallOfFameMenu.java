@@ -9,10 +9,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import model.ui.menu.Menu;
 import model.ui.menu.MenuButtonTransition;
-import view.score.HighScores;
 import view.Main;
-import view.score.ScoreBoard;
 import view.menu.mainmenu.MenuScene;
+import view.score.HighScores;
+import view.score.ScoreBoard;
 
 public class HallOfFameMenu extends Menu {
     private static TableView<HighScores> highScoreTable;
