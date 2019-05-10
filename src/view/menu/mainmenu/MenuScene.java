@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.ui.menu.Menu;
 import model.ui.menu.MenuBackground;
@@ -28,6 +29,8 @@ public class MenuScene extends Scene {
 
     private static final Font TITLE_FONT_SIZE = new Font(40);
 
+    private final Stage primaryStage;
+
     private HashMap<Menus, Menu> menuHashMap = new HashMap<>();
     private StackPane stackPane;
 
@@ -35,9 +38,11 @@ public class MenuScene extends Scene {
     private MenuBackground menuBackground;
     private AnimationTimer animationTimer;
 
-    public MenuScene(double width, double height) {
+    public MenuScene(double width, double height, Stage primaryStage) {
         super(new StackPane(), width, height);//todo width and height
         stackPane = (StackPane) getRoot();
+
+        this.primaryStage = primaryStage;
 
         createScene();
     }
@@ -127,11 +132,15 @@ public class MenuScene extends Scene {
         menuBackground.getAnimationClips().forEach(AnimationClip::animate);
     }
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     public void stopLoop(){
         animationTimer.stop();
         menuBackground.pausePulse();
-
     }
+
     private void startLoop() {
         animationTimer = new AnimationTimer() {
             @Override

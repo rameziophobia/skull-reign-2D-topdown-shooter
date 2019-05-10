@@ -20,6 +20,7 @@ import model.ui.mainmenu.SubsceneTemp;
 
 import java.util.ArrayList;
 
+@Deprecated
 public class ViewManager {
 
     private BorderPane mainPane;

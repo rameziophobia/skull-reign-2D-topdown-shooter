@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import model.player.PlayerType;
 
+@Deprecated
 public class PlayerPicker extends VBox {
 
     private ImageView buttonImage;

@@ -21,7 +21,7 @@ public class Main extends Application {
         SettingsManager.init();
 
         stage = primaryStage;
-        MenuScene menuScene = new MenuScene(1280, 720);
+        MenuScene menuScene = new MenuScene(1280, 720, primaryStage);
         stage.setScene(menuScene);
 
         primaryStage.show();
