@@ -1,5 +1,7 @@
 package controller.audiomanager;
 
+import view.Main;
+
 public enum AudioFile {
     FOOTSTEPS(Constants.PATH_RESOURCES_AUDIO_SFX  + "336598__inspectorj__footsteps-concrete-a.wav", MixerType.SFX, 0.85),
     BURST(Constants.PATH_RESOURCES_AUDIO_SFX_PROJECTILES  + "burst.mp3", MixerType.SFX, 0.85),
@@ -11,26 +13,17 @@ public enum AudioFile {
     WOOSH(Constants.PATH_RESOURCES_AUDIO_SFX_PROJECTILES  + "woosh.mp3", MixerType.SFX, 0.85),
     ELECTRIC1(Constants.PATH_RESOURCES_AUDIO_SFX_PROJECTILES  + "electric1.mp3", MixerType.SFX, 0.85);
 
-    private String path;
-    private MixerType mixer;
-    private double volume = 1.0;
-    private int cycleCount = 1;
+    private final String path;
+    private final MixerType mixer;
+    private final double volume;
+    private final int cycleCount;
 
     AudioFile(String path, MixerType mixer) {
-        this.path = path;
-        this.mixer = mixer;
+        this(path, mixer, 1, 1);
     }
 
     AudioFile(String path, MixerType mixer, double volume) {
-        this.path = path;
-        this.mixer = mixer;
-        this.volume = volume;
-    }
-
-    AudioFile(String path, MixerType mixer, int cycleCount) {
-        this.path = path;
-        this.mixer = mixer;
-        this.cycleCount = cycleCount;
+        this(path, mixer, volume, 1);
     }
 
     AudioFile(String path, MixerType mixer, double volume, int cycleCount) {
@@ -57,7 +50,7 @@ public enum AudioFile {
     }
 
     private static class Constants {
-        private static final String PATH_RESOURCES_AUDIO = "file:resources/audio/";
+        private static final String PATH_RESOURCES_AUDIO = Main.PATH_RESOURCES + "audio/";
         private static final String PATH_RESOURCES_AUDIO_SFX = PATH_RESOURCES_AUDIO + "sfx/";
         private static final String PATH_RESOURCES_AUDIO_SFX_PROJECTILES = PATH_RESOURCES_AUDIO_SFX + "projectiles/";
     }

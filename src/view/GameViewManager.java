@@ -83,7 +83,7 @@ public class GameViewManager {
     private void createPlayer(PlayerType chosenPlayer) {
         player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
         addGameObjectTOScene(player);
-        player.toFront();//todo walls ?
+        player.toFront();
     }
 
     private void createUI() {
@@ -91,7 +91,7 @@ public class GameViewManager {
     }
 
     private void startGameLoop() {
-//        gameStart();
+        gameStart();
 
         new AnimationTimer() {
             @Override
@@ -101,15 +101,16 @@ public class GameViewManager {
         }.start();
     }
 
-//    private void gameStart() { //todo: do we need that ?
-//
-//    }
+    private void gameStart() {
+        LevelManager.createWall();
+    }
 
     private void gameUpdate() {
         LevelManager.createEnemies();
         LevelManager.createObstacles();
 
-        List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
+
+            List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
                 (GameObject) n
         ).collect(Collectors.toList());
         gameObjects.forEach(GameObject::update);

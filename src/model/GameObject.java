@@ -38,11 +38,11 @@ public abstract class GameObject extends ImageView {
     }
 
     public boolean isIntersects(GameObject s) {
-        return getBounds().intersects(s.getBounds().getX(),
-                s.getBounds().getY(),
-                s.getBounds().getWidth(),
-                s.getBounds().getHeight());
-//        return getBoundsInParent().intersects(s.getBoundsInParent());
+//        return getBounds().intersects(s.getBounds().getX(),
+//                s.getBounds().getY(),
+//                s.getBounds().getWidth(),
+//                s.getBounds().getHeight());
+        return getBoundsInParent().intersects(s.getBoundsInParent());
     }//todo: ((Path)Shape.intersect(bullet, target)).getElements().size() > 0 better implementation??
 
     public abstract void update();
