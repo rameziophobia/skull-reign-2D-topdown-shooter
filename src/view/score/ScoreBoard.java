@@ -115,7 +115,7 @@ public class ScoreBoard {
     }
 
     public ObservableList<HighScores> getHighScores() {
-
         return sorted;
     }
+
 }

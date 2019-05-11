@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import model.ui.menu.Menu;
@@ -50,15 +51,26 @@ public class HallOfFameMenu extends Menu {
         scoreColumn.setMinWidth(width / 2);
         scoreColumn.setSortType(TableColumn.SortType.DESCENDING);
         highScoreTable.setId("highScore");
-        highScoreTable.getColumns().addAll(scoreColumn, nameColumn);
+        ObservableList<TableColumn<HighScores, ?>> columns = highScoreTable.getColumns();
+        columns.add(scoreColumn);
+        columns.add( nameColumn);
 
         VBox.setMargin(highScoreTable, new Insets(0, 0, 0, 10));
+    }
 
-        setNewRecord("AMS", 12345);
+    public static void addScoreInput(int val){
+        String text=null;
+        TextInputDialog input = new TextInputDialog("");
+        input.setTitle("Save high score");
+        input.setHeaderText("Please enter your name");
+        input.show();
+        input.setOnCloseRequest(e->setNewRecord(input.getEditor().getText(),val));
+
     }
 
     public static void setNewRecord(String Name, int Score) {
         leaderBoards.addNewScore(Name, Score);
+        System.out.println("testing");
     }
 
 }

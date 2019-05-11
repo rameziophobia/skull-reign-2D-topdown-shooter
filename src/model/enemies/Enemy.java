@@ -2,6 +2,7 @@ package model.enemies;
 
 import javafx.geometry.Point2D;
 import model.Entity;
+import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
 import view.LevelManager;
@@ -67,11 +68,16 @@ public class Enemy extends Entity {
 
         enemyProjectileControl.update(angle, new Point2D(getLayoutX(), getLayoutY()));//todo: enter values projectileControls mn 7eta 8er hna (endless mode class)
 
-        if (hp <= 0) {
+        if (hp <= 0||!LevelManager.isSpawnable()) {
             removeGameObjectFromScene(this);
             LevelManager.removeEnemy(this);
+            Player.increaseCurrentScore(this.getScoreValue());
         }
+
     }
 
+    public int getScoreValue(){
+        return enemyType.getScore();
+    }
 
 }

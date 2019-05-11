@@ -9,10 +9,10 @@ import view.GameViewManager;
 import view.menu.mainmenu.MenuScene;
 
 public class NewGameMenu extends Menu {
+    GameViewManager gameViewManager ;
     public NewGameMenu(MenuScene menuScene) {
         super(menuScene);
 
-        GameViewManager gameViewManager = new GameViewManager();
 
         Label lbl_newGameMenu = MenuScene.createMenuTitle("Choose Game Type");
 
@@ -20,9 +20,15 @@ public class NewGameMenu extends Menu {
                 lbl_newGameMenu,
                 new MenuButton("New Campaign", () -> {
                     menuScene.stopLoop();
+                    createGameViewManager();
                     gameViewManager.createNewGame(menuScene.getPrimaryStage(), PlayerType.ROBOT);
                 }),
                 new MenuButton("Endless"),
                 new MenuButtonTransition("Back", this, Menus.Main, menuScene::closeDoor));
     }
+
+    private void createGameViewManager() {
+        gameViewManager = new GameViewManager();
+    }
+
 }

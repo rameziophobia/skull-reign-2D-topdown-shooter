@@ -16,6 +16,7 @@ public class LevelManager {//todo temp static
 
     private static long nextEnemySpawnTime;
     private static long nextObstaclesSpawnTime; //todo dup code
+    private static boolean spawnable=true;
 
     private LevelManager() {
     }
@@ -25,7 +26,7 @@ public class LevelManager {//todo temp static
     }
 
     public static void createEnemies() {
-        if (nextEnemySpawnTime < System.currentTimeMillis()) {
+        if (nextEnemySpawnTime < System.currentTimeMillis() && spawnable) {
             nextEnemySpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
 
             Enemy enemy = new Enemy(TANK_SAND);
@@ -35,7 +36,7 @@ public class LevelManager {//todo temp static
     }
 
     public static void createObstacles() {//todo implement timer
-        if (nextObstaclesSpawnTime < System.currentTimeMillis()) {
+        if (nextObstaclesSpawnTime < System.currentTimeMillis()&&isSpawnable()) {
             nextObstaclesSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_OBSTACLES);
 
             GameViewManager.addGameObjectTOScene(new Obstacle());
@@ -44,5 +45,12 @@ public class LevelManager {//todo temp static
 
     public static void removeEnemy(Enemy enemy) {
         enemyArrayList.remove(enemy);
+    }
+
+    public static boolean isSpawnable(){
+        return spawnable;
+    }
+    public static void setSpawnable(boolean state) {
+        spawnable=state;
     }
 }

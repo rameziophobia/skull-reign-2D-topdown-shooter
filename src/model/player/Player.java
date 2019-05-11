@@ -7,12 +7,14 @@ import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
 import view.GameViewManager;
 import view.InputManager;
+import view.LevelManager;
 import view.game.stats.StatBar;
 
 import static java.lang.Math.atan2;
 
 public class Player extends Entity {
 
+    private static int currentScore = 0;
     private static final float SPEED = 4;
     private static final double MAX_HP = 200;
     private static final double MAX_SHIELD = 200;
@@ -23,6 +25,7 @@ public class Player extends Entity {
     private final PlayerProjectileControl primaryBtnHandler;
     private final PlayerProjectileControl secondaryBtnHandler;
     private double currentHp = MAX_HP;
+    private double currentShield = MAX_SHIELD;
     private double angle;
 
     private boolean upPressed;
@@ -101,10 +104,14 @@ public class Player extends Entity {
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
             barScaleAnimator(ShieldRectangle);
+            currentShield = ShieldRectangle.getCurrentValue();
         } else {
             HPRectangle.decreaseCurrent(dmg);
             barScaleAnimator(HPRectangle);
+            currentHp = HPRectangle.getCurrentValue();
         }
+        if (currentHp <= 0)
+            killPlayer();
     }
 
     @Override
@@ -157,5 +164,24 @@ public class Player extends Entity {
 
         secondaryBtnHandler.update(angle);
         primaryBtnHandler.update(angle);
+    }
+
+    public static void increaseCurrentScore(int amount) {
+        currentScore += amount;
+        System.out.println(currentScore);
+        GameViewManager.updateLabel();
+    }
+
+    public void resetScore() {
+        currentScore = 0;
+    }
+
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    public void killPlayer() {
+        LevelManager.setSpawnable(false);
+        GameViewManager.endGameSequence();
     }
 }
