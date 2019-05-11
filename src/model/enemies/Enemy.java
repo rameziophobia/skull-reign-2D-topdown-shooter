@@ -74,7 +74,6 @@ public class Enemy extends Entity {
             if (hp <= 0)
                 Player.increaseCurrentScore(this.getScoreValue());
         }
-
     }
 
     public int getScoreValue() {

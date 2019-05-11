@@ -172,9 +172,8 @@ public class GameViewManager {
         fader.setOnFinished(e->view.setMouseTransparent(false));
         addGameObjectTOScene(view);
         view.setOnMouseClicked(e->{
-            HallOfFameMenu.addScoreInput(player.getCurrentScore());
+            HallOfFameMenu.addScoreInput(player.getCurrentScore(),true);
             player.resetScore();
-            endGame();
         });
     }
     public static void endGame(){

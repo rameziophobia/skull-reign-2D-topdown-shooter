@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import model.ui.menu.Menu;
 import model.ui.menu.MenuButtonTransition;
+import view.GameViewManager;
 import view.Main;
 import view.menu.mainmenu.MenuScene;
 import view.score.HighScores;
@@ -58,7 +59,7 @@ public class HallOfFameMenu extends Menu {
         VBox.setMargin(highScoreTable, new Insets(0, 0, 0, 10));
     }
 
-    public static void addScoreInput(int val){
+    public static void addScoreInput(int val,boolean gameEnded){
         String text=null;
         TextInputDialog input = new TextInputDialog("");
         input.setTitle("Save high score");
@@ -69,6 +70,9 @@ public class HallOfFameMenu extends Menu {
                 setNewRecord(input.getEditor().getText(), val);
             else
                 setNewRecord("NoName",val);
+            if(gameEnded){
+                GameViewManager.endGame();
+            }
         });
 
     }
