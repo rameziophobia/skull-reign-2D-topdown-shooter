@@ -12,6 +12,7 @@ public class Main extends Application {
     public static final String PATH_RESOURCES_SPRITES = PATH_RESOURCES + "sprites/";
 
     private static Stage stage;
+    private static MenuScene menuScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -21,10 +22,10 @@ public class Main extends Application {
         SettingsManager.init();
 
         stage = primaryStage;
-        MenuScene menuScene = new MenuScene(1280, 720, primaryStage);
+        menuScene = new MenuScene(1280, 720, stage);
         stage.setScene(menuScene);
 
-        primaryStage.show();
+        stage.show();
     }
 
     public static void main(String[] args) {
@@ -33,5 +34,15 @@ public class Main extends Application {
 
     public static void exit() {
         stage.close();
+    }
+
+    public static void switchToMainMenu(){
+        stage.show();
+        menuScene.startLoop();
+        GameViewManager.getGameStage().hide();
+    }
+    public static void switchToGame(){
+        stage.hide();
+        GameViewManager.getGameStage().show();
     }
 }

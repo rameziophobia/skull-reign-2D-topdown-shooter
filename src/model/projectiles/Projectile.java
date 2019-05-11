@@ -5,7 +5,6 @@ import controller.animation.SpriteSheet;
 import javafx.geometry.Point2D;
 import model.GameObject;
 import model.enemies.Enemy;
-import model.player.Player;
 import view.GameViewManager;
 import view.LevelManager;
 

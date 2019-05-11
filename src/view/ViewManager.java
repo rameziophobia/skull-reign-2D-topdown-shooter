@@ -80,10 +80,6 @@ public class ViewManager {
         mainPane.setCenter(centerHbx);
     }
 
-    public Stage getMainStage() {
-        return mainStage;
-    }
-
     private void createBackground() {
         Image backgroundImage = new Image("file:resources/sprites/tiles/floor2.png");
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
@@ -129,7 +125,7 @@ public class ViewManager {
         HBox hbx_start = createHbxStart();
         BtnTemp begin = new BtnTemp("begin");
         GameViewManager gm = new GameViewManager();
-        begin.setOnAction(e -> gm.createNewGame(mainStage, chosenPlayer));
+        begin.setOnAction(e -> gm.createNewGame(chosenPlayer));
         subscene.getPane().getChildren().addAll(hbx_start, begin);
     }
 

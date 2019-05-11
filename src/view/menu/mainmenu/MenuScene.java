@@ -97,8 +97,6 @@ public class MenuScene extends Scene {
         startLoop();
     }
 
-
-
     public static Label createMenuTitle(String text) {
         final Label lbl_title = new Label(text);
         lbl_title.setFont(TITLE_FONT_SIZE);
@@ -141,7 +139,7 @@ public class MenuScene extends Scene {
         menuBackground.pausePulse();
     }
 
-    private void startLoop() {
+    public void startLoop() {
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {

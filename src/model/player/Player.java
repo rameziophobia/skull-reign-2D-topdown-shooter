@@ -156,14 +156,16 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        updateAngle(InputManager.getMouseXPos(), InputManager.getMouseYPos());
-        setRotate(angle);
+        if (currentHp > 0) {
+            updateAngle(InputManager.getMouseXPos(), InputManager.getMouseYPos());
+            setRotate(angle);
 
-        move();
-        warp();
+            move();
+            warp();
 
-        secondaryBtnHandler.update(angle);
-        primaryBtnHandler.update(angle);
+            secondaryBtnHandler.update(angle);
+            primaryBtnHandler.update(angle);
+        }
     }
 
     public static void increaseCurrentScore(int amount) {

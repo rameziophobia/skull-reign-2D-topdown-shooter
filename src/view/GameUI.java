@@ -1,14 +1,8 @@
 package view;
 
-import javafx.geometry.Pos;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
-import model.player.Player;
-
-import javafx.scene.control.Label;
 
 public class GameUI { //todo temp static
 

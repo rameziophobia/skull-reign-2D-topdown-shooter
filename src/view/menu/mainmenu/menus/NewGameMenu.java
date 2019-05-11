@@ -9,20 +9,25 @@ import view.GameViewManager;
 import view.menu.mainmenu.MenuScene;
 
 public class NewGameMenu extends Menu {
-    GameViewManager gameViewManager ;
+    private GameViewManager gameViewManager;
+
     public NewGameMenu(MenuScene menuScene) {
         super(menuScene);
 
-
         Label lbl_newGameMenu = MenuScene.createMenuTitle("Choose Game Type");
+
+        MenuButton new_campaign = new MenuButton("New Campaign");
+        new_campaign.setOnAnimationEndAction(() -> {
+            menuScene.stopLoop();
+            createGameViewManager();
+            gameViewManager.createNewGame(PlayerType.ROBOT);
+            new_campaign.setTranslateY(0);//todo temp
+            new_campaign.setOpacity(1);//todo temp
+        });
 
         addNodeAll(
                 lbl_newGameMenu,
-                new MenuButton("New Campaign", () -> {
-                    menuScene.stopLoop();
-                    createGameViewManager();
-                    gameViewManager.createNewGame(menuScene.getPrimaryStage(), PlayerType.ROBOT);
-                }),
+                new_campaign,
                 new MenuButton("Endless"),
                 new MenuButtonTransition("Back", this, Menus.Main, menuScene::closeDoor));
     }
