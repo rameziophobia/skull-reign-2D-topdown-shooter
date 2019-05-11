@@ -64,7 +64,12 @@ public class HallOfFameMenu extends Menu {
         input.setTitle("Save high score");
         input.setHeaderText("Please enter your name");
         input.show();
-        input.setOnCloseRequest(e->setNewRecord(input.getEditor().getText(),val));
+        input.setOnCloseRequest(e-> {
+            if(!input.getEditor().getText().isEmpty())
+                setNewRecord(input.getEditor().getText(), val);
+            else
+                setNewRecord("NoName",val);
+        });
 
     }
 
