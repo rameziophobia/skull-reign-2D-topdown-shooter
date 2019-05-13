@@ -47,7 +47,7 @@ public class Player extends Entity {
 
         primaryBtnHandler = new PlayerProjectileControl(ProjectileType.BULLET,
                 PlayerProjectileControl.buttons.PRIMARY);
-        secondaryBtnHandler = new PlayerProjectileControl(ProjectileType.FIRE,
+        secondaryBtnHandler = new PlayerProjectileControl(ProjectileType.WHIRLWIND,
                 PlayerProjectileControl.buttons.SECONDARY);
     }
 

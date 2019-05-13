@@ -50,7 +50,7 @@ public class PowerUp extends GameObject {
             Player.setSPEED(powerUpType.getSpeed());
             getPlayer().getSecondaryBtnHandler().setPowerUp(powerUpType,powerUpType.getScale());
             if(powerUpType.getProjectileType()!= null){
-                getPlayer().getSecondaryBtnHandler().addType(powerUpType.getProjectileType(), true);
+                getPlayer().getSecondaryBtnHandler().addType(powerUpType.getProjectileType());
             }
             removeGameObjectFromScene(this);
         }

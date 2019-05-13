@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import model.projectiles.ProjectileType;
 import view.GameViewManager;
 
 import static model.GameObject.*;
@@ -37,31 +38,37 @@ public class ProjectileUI extends HBox {
         setLayoutY(GameViewManager.HEIGHT - 90);
     }
 
-    public static void setWeapon(int index, String projectileURL) {
-
+    public static void setWeapon(ProjectileType type) {
+        String projectileURL = type.getURL();
         ImageView weaponImage;
-        if (prevWeaponURLs[index] != null) {
-            int i = (index == 0) ? 0 : 3;
+
+        int animated = type.isANIMATED() ? 1 : 0;
+        if (prevWeaponURLs[animated] != null) {
+            int i = (animated == 0) ? 0 : 3;
             ObservableList<Node> activeSlot = weapons[i].getChildren();
             if (activeSlot.size() > 1) {
                 activeSlot.remove(1);
             }
-            prevWeaponURLs[index].setScaleX(0.5);
-            prevWeaponURLs[index].setScaleY(0.5);
-            activeSlot.add(prevWeaponURLs[index]);
+            prevWeaponURLs[animated].setScaleX(0.5);
+            prevWeaponURLs[animated].setScaleY(0.5);
+            activeSlot.add(prevWeaponURLs[animated]);
         }
-        index++;
+        animated++;
 
         weaponImage = !isAnimated(projectileURL) ?
                 new ImageView(projectileURL) :
                 new ImageView(SpriteSheet.getFirstSprite(projectileURL));
 
+        if (type.isANIMATED()){
+
+        }
+
         weaponImage.setRotate(270);
-        ObservableList<Node> currentSlot = weapons[index].getChildren();
+        ObservableList<Node> currentSlot = weapons[animated].getChildren();
         if (currentSlot.size() > 1) {
             currentSlot.remove(1);
         }
         currentSlot.add(weaponImage);
-        prevWeaponURLs[--index] = weaponImage;
+        prevWeaponURLs[--animated] = weaponImage;
     }
 }

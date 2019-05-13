@@ -56,6 +56,7 @@ public enum PowerUpType {
         private static final String PATH_RESOURCES_SPRITES_POWERUPS = Main.PATH_RESOURCES_SPRITES + "powerups/";
         private static final String PATH_RESOURCES_SPRITES_PROJECTILES = Main.PATH_RESOURCES_SPRITES + "projectiles/";
     }
+
     public static PowerUpType getRandomPowerUpType() {
         Random random = new Random();
         PowerUpType power;

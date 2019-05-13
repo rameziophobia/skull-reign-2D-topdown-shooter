@@ -57,7 +57,7 @@ public class PlayerProjectileControl {
         powerUp = new HashMap<>();
 
         rangeEnable = false;
-        setWeapon(projectileBtn.getIndex(), projectile.getURL());
+        setWeapon(projectile);
         powerUp = initializePowerUp();
         weaponSettings.put(projectile, powerUp);
         weaponList.add(type);
@@ -135,13 +135,12 @@ public class PlayerProjectileControl {
                 > range;
     }
 
-    public void addType(ProjectileType type, boolean special) {
+    public void addType(ProjectileType type) {
         this.type = type;
         weaponSettings.putIfAbsent(type, initializePowerUp());
         this.powerUp = weaponSettings.get(type);
 
-        int weaponSlot = special ? 1 : 0;
-        setWeapon(weaponSlot, type.getURL());
+        setWeapon(type);
         if (weaponList.size() < weaponSettings.size()) {
             weaponList.add(type);
         }
@@ -154,7 +153,7 @@ public class PlayerProjectileControl {
         type = nextType;
 
         int weaponSlot = special ? 1 : 0;
-        setWeapon(weaponSlot, type.getURL()); //todo ui slot kda msh dynamic but screw it i need my brain cells ughhhh nvm this needs to be done
+        setWeapon(type); //todo ui slot kda msh dynamic but screw it i need my brain cells ughhhh nvm this needs to be done
     }
 
     public void setPowerUp(PowerUpType key, Float value) {
