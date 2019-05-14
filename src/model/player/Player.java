@@ -15,7 +15,7 @@ import static java.lang.Math.atan2;
 
 public class Player extends Entity {
 
-    private static final float SPEED = 4;
+    private static final float SPEED = 6;
     private static final double MAX_HP = 200;
     private static final double MAX_SHIELD = 200;
     private static final long REGENERATION_TIME_CD_MS = 5000;

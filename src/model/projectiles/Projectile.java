@@ -19,15 +19,18 @@ public class Projectile extends GameObject {
     private double scale = 1.0;
     private AnimationClip animationClip;
     private Boolean enemyProjectile;
+    private static final float playerSpeedMultiplier = 1.4f;
 
     private float speed;
 
     Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile) {
         super(projectileType.getURL());
         this.projectileType = projectileType;
-        this.speed = projectileType.getSPEED();
         this.angle = angle;
         this.enemyProjectile = enemyProjectile;
+
+        float speedMultiplier = enemyProjectile ? 1 : playerSpeedMultiplier;
+        this.speed = projectileType.getSPEED() * speedMultiplier;
 
         if (projectileType.isANIMATED()) {
             this.animated = true;
