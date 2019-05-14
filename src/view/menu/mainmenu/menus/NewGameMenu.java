@@ -29,7 +29,7 @@ public class NewGameMenu extends Menu {
                 lbl_newGameMenu,
                 new_campaign,
                 new MenuButton("Endless"),
-                new MenuButtonTransition("Back", this, Menus.Main, menuScene::closeDoor));
+                new MenuButtonTransition("Back", this, Menus.Customization));
     }
 
     private void createGameViewManager() {

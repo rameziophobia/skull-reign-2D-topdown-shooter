@@ -69,6 +69,9 @@ public class MenuScene extends Scene {
         final Menu mainMenu = new MainMenu(this);
         menuHashMap.put(Menus.Main, mainMenu);
 
+        final Menu customizationMenu = new CustomizationMenu(this);
+        menuHashMap.put(Menus.Customization, customizationMenu);
+
         final Menu newGameMenu = new NewGameMenu(this);
         menuHashMap.put(Menus.NewGame, newGameMenu);
 
@@ -81,7 +84,14 @@ public class MenuScene extends Scene {
         final Menu settingsMenu = new SettingsMenu(this);
         menuHashMap.put(Menus.Settings, settingsMenu);
 
-        stp_menus = new StackPane(mainMenu, newGameMenu, loadGameMenu, hallOfFameMenu, settingsMenu);
+        stp_menus = new StackPane(
+                mainMenu,
+                customizationMenu,
+                newGameMenu,
+                loadGameMenu,
+                hallOfFameMenu,
+                settingsMenu
+        );
 
         final VBox vbx_main = new VBox(hbx_logo, stp_menus);
         vbx_main.setPadding(new Insets(10, 0, 10, 0));
