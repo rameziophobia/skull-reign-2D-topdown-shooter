@@ -34,11 +34,11 @@ public class SettingsMenu extends Menu {
                 sfxVolumeSlider,
                 ambientVolumeSlider,
                 musicVolumeSlider,
-                new MenuButtonTransition("Save", this, Menus.Main, () -> {
+                new MenuButtonTransition("Save", this, Menus.MAIN, () -> {
                     this.applyVolumeSettings();
                     SettingsManager.saveAudiSettings();
                 }),
-                new MenuButtonTransition("Back", this, Menus.Main, this::resetSliders));
+                new MenuButtonTransition("Back", this, Menus.MAIN, this::resetSliders));
     }
 
     private void resetSliders() {

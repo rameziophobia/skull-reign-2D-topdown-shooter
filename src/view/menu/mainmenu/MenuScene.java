@@ -67,22 +67,22 @@ public class MenuScene extends Scene {
         MenuButton.setButtonScale(BUTTON_SCALE);
 
         final Menu mainMenu = new MainMenu(this);
-        menuHashMap.put(Menus.Main, mainMenu);
+        menuHashMap.put(Menus.MAIN, mainMenu);
 
         final Menu customizationMenu = new CustomizationMenu(this);
-        menuHashMap.put(Menus.Customization, customizationMenu);
+        menuHashMap.put(Menus.CUSTOMIZATION, customizationMenu);
 
         final Menu newGameMenu = new NewGameMenu(this);
-        menuHashMap.put(Menus.NewGame, newGameMenu);
+        menuHashMap.put(Menus.NEW_GAME, newGameMenu);
 
         final Menu loadGameMenu = new LoadGameMenu(this);
-        menuHashMap.put(Menus.LoadGame, loadGameMenu);
+        menuHashMap.put(Menus.LOAD_GAME, loadGameMenu);
 
         final Menu hallOfFameMenu = new HallOfFameMenu(this);
-        menuHashMap.put(Menus.HallOfFame, hallOfFameMenu);
+        menuHashMap.put(Menus.HALL_OF_FAME, hallOfFameMenu);
 
         final Menu settingsMenu = new SettingsMenu(this);
-        menuHashMap.put(Menus.Settings, settingsMenu);
+        menuHashMap.put(Menus.SETTINGS, settingsMenu);
 
         stp_menus = new StackPane(
                 mainMenu,

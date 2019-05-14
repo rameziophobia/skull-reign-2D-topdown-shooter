@@ -21,8 +21,8 @@ public class CustomizationMenu extends Menu {
         addNodeAll(
                 MenuScene.createMenuTitle("Enter Player Name"),
                 txt_playerName,
-                new MenuButtonTransition("Next", this, Menus.NewGame),
-                new MenuButtonTransition("Back", this, Menus.Main, menuScene::closeDoor)
+                new MenuButtonTransition("Next", this, Menus.NEW_GAME),
+                new MenuButtonTransition("Back", this, Menus.MAIN, menuScene::closeDoor)
         );
     }
 }

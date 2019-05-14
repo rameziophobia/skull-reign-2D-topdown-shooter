@@ -1,10 +1,10 @@
 package view.menu.mainmenu.menus;
 
 public enum Menus {
-    Main,
-    Customization,
-    NewGame,
-    LoadGame,
-    HallOfFame,
-    Settings
+    MAIN,
+    CUSTOMIZATION,
+    NEW_GAME,
+    LOAD_GAME,
+    HALL_OF_FAME,
+    SETTINGS
 }

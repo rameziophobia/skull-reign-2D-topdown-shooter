@@ -30,7 +30,7 @@ public class HallOfFameMenu extends Menu {
 
         addNodeAll(
                 lbl_hallOfFameMenu, highScoreTable,
-                new MenuButtonTransition("Back", this, Menus.Main));
+                new MenuButtonTransition("Back", this, Menus.MAIN));
     }
 
     private void createLeaderBoardsTable(Double width) {

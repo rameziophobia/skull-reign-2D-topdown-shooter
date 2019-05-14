@@ -15,10 +15,10 @@ public class MainMenu extends Menu {
 
         addNodeAll(
                 lbl_mainMenu,
-                new MenuButtonTransition("New Game", this, Menus.Customization, menuScene::openDoor),
-                new MenuButtonTransition("Load Game", this, Menus.LoadGame),
-                new MenuButtonTransition("Hall of Fame", this, Menus.HallOfFame),
-                new MenuButtonTransition("Settings", this, Menus.Settings),
+                new MenuButtonTransition("New Game", this, Menus.CUSTOMIZATION, menuScene::openDoor),
+                new MenuButtonTransition("Load Game", this, Menus.LOAD_GAME),
+                new MenuButtonTransition("Hall of Fame", this, Menus.HALL_OF_FAME),
+                new MenuButtonTransition("Settings", this, Menus.SETTINGS),
                 new MenuButton("Exit", Main::exit));
     }
 }
