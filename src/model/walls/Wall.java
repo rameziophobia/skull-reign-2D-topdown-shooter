@@ -37,6 +37,9 @@ public class Wall extends GameObject {
     }
 
     public static boolean canMove(GameObject gameObject, ArrayList<Wall> wallArrayList, boolean horizontal, int offset){
+        if(wallArrayList == null)
+            return true;//todo da ybawaz 7aga?
+
         for(Wall wall: wallArrayList) {
             if (wall.getBoundsInParent().intersects(gameObject.getBoundsInParent())) {
                 if (horizontal) {
