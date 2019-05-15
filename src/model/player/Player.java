@@ -15,7 +15,7 @@ import static java.lang.Math.atan2;
 
 public class Player extends Entity {
 
-    private static final float SPEED = 4;
+    private static final float SPEED = 6;
     private static final double MAX_HP = 200;
     private static final double MAX_SHIELD = 200;
     private static final long REGENERATION_TIME_CD_MS = 5000;
@@ -63,7 +63,7 @@ public class Player extends Entity {
         this.rightPressed = rightPressed;
     }
 
-    private void move() { //todo can be coded more efficiently
+    private void move() {
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
             if(Wall.canMoveUp(this, LevelManager.getWallArrayList())&& !atTopBorder()){

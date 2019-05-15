@@ -70,7 +70,7 @@ public class PlayerProjectileControl {
 
     public void fireProjectile() {
         if (mousePressed && lastPressed.equals(projectileBtn)) {
-            createProjectile();//todo: functions name needs refactoring
+            createProjectile();
         }
     }
 
@@ -126,15 +126,18 @@ public class PlayerProjectileControl {
     }
 
     public void addType(ProjectileType type, boolean special) {
-        this.type = type;
-        weaponSettings.putIfAbsent(type, initializePowerUp());
-        this.powerUp = weaponSettings.get(type);
+        if (this.type != type){
+            this.type = type;
+            weaponSettings.putIfAbsent(type, initializePowerUp());
+            this.powerUp = weaponSettings.get(type);
 
-        int weaponSlot = special ? 1 : 0;
-        setWeapon(weaponSlot, type.getURL());
-        if (weaponList.size() < weaponSettings.size()) {
-            weaponList.add(type);
+            int weaponSlot = special ? 1 : 0;
+            setWeapon(weaponSlot, type.getURL());
+            if (weaponList.size() < weaponSettings.size()) {
+                weaponList.add(type);
+            }
         }
+
     }
 
     public void setToNextType(boolean special) {
@@ -142,9 +145,10 @@ public class PlayerProjectileControl {
         ProjectileType nextType = weaponList.get((weaponList.indexOf(type) + 1) % weaponList.size());
         powerUp = weaponSettings.get(nextType);
         type = nextType;
-
-        int weaponSlot = special ? 1 : 0;
-        setWeapon(weaponSlot, type.getURL()); //todo ui slot kda msh dynamic but screw it i need my brain cells ughhhh nvm this needs to be done
+        if(weaponList.size() > 1){
+            int weaponSlot = special ? 1 : 0;
+            setWeapon(weaponSlot, type.getURL());
+        }
     }
 
     public void setPowerUp(PowerUpTypes key, Float value) {

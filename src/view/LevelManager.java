@@ -2,6 +2,7 @@ package view;
 
 import model.enemies.Enemy;
 import model.obstacles.Obstacle;
+import model.projectiles.ProjectileType;
 import model.walls.Wall;
 
 import java.util.ArrayList;
@@ -33,7 +34,9 @@ public class LevelManager {//todo temp static
         if (nextEnemySpawnTime < System.currentTimeMillis()) {
             nextEnemySpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
 
-            Enemy enemy = new Enemy(TANK_SAND);
+            Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, Enemy.MoveMode.stationary);
+            enemy.getEnemyProjectileControl().addSpawnRing(3000,90);
+            enemy.getEnemyProjectileControl().addRing1by1(300,30);
             enemyArrayList.add(enemy);
             GameViewManager.addGameObjectTOScene(enemy);
         }
@@ -45,11 +48,6 @@ public class LevelManager {//todo temp static
 
             GameViewManager.addGameObjectTOScene(new Obstacle());
         }
-    }
-    public static void createWall(){
-        Wall rectangle = new Wall(1200,200);
-        wallArrayList.add(rectangle);
-        GameViewManager.addGameObjectTOScene(rectangle);
     }
 
     public static void removeEnemy(Enemy enemy) {
