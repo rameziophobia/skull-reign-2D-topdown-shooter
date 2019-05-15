@@ -14,11 +14,13 @@ import view.game.stats.StatBar;
 import static java.lang.Math.atan2;
 
 public class Player extends Entity {
+
+
     private static int currentScore = 0;
-    private static final float SPEED = 6;
-  
-    private static final double MAX_HP = 200;
-    private static final double MAX_SHIELD = 200;
+    private static final float MAX_SPEED = 8;
+    private static float SPEED = 6;
+    private static final double MAX_HP = 500;
+    private static final double MAX_SHIELD = 500;
     private static final long REGENERATION_TIME_CD_MS = 5000;
 
     private StatBar HPRectangle;
@@ -47,7 +49,7 @@ public class Player extends Entity {
 
         primaryBtnHandler = new PlayerProjectileControl(ProjectileType.BULLET,
                 PlayerProjectileControl.buttons.PRIMARY);
-        secondaryBtnHandler = new PlayerProjectileControl(ProjectileType.FIRE,
+        secondaryBtnHandler = new PlayerProjectileControl(ProjectileType.WHIRLWIND,
                 PlayerProjectileControl.buttons.SECONDARY);
     }
 
@@ -78,28 +80,30 @@ public class Player extends Entity {
     private void move() {
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
-            if(Wall.canMoveUp(this, LevelManager.getWallArrayList())&& !atTopBorder()){
+            if (Wall.canMoveUp(this, LevelManager.getWallArrayList()) && !atTopBorder()) {
                 if (rightPressed || leftPressed) {
                     setLayoutY(getLayoutY() - SPEED / DIAGONAL_FACTOR); // to avoid moving fast diagonally
                 } else {
                     setLayoutY(getLayoutY() - SPEED);
                 }
             }
-        } else if(downPressed && Wall.canMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()){
+        } else if (downPressed && Wall.canMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()) {
             if (rightPressed || leftPressed) {
                 setLayoutY(getLayoutY() + SPEED / DIAGONAL_FACTOR);
             } else {
                 setLayoutY(getLayoutY() + SPEED);
             }
-        } if (rightPressed) {
-            if(Wall.canMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()){
+        }
+        if (rightPressed) {
+
+            if (Wall.canMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()) {
                 if (upPressed || downPressed) {
                     setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
                 } else {
                     setLayoutX(getLayoutX() + SPEED);
                 }
             }
-        } else if(leftPressed && Wall.canMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()) {
+        } else if (leftPressed && Wall.canMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()) {
             if (upPressed || downPressed) {
                 setLayoutX(getLayoutX() - SPEED / DIAGONAL_FACTOR);
             } else {
@@ -113,21 +117,26 @@ public class Player extends Entity {
         setLayoutY((getLayoutY() < 0) ? (getLayoutY() + GameViewManager.HEIGHT) : (getLayoutY() % GameViewManager.HEIGHT));
         setLayoutX((getLayoutX() < 0) ? (getLayoutX() + GameViewManager.WIDTH) : (getLayoutX() % GameViewManager.WIDTH));
     }
-    private boolean atRightBorder(){
-        return( getLayoutX() >= GameViewManager.WIDTH - 49);
+
+    private boolean atRightBorder() {
+        return (getLayoutX() >= GameViewManager.WIDTH - 49);
 
     }
-    private boolean atLeftBorder(){
-        return( getLayoutX() < 1);
+
+    private boolean atLeftBorder() {
+        return (getLayoutX() < 1);
 
     }
-    private boolean atBottomBorder(){
-        return( getLayoutY()  >= GameViewManager.HEIGHT - 43);
+
+    private boolean atBottomBorder() {
+        return (getLayoutY() >= GameViewManager.HEIGHT - 43);
 
     }
-    private boolean atTopBorder(){
-        return( getLayoutY() < 3);
+
+    private boolean atTopBorder() {
+        return (getLayoutY() < 3);
     }
+
     @Override
     public void takeDmg(double dmg) {
         if (ShieldRectangle.getCurrentValue() > 0) {
@@ -179,6 +188,21 @@ public class Player extends Entity {
         return MAX_SHIELD;
     }
 
+    public static void setSPEED(float speed) {
+        if ((Player.SPEED * speed) > MAX_SPEED) {
+            Player.SPEED = MAX_SPEED;
+        } else if (speed != 0) {
+            Player.SPEED *= speed;
+        } else {
+            Player.SPEED = 4;
+        }
+
+    }
+
+    public static float getSPEED() {
+        return SPEED;
+    }
+
     private void updateAngle(double x, double y) {
         angle = Math.toDegrees(atan2(y - getSpawner().getY(), x - getSpawner().getX()));
     }
@@ -215,4 +239,9 @@ public class Player extends Entity {
         LevelManager.setSpawnable(false);
         GameViewManager.endGameSequence();
     }
+
+    public static void increasePlayerCurrentScore(int amount) {
+        currentScore += amount;
+    }
+
 }

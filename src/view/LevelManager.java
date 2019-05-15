@@ -2,6 +2,8 @@ package view;
 
 import model.enemies.Enemy;
 import model.obstacles.Obstacle;
+import model.projectiles.PowerUp;
+import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
 import model.walls.Wall;
 
@@ -13,12 +15,14 @@ public class LevelManager {//todo temp static
 
     private static final float SPAWN_CD_ENEMY = 1000 * 10;
     private static final float SPAWN_CD_OBSTACLES = 1000 * 5f;
+    private static final float SPAWN_CD_POWERUPS = 1000 * 20f;
 
     private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
     private static ArrayList<Wall> wallArrayList = new ArrayList<>();
 
     private static long nextEnemySpawnTime;
     private static long nextObstaclesSpawnTime; //todo dup code
+    private static long nextPowerUpSpawnTime;
     private static boolean spawnable = true;
 
     private LevelManager() {
@@ -50,6 +54,19 @@ public class LevelManager {//todo temp static
 
             GameViewManager.addGameObjectTOScene(new Obstacle());
         }
+    }
+    public static void createPowerUp() {//todo implement timer
+        if (nextPowerUpSpawnTime < System.currentTimeMillis()) {
+            nextPowerUpSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_POWERUPS);
+            PowerUp powerUp;
+            powerUp = new PowerUp(PowerUpType.getRandomPowerUpType());
+            GameViewManager.addGameObjectTOScene(powerUp);
+        }
+    }
+    public static void createWall() {
+        Wall rectangle = new Wall(1200, 200);
+        wallArrayList.add(rectangle);
+        GameViewManager.addGameObjectTOScene(rectangle);
     }
 
     public static void removeEnemy(Enemy enemy) {

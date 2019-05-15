@@ -45,6 +45,7 @@ public class GameViewManager {
 
         GameUI.createBackground(gamePane);
         GameUI.setCrosshair(gamePane);
+
         setWindowScaling();
 
         GVUI = new GameViewUI();
@@ -168,11 +169,14 @@ public class GameViewManager {
 
     private void gameUpdate() {
 
+        LevelManager.createEnemies();
+        LevelManager.createObstacles();
+        LevelManager.createPowerUp();
+
+
         List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
                 (GameObject) n
         ).collect(Collectors.toList());
         gameObjects.forEach(GameObject::update);
-
-        LevelManager.createEnemies();
     }
 }

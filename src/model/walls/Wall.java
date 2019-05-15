@@ -7,6 +7,7 @@ import view.Main;
 import java.util.ArrayList;
 
 
+
 public class Wall extends GameObject {
 
     private final static int MARGIN = 8;
@@ -35,18 +36,25 @@ public class Wall extends GameObject {
         return canMove(entity, wallArrayList, true, (int)entity.getImage().getHeight());
     }
 
-    private static boolean canMove(Entity entity, ArrayList<Wall> wallArrayList, boolean horizontal, int offset) {
-        for (Wall wall : wallArrayList) {
-            if (wall.getBoundsInParent().intersects(entity.getBoundsInParent())) {
+    public static boolean canMove(GameObject gameObject, ArrayList<Wall> wallArrayList, boolean horizontal, int offset){
+        if(wallArrayList == null)
+            return true;//todo da ybawaz 7aga?
+
+        for(Wall wall: wallArrayList) {
+            if (wall.getBoundsInParent().intersects(gameObject.getBoundsInParent())) {
                 if (horizontal) {
-                    if (Math.abs(entity.getLayoutX() + offset - wall.getLayoutX()) < MARGIN) {
-                        return false;
-                    }
-                } else {
-                    if (Math.abs(entity.getLayoutY() + offset - wall.getLayoutY()) < MARGIN) {
+                    if(Math.abs(gameObject.getLayoutX() + offset - wall.getLayoutX() ) < MARGIN){
                         return false;
                     }
                 }
+                else{
+                    if(Math.abs(gameObject.getLayoutY() + offset - wall.getLayoutY() ) < 8){
+                        return false;
+                    }
+                }
+            }
+            if(offset == 0){
+                return wall.getBoundsInParent().intersects(gameObject.getBoundsInParent());
             }
         }
         return true;

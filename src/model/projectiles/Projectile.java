@@ -27,6 +27,7 @@ public class Projectile extends GameObject {
     Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile) {
         super(projectileType.getURL());
         this.projectileType = projectileType;
+        this.speed = projectileType.getSPEED();
         this.angle = angle;
         this.enemyProjectile = enemyProjectile;
 
@@ -94,14 +95,14 @@ public class Projectile extends GameObject {
             GameViewManager.removeGameObjectFromScene(this);
         }
     }
-
-    private void checkCollision_wall() {
-        for (Wall wall : LevelManager.getWallArrayList()) {
-            if (isIntersects(wall)) {
+    private void checkCollision_wall(){
+        for(Wall wall: LevelManager.getWallArrayList()){
+            if(isIntersects(wall)){
                 GameViewManager.removeGameObjectFromScene(this);
             }
         }
     }
+
 
 
     @Override
