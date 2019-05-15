@@ -6,13 +6,20 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import model.GameObject;
-import model.player.PlayerType;
 import model.player.Player;
 import javafx.scene.control.Label;
+import model.player.PlayerType;
+import view.menu.GameEnd;
+import view.menu.mainmenu.menus.HallOfFameMenu;
 
 import java.awt.*;
 import java.util.List;
@@ -22,35 +29,46 @@ import java.util.stream.Collectors;
 public class GameViewManager {
     public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
     public static final int WIDTH = 1920;
-    private static AnchorPane gamePane = new AnchorPane();
-    private Scene gameScene = new Scene(gamePane, WIDTH, HEIGHT);
-    private Stage gameStage = new Stage();
-    private Stage menuStage;
-    private static Player player;
-    private static Label playerScorelbl;
 
+    private static AnchorPane gamePane;
+    private static GameEnd gameEnd;
+    private static boolean gameEnded;
+    private Scene gameScene;
+    private static Stage gameStage = new Stage();
+    private static Player player;
+    private static Label lbl_currentScore;
     private GameViewUI GVUI;
+    private static AnimationTimer gameLoop;
 
     public GameViewManager() {
+        gamePane = new AnchorPane();
+        gameScene = new Scene(gamePane, WIDTH, HEIGHT);
         gameStage.setScene(gameScene);
+        gameStage.setFullScreen(true);
 
         GameUI.createBackground(gamePane);
         GameUI.setCrosshair(gamePane);
 
-        gamePane.getChildren().add(createScoreLbl());
+        createScoreLabel();
 
         setWindowScaling();
 
         GVUI = new GameViewUI();
-    }
 
-    private Label createScoreLbl(){
-        playerScorelbl = new Label("Get Gud");
-        playerScorelbl.setTextFill(Color.YELLOW);
-        playerScorelbl.setStyle("-fx-font-size:20px;-fx-font-weight: bold;");
-        playerScorelbl.setPrefWidth(WIDTH);
-        playerScorelbl.setAlignment(Pos.TOP_CENTER);
-        return playerScorelbl;
+        gameEnded = false;
+        gameEnd = new GameEnd();
+        gameEnd.setOnMouseClicked(e -> {
+            HallOfFameMenu.setNewRecord(player.getName(), player.getCurrentScore());
+            player.resetScore();
+            endGame();
+        });
+
+        gameLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                gameUpdate();
+            }
+        };
     }
 
     public static Player getPlayer() {
@@ -66,58 +84,92 @@ public class GameViewManager {
         node.toBack();
     }
 
+    @Deprecated
     public static AnchorPane getGamePane() {
         return gamePane;
     }
 
     private void setWindowScaling() {
         Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
-        double width = resolution.getWidth();
-        double height = resolution.getHeight();
-        double w = width / WIDTH;  //your window width
-        double h = height / HEIGHT;  //your window height
-        Scale scale = new Scale(w, h, 0, 0);
-        gamePane.getTransforms().add(scale);
+        gamePane.getTransforms().add(new Scale(
+                resolution.getWidth() / WIDTH,
+                resolution.getHeight() / HEIGHT,
+                0, 0));
     }
 
-    public void createNewGame(Stage menuStage, PlayerType chosenPlayer) {
-        this.menuStage = menuStage;
-        this.menuStage.hide();
-        gameStage.show();
-        gameStage.setFullScreen(true);
+    @Deprecated
+    public void createNewGame(PlayerType chosenPlayer) {
+        createNewGame(chosenPlayer, "");
+    }
 
-        createUI();
-        createPlayer(chosenPlayer);
+    public void createNewGame(PlayerType chosenPlayer, String playerName) {
+        Main.switchToGame();
 
-        InputManager.setPlayer(player);
-        InputManager.setKeyListener(gameScene);
-        InputManager.setMouseListeners(gamePane);
+        createPlayer(chosenPlayer, playerName);
 
         startGameLoop();
     }
 
-    private void createPlayer(PlayerType chosenPlayer) {
+    private void createPlayer(PlayerType chosenPlayer, String playerName) {
         player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
+        player.setName(playerName);
         addGameObjectTOScene(player);
         player.toBack();
     }
 
     private void createUI() {
         gamePane.getChildren().addAll(GVUI.getGroup(), GVUI.getHealthBars());
+        createScoreLabel();
     }
 
     private void startGameLoop() {
         gameStart();
+        gameLoop.start();
+    }
 
-        new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                gameUpdate();
-            }
-        }.start();
+    public void createScoreLabel() {
+        lbl_currentScore = new Label("Current Score: 0");
+        lbl_currentScore.setPrefWidth(GameViewManager.WIDTH);
+        lbl_currentScore.setAlignment(Pos.TOP_CENTER);
+        lbl_currentScore.setTextAlignment(TextAlignment.CENTER);
+        lbl_currentScore.setTextFill(Color.YELLOW);
+        lbl_currentScore.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        addGameObjectTOScene(lbl_currentScore);
+    }
+
+    public static void updateLabel() {
+        lbl_currentScore.setText("Current Score: " + player.getCurrentScore());
+    }
+
+    public static void endGameSequence() {
+        if (!gameEnded) {
+            gameEnded = true;
+
+            gameEnd.setName(player.getName());
+            gameEnd.setScore(player.getCurrentScore());
+            addGameObjectTOScene(gameEnd);
+            gameEnd.show();
+            gameEnd.toFront();
+        }
+    }
+
+    public void endGame() {
+        gameLoop.stop();
+        Main.switchToMainMenu();
+    }
+
+    public static Stage getGameStage() {
+        return gameStage;
     }
 
     private void gameStart() {
+        createUI();
+
+        LevelManager.setSpawnable(true);
+
+        InputManager.setPlayer(player);
+        InputManager.setKeyListener(gameScene);
+        InputManager.setMouseListeners(gamePane);
     }
 
     private void gameUpdate() {
@@ -127,13 +179,8 @@ public class GameViewManager {
         LevelManager.createPowerUp();
 
 
-            List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
+        List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
                 (GameObject) n
         ).collect(Collectors.toList());
         gameObjects.forEach(GameObject::update);
-    }
-
-    public static void updateScorelbl(){
-        playerScorelbl.setText("Current Score: "+Player.getCurrentScore());
-    }
 }

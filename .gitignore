@@ -109,4 +109,6 @@ hs_err_pid*
 
 _temp/
 .env
-
+resources/savedata/
+resources/settings/*
+!resources/settings/.gitkeep

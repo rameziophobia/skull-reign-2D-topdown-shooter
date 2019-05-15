@@ -23,4 +23,6 @@ public class GameUI { //todo temp static
                 image.getWidth() / 2,
                 image.getHeight() / 2));
     }
+
+
 }

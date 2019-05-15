@@ -3,13 +3,13 @@ package model.player;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import model.Entity;
-import model.walls.Wall;
-import view.LevelManager;
-import view.game.stats.StatBar;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
+import model.walls.Wall;
 import view.GameViewManager;
 import view.InputManager;
+import view.LevelManager;
+import view.game.stats.StatBar;
 
 import static java.lang.Math.atan2;
 
@@ -36,6 +36,8 @@ public class Player extends Entity {
     private boolean leftPressed;
     private boolean rightPressed;
 
+    private String name;
+
     public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change it to said's char mn 8er rotation
         super(player.getURL(), SPEED);
 
@@ -49,6 +51,14 @@ public class Player extends Entity {
                 PlayerProjectileControl.buttons.PRIMARY);
         secondaryBtnHandler = new PlayerProjectileControl(ProjectileType.WHIRLWIND,
                 PlayerProjectileControl.buttons.SECONDARY);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setUpPressed(boolean upPressed) {
@@ -132,12 +142,14 @@ public class Player extends Entity {
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
             barScaleAnimator(ShieldRectangle);
-            currentShield=ShieldRectangle.getCurrentValue();
+            currentShield = ShieldRectangle.getCurrentValue();
         } else {
             HPRectangle.decreaseCurrent(dmg);
             barScaleAnimator(HPRectangle);
-            currentHp=HPRectangle.getCurrentValue();
+            currentHp = HPRectangle.getCurrentValue();
         }
+        if (currentHp <= 0)
+            killPlayer();
     }
 
     @Override
@@ -197,13 +209,35 @@ public class Player extends Entity {
 
     @Override
     public void update() {
-        updateAngle(InputManager.getMouseXPos(), InputManager.getMouseYPos());
-        setRotate(angle);
+        if (currentHp > 0) {
+            updateAngle(InputManager.getMouseXPos(), InputManager.getMouseYPos());
+            setRotate(angle);
 
-        move();
+            move();
+            warp();
 
-        secondaryBtnHandler.update(angle);
-        primaryBtnHandler.update(angle);
+            secondaryBtnHandler.update(angle);
+            primaryBtnHandler.update(angle);
+        }
+    }
+
+    public static void increaseCurrentScore(int amount) {
+        currentScore += amount;
+        System.out.println(currentScore);
+        GameViewManager.updateLabel();
+    }
+
+    public void resetScore() {
+        currentScore = 0;
+    }
+
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    public void killPlayer() {
+        LevelManager.setSpawnable(false);
+        GameViewManager.endGameSequence();
     }
 
     public static int getCurrentScore() {
