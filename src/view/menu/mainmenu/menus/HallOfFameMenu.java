@@ -18,7 +18,6 @@ import view.score.ScoreBoard;
 
 public class HallOfFameMenu extends Menu {
     private static TableView<HighScores> highScoreTable;
-    private static ObservableList<HighScores> nameList;
     private static ScoreBoard leaderBoards;
 
     public HallOfFameMenu(MenuScene menuScene) {
@@ -29,7 +28,8 @@ public class HallOfFameMenu extends Menu {
         Label lbl_hallOfFameMenu = MenuScene.createMenuTitle("Hall Of Fame");
 
         addNodeAll(
-                lbl_hallOfFameMenu, highScoreTable,
+                lbl_hallOfFameMenu,
+                highScoreTable,
                 new MenuButtonTransition("Back", this, Menus.MAIN));
     }
 
@@ -37,21 +37,20 @@ public class HallOfFameMenu extends Menu {
         highScoreTable = new TableView<>();
         leaderBoards = new ScoreBoard();
 
-        TableColumn<HighScores, String> nameColumn = new TableColumn<>("Name");
+        final TableColumn<HighScores, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-        nameList = leaderBoards.getHighScores();
-
-        TableColumn<HighScores, String> scoreColumn = new TableColumn<>("High score");
-        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
-
-        highScoreTable.setItems(nameList);
-        highScoreTable.setPrefWidth(400);
-        highScoreTable.getStyleClass().addAll("NoFocus");
         nameColumn.setMinWidth(width / 2);
+
+        final TableColumn<HighScores, String> scoreColumn = new TableColumn<>("High score");
+        scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
         scoreColumn.setMinWidth(width / 2);
         scoreColumn.setSortType(TableColumn.SortType.DESCENDING);
+
+//        highScoreTable.setItems(leaderBoards.getHighScores());
+        highScoreTable.setPrefWidth(400);
+        highScoreTable.getStyleClass().addAll("NoFocus");
         highScoreTable.setId("highScore");
+
         ObservableList<TableColumn<HighScores, ?>> columns = highScoreTable.getColumns();
         columns.add(scoreColumn);
         columns.add(nameColumn);
@@ -80,7 +79,11 @@ public class HallOfFameMenu extends Menu {
 
     public static void setNewRecord(String Name, int Score) {
         leaderBoards.addNewScore(Name, Score);
-        System.out.println("testing");
     }
 
+    @Override
+    public void fadeIn() {
+        super.fadeIn();
+        highScoreTable.setItems(leaderBoards.getHighScores());
+    }
 }

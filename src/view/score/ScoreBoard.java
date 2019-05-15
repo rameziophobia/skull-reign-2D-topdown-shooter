@@ -111,11 +111,10 @@ public class ScoreBoard {
             scoreString = '0' + scoreString;
         }
         addToData(Name, scoreString);
-        loadScoreData();
     }
 
     public ObservableList<HighScores> getHighScores() {
-        return sorted;
+        return createList();
     }
 
 }
