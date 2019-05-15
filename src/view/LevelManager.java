@@ -3,6 +3,7 @@ package view;
 import model.enemies.Enemy;
 import model.projectiles.PowerUp;
 import model.projectiles.PowerUpType;
+import model.projectiles.ProjectileType;
 import model.walls.Wall;
 import model.obstacles.Obstacle;
 

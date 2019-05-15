@@ -66,7 +66,7 @@ public enum ProjectileType {
         return DAMAGE;
     }
 
-    public int getSpeed() {
+    public int getSPEED() {
         return speed;
     }
 

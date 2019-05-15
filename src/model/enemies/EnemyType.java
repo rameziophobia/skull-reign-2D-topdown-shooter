@@ -13,12 +13,13 @@ public enum EnemyType {
     private String URL;
     private float SPEED;
     private float HP;
-    private int ENEMY_SCORE;
+    private int SCORE;
 
-    EnemyType(String s, float speed, float hp) {
+    EnemyType(String s, float speed, float hp, int score) {
         URL = s;
         SPEED = speed;
         HP = hp;
+        SCORE = score;
     }
 
     public String getURL() {
@@ -29,8 +30,8 @@ public enum EnemyType {
         return SPEED;
     }
 
-    public int getEnemyscore() {
-        return ENEMY_SCORE;
+    public int getScore() {
+        return SCORE;
     }
 
     public float getHP() {

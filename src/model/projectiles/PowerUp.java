@@ -30,7 +30,8 @@ public class PowerUp extends GameObject {
             setLayoutY(rand.nextInt((HEIGHT-50)));
             setLayoutX(rand.nextInt((WIDTH-50)));
         }
-        while (Wall.canMove(this, LevelManager.getWallArrayList(),false,0));
+//        while (Wall.canMove(this, LevelManager.getWallArrayList(),false,0)); //todo eh da??? by3ml infinite loop
+        while (false);
         this.animated = powerUpType.isANIMATED();
         if(animated){
             SpriteSheet spriteSheet = new SpriteSheet(powerUpType.getURL(), 0);

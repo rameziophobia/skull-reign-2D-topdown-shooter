@@ -43,15 +43,15 @@ public class ProjectileUI extends HBox {
         ImageView weaponImage;
 
         int animated = type.isANIMATED() ? 1 : 0;
-        if (prevWeaponURLs[animated] != null) {
+        if (prevWeaponViews[animated] != null) {
             int i = (animated == 0) ? 0 : 3;
             ObservableList<Node> activeSlot = weapons[i].getChildren();
             if (activeSlot.size() > 1) {
                 activeSlot.remove(1);
             }
-            prevWeaponURLs[animated].setScaleX(0.5);
-            prevWeaponURLs[animated].setScaleY(0.5);
-            activeSlot.add(prevWeaponURLs[animated]);
+            prevWeaponViews[animated].setScaleX(0.5);
+            prevWeaponViews[animated].setScaleY(0.5);
+            activeSlot.add(prevWeaponViews[animated]);
         }
         animated++;
 
@@ -69,6 +69,6 @@ public class ProjectileUI extends HBox {
             currentSlot.remove(1);
         }
         currentSlot.add(weaponImage);
-        prevWeaponURLs[--animated] = weaponImage;
+        prevWeaponViews[--animated] = weaponImage;
     }
 }

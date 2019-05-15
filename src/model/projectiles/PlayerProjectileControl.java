@@ -53,7 +53,7 @@ public class PlayerProjectileControl {
 
         this.type = projectile;
         this.projectileBtn = projectileBtn;
-        MAX_SPEED = (int)(this.type.getSpeed() *1.5);
+        MAX_SPEED = (int)(this.type.getSPEED() *1.5);
         powerUp = new HashMap<>();
 
         rangeEnable = false;
@@ -170,9 +170,9 @@ public class PlayerProjectileControl {
             type.incCurrentScale(value);
             powerUp.put(key, type.getCurrentScale());
         }
-        else if(key == PowerUpType.SPEEDPROJECTILE && type.getSpeed() <= MAX_SPEED){
+        else if(key == PowerUpType.SPEEDPROJECTILE && type.getSPEED() <= MAX_SPEED){
             type.incCurrentSpeed(value);
-            powerUp.put(key, (float)type.getSpeed());
+            powerUp.put(key, (float)type.getSPEED());
         }
 
     }
