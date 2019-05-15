@@ -4,10 +4,8 @@ import controller.audiomanager.AudioFile;
 import view.Main;
 
 public enum ProjectileType {
-    BULLET("bullet-13x3.png",
-            15, 1, 10, 3, false, AudioFile.MACHINE, 1, 1),
-    FIRE("fire-32x12.png",
-            1, 35, 6, 1, false, AudioFile.WOOSH, 1, 1),
+    BULLET("bullet-13x3.png", 15, 1, 10, 3, false, AudioFile.MACHINE, 1, 1),
+    FIRE("fire-32x12.png", 1, 35, 6, 1, false, AudioFile.WOOSH, 1, 1),
     REDLASER01("laserRed01-9x54.png", 3, 15, 15, 3, false, AudioFile.LASER, 1, 1),
     GREENLASER01("laserGreen01-9x54.png", 3, 15, 15, 3, false, AudioFile.LASER, 1, 1),
     BLUELASER01("laserBlue01-9x54.png", 3, 15, 15, 3, false, AudioFile.LASER, 1, 1),
@@ -31,7 +29,6 @@ public enum ProjectileType {
     CAT("black-cat-animated-32x26.png", 1.3, 40, 5, 10, true, AudioFile.S2, 1, 1),
     WHIRLWIND("whirlwind-animated-16x19.png", 2, 40, 7, 5, true, AudioFile.WOOSH, 1, 1);
 
-
     private final String URL;
     private final double FIRERATE;
     private final float DAMAGE;
@@ -42,7 +39,6 @@ public enum ProjectileType {
     private int speed;
     private float currentMult;
     private float currentScale;
-
 
     ProjectileType(String fileName, double fireRate, float damage, int speed, double multAngle, boolean animated, AudioFile sound, float currentScale, float currentMult) {
         this.URL = Constants.PATH_RESOURCES_SPRITES_PROJECTILES + fileName;

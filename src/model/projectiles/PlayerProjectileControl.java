@@ -1,5 +1,7 @@
 package model.projectiles;
 
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
 import view.GameViewManager;
@@ -110,10 +112,8 @@ public class PlayerProjectileControl {
     }
 
     private void createProjectile() {
-
         if (System.currentTimeMillis() > (lastFireTime + 1000 / type.getFIRERATE())) {
             for (int mult = 0; mult < powerUp.get(PowerUpType.MULT); mult++) {
-
                 Projectile projectile = new Projectile(getPlayer().getSpawner(),
                         type,
                         angle + mult * type.getMULTANGLE() * Math.pow(-1, mult),

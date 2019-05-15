@@ -13,7 +13,9 @@ public enum AudioFile {
     WOOSH(Constants.FOLDER_PROJECTILE + "woosh.mp3", MixerType.SFX, 0.85),
     ELECTRIC1(Constants.FOLDER_PROJECTILE + "electric1.mp3", MixerType.SFX, 0.85),
     BUTTON_CLICK(Constants.FOLDER_MENU  + "tap-crisp.aif", MixerType.SFX, 0.7, 1),
-    FIRE("fire.mp3", MixerType.SFX, 0.05, 1);//todo;
+    FIRE("fire.mp3", MixerType.SFX, 0.05, 1),//todo
+    FIREBALL("334234__liamg-sfx__fireball-cast-1.wav", MixerType.SFX, 0.9),
+    HURT("SFX_Hurt10.wav", MixerType.SFX, 1);
 
     private final String path;
     private final MixerType mixer;

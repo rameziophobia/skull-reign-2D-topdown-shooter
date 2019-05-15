@@ -1,5 +1,7 @@
 package model.player;
 
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import model.Entity;
@@ -139,6 +141,7 @@ public class Player extends Entity {
 
     @Override
     public void takeDmg(double dmg) {
+        AudioManager.playNewAudio(AudioFile.HURT, 1);
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
             barScaleAnimator(ShieldRectangle);

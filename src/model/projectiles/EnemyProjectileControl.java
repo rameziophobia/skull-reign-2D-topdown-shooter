@@ -6,6 +6,7 @@ import view.GameViewManager;
 import java.util.ArrayList;
 
 import static controller.audiomanager.AudioManager.playAudio;
+import static controller.audiomanager.AudioManager.playNewAudio;
 import static view.GameViewManager.addGameObjectTOScene;
 
 public class EnemyProjectileControl {
@@ -97,6 +98,7 @@ public class EnemyProjectileControl {
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1, true);
             addGameObjectTOScene(projectile);
             lastFireTime[i] = timeNow;
+//            playNewAudio(type.getSound(), 1);
         }
     }
 
@@ -108,7 +110,7 @@ public class EnemyProjectileControl {
             Projectile projectile = new Projectile(spawner, type, angle, true);
             addGameObjectTOScene(projectile);
             lastFireTime[i] = timeNow;
-            playAudio(type.getSound());
+//            playNewAudio(type.getSound(), 1);
         }
     }
 

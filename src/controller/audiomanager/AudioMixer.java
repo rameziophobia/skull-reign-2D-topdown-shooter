@@ -35,6 +35,17 @@ class AudioMixer {
             audioClip.play(volume * mixerVolume * AudioManager.getMasterVolume() * audioFile.getVolume());
     }
 
+    void playNewAudio(AudioFile audioFile, double volume) {
+        AudioClip audioClip = audioClipHashMap.get(audioFile);
+
+        if (audioClip.isPlaying()){
+            System.out.println(System.currentTimeMillis() + " New Audio");
+            audioClip = new AudioClip(audioClip.getSource());
+        }
+
+        audioClip.play(volume * mixerVolume * AudioManager.getMasterVolume() * audioFile.getVolume());
+    }
+
     void stopAudio(AudioFile audioFile) {
         final AudioClip audioClip = audioClipHashMap.get(audioFile);
 

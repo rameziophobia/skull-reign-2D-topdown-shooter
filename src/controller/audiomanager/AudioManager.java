@@ -1,4 +1,3 @@
-
 package controller.audiomanager;
 
 import java.util.HashMap;
@@ -38,6 +37,9 @@ public class AudioManager {
 
     public static void playAudio(AudioFile audioFile, double volume) {
         AUDIO_MIXER_HASH_MAP.get(audioFile.getMixer()).playAudio(audioFile, volume);
+    }
+    public static void playNewAudio(AudioFile audioFile, double volume) {
+        AUDIO_MIXER_HASH_MAP.get(audioFile.getMixer()).playNewAudio(audioFile, volume);
     }
 
     public static void stopAudio(AudioFile audioFile) {
