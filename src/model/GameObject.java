@@ -1,6 +1,7 @@
 package model;
 
 import javafx.geometry.Point2D;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
@@ -10,10 +11,13 @@ public abstract class GameObject extends ImageView {
     protected boolean animated;
 
     public GameObject(String url) {
-        super(url);
-        height = getImageWidth(url);
-        width = getImageHeight(url);
-        animated = isAnimated(url);
+        this(new Image(url));
+    }
+    public GameObject(Image image){
+        super(image);
+        height = getImageWidth(image.impl_getUrl());
+        width = getImageHeight(image.impl_getUrl());
+        animated = isAnimated(image.impl_getUrl());
     }
 
     public static boolean isAnimated(String url) {
@@ -21,8 +25,7 @@ public abstract class GameObject extends ImageView {
     }
 
     public Point2D getSpawner() {
-        return new Point2D(getLayoutX(), getLayoutY())
-                .add(new Point2D(getFitWidth() / 2, getFitHeight() / 2));
+        return new Point2D(getLayoutX() + (width >> 1), getLayoutY() + (height >> 1));
     }
 
     public Rectangle getBounds() {
@@ -38,11 +41,11 @@ public abstract class GameObject extends ImageView {
     }
 
     public boolean isIntersects(GameObject s) {
-        return getBounds().intersects(s.getBounds().getX(),
-                s.getBounds().getY(),
-                s.getBounds().getWidth(),
-                s.getBounds().getHeight());
-//        return getBoundsInParent().intersects(s.getBoundsInParent());
+//        return getBounds().intersects(s.getBounds().getX(),
+//                s.getBounds().getY(),
+//                s.getBounds().getWidth(),
+//                s.getBounds().getHeight());
+        return getBoundsInParent().intersects(s.getBoundsInParent());
     }//todo: ((Path)Shape.intersect(bullet, target)).getElements().size() > 0 better implementation??
 
     public abstract void update();

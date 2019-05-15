@@ -15,7 +15,7 @@ public class ProjectileUI extends HBox {
 
     private static final int weaponSlotsNum = 4;
     private static final StackPane[] weapons = new StackPane[weaponSlotsNum];
-    private static ImageView[] prevWeaponURLs = new ImageView[2];
+    private static ImageView[] prevWeaponViews = new ImageView[2];
 
     public ProjectileUI() {
         setSpacing(10);
@@ -40,16 +40,18 @@ public class ProjectileUI extends HBox {
     public static void setWeapon(int index, String projectileURL) {
 
         ImageView weaponImage;
-        if (prevWeaponURLs[index] != null) {
+
+        if (prevWeaponViews[index] != null) {
             int i = (index == 0) ? 0 : 3;
             ObservableList<Node> activeSlot = weapons[i].getChildren();
             if (activeSlot.size() > 1) {
                 activeSlot.remove(1);
             }
-            prevWeaponURLs[index].setScaleX(0.5);
-            prevWeaponURLs[index].setScaleY(0.5);
-            activeSlot.add(prevWeaponURLs[index]);
+            prevWeaponViews[index].setScaleX(0.5);
+            prevWeaponViews[index].setScaleY(0.5);
+            activeSlot.add(prevWeaponViews[index]);
         }
+
         index++;
 
         weaponImage = !isAnimated(projectileURL) ?
@@ -62,6 +64,6 @@ public class ProjectileUI extends HBox {
             currentSlot.remove(1);
         }
         currentSlot.add(weaponImage);
-        prevWeaponURLs[--index] = weaponImage;
+        prevWeaponViews[--index] = weaponImage;
     }
 }

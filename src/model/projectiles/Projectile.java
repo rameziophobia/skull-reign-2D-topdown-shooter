@@ -3,8 +3,10 @@ package model.projectiles;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.geometry.Point2D;
-import model.GameObject;
+import javafx.scene.transform.Rotate;
 import model.enemies.Enemy;
+import model.GameObject;
+import model.walls.Wall;
 import view.GameViewManager;
 import view.LevelManager;
 
@@ -18,15 +20,18 @@ public class Projectile extends GameObject {
     private double scale = 1.0;
     private AnimationClip animationClip;
     private Boolean enemyProjectile;
+    private static final float playerSpeedMultiplier = 1.4f;
 
     private float speed;
 
     Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile) {
         super(projectileType.getURL());
         this.projectileType = projectileType;
-        this.speed = projectileType.getSPEED();
         this.angle = angle;
         this.enemyProjectile = enemyProjectile;
+
+        float speedMultiplier = enemyProjectile ? 1 : playerSpeedMultiplier;
+        this.speed = projectileType.getSPEED() * speedMultiplier;
 
         if (projectileType.isANIMATED()) {
             this.animated = true;
@@ -44,7 +49,8 @@ public class Projectile extends GameObject {
     private void spawnProjectile(Point2D spawnPoint, double angle) {
         setLayoutX(spawnPoint.getX());
         setLayoutY(spawnPoint.getY());
-        setRotate(angle);
+        Rotate rotate = new Rotate(angle, 0, 0);
+        getTransforms().add(rotate);
     }
 
     public void addSpeed(float speed) {
@@ -68,7 +74,7 @@ public class Projectile extends GameObject {
 
     private void checkCollision_entity() {
         if (enemyProjectile) {
-            if(isIntersects(getPlayer())){
+            if (isIntersects(getPlayer())) {
                 getPlayer().takeDmg(projectileType.getDAMAGE());
                 removeGameObjectFromScene(this);
             }
@@ -89,6 +95,15 @@ public class Projectile extends GameObject {
         }
     }
 
+    private void checkCollision_wall() {
+        for (Wall wall : LevelManager.getWallArrayList()) {
+            if (isIntersects(wall)) {
+                GameViewManager.removeGameObjectFromScene(this);
+            }
+        }
+    }
+
+
     @Override
     public void update() {
         move();
@@ -98,6 +113,7 @@ public class Projectile extends GameObject {
         }
         checkCollision_entity();
         checkCollision_border();
+        checkCollision_wall();
         //todo: check range
     }
 

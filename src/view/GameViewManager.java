@@ -22,6 +22,7 @@ import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class GameViewManager {
     public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
     public static final int WIDTH = 1920;
@@ -74,6 +75,7 @@ public class GameViewManager {
 
     public static void addGameObjectTOScene(Node node) {
         gamePane.getChildren().add(node);
+        node.toBack();
     }
 
     @Deprecated
@@ -106,7 +108,7 @@ public class GameViewManager {
         player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
         player.setName(playerName);
         addGameObjectTOScene(player);
-        player.toFront();//todo walls ?
+        player.toBack();
     }
 
     private void createUI() {
@@ -164,10 +166,8 @@ public class GameViewManager {
     }
 
     private void gameUpdate() {
-        LevelManager.createEnemies();
-        LevelManager.createObstacles();
 
-        List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
+            List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
                 (GameObject) n
         ).collect(Collectors.toList());
         gameObjects.forEach(GameObject::update);
