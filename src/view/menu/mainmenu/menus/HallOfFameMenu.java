@@ -46,7 +46,6 @@ public class HallOfFameMenu extends Menu {
         scoreColumn.setMinWidth(width / 2);
         scoreColumn.setSortType(TableColumn.SortType.DESCENDING);
 
-//        highScoreTable.setItems(leaderBoards.getHighScores());
         highScoreTable.setPrefWidth(400);
         highScoreTable.getStyleClass().addAll("NoFocus");
         highScoreTable.setId("highScore");
@@ -56,25 +55,6 @@ public class HallOfFameMenu extends Menu {
         columns.add(nameColumn);
 
         VBox.setMargin(highScoreTable, new Insets(0, 0, 0, 10));
-    }
-
-    @Deprecated
-    public static void addScoreInput(int val, boolean gameEnded) {
-        String text = null;
-        TextInputDialog input = new TextInputDialog("");
-        input.setTitle("Save high score");
-        input.setHeaderText("Please enter your name");
-        input.show();
-        input.setOnCloseRequest(e -> {
-            if (!input.getEditor().getText().isEmpty())
-                setNewRecord(input.getEditor().getText(), val);
-            else
-                setNewRecord("NoName", val);
-            if (gameEnded) {
-                GameViewManager.endGame();
-            }
-        });
-
     }
 
     public static void setNewRecord(String Name, int Score) {

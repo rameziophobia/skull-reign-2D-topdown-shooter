@@ -7,18 +7,16 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class ScoreBoard {
-    private final int MAX_DIGITS = 5;
-    private final String FILE_PATH = "resources/savedata";
-    private final String FILE_NAME = "highscores.dat";
+    private static final int MAX_DIGITS = 5;
+    private static final String FILE_PATH = "resources/savedata";
+    private static final String FILE_NAME = "highscores.dat";
     private ArrayList<String> data;
-    private ObservableList<HighScores> sorted;
     //score data format --> SCORE:NAME
     private File scoreFile;
-    private File dir;
 
     public ScoreBoard() {
         scoreFile = new File(FILE_PATH + '/', FILE_NAME);
-        dir = new File(FILE_PATH);
+        final File dir = new File(FILE_PATH);
         if (!dir.exists()) {
             System.out.println(dir.mkdirs() + "the directory is created");
         }
@@ -33,7 +31,6 @@ public class ScoreBoard {
         }
         data = new ArrayList<>();
         loadScoreData();
-        sorted = createList();
     }
 
     private ObservableList<HighScores> createList() {

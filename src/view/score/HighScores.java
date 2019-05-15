@@ -3,10 +3,9 @@ package view.score;
 public class HighScores {
     private String name;
     private int score;
-    private String[] raw;
 
     public HighScores(String Data) {
-        raw = Data.split(":");
+        final String[] raw = Data.split(":");
         score = Integer.valueOf(raw[0]);
         name = raw[1];
     }

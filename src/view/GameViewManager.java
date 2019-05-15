@@ -143,10 +143,11 @@ public class GameViewManager {
             gameEnd.setScore(player.getCurrentScore());
             addGameObjectTOScene(gameEnd);
             gameEnd.show();
+            gameEnd.toFront();
         }
     }
 
-    public static void endGame() {
+    public void endGame() {
         gameLoop.stop();
         Main.switchToMainMenu();
     }
@@ -167,9 +168,11 @@ public class GameViewManager {
 
     private void gameUpdate() {
 
-            List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
+        List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
                 (GameObject) n
         ).collect(Collectors.toList());
         gameObjects.forEach(GameObject::update);
+
+        LevelManager.createEnemies();
     }
 }
