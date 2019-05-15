@@ -20,7 +20,7 @@ public class NewGameMenu extends Menu {
         new_campaign.setOnAnimationEndAction(() -> {
             menuScene.stopLoop();
             createGameViewManager();
-            gameViewManager.createNewGame(PlayerType.ROBOT);
+            gameViewManager.createNewGame(PlayerType.ROBOT, menuScene.getPlayerName());
             new_campaign.setTranslateY(0);//todo temp
             new_campaign.setOpacity(1);//todo temp
         });

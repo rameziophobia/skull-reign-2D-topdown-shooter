@@ -59,6 +59,7 @@ public class HallOfFameMenu extends Menu {
         VBox.setMargin(highScoreTable, new Insets(0, 0, 0, 10));
     }
 
+    @Deprecated
     public static void addScoreInput(int val, boolean gameEnded) {
         String text = null;
         TextInputDialog input = new TextInputDialog("");

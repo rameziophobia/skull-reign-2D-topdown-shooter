@@ -33,6 +33,8 @@ public class Player extends Entity {
     private boolean leftPressed;
     private boolean rightPressed;
 
+    private String name;
+
     public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change it to said's char mn 8er rotation
         super(player.getURL(), SPEED);
 
@@ -46,6 +48,14 @@ public class Player extends Entity {
                 PlayerProjectileControl.buttons.PRIMARY);
         secondaryBtnHandler = new PlayerProjectileControl(ProjectileType.FIRE,
                 PlayerProjectileControl.buttons.SECONDARY);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setUpPressed(boolean upPressed) {

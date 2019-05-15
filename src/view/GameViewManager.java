@@ -51,8 +51,9 @@ public class GameViewManager {
         gameEnded = false;
         gameEnd = new GameEnd();
         gameEnd.setOnMouseClicked(e -> {
-            HallOfFameMenu.addScoreInput(player.getCurrentScore(), true);
+            HallOfFameMenu.setNewRecord(player.getName(), player.getCurrentScore());
             player.resetScore();
+            endGame();
         });
 
         gameLoop = new AnimationTimer() {
@@ -88,16 +89,22 @@ public class GameViewManager {
                 0, 0));
     }
 
+    @Deprecated
     public void createNewGame(PlayerType chosenPlayer) {
+        createNewGame(chosenPlayer, "");
+    }
+
+    public void createNewGame(PlayerType chosenPlayer, String playerName) {
         Main.switchToGame();
 
-        createPlayer(chosenPlayer);
+        createPlayer(chosenPlayer, playerName);
 
         startGameLoop();
     }
 
-    private void createPlayer(PlayerType chosenPlayer) {
+    private void createPlayer(PlayerType chosenPlayer, String playerName) {
         player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
+        player.setName(playerName);
         addGameObjectTOScene(player);
         player.toFront();//todo walls ?
     }
@@ -130,7 +137,7 @@ public class GameViewManager {
         if (!gameEnded) {
             gameEnded = true;
 
-            gameEnd.setName("Reported");//todo
+            gameEnd.setName(player.getName());
             gameEnd.setScore(player.getCurrentScore());
             addGameObjectTOScene(gameEnd);
             gameEnd.show();

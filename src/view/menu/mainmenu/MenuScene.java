@@ -37,6 +37,7 @@ public class MenuScene extends Scene {
     private StackPane stp_menus;
     private MenuBackground menuBackground;
     private AnimationTimer animationTimer;
+    private String playerName;
 
     public MenuScene(double width, double height, Stage primaryStage) {
         super(new StackPane(), width, height);//todo width and height
@@ -144,7 +145,7 @@ public class MenuScene extends Scene {
         return primaryStage;
     }
 
-    public void stopLoop(){
+    public void stopLoop() {
         animationTimer.stop();
         menuBackground.pausePulse();
     }
@@ -159,5 +160,13 @@ public class MenuScene extends Scene {
         animationTimer.start();
 
         menuBackground.startPulse();
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 }
