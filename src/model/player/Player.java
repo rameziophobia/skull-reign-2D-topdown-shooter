@@ -18,7 +18,7 @@ public class Player extends Entity {
 
     private static int currentScore = 0;
     private static final float MAX_SPEED = 8;
-    private static float SPEED = 4;
+    private static float SPEED = 6;
     private static final double MAX_HP = 500;
     private static final double MAX_SHIELD = 500;
     private static final long REGENERATION_TIME_CD_MS = 5000;
@@ -67,7 +67,7 @@ public class Player extends Entity {
         this.rightPressed = rightPressed;
     }
 
-    private void move() { //todo can be coded more efficiently
+    private void move() {
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
             if (Wall.canMoveUp(this, LevelManager.getWallArrayList()) && !atTopBorder()) {

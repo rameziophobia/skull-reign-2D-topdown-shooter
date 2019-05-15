@@ -16,7 +16,6 @@ public class LevelManager {//todo temp static
     private static final float SPAWN_CD_OBSTACLES = 1000 * 5f;
     private static final float SPAWN_CD_POWERUPS = 1000 * 20f;
 
-
     private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
     private static ArrayList<Wall> wallArrayList = new ArrayList<>();
 
@@ -24,14 +23,12 @@ public class LevelManager {//todo temp static
     private static long nextObstaclesSpawnTime; //todo dup code
     private static long nextPowerUpSpawnTime;
 
-
     private LevelManager() {
     }
 
     public static ArrayList<Enemy> getEnemyArrayList() {
         return enemyArrayList;
     }
-
     public static ArrayList<Wall> getWallArrayList() {
         return wallArrayList;
     }
@@ -40,7 +37,9 @@ public class LevelManager {//todo temp static
         if (nextEnemySpawnTime < System.currentTimeMillis()) {
             nextEnemySpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
 
-            Enemy enemy = new Enemy(TANK_SAND);
+            Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, Enemy.MoveMode.stationary);
+            enemy.getEnemyProjectileControl().addSpawnRing(3000,90);
+            enemy.getEnemyProjectileControl().addRing1by1(300,30);
             enemyArrayList.add(enemy);
             GameViewManager.addGameObjectTOScene(enemy);
         }
@@ -53,6 +52,7 @@ public class LevelManager {//todo temp static
             GameViewManager.addGameObjectTOScene(new Obstacle());
         }
     }
+
     public static void createPowerUp() {//todo implement timer
         if (nextPowerUpSpawnTime < System.currentTimeMillis()) {
             nextPowerUpSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_POWERUPS);

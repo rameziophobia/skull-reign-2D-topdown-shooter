@@ -3,21 +3,22 @@ package model.enemies;
 import view.Main;
 
 public enum EnemyType {
-    TANK_SAND(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_sand-42x42.png", 1.7f, 5),
-    TANK_DARK(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_dark-42x42.png", 1.4f, 2),
-    TANK_RED(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_red-38x38.png", 2, 3),
-    TANK_BLUE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_blue-42x42.png", 2, 4),
-    TANK_HUGE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_huge-62x60.png", 0.5f, 5),
-    TANK_DARK_LARGE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_darkLarge-52x51.png", 30, 6);
+    TANK_SAND(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_sand-42x42.png", 1.7f, 60, 5),
+    TANK_DARK(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_dark-42x42.png", 1f, 80, 5),
+    TANK_RED(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_red-38x38.png", 2, 80, 5),
+    TANK_BLUE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_blue-42x42.png", 2, 80, 5),
+    TANK_HUGE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_huge-62x60.png", 0.7f, 80, 5),
+    TANK_DARK_LARGE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_darkLarge-52x51.png", 0.5f, 200, 5);
 
     private String URL;
     private float SPEED;
-    private int enemyScore;
+    private float HP;
+    private int ENEMY_SCORE;
 
-    EnemyType(String s, float speed, int score) {
+    EnemyType(String s, float speed, float hp) {
         URL = s;
-        this.SPEED = speed;
-        this.enemyScore = score;
+        SPEED = speed;
+        HP = hp;
     }
 
     public String getURL() {
@@ -29,7 +30,11 @@ public enum EnemyType {
     }
 
     public int getEnemyscore() {
-        return enemyScore;
+        return ENEMY_SCORE;
+    }
+
+    public float getHP() {
+        return HP;
     }
 
     private static class Constants {

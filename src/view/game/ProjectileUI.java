@@ -16,7 +16,7 @@ public class ProjectileUI extends HBox {
 
     private static final int weaponSlotsNum = 4;
     private static final StackPane[] weapons = new StackPane[weaponSlotsNum];
-    private static ImageView[] prevWeaponURLs = new ImageView[2];
+    private static ImageView[] prevWeaponViews = new ImageView[2];
 
     public ProjectileUI() {
         setSpacing(10);
