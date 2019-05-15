@@ -1,13 +1,11 @@
 package model.enemies;
 
-import javafx.geometry.Point2D;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Text;
 import model.Entity;
 import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
-import view.GameViewManager;
 import view.LevelManager;
 
 import java.util.Random;
