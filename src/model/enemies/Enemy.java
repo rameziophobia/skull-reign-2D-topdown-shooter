@@ -1,12 +1,11 @@
 package model.enemies;
 
-import javafx.geometry.Point2D;
 import javafx.scene.shape.Path;
 import javafx.scene.text.Text;
 import model.Entity;
+import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
-import view.GameViewManager;
 import view.LevelManager;
 
 import java.util.Random;
@@ -151,11 +150,16 @@ public class Enemy extends Entity {
 
         enemyProjectileControl.update(angle, getSpawner());
 
-        if (hp <= 0) {
+        if (hp <= 0 || !LevelManager.isSpawnable()) {
             removeGameObjectFromScene(this);
             LevelManager.removeEnemy(this);
+            if (hp <= 0)
+                Player.increaseCurrentScore(this.getScoreValue());
         }
     }
 
+    public int getScoreValue() {
+        return enemyType.getScore();
+    }
 
 }

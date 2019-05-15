@@ -2,6 +2,7 @@ package model.player;
 
 import view.Main;
 
+@Deprecated
 public enum PlayerType {
     HITMAN(Constants.PATH_RESOURCES_SPRITES_PLAYER + "Hitman 1/hitman1_gun-49x43.png"),
     BLUE(Constants.PATH_RESOURCES_SPRITES_PLAYER + "Man Blue/manBlue_gun-49x43.png"),

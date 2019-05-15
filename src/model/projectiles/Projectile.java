@@ -4,13 +4,14 @@ import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.geometry.Point2D;
 import javafx.scene.transform.Rotate;
-import model.enemies.Enemy;
 import model.GameObject;
+import model.enemies.Enemy;
 import model.walls.Wall;
 import view.GameViewManager;
 import view.LevelManager;
 
-import static view.GameViewManager.*;
+import static view.GameViewManager.getPlayer;
+import static view.GameViewManager.removeGameObjectFromScene;
 
 public class Projectile extends GameObject {
 

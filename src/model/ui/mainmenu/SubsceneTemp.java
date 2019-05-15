@@ -10,6 +10,7 @@ import javafx.util.Duration;
 
 import static view.ViewManager.setCursorHand;
 
+@Deprecated
 public class SubsceneTemp extends SubScene {
 
     private final static String BACKGROUND_IMAGE = "file:resources/sprites/ui/menu/subscene.png";

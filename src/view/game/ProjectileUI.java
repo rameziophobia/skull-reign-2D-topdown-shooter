@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import view.GameViewManager;
 
-import static model.GameObject.*;
+import static model.GameObject.isAnimated;
 
 public class ProjectileUI extends HBox {
 

@@ -19,6 +19,7 @@ public class LevelManager {//todo temp static
 
     private static long nextEnemySpawnTime;
     private static long nextObstaclesSpawnTime; //todo dup code
+    private static boolean spawnable = true;
 
     private LevelManager() {
     }
@@ -26,24 +27,25 @@ public class LevelManager {//todo temp static
     public static ArrayList<Enemy> getEnemyArrayList() {
         return enemyArrayList;
     }
+
     public static ArrayList<Wall> getWallArrayList() {
         return wallArrayList;
     }
 
     public static void createEnemies() {
-        if (nextEnemySpawnTime < System.currentTimeMillis()) {
+        if (nextEnemySpawnTime < System.currentTimeMillis() && spawnable) {
             nextEnemySpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
 
             Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, Enemy.MoveMode.stationary);
-            enemy.getEnemyProjectileControl().addSpawnRing(3000,90);
-            enemy.getEnemyProjectileControl().addRing1by1(300,30);
+            enemy.getEnemyProjectileControl().addSpawnRing(3000, 90);
+            enemy.getEnemyProjectileControl().addRing1by1(300, 30);
             enemyArrayList.add(enemy);
             GameViewManager.addGameObjectTOScene(enemy);
         }
     }
 
     public static void createObstacles() {//todo implement timer
-        if (nextObstaclesSpawnTime < System.currentTimeMillis()) {
+        if (nextObstaclesSpawnTime < System.currentTimeMillis() && isSpawnable()) {
             nextObstaclesSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_OBSTACLES);
 
             GameViewManager.addGameObjectTOScene(new Obstacle());
@@ -52,5 +54,13 @@ public class LevelManager {//todo temp static
 
     public static void removeEnemy(Enemy enemy) {
         enemyArrayList.remove(enemy);
+    }
+
+    public static boolean isSpawnable() {
+        return spawnable;
+    }
+
+    public static void setSpawnable(boolean state) {
+        spawnable = state;
     }
 }
