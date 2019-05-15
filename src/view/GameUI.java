@@ -12,7 +12,8 @@ public class GameUI { //todo temp static
 
     public static void createBackground(AnchorPane gamePane) {
         Image backgroundImage = new Image("file:resources/sprites/tiles/floor2.png");
-        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT,
+                BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         gamePane.setBackground(new Background(background));
     }
 
@@ -22,4 +23,6 @@ public class GameUI { //todo temp static
                 image.getWidth() / 2,
                 image.getHeight() / 2));
     }
+
+
 }

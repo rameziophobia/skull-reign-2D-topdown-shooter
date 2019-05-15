@@ -7,6 +7,7 @@ import javafx.scene.text.Font;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+@Deprecated
 public class SmallLabel extends Label {
 
     private final static String FONT_PATH = "src/model/resources/kenvector_future_thin.ttf";

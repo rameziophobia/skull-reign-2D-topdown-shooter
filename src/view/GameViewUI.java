@@ -21,7 +21,6 @@ public class GameViewUI {
         GameViewManager.addGameObjectTOScene(new ProjectileUI());
     }
 
-
     public Group getGroup() {
         return group;
     }
@@ -29,4 +28,5 @@ public class GameViewUI {
     public HealthBars getHealthBars() {
         return healthBars;
     }
+
 }

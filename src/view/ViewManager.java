@@ -12,15 +12,15 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import model.player.PlayerType;
+import model.ui.mainmenu.BtnTemp;
+import model.ui.mainmenu.PlayerPicker;
 import model.ui.mainmenu.SmallLabel;
 import model.ui.mainmenu.SubsceneTemp;
-import model.ui.mainmenu.PlayerPicker;
-import model.ui.mainmenu.BtnTemp;
-import model.player.PlayerType;
-
 
 import java.util.ArrayList;
 
+@Deprecated
 public class ViewManager {
 
     private BorderPane mainPane;
@@ -80,10 +80,6 @@ public class ViewManager {
         mainPane.setCenter(centerHbx);
     }
 
-    public Stage getMainStage() {
-        return mainStage;
-    }
-
     private void createBackground() {
         Image backgroundImage = new Image("file:resources/sprites/tiles/floor2.png");
         BackgroundImage background = new BackgroundImage(backgroundImage, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.DEFAULT, null);
@@ -129,7 +125,7 @@ public class ViewManager {
         HBox hbx_start = createHbxStart();
         BtnTemp begin = new BtnTemp("begin");
         GameViewManager gm = new GameViewManager();
-        begin.setOnAction(e -> gm.createNewGame(mainStage, chosenPlayer));
+        begin.setOnAction(e -> gm.createNewGame(chosenPlayer));
         subscene.getPane().getChildren().addAll(hbx_start, begin);
     }
 
@@ -153,7 +149,7 @@ public class ViewManager {
     }
 
     private void createScoreBtn() {
-        BtnTemp btn = new BtnTemp("Score");
+        BtnTemp btn = new BtnTemp("score");
         menuButtons.getChildren().add(btn);
         SubsceneTemp subscene = new SubsceneTemp();
         stkPane.getChildren().add(subscene);

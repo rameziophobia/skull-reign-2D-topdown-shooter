@@ -21,10 +21,15 @@ public class PlayerProjectileControl {
     private final buttons projectileBtn;
     private buttons lastPressed;
 
-    private HashMap<PowerUpTypes, Float> powerUp;
-    private HashMap<ProjectileType, HashMap<PowerUpTypes, Float>> weaponSettings = new HashMap<>();
+    private HashMap<PowerUpType, Float> powerUp;
+    private HashMap<ProjectileType, HashMap<PowerUpType, Float>> weaponSettings = new HashMap<>();
     private LinkedList<ProjectileType> weaponList = new LinkedList<>();
     //dictionary of weapons used with their respective powerUp dict
+
+    private final static int MAX_MULT = 6;
+    private final static int MAX_SCALE = 50;
+    private final int MAX_SPEED;
+
 
     private boolean rangeEnable;
     private double range = 2000; //bound akbar mn el shasha
@@ -49,29 +54,30 @@ public class PlayerProjectileControl {
 
         this.type = projectile;
         this.projectileBtn = projectileBtn;
+        MAX_SPEED = (int)(this.type.getSPEED() *1.5);
         powerUp = new HashMap<>();
 
         rangeEnable = false;
-        setWeapon(projectileBtn.getIndex(), projectile.getURL());
+        setWeapon(projectile);
         powerUp = initializePowerUp();
         weaponSettings.put(projectile, powerUp);
         weaponList.add(type);
     }
 
     //sets powerUp to zero
-    private HashMap<PowerUpTypes, Float> initializePowerUp() {
-        HashMap<PowerUpTypes, Float> power = new HashMap<>();
-        for (PowerUpTypes powerUpTypes : PowerUpTypes.values()) {
+    private HashMap<PowerUpType, Float> initializePowerUp() {
+        HashMap<PowerUpType, Float> power = new HashMap<>();
+        for (PowerUpType powerUpTypes : PowerUpType.values()) {
             power.put(powerUpTypes, 0f);
         }
-        power.put(PowerUpTypes.MULT, 1f);
+        power.put(PowerUpType.MULT, 1f);
 
         return power;
     }
 
     public void fireProjectile() {
         if (mousePressed && lastPressed.equals(projectileBtn)) {
-            createProjectile();//todo: functions name needs refactoring
+            createProjectile();
         }
     }
 
@@ -90,6 +96,10 @@ public class PlayerProjectileControl {
         fireProjectile();
     }
 
+    protected HashMap getWeaponSettings(){
+        return weaponSettings;
+    }
+
     private void detectBtnType(MouseEvent e) {
 
         if (e.isPrimaryButtonDown()) {
@@ -102,14 +112,14 @@ public class PlayerProjectileControl {
     private void createProjectile() {
 
         if (System.currentTimeMillis() > (lastFireTime + 1000 / type.getFIRERATE())) {
-            for (int mult = 0; mult < powerUp.get(PowerUpTypes.MULT); mult++) {
+            for (int mult = 0; mult < powerUp.get(PowerUpType.MULT); mult++) {
 
                 Projectile projectile = new Projectile(getPlayer().getSpawner(),
                         type,
                         angle + mult * type.getMULTANGLE() * Math.pow(-1, mult),
                         false);//todo odd multiples look weird
-                projectile.setDmgScale(powerUp.get(PowerUpTypes.SCALE));
-                projectile.addSpeed(powerUp.get(PowerUpTypes.SPEED));
+                projectile.setDmgScale(powerUp.get(PowerUpType.SCALE));
+                projectile.addSpeed(powerUp.get(PowerUpType.SPEEDPROJECTILE));
 
                 lastFireLocationX = getPlayer().getLayoutX();
                 lastFireLocationY = getPlayer().getLayoutY();
@@ -125,16 +135,18 @@ public class PlayerProjectileControl {
                 > range;
     }
 
-    public void addType(ProjectileType type, boolean special) {
-        this.type = type;
-        weaponSettings.putIfAbsent(type, initializePowerUp());
-        this.powerUp = weaponSettings.get(type);
+    public void addType(ProjectileType type) {
+        if (this.type != type){
+            this.type = type;
+            weaponSettings.putIfAbsent(type, initializePowerUp());
+            this.powerUp = weaponSettings.get(type);
 
-        int weaponSlot = special ? 1 : 0;
-        setWeapon(weaponSlot, type.getURL());
-        if (weaponList.size() < weaponSettings.size()) {
-            weaponList.add(type);
+            setWeapon(type);
+            if (weaponList.size() < weaponSettings.size()) {
+                weaponList.add(type);
+            }
         }
+
     }
 
     public void setToNextType(boolean special) {
@@ -143,12 +155,26 @@ public class PlayerProjectileControl {
         powerUp = weaponSettings.get(nextType);
         type = nextType;
 
-        int weaponSlot = special ? 1 : 0;
-        setWeapon(weaponSlot, type.getURL()); //todo ui slot kda msh dynamic but screw it i need my brain cells ughhhh nvm this needs to be done
+        setWeapon(type); 
     }
 
-    public void setPowerUp(PowerUpTypes key, Float value) {
-        powerUp.put(key, value);
+    public void setPowerUp(PowerUpType key, Float value) {
+        if (value == 0){
+            powerUp.put(key, 1f);
+        }
+        else if(key==PowerUpType.MULT && type.getCurrentMult() < MAX_MULT ){
+            type.incCurrentMult(value);
+            powerUp.put(key, type.getCurrentMult());
+        }
+        else if(key == PowerUpType.SCALE && type.getCurrentScale() <= MAX_SCALE){
+            type.incCurrentScale(value);
+            powerUp.put(key, type.getCurrentScale());
+        }
+        else if(key == PowerUpType.SPEEDPROJECTILE && type.getSPEED() <= MAX_SPEED){
+            type.incCurrentSpeed(value);
+            powerUp.put(key, (float)type.getSPEED());
+        }
+
     }
 
     public void setRange(double range) {

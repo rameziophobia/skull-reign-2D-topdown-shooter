@@ -11,7 +11,9 @@ public enum AudioFile {
     MACHINE(Constants.FOLDER_PROJECTILE + "machine.mp3", MixerType.SFX, 0.85),
     LASER(Constants.FOLDER_PROJECTILE + "laser.wav", MixerType.SFX, 0.85),
     WOOSH(Constants.FOLDER_PROJECTILE + "woosh.mp3", MixerType.SFX, 0.85),
-    ELECTRIC1(Constants.FOLDER_PROJECTILE + "electric1.mp3", MixerType.SFX, 0.85);
+    ELECTRIC1(Constants.FOLDER_PROJECTILE + "electric1.mp3", MixerType.SFX, 0.85),
+    BUTTON_CLICK(Constants.FOLDER_MENU  + "tap-crisp.aif", MixerType.SFX, 0.7, 1),
+    FIRE("fire.mp3", MixerType.SFX, 0.05, 1);//todo;
 
     private final String path;
     private final MixerType mixer;
@@ -70,5 +72,6 @@ public enum AudioFile {
         private static final String PATH_RESOURCES_AUDIO_AMBIENT = PATH_RESOURCES_AUDIO + "ambient/";
 
         private static final String FOLDER_PROJECTILE = "projectiles/";
+        private static final String FOLDER_MENU = "menu/";
     }
 }

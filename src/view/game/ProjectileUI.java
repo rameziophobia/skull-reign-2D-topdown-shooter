@@ -7,15 +7,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import model.projectiles.ProjectileType;
 import view.GameViewManager;
 
-import static model.GameObject.*;
+import static model.GameObject.isAnimated;
 
 public class ProjectileUI extends HBox {
 
     private static final int weaponSlotsNum = 4;
     private static final StackPane[] weapons = new StackPane[weaponSlotsNum];
-    private static ImageView[] prevWeaponURLs = new ImageView[2];
+    private static ImageView[] prevWeaponViews = new ImageView[2];
 
     public ProjectileUI() {
         setSpacing(10);
@@ -37,31 +38,37 @@ public class ProjectileUI extends HBox {
         setLayoutY(GameViewManager.HEIGHT - 90);
     }
 
-    public static void setWeapon(int index, String projectileURL) {
-
+    public static void setWeapon(ProjectileType type) {
+        String projectileURL = type.getURL();
         ImageView weaponImage;
-        if (prevWeaponURLs[index] != null) {
-            int i = (index == 0) ? 0 : 3;
+
+        int animated = type.isANIMATED() ? 1 : 0;
+        if (prevWeaponViews[animated] != null) {
+            int i = (animated == 0) ? 0 : 3;
             ObservableList<Node> activeSlot = weapons[i].getChildren();
             if (activeSlot.size() > 1) {
                 activeSlot.remove(1);
             }
-            prevWeaponURLs[index].setScaleX(0.5);
-            prevWeaponURLs[index].setScaleY(0.5);
-            activeSlot.add(prevWeaponURLs[index]);
+            prevWeaponViews[animated].setScaleX(0.5);
+            prevWeaponViews[animated].setScaleY(0.5);
+            activeSlot.add(prevWeaponViews[animated]);
         }
-        index++;
+        animated++;
 
         weaponImage = !isAnimated(projectileURL) ?
                 new ImageView(projectileURL) :
                 new ImageView(SpriteSheet.getFirstSprite(projectileURL));
 
+        if (type.isANIMATED()){
+
+        }
+
         weaponImage.setRotate(270);
-        ObservableList<Node> currentSlot = weapons[index].getChildren();
+        ObservableList<Node> currentSlot = weapons[animated].getChildren();
         if (currentSlot.size() > 1) {
             currentSlot.remove(1);
         }
         currentSlot.add(weaponImage);
-        prevWeaponURLs[--index] = weaponImage;
+        prevWeaponViews[--animated] = weaponImage;
     }
 }
