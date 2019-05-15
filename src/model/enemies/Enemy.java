@@ -151,10 +151,13 @@ public class Enemy extends Entity {
         enemyProjectileControl.update(angle, getSpawner());
 
         if (hp <= 0 || !LevelManager.isSpawnable()) {
+            if (hp <= 0) {
+                Player.increaseCurrentScore(this.getScoreValue(),this.getLayoutX(),this.getLayoutY());
+
+            }
             removeGameObjectFromScene(this);
             LevelManager.removeEnemy(this);
-            if (hp <= 0)
-                Player.increaseCurrentScore(this.getScoreValue());
+
         }
     }
 

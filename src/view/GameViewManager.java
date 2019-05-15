@@ -1,6 +1,9 @@
 package view;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,6 +15,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.GameObject;
 import model.player.Player;
 import model.player.PlayerType;
@@ -34,6 +38,8 @@ public class GameViewManager {
     private static Stage gameStage = new Stage();
     private static Player player;
     private static Label lbl_currentScore;
+    private static Label lbl_floatingScore;
+    private static FadeTransition lblfader;
     private GameViewUI GVUI;
     private static AnimationTimer gameLoop;
 
@@ -123,17 +129,43 @@ public class GameViewManager {
     }
 
     public void createScoreLabel() {
-        lbl_currentScore = new Label("Current Score: 0");
+        lbl_currentScore = new Label("CURRENT SCORE: 0");
         lbl_currentScore.setPrefWidth(GameViewManager.WIDTH);
-        lbl_currentScore.setAlignment(Pos.TOP_CENTER);
+        lbl_currentScore.setPadding(new Insets(10,0,0,0));
+        lbl_currentScore.setAlignment(Pos.BOTTOM_CENTER);
         lbl_currentScore.setTextAlignment(TextAlignment.CENTER);
-        lbl_currentScore.setTextFill(Color.YELLOW);
-        lbl_currentScore.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        lbl_currentScore.setTextFill(Color.GHOSTWHITE);
+        lbl_currentScore.setFont(Main.FutureThinFont);
+        lbl_currentScore.setStyle("-fx-stroke: firebrick;-fx-stroke-width: 12px;");
         addGameObjectTOScene(lbl_currentScore);
+
+        lbl_floatingScore = new Label("");
+        lbl_floatingScore.setFont(Font.font("Arial", FontWeight.BOLD, 35));
+        lbl_floatingScore.setTextFill(Color.GHOSTWHITE);
+        lblfader = new FadeTransition();
+        lbl_floatingScore.setLayoutX(player.getLayoutX());
+        addGameObjectTOScene(lbl_floatingScore);
     }
 
-    public static void updateLabel() {
-        lbl_currentScore.setText("Current Score: " + player.getCurrentScore());
+    public static void updateLabel(int amount,double X,double Y) {
+        lbl_currentScore.setText("CURRENT SCORE: " + player.getCurrentScore());
+        lbl_floatingScore.setText("+"+amount);
+        playFloatingLabelAnimation(X,Y);
+
+    }
+    public static void playFloatingLabelAnimation(double X,double Y) {
+        lblfader.setToValue(0);
+        lblfader.setFromValue(1);
+        lblfader.setDuration(Duration.millis(1250));
+        TranslateTransition lblmover = new TranslateTransition();
+        lblmover.setDuration(Duration.millis(1500));
+        lbl_floatingScore.setLayoutX(X);
+        lblmover.setFromY(Y);
+        lblmover.setByY(-65.0);
+        lblfader.setNode(lbl_floatingScore);
+        lblmover.setNode(lbl_floatingScore);
+        lblfader.play();
+        lblmover.play();
     }
 
     public static void endGameSequence() {

@@ -221,10 +221,10 @@ public class Player extends Entity {
         }
     }
 
-    public static void increaseCurrentScore(int amount) {
+    public static void increaseCurrentScore(int amount,double X,double Y) {
         currentScore += amount;
         System.out.println(currentScore);
-        GameViewManager.updateLabel();
+        GameViewManager.updateLabel(amount,X,Y);
     }
 
     public void resetScore() {
