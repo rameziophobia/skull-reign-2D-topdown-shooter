@@ -4,8 +4,6 @@ import javafx.animation.AnimationTimer;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -16,7 +14,6 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import model.GameObject;
 import model.player.Player;
-import javafx.scene.control.Label;
 import model.player.PlayerType;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
@@ -48,8 +45,6 @@ public class GameViewManager {
 
         GameUI.createBackground(gamePane);
         GameUI.setCrosshair(gamePane);
-
-        createScoreLabel();
 
         setWindowScaling();
 
@@ -173,7 +168,7 @@ public class GameViewManager {
     }
 
     private void gameUpdate() {
-        
+
         LevelManager.createEnemies();
         LevelManager.createObstacles();
         LevelManager.createPowerUp();
@@ -183,4 +178,5 @@ public class GameViewManager {
                 (GameObject) n
         ).collect(Collectors.toList());
         gameObjects.forEach(GameObject::update);
+    }
 }

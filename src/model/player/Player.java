@@ -240,15 +240,8 @@ public class Player extends Entity {
         GameViewManager.endGameSequence();
     }
 
-    public static int getCurrentScore() {
-        return currentScore;
-    }
-
     public static void increasePlayerCurrentScore(int amount) {
         currentScore += amount;
     }
 
-    public static void killPlayer(){
-
-    }
 }
