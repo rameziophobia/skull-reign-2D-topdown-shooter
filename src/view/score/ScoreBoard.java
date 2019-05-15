@@ -104,6 +104,8 @@ public class ScoreBoard {
 
     public void addNewScore(String Name, int highScore) {
         String scoreString = String.valueOf(highScore);
+        if(scoreString == "")
+            scoreString = "No Name";
         while (scoreString.length() < MAX_DIGITS) {
             scoreString = '0' + scoreString;
         }
