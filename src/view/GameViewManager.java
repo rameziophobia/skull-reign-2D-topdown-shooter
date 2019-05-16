@@ -1,6 +1,9 @@
 package view;
 
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,9 +15,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.GameObject;
 import model.player.Player;
 import model.player.PlayerType;
+import model.ui.game.ScoreLabel;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
@@ -70,11 +75,32 @@ public class GameViewManager {
         return player;
     }
 
+    public static void removeFromScene(Node node) {
+        gamePane.getChildren().remove(node);
+    }
+
+    /**
+     * @param gameObject to be removed
+     *
+     * @deprecated use {@link #removeFromScene(Node)}instead.
+     */
+    @Deprecated
     public static void removeGameObjectFromScene(GameObject gameObject) {
         gamePane.getChildren().remove(gameObject);
     }
 
+    /**
+     * @param node
+     *
+     * @deprecated use {@link #addTOScene(Node)}instead.
+     */
+    @Deprecated
     public static void addGameObjectTOScene(Node node) {
+        gamePane.getChildren().add(node);
+        node.toBack();
+    }
+
+    public static void addTOScene(Node node) {
         gamePane.getChildren().add(node);
         node.toBack();
     }
@@ -123,17 +149,12 @@ public class GameViewManager {
     }
 
     public void createScoreLabel() {
-        lbl_currentScore = new Label("Current Score: 0");
-        lbl_currentScore.setPrefWidth(GameViewManager.WIDTH);
-        lbl_currentScore.setAlignment(Pos.TOP_CENTER);
-        lbl_currentScore.setTextAlignment(TextAlignment.CENTER);
-        lbl_currentScore.setTextFill(Color.YELLOW);
-        lbl_currentScore.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        lbl_currentScore = new ScoreLabel(); //todo move to GameUI
         addGameObjectTOScene(lbl_currentScore);
     }
 
-    public static void updateLabel() {
-        lbl_currentScore.setText("Current Score: " + player.getCurrentScore());
+    public static void updateLabel(int amount) {
+        lbl_currentScore.setText("CURRENT SCORE: " + player.getCurrentScore());
     }
 
     public static void endGameSequence() {

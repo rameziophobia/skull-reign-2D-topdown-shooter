@@ -223,8 +223,7 @@ public class Player extends Entity {
 
     public static void increaseCurrentScore(int amount) {
         currentScore += amount;
-        System.out.println(currentScore);
-        GameViewManager.updateLabel();
+        GameViewManager.updateLabel(amount);
     }
 
     public void resetScore() {
