@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -52,6 +53,19 @@ public class GameViewManager {
 
         GameUI.createBackground(gamePane);
         GameUI.setCrosshair(gamePane);
+
+        levelUI waveui = new levelUI("Wave",6,30);
+        waveui.addUIToGame(gamePane);
+
+        levelUI levelui = new levelUI("Level",10,0);
+        levelui.addUIToGame(gamePane);
+
+        gamePane.setOnMouseReleased(e->{
+            levelui.incrementUICounterWithAnimation();
+        });
+        gamePane.setOnMouseClicked(e->{
+            waveui.incrementUICounterWithAnimation();
+        });
 
         setWindowScaling();
 
