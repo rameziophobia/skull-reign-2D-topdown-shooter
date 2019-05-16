@@ -3,6 +3,7 @@ package view.score;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+@Deprecated
 public class ScoreChest extends ImageView {
     private Image openedImg;
     private Image closedImg;
