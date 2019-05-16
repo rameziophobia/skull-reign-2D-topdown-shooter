@@ -2,22 +2,26 @@ package model.enemies;
 
 import view.Main;
 
-public enum EnemyType implements Comparable<EnemyType> {
-    TANK_SAND(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_sand-42x42.png", 1.7f, 5),
-    TANK_DARK(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_dark-42x42.png", 1.4f, 30),
-    TANK_RED(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_red-38x38.png", 2, 20),
-    TANK_BLUE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_blue-42x42.png", 2, 10),
-    TANK_HUGE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_huge-62x60.png", 0.5f, 50),
-    TANK_DARK_LARGE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_darkLarge-52x51.png", 30, 100);
+public enum EnemyType {
+    TANK_SAND("tank_sand-42x42.png", 1.7f, 60, 5, 5),
+    TANK_DARK("tank_dark-42x42.png", 1f, 80, 5, 10),
+    TANK_RED("tank_red-38x38.png", 2, 80, 5, 30),
+    TANK_BLUE("tank_blue-42x42.png", 2, 80, 5, 20),
+    TANK_HUGE("tank_huge-62x60.png", 0.7f, 80, 5, 40),
+    TANK_DARK_LARGE("tank_darkLarge-52x51.png", 0.5f, 200, 5, 50);
 
     private String URL;
     private float SPEED;
+    private float HP;
+    private int SCORE;
     private int POWER;
 
-    EnemyType(String URL, float SPEED, int POWER) {
-        this.URL = URL;
-        this.SPEED = SPEED;
-        this.POWER = POWER;
+    EnemyType(String name, float speed, float hp, int score, int power) {
+        URL = Constants.PATH_RESOURCES_SPRITES_ENEMY + name;
+        SPEED = speed;
+        HP = hp;
+        SCORE = score;
+        POWER = power;
     }
 
     public String getURL() {
@@ -30,6 +34,14 @@ public enum EnemyType implements Comparable<EnemyType> {
 
     public int getPOWER() {
         return POWER;
+    }
+
+    public int getScore() {
+        return SCORE;
+    }
+
+    public float getHP() {
+        return HP;
     }
 
     private static class Constants {

@@ -11,6 +11,7 @@ import view.Main;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+@Deprecated
 public class BtnTemp extends Button {
 
     private final static String FONT_PATH = Main.PATH_RESOURCES + "fonts/kenvector_future_thin.ttf";
