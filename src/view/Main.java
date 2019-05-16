@@ -3,6 +3,7 @@ package view;
 import controller.SettingsManager;
 import controller.audiomanager.AudioManager;
 import javafx.application.Application;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import view.menu.mainmenu.MenuScene;
 
@@ -10,14 +11,15 @@ public class Main extends Application {
 
     public static final String PATH_RESOURCES = "file:resources/";
     public static final String PATH_RESOURCES_SPRITES = PATH_RESOURCES + "sprites/";
+    public static final Font FutureThinFont = Font.loadFont(Main.class.getResourceAsStream("/fonts/prstart.ttf"), 25);
 
     private static Stage stage;
     private static MenuScene menuScene;
 
     @Override
     public void start(Stage primaryStage) {
-//        ViewManager manager = new ViewManager();
-//        primaryStage = manager.getMainStage();
+        //      ViewManager manager = new ViewManager();
+        //      primaryStage = manager.getMainStage();
         AudioManager.init();
         SettingsManager.init();
 
