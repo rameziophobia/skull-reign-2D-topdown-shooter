@@ -4,6 +4,7 @@ import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.QuadCurveTo;
@@ -66,5 +67,10 @@ public class Tornado extends GameObject {
     @Override
     public void update() {
         animationClip.animate();
+    }
+
+    @Override
+    public Node[] getChildren() {
+        return null;
     }
 }

@@ -3,6 +3,7 @@ package model.enemies;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
@@ -15,7 +16,6 @@ import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
 import view.GameViewManager;
-import view.LevelManager;
 
 import java.util.Random;
 
@@ -172,17 +172,17 @@ public class Enemy extends Entity {
     }
 
     private void checkAlive() {
-        if (hp <= 0 || !LevelManager.isSpawnable()) {
+        if (hp <= 0 || !GameViewManager.getInstance().isSpawnable()) {
             if (hp <= 0) {
                 Player.increaseCurrentScore(this.getScoreValue());
                 lbl_floatingScore.setText("+" + this.getScoreValue());
                 lbl_floatingScore.setLayoutX(this.getLayoutX());
                 lblmover.setFromY(this.getLayoutY());
-                GameViewManager.addTOScene(lbl_floatingScore);
+                GameViewManager.addToScene(lbl_floatingScore);
                 floatingScoreTransition.play();
             }
             removeFromScene(this);
-            LevelManager.removeEnemy(this);
+            GameViewManager.getInstance().removeEnemy(this);
         }
     }
 
@@ -196,6 +196,11 @@ public class Enemy extends Entity {
         enemyProjectileControl.update(angle, getSpawner());
 
         checkAlive();
+    }
+
+    @Override
+    public Node[] getChildren() {
+        return null;
     }
 
 

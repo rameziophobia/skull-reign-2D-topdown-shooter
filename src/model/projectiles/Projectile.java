@@ -3,12 +3,12 @@ package model.projectiles;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.transform.Rotate;
 import model.GameObject;
 import model.enemies.Enemy;
 import model.walls.Wall;
 import view.GameViewManager;
-import view.LevelManager;
 
 import static view.GameViewManager.getPlayer;
 import static view.GameViewManager.removeGameObjectFromScene;
@@ -80,7 +80,7 @@ public class Projectile extends GameObject {
                 removeGameObjectFromScene(this);
             }
         } else {
-            for (Enemy enemy : LevelManager.getEnemyArrayList()) {
+            for (Enemy enemy : GameViewManager.getInstance().getEnemyArrayList()) {
                 if (isIntersects(enemy)) {
                     enemy.takeDmg(getDamage());
                     GameViewManager.removeGameObjectFromScene(this);
@@ -92,13 +92,13 @@ public class Projectile extends GameObject {
     private void checkCollision_border() {
         if ((getLayoutY() > GameViewManager.HEIGHT || getLayoutY() < 0)
                 && (getLayoutX() > GameViewManager.WIDTH || getLayoutX() < 0)) {
-            GameViewManager.removeGameObjectFromScene(this);
+            GameViewManager.removeFromScene(this);
         }
     }
     private void checkCollision_wall(){
-        for(Wall wall: LevelManager.getWallArrayList()){
+        for(Wall wall: GameViewManager.getInstance().getWallArrayList()){
             if(isIntersects(wall)){
-                GameViewManager.removeGameObjectFromScene(this);
+                GameViewManager.removeFromScene(this);
             }
         }
     }
@@ -116,6 +116,11 @@ public class Projectile extends GameObject {
         checkCollision_border();
         checkCollision_wall();
         //todo: check range
+    }
+
+    @Override
+    public Node[] getChildren() {
+        return null;
     }
 
 

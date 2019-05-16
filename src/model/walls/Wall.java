@@ -1,17 +1,15 @@
 package model.walls;
 
+import javafx.scene.Node;
 import model.Entity;
 import model.GameObject;
 import view.Main;
 
 import java.util.ArrayList;
 
-
-
 public class Wall extends GameObject {
 
     private final static int MARGIN = 8;
-
 
     public Wall(double x, double y) {
         super(Main.PATH_RESOURCES_SPRITES + "walls/" + "wall-250x60.png");
@@ -63,5 +61,10 @@ public class Wall extends GameObject {
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public Node[] getChildren() {
+        return null;
     }
 }

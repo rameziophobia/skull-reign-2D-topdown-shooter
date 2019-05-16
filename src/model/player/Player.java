@@ -1,6 +1,7 @@
 package model.player;
 
 import javafx.animation.ScaleTransition;
+import javafx.scene.Node;
 import javafx.util.Duration;
 import model.Entity;
 import model.projectiles.PlayerProjectileControl;
@@ -8,14 +9,11 @@ import model.projectiles.ProjectileType;
 import model.walls.Wall;
 import view.GameViewManager;
 import view.InputManager;
-import view.LevelManager;
 import view.game.stats.StatBar;
 
 import static java.lang.Math.atan2;
 
 public class Player extends Entity {
-
-
     private static int currentScore = 0;
     private static final float MAX_SPEED = 8;
     private static float SPEED = 6;
@@ -80,14 +78,14 @@ public class Player extends Entity {
     private void move() {
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
-            if (Wall.canMoveUp(this, LevelManager.getWallArrayList()) && !atTopBorder()) {
+            if (Wall.canMoveUp(this, GameViewManager.getInstance().getWallArrayList()) && !atTopBorder()) {
                 if (rightPressed || leftPressed) {
                     setLayoutY(getLayoutY() - SPEED / DIAGONAL_FACTOR); // to avoid moving fast diagonally
                 } else {
                     setLayoutY(getLayoutY() - SPEED);
                 }
             }
-        } else if (downPressed && Wall.canMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()) {
+        } else if (downPressed && Wall.canMoveDown(this, GameViewManager.getInstance().getWallArrayList()) && !atBottomBorder()) {
             if (rightPressed || leftPressed) {
                 setLayoutY(getLayoutY() + SPEED / DIAGONAL_FACTOR);
             } else {
@@ -96,14 +94,14 @@ public class Player extends Entity {
         }
         if (rightPressed) {
 
-            if (Wall.canMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()) {
+            if (Wall.canMoveRight(this, GameViewManager.getInstance().getWallArrayList()) && !atRightBorder()) {
                 if (upPressed || downPressed) {
                     setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
                 } else {
                     setLayoutX(getLayoutX() + SPEED);
                 }
             }
-        } else if (leftPressed && Wall.canMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()) {
+        } else if (leftPressed && Wall.canMoveLeft(this, GameViewManager.getInstance().getWallArrayList()) && !atLeftBorder()) {
             if (upPressed || downPressed) {
                 setLayoutX(getLayoutX() - SPEED / DIAGONAL_FACTOR);
             } else {
@@ -221,6 +219,11 @@ public class Player extends Entity {
         }
     }
 
+    @Override
+    public Node[] getChildren() {
+        return null;
+    }
+
     public static void increaseCurrentScore(int amount) {
         currentScore += amount;
         GameViewManager.updateLabel(amount);
@@ -235,7 +238,7 @@ public class Player extends Entity {
     }
 
     public void killPlayer() {
-        LevelManager.setSpawnable(false);
+        GameViewManager.getInstance().setSpawnable(false);
         GameViewManager.endGameSequence();
     }
 

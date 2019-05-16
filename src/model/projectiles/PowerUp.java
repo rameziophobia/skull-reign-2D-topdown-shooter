@@ -3,10 +3,11 @@ package model.projectiles;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import javafx.scene.Node;
 import model.GameObject;
 import model.player.Player;
 import model.walls.Wall;
-import view.LevelManager;
+import view.GameViewManager;
 
 import java.util.Random;
 
@@ -29,8 +30,8 @@ public class PowerUp extends GameObject {
             setLayoutY(rand.nextInt((HEIGHT - 50)));
             setLayoutX(rand.nextInt((WIDTH - 50)));
         }
-        while (LevelManager.getWallArrayList().size() > 0 &&
-                Wall.canMove(this, LevelManager.getWallArrayList(), false, 0));
+        while (GameViewManager.getInstance().getWallArrayList().size() > 0 &&
+                Wall.canMove(this, GameViewManager.getInstance().getWallArrayList(), false, 0));
         this.animated = powerUpType.isANIMATED();
         if (animated) {
             SpriteSheet spriteSheet = new SpriteSheet(powerUpType.getURL(), 0);
@@ -53,7 +54,7 @@ public class PowerUp extends GameObject {
             if (powerUpType.getProjectileType() != null) {
                 getPlayer().getSecondaryBtnHandler().addType(powerUpType.getProjectileType());
             }
-            removeGameObjectFromScene(this);
+            removeFromScene(this);
         }
 
     }
@@ -80,6 +81,10 @@ public class PowerUp extends GameObject {
             animationClip.animate();
         }
         checkCollision();
+    }
 
+    @Override
+    public Node[] getChildren() {
+        return null;
     }
 }
