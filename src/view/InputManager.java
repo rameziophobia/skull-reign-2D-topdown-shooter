@@ -107,11 +107,11 @@ public class InputManager {//todo temp static ?
                     break;
                 }
                 case Q: {
-                    player.getPrimaryBtnHandler().setToNextType(false);
+                    player.getPrimaryBtnHandler().setToNextType();
                     break;
                 }
                 case E: {
-                    player.getSecondaryBtnHandler().setToNextType(true);
+                    player.getSecondaryBtnHandler().setToNextType();
                     break;
                 }
                 case SHIFT: {
