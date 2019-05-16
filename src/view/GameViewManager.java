@@ -1,6 +1,7 @@
 package view;
 
 import javafx.animation.AnimationTimer;
+import javafx.collections.ObservableList;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
@@ -25,6 +26,7 @@ import view.menu.mainmenu.menus.HallOfFameMenu;
 
 import java.awt.*;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 
@@ -194,10 +196,11 @@ public class GameViewManager {
         LevelManager.createObstacles();
         LevelManager.createPowerUp();
 
+        Object[] ob = gamePane.getChildren().toArray();
+        for (Object node : ob) {
+            if(node instanceof GameObject)
+                ((GameObject) node).update();
+        }
 
-        List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
-                (GameObject) n
-        ).collect(Collectors.toList());
-        gameObjects.forEach(GameObject::update);
     }
 }
