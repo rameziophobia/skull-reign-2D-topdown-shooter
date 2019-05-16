@@ -1,6 +1,8 @@
 package view;
 
+import model.enemies.Boss;
 import model.enemies.Enemy;
+import model.enemies.EnemyType;
 import model.obstacles.Obstacle;
 import model.projectiles.PowerUp;
 import model.projectiles.PowerUpType;
@@ -13,7 +15,7 @@ import static model.enemies.EnemyType.TANK_SAND;
 
 public class LevelManager {//todo temp static
 
-    private static final float SPAWN_CD_ENEMY = 1000 * 10;
+    private static final float SPAWN_CD_ENEMY = 1000 * 10000;
     private static final float SPAWN_CD_OBSTACLES = 1000 * 5f;
     private static final float SPAWN_CD_POWERUPS = 1000 * 20f;
 
@@ -40,9 +42,12 @@ public class LevelManager {//todo temp static
         if (nextEnemySpawnTime < System.currentTimeMillis() && spawnable) {
             nextEnemySpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
 
-            Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, Enemy.MoveMode.stationary);
+            Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01,Enemy.MoveMode.followPlayer);
             enemy.getEnemyProjectileControl().addSpawnRing(3000, 90);
             enemy.getEnemyProjectileControl().addRing1by1(300, 30);
+            Boss boss = new Boss(EnemyType.MAGE1, Boss.stageEnum.STAGE1);
+            enemyArrayList.add(boss);
+            GameViewManager.addGameObjectTOScene(boss);
             enemyArrayList.add(enemy);
             GameViewManager.addGameObjectTOScene(enemy);
         }

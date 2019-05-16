@@ -1,7 +1,9 @@
 package view.game.stats;
 
+import javafx.animation.ScaleTransition;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class StatBar extends Rectangle {
     private double currentValue;
@@ -36,5 +38,11 @@ public class StatBar extends Rectangle {
         if (canRegenerate && currentValue < maxValue / 2) {
             setCurrentValue(maxValue / 2);
         }
+    }
+    public static void barScaleAnimator(StatBar HP, double MAX_HP) {
+        ScaleTransition HPAnimation = new ScaleTransition(Duration.seconds(0.1), HP);
+        HPAnimation.setToX((HP.getCurrentValue()) / MAX_HP);
+
+        HPAnimation.play();
     }
 }

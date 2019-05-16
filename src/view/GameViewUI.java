@@ -7,7 +7,7 @@ import view.game.stats.HealthBars;
 public class GameViewUI {
 
     private Group group = new Group();
-    private HealthBars healthBars = new HealthBars();
+    private HealthBars playerHealthBars = new HealthBars();
 
     public GameViewUI() {
         createWeaponBar();
@@ -25,8 +25,8 @@ public class GameViewUI {
         return group;
     }
 
-    public HealthBars getHealthBars() {
-        return healthBars;
+    public HealthBars getPlayerHealthBars() {
+        return playerHealthBars;
     }
 
 }

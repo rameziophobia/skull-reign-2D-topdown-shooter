@@ -1,33 +1,21 @@
 package view;
 
 import javafx.animation.AnimationTimer;
-import javafx.collections.ObservableList;
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.GameObject;
 import model.player.Player;
 import model.player.PlayerType;
 import model.ui.game.ScoreLabel;
+import view.game.stats.HealthBars;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
 import java.awt.*;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.stream.Collectors;
 
 
 public class GameViewManager {
@@ -41,7 +29,7 @@ public class GameViewManager {
     private static Stage gameStage = new Stage();
     private static Player player;
     private static Label lbl_currentScore;
-    private GameViewUI GVUI;
+    public GameViewUI GVUI;
     private static AnimationTimer gameLoop;
 
     public GameViewManager() {
@@ -134,14 +122,16 @@ public class GameViewManager {
     }
 
     private void createPlayer(PlayerType chosenPlayer, String playerName) {
-        player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
+        player = new Player(chosenPlayer,
+                GVUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.HP),
+                GVUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.SHIELD));
         player.setName(playerName);
         addGameObjectTOScene(player);
         player.toBack();
     }
 
     private void createUI() {
-        gamePane.getChildren().addAll(GVUI.getGroup(), GVUI.getHealthBars());
+        gamePane.getChildren().addAll(GVUI.getGroup(), GVUI.getPlayerHealthBars());
         createScoreLabel();
     }
 

@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import view.GameViewManager;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static view.GameViewManager.addGameObjectTOScene;
 
@@ -17,23 +18,27 @@ public class EnemyProjectileControl {
 
     private float ringAngle;
     private float ringAngle1by1;
+    private boolean ringFollowPlayer;
+    private double bossRingAngle;
+    private boolean boss;
+    private long nextchange;
 
     public enum PatternRate {
         RING(0), RING1BY1(1), toPlayer(2);
+
         int index;
 
         PatternRate(int i) {
             index = i;
         }
-
         public int getIndex() {
             return index;
         }
-    }
 
+
+    }
     private final ProjectileType type;
     private long[] lastFireTime;
-
 
     public EnemyProjectileControl(ProjectileType type) {
         super();
@@ -57,19 +62,28 @@ public class EnemyProjectileControl {
         setPatternRate(PatternRate.toPlayer,rate);
     }
 
+    public void addSpawnRingBoss(long rate, float ringAngle) {
+        addSpawnRing(rate, ringAngle);
+        this.ringFollowPlayer = false;
+        this.boss = true;
+    }
+
     public void addSpawnRing(long rate, float ringAngle){
         setPatternRate(PatternRate.RING,rate);
         this.ringAngle =  ringAngle;
+        ringFollowPlayer = true;
     }
 
     public void spawnRing() {
         int i = PatternRate.RING.getIndex();
         final long timeNow = System.currentTimeMillis();
-
         ArrayList<Projectile> projArrTest = new ArrayList<>();
-
+        long t1 = 2;
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
-            for (int j = (int) angle; j < 360 + (int) angle; j += ringAngle) {
+            final double ang = boss ? bossRingAngle : angle;
+            int changeDir = (timeNow % 20000 > 8000) ? -1 : 1;
+            bossRingAngle += 0.4 * changeDir;
+            for (int j = (int) ang; j < 360 + (int) ang; j += ringAngle) {
                 Projectile projectile = new Projectile(spawner, type, j, true);
                 projArrTest.add(projectile);
             }
@@ -113,5 +127,9 @@ public class EnemyProjectileControl {
 
     public void setSpawner(Point2D spawner) {
         this.spawner = spawner;
+    }
+
+    public ProjectileType getType() {
+        return type;
     }
 }

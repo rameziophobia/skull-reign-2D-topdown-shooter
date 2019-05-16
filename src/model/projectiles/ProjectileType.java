@@ -7,7 +7,7 @@ public enum ProjectileType {
             15, 1, 10, 3, false,1,1),
     FIRE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fire-32x12.png",
             1, 35, 6, 3, false,1,1),
-    REDLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserRed01-9x54.png", 3, 15, 15, 3, false,1,1),
+    REDLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserRed01-9x54.png", 1, 15, 9, 3, false,1,1),
     GREENLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserGreen01-9x54.png", 3, 15, 15, 3, false,1,1),
     BLUELASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserBlue01-9x54.png", 3, 15, 15, 3, false,1,1),
 
@@ -15,7 +15,7 @@ public enum ProjectileType {
     GREENLASER02(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserGreen02-13x37.png", 2, 10, 8, 2, false,1,1),
     BLUELASER02(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserBlue02-13x37.png", 2, 10, 8, 2, false,1,1),
 
-    REDLASER03(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserRed03-9x37.png", 20, 1.5f, 10, 3, false,1,1),
+    REDLASER03(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserRed03-9x37.png", 25, 3f, 20, 3, false,1,1),
     GREENLASER03(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserGreen03-9x37.png", 20, 1.5f, 10, 3, false,1,1),
     BLUELASER03(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserBlue03-9x37.png", 20, 1.5f, 10, 3, false,1,1),
 
