@@ -5,7 +5,7 @@ import model.obstacles.Obstacle;
 import model.projectiles.PowerUp;
 import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
-import model.walls.Wall;
+import model.wall.Wall;
 
 import java.util.ArrayList;
 
@@ -64,9 +64,9 @@ public class LevelManager {//todo temp static
         }
     }
     public static void createWall() {
-        Wall rectangle = new Wall(1200, 200);
-        wallArrayList.add(rectangle);
-        GameViewManager.addGameObjectTOScene(rectangle);
+//        Wall rectangle = new Wall(1200, 200);
+//        wallArrayList.add(rectangle);
+//        GameViewManager.addGameObjectTOScene(rectangle);
     }
 
     public static void removeEnemy(Enemy enemy) {

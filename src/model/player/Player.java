@@ -5,7 +5,7 @@ import javafx.util.Duration;
 import model.Entity;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
-import model.walls.Wall;
+import model.wall.Wall;
 import view.GameViewManager;
 import view.InputManager;
 import view.LevelManager;

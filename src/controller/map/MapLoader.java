@@ -4,9 +4,10 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import model.wall.Wall;
 import view.GameViewManager;
+import view.LevelManager;
 import view.Main;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class MapLoader {
     private static final int MAP_BLOCKS_WIDTH = 25;
     private static final int MAP_BLOCKS_HEIGHT = 16;
 
-    private static final double BLOCK_SIZE = 16 * 4;
+    public static final double BLOCK_SIZE = 16 * 4;
     private static final int STARTING_X = (int) ((GameViewManager.WIDTH - (BLOCK_SIZE * MAP_BLOCKS_WIDTH)) / 2);
     private static final int STARTING_Y = (int) ((GameViewManager.HEIGHT - (BLOCK_SIZE * MAP_BLOCKS_HEIGHT)) / 2);
 
@@ -40,10 +41,10 @@ public class MapLoader {
             for (int j = 0; j < MAP_BLOCKS_WIDTH; j++) {
                 switch (MapKey.getMapKeyFrom(pixelReader.getColor(j, i))) {
                     case FLAG:
-                        addWallTile("Flag_Red.png", j, i);
+                        addWallTiles("Flag_Red.png", j, i);
                         break;
                     case PILLAR:
-                        addTile("Pillar_Center.png", j, i);
+                        addWall("Pillar_Center.png", j, i);
                         addTile("Pillar_Ground.png", j, i + 1);
                         addTile("Pillar_Top.png", j, i - 1);
                         break;
@@ -54,43 +55,43 @@ public class MapLoader {
                         addTile("Side_Corner.png", j, i, true);
                         break;
                     case WALL_SIDE_LEFT:
-                        addTile("Side_Wall.png", j, i);
+                        addWall("Side_Wall.png", j, i);
                         break;
                     case WALL_SIDE_RIGHT:
-                        addTile("Side_Wall.png", j, i, true);
+                        addWall("Side_Wall.png", j, i, true);
                         break;
                     case WALL:
-                        addWallTile("Wall.png", j, i);
+                        addWallTiles("Wall.png", j, i);
                         break;
                     case WALL_ALONE:
-                        addTile("Wall_Alone.png", j, i);
-                        addTile(getRandWallGround(), j, i+1);
+                        addWall("Wall_Alone.png", j, i);
+                        addTile(getRandWallGround(), j, i + 1);
                         break;
                     case WALL_BARS_BOTTOM:
-                        addWallTile("Wall_Bars_Bottom.png", j, i);
+                        addWallTiles("Wall_Bars_Bottom.png", j, i);
                         break;
                     case WALL_BARS_MIDDLE:
-                        addWallTile("Wall_Bars_Middle.png", j, i);
+                        addWallTiles("Wall_Bars_Middle.png", j, i);
                         break;
                     case WALL_BROKEN_1:
-                        addWallTile("Wall_Broken_1.png", j, i);
+                        addWallTiles("Wall_Broken_1.png", j, i);
                         break;
                     case WALL_BROKEN_2:
-                        addWallTile("Wall_Broken_2.png", j, i);
+                        addWallTiles("Wall_Broken_2.png", j, i);
                         break;
                     case WALL_END_LEFT:
-                        addTile("Wall_End_Left.png", j, i);
+                        addWall("Wall_End_Left.png", j, i);
                         addTile("Wall_End_Left_Top.png", j, i - 1);
                         addTile(getRandWallGround(), j, i + 1);
                         break;
                     case WALL_END_RIGHT:
-                        addTile("Wall_End_Right.png", j, i);
+                        addWall("Wall_End_Right.png", j, i);
                         addTile("Wall_End_Right_Top.png", j, i - 1);
                         addTile(getRandWallGround(), j, i + 1);
                         break;
                     case WALL_FRONT:
                         addTile("Wall_Top.png", j, i - 1);
-                        addTile("Wall.png", j, i);
+                        addWall("Wall.png", j, i);
                         break;
                     case WALL_FRONT_END_LEFT:
                         addTile("Wall_Front_End.png", j, i);
@@ -117,10 +118,25 @@ public class MapLoader {
         }
     }
 
-    private void addWallTile(String wallFileName, int j, int i) {
+    private void addWallTiles(String wallFileName, int j, int i) {
         addTile("Wall_Top.png", j, i - 1);
-        addTile(wallFileName, j, i);
+        addWall(wallFileName, j, i, false);
         addTile(getRandWallGround(), j, i + 1);
+    }
+
+    private void addWall(String wallFileName, int j, int i) {
+        addWall(wallFileName, j, i, false);
+    }
+
+    private void addWall(String wallFileName, int j, int i, boolean reverse) {
+        Wall wall = new Wall(new Image(PATH_RESOURCES_SPRITES_MAP + wallFileName,
+                BLOCK_SIZE, BLOCK_SIZE, true, false));
+        wall.setLayoutX(STARTING_X + j * BLOCK_SIZE);
+        wall.setLayoutY(STARTING_Y + i * BLOCK_SIZE);
+        if (reverse)
+            wall.setScaleX(-1);
+        nodes.add(wall);
+        LevelManager.getWallArrayList().add(wall);
     }
 
     private String getRandWallGround() {

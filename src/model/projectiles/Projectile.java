@@ -6,7 +6,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.transform.Rotate;
 import model.GameObject;
 import model.enemies.Enemy;
-import model.walls.Wall;
+import model.wall.Wall;
 import view.GameViewManager;
 import view.LevelManager;
 

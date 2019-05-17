@@ -5,7 +5,7 @@ import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import model.GameObject;
 import model.player.Player;
-import model.walls.Wall;
+import model.wall.Wall;
 import view.LevelManager;
 
 
