@@ -42,6 +42,7 @@ public enum ProjectileType {
 
     ProjectileType(String fileName, double fireRate, float damage, int speed, double multAngle, boolean animated, AudioFile sound, float currentScale, float currentMult) {
         this.URL = Constants.PATH_RESOURCES_SPRITES_PROJECTILES + fileName;
+
         this.FIRERATE = fireRate;
         this.DAMAGE = damage;
         this.speed = speed;
@@ -95,7 +96,6 @@ public enum ProjectileType {
     public void incCurrentSpeed(float speed) {
         this.speed += speed;
     }
-
 
     public AudioFile getSound() {
         return SOUND;

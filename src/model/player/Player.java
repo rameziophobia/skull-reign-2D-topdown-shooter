@@ -7,17 +7,15 @@ import javafx.util.Duration;
 import model.Entity;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
-import model.walls.Wall;
+import model.wall.Wall;
 import view.GameViewManager;
-import view.InputManager;
+import controller.InputManager;
 import view.LevelManager;
 import view.game.stats.StatBar;
 
 import static java.lang.Math.atan2;
 
 public class Player extends Entity {
-
-
     private static int currentScore = 0;
     private static final float MAX_SPEED = 8;
     private static float SPEED = 6;
@@ -226,7 +224,6 @@ public class Player extends Entity {
 
     public static void increaseCurrentScore(int amount) {
         currentScore += amount;
-        System.out.println(currentScore);
         GameViewManager.updateLabel();
     }
 

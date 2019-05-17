@@ -28,7 +28,7 @@ public class JsonParser {//todo generic
         try {
             byte[] bytes = Files.readAllBytes(FILE_SETTINGS_AUDIO);
             fileData = new String(bytes);
-        }catch (NoSuchFileException e){
+        } catch (NoSuchFileException e) {
             System.out.println("Json Parser file not found");
         } catch (IOException e) {
             e.printStackTrace();
@@ -42,7 +42,7 @@ public class JsonParser {//todo generic
             Files.write(FILE_SETTINGS_AUDIO, gson.toJson(audioSettings).getBytes());
         } catch (IOException e) {
             e.printStackTrace();
-            return false; // todo use for notifying for errors in saving
+            return false;
         }
         return true;
     }

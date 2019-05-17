@@ -1,20 +1,34 @@
 package model.enemies;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import model.Entity;
 import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
+import view.GameViewManager;
 import view.LevelManager;
 
 import java.util.Random;
 
-import static view.GameViewManager.*;
-
 public class Enemy extends Entity {
+    private static final Duration FLOATING_SCORE_TRANSLATE_DURATION = Duration.millis(1500);
+    private static final Duration FLOATING_SCORE_FADE_DURATION = Duration.millis(1250);
+    private static final Font FLOATING_SCORE_FONT = Font.font("Arial", FontWeight.BOLD, 35);
+    private static final double FLOATING_SCORE_TRANSLATE_Y_BY = -65.0;
     private final double MAX_HP;
     private final Text damageTxt = new Text("");
+    private final Label lbl_floatingScore;
+    private final TranslateTransition lblmover;
+    private final ParallelTransition floatingScoreTransition;
 
     private EnemyType enemyType;
     private double angle;
@@ -57,9 +71,23 @@ public class Enemy extends Entity {
         hp = MAX_HP;
 
         Random rand = new Random();
-        setLayoutY(height + rand.nextInt(HEIGHT - 2 * height - 10));
-        setLayoutX(width + rand.nextInt(WIDTH - 2 * width - 10));
+        setLayoutY(height + rand.nextInt(GameViewManager.HEIGHT - 2 * height - 10));
+        setLayoutX(width + rand.nextInt(GameViewManager.WIDTH - 2 * width - 10));
         enemyProjectileControl = new EnemyProjectileControl(projectileType);
+
+        lbl_floatingScore = new Label("");
+        lbl_floatingScore.setFont(FLOATING_SCORE_FONT);
+        lbl_floatingScore.setTextFill(Color.GHOSTWHITE);
+
+        final FadeTransition lblfader = new FadeTransition(FLOATING_SCORE_FADE_DURATION);
+        lblfader.setToValue(0);
+        lblfader.setFromValue(1);
+
+        lblmover = new TranslateTransition(FLOATING_SCORE_TRANSLATE_DURATION);
+        lblmover.setByY(FLOATING_SCORE_TRANSLATE_Y_BY);
+
+        floatingScoreTransition = new ParallelTransition(lbl_floatingScore, lblfader, lblmover);
+        floatingScoreTransition.setOnFinished(e -> GameViewManager.getMainPane().removeFromUIPane(lbl_floatingScore));
     }
 
     public EnemyProjectileControl getEnemyProjectileControl() {
@@ -78,14 +106,14 @@ public class Enemy extends Entity {
 
     private void calculateDistance() {
         farFromPlayer = Math.hypot(
-                getLayoutX() - getPlayer().getLayoutX(),
-                getLayoutY() - getPlayer().getLayoutY())
+                getLayoutX() - GameViewManager.getPlayer().getLayoutX(),
+                getLayoutY() - GameViewManager.getPlayer().getLayoutY())
                 > minDistance;
     }
 
     private void updateAngle() {
-        angle = Math.toDegrees(Math.atan2(getPlayer().getLayoutY() - getLayoutY(),
-                getPlayer().getLayoutX() - getLayoutX()));
+        angle = Math.toDegrees(Math.atan2(GameViewManager.getPlayer().getLayoutY() - getLayoutY(),
+                GameViewManager.getPlayer().getLayoutX() - getLayoutX()));
     }
 
     public void setMoveMode(MoveMode mode) {
@@ -128,17 +156,32 @@ public class Enemy extends Entity {
         double nextX = getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED();
         double nextY = getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED();
 
-        if (nextX + 15 + width < WIDTH && nextX > 15) {
+        if (nextX + 15 + width < GameViewManager.WIDTH && nextX > 15) {
             setLayoutX(nextX);
         } else {
             randomSign *= -1;
         }
-        if (nextY + 15 + height < HEIGHT && nextY > 15) {
+        if (nextY + 15 + height < GameViewManager.HEIGHT && nextY > 15) {
             setLayoutY(nextY);
         } else {
             randomSign *= -1;
         }
 
+    }
+
+    private void checkAlive() {
+        if (hp <= 0 || !LevelManager.isSpawnable()) {
+            if (hp <= 0) {
+                Player.increaseCurrentScore(this.getScoreValue());
+                lbl_floatingScore.setText("+" + this.getScoreValue());
+                lbl_floatingScore.setLayoutX(this.getLayoutX());
+                lblmover.setFromY(this.getLayoutY());
+                GameViewManager.getMainPane().addToUIPane(lbl_floatingScore);
+                floatingScoreTransition.play();
+            }
+            GameViewManager.getMainPane().removeFromGamePane(this);
+            LevelManager.removeEnemy(this);
+        }
     }
 
     @Override
@@ -150,16 +193,10 @@ public class Enemy extends Entity {
 
         enemyProjectileControl.update(angle, getSpawner());
 
-        if (hp <= 0 || !LevelManager.isSpawnable()) {
-            removeGameObjectFromScene(this);
-            LevelManager.removeEnemy(this);
-            if (hp <= 0)
-                Player.increaseCurrentScore(this.getScoreValue());
-        }
+        checkAlive();
     }
 
     public int getScoreValue() {
         return enemyType.getScore();
     }
-
 }
