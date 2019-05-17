@@ -18,6 +18,7 @@ import model.enemies.Enemy;
 import model.player.Player;
 import model.player.PlayerType;
 import model.ui.game.ScoreLabel;
+import model.ui.game.levelUI;
 import model.wall.Wall;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
@@ -180,12 +181,6 @@ public class GameViewManager {
         InputManager.setPlayer(player);
         InputManager.setKeyListener(gameScene);
         InputManager.setMouseListeners(mainPane);
-
-        MapLoader mapLoader = new MapLoader(Map.BASE);
-        mapLoader.getBackNodes().forEach(mainPane::addToBackPane);
-        mapLoader.getWallNodes().forEach(mainPane::addToGamePane);
-        levelManager.getWallArrayList().addAll(mapLoader.getWallNodes());
-        mapLoader.getFrontNodes().forEach(mainPane::addToFrontPane);
     }
 
     private void gameUpdate() {

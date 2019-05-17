@@ -1,5 +1,7 @@
 package controller;
 
+import controller.map.Map;
+import controller.map.MapLoader;
 import model.enemies.Enemy;
 import model.enemies.EnemyType;
 import model.level.Level;
@@ -22,6 +24,8 @@ public class LevelManager {
     private int currentWaveIndex;
     private int currentEnemyIndex;
     private long nextEnemySpawnTime;
+    private Level currentLevel;
+    private ArrayList<SpawnPoint> currentSpawnPoints;
 
     public LevelManager() {
         enemyArrayList = new ArrayList<>();
@@ -59,18 +63,7 @@ public class LevelManager {
                         )
                 },
                 10000,
-                new Wall[]{
-//                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT / 4),
-//                        new Wall(GameViewManager.WIDTH * 3 / 4, GameViewManager.HEIGHT / 4),
-//                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT * 3 / 4),
-//                        new Wall(GameViewManager.WIDTH * 3 / 4, GameViewManager.HEIGHT * 3 / 4)
-                },
-                new SpawnPoint[]{
-                        new SpawnPoint(200, GameViewManager.CENTER_Y),
-                        new SpawnPoint(GameViewManager.CENTER_X, GameViewManager.CENTER_Y),
-                        new SpawnPoint(GameViewManager.CENTER_X, 200),
-                        new SpawnPoint(200, 200)
-                }
+                new MapLoader(Map.LEVEL_01)
         );
 
         levels[1] = new Level(
@@ -103,15 +96,7 @@ public class LevelManager {
                         )
                 },
                 10000,
-                new Wall[]{
-//                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT / 4),
-//                        new Wall(GameViewManager.WIDTH * 3 / 4, GameViewManager.HEIGHT / 4),
-//                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT * 3 / 4),
-                },
-                new SpawnPoint[]{
-                        new SpawnPoint(200, GameViewManager.CENTER_Y),
-                        new SpawnPoint(GameViewManager.CENTER_X, GameViewManager.CENTER_Y),
-                }
+                new MapLoader(Map.LEVEL_02)
         );
 
         loadLevel();
@@ -131,15 +116,15 @@ public class LevelManager {
                 && enemyArrayList.size() == 0) {
             if (currentWaveIndex + 1 == levels[currentLevelIndex].getWaves().length) {
                 if (currentLevelIndex + 1 < levels.length) {
-                    System.out.println("lvl Increased " + currentLevelIndex);
+//                    System.out.println("lvl Increased " + currentLevelIndex);
+//                    System.out.println("Wave reset " + currentWaveIndex);
                     currentLevelIndex++;
-                    System.out.println("Wave reset " + currentWaveIndex);
                     currentWaveIndex = 0;
                     currentEnemyIndex = 0;
                     loadLevel();
                 }
             } else {
-                System.out.println("Wave Increased " + currentWaveIndex);
+//                System.out.println("Wave Increased " + currentWaveIndex);
                 currentWaveIndex++;
                 currentEnemyIndex = 0;
             }
@@ -153,37 +138,43 @@ public class LevelManager {
         player.setLayoutX(GameViewManager.CENTER_X);
         player.setLayoutY(GameViewManager.CENTER_Y);
 
-        if (currentLevelIndex != 0)//todo -.-
-            for (SpawnPoint spawnPoint : levels[currentLevelIndex - 1].getSpawnPoints()) {
-                GameViewManager.getMainPane().removeFromGamePane(spawnPoint);
-            }
-        for (SpawnPoint spawnPoint : levels[currentLevelIndex].getSpawnPoints()) {
-            GameViewManager.getMainPane().addToGamePane(spawnPoint);
-            spawnPoint.setActive(true);//todo temp
+
+        if (currentLevelIndex != 0) {//todo -.-
+            final MapLoader mapLoader = levels[currentLevelIndex - 1].getMapLoader();
+            GameViewManager.getMainPane().removeAllFromFrontPane(mapLoader.getFrontNodes());
+            GameViewManager.getMainPane().removeAllFromBackPane(mapLoader.getBackNodes());
+
+            System.out.println(mapLoader.getBackNodes().size());
+
+            mapLoader.getWallNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
+            wallArrayList.removeAll(mapLoader.getWallNodes());
+            mapLoader.getSpawnPointsNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
         }
 
-        if (currentLevelIndex != 0)//todo -.-
-            for (Wall wall : levels[currentLevelIndex - 1].getWalls()) {
-                wallArrayList.remove(wall);
-                GameViewManager.getMainPane().removeFromGamePane(wall);
-            }
-        for (Wall wall : levels[currentLevelIndex].getWalls()) {
-            wallArrayList.add(wall);
-            GameViewManager.getMainPane().addToGamePane(wall);
-        }
+        currentLevel = levels[currentLevelIndex];
+        final MapLoader mapLoader = currentLevel.getMapLoader();
+        GameViewManager.getMainPane().addAllToFrontPane(mapLoader.getFrontNodes());
+        GameViewManager.getMainPane().addAllToBackPane(mapLoader.getBackNodes());
+
+        mapLoader.getWallNodes().forEach(node -> GameViewManager.getMainPane().addToGamePane(node));
+        wallArrayList.addAll(mapLoader.getWallNodes());
+        currentSpawnPoints = mapLoader.getSpawnPointsNodes();
+        currentSpawnPoints.forEach(node -> {
+            GameViewManager.getMainPane().addToGamePane(node);
+            node.setActive(true);
+        });
     }
 
     private void createEnemies() {
         if (nextEnemySpawnTime < System.currentTimeMillis()) {
-            final Wave wave = levels[currentLevelIndex].getWaves()[currentWaveIndex];// todo cache
-            final SpawnPoint[] spawnPoints = levels[currentLevelIndex].getSpawnPoints();
+            final Wave wave = currentLevel.getWaves()[currentWaveIndex];// todo cache
 
             nextEnemySpawnTime = System.currentTimeMillis() + wave.getTimeBetweenSpawns();
-            for (SpawnPoint spawnPoint : spawnPoints) {
+            for (SpawnPoint spawnPoint : currentSpawnPoints) {
                 if (currentEnemyIndex < wave.getEnemies().length) {
                     spawnPoint.setSpawning(true);
 
-                    System.out.println("Spawning Enemy " + currentEnemyIndex);
+//                    System.out.println("Spawning Enemy " + currentEnemyIndex);
                     final Enemy enemy = wave.getEnemies()[currentEnemyIndex++];
                     enemy.setLayoutX(spawnPoint.getSpawnPointX());
                     enemy.setLayoutY(spawnPoint.getSpawnPointY());

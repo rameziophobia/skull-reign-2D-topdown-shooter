@@ -3,7 +3,9 @@ package controller.map;
 import view.Main;
 
 public enum Map {
-    BASE("Map.png");
+    BASE("Map.png"),
+    LEVEL_01("Level_01.png"),
+    LEVEL_02("Level_02.png");
 
     private String path;
 

@@ -2,6 +2,7 @@ package model.spawner;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import controller.map.MapKey;
 import controller.map.MapLoader;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
@@ -24,7 +25,7 @@ public class SpawnPoint extends GameObject {
     private boolean spawning;
     private final AnimationClip spawningAnimation;
 
-    public SpawnPoint(int x, int y) {
+    public SpawnPoint(double x, double y) {
         super(new Image(Main.PATH_RESOURCES_SPRITES + "pent/Pent_IDLE-16x16.png",
                 MapLoader.BLOCK_SIZE, MapLoader.BLOCK_SIZE, true, false));
 
@@ -55,11 +56,11 @@ public class SpawnPoint extends GameObject {
     }
 
     public double getSpawnPointX() {
-        return this.getLayoutX() + 16;//todo magic
+        return this.getLayoutX() + MapLoader.BLOCK_SIZE/4;
     }
 
     public double getSpawnPointY() {
-        return this.getLayoutY() + 16;//todo magic
+        return this.getLayoutY() + MapLoader.BLOCK_SIZE/4;
     }
 
     public boolean isActive() {

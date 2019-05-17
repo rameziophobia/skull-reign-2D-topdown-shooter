@@ -1,19 +1,16 @@
 package model.level;
 
-import model.spawner.SpawnPoint;
-import model.wall.Wall;
+import controller.map.MapLoader;
 
 public class Level {
     private Wave[] waves;
     private int timeBetweenWaves;
-    private Wall[] walls;
-    private SpawnPoint[] spawnPoints;
+    private MapLoader mapLoader;
 
-    public Level(Wave[] waves, int timeBetweenWaves, Wall[] walls, SpawnPoint[] spawnPoints) {
+    public Level(Wave[] waves, int timeBetweenWaves, MapLoader mapLoader) {
         this.waves = waves;
         this.timeBetweenWaves = timeBetweenWaves;
-        this.walls = walls;
-        this.spawnPoints = spawnPoints;
+        this.mapLoader = mapLoader;
     }
 
     public Wave[] getWaves() {
@@ -24,11 +21,7 @@ public class Level {
         return timeBetweenWaves;
     }
 
-    public Wall[] getWalls() {
-        return walls;
-    }
-
-    public SpawnPoint[] getSpawnPoints() {
-        return spawnPoints;
+    public MapLoader getMapLoader() {
+        return mapLoader;
     }
 }

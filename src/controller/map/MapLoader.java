@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.shape.Rectangle;
+import model.spawner.SpawnPoint;
 import model.wall.Wall;
 import view.GameViewManager;
 import view.Main;
@@ -29,6 +30,7 @@ public class MapLoader {
     };
 
     private final ArrayList<Node> backNodes;
+    private final ArrayList<SpawnPoint> spawnPointsNodes;
     private final ArrayList<Wall> wallNodes;
     private final ArrayList<Node> frontNodes;
     private final int[][] aiGrid;
@@ -37,6 +39,7 @@ public class MapLoader {
     public MapLoader(Map map) {
         backNodes = new ArrayList<>();
         wallNodes = new ArrayList<>();
+        spawnPointsNodes = new ArrayList<>();
         frontNodes = new ArrayList<>();
         aiGrid = new int[MAP_BLOCKS_HEIGHT][MAP_BLOCKS_WIDTH];
         random = new Random();
@@ -46,6 +49,8 @@ public class MapLoader {
             for (int j = 0; j < MAP_BLOCKS_WIDTH; j++) {
                 aiGrid[i][j] = 0;
                 switch (MapKey.getMapKeyFrom(pixelReader.getColor(j, i))) {
+                    case EMPTY:
+                        continue;
                     case FLAG:
                         addWallTiles("Flag_Red.png", j, i);
                         break;
@@ -109,21 +114,29 @@ public class MapLoader {
                     case SKULL:
                         addTile("Skull.png", j, i);
                         break;
+                    case SPAWNER:
+                        spawnPointsNodes.add(new SpawnPoint(getX(j), getY(i)));
                     case GROUND:
                         final Rectangle rectangle = new Rectangle(BLOCK_SIZE, BLOCK_SIZE, MapKey.GROUND.getColor());
                         rectangle.setStroke(MapKey.GROUND.getColor());
                         rectangle.setStrokeWidth(5);
-                        rectangle.setLayoutX(STARTING_X + j * BLOCK_SIZE);
-                        rectangle.setLayoutY(STARTING_Y + i * BLOCK_SIZE);
+                        rectangle.setLayoutX(getX(j));
+                        rectangle.setLayoutY(getY(i));
                         backNodes.add(rectangle);
                         break;
-                    case EMPTY:
-                        continue;
                     default:
                         throw new NullPointerException();
                 }
             }
         }
+    }
+
+    private double getY(int i) {
+        return STARTING_Y + i * BLOCK_SIZE;
+    }
+
+    private double getX(int j) {
+        return STARTING_X + j * BLOCK_SIZE;
     }
 
     private void addWallTiles(String wallFileName, int j, int i) {
@@ -139,8 +152,8 @@ public class MapLoader {
     private void addWall(String wallFileName, int j, int i, boolean reverse) {
         Wall wall = new Wall(new Image(PATH_RESOURCES_SPRITES_MAP + wallFileName,
                 BLOCK_SIZE, BLOCK_SIZE, true, false));
-        wall.setLayoutX(STARTING_X + j * BLOCK_SIZE);
-        wall.setLayoutY(STARTING_Y + i * BLOCK_SIZE);
+        wall.setLayoutX(getX(j));
+        wall.setLayoutY(getY(i));
         if (reverse)
             wall.setScaleX(-1);
         wallNodes.add(wall);
@@ -159,8 +172,8 @@ public class MapLoader {
     private void addTile(String fileName, int j, int i, boolean reverse, boolean front) {
         ImageView imageView = new ImageView(new Image(PATH_RESOURCES_SPRITES_MAP + fileName,
                 BLOCK_SIZE, BLOCK_SIZE, true, false));
-        imageView.setLayoutX(STARTING_X + j * BLOCK_SIZE);
-        imageView.setLayoutY(STARTING_Y + i * BLOCK_SIZE);
+        imageView.setLayoutX(getX(j));
+        imageView.setLayoutY(getY(i));
         if (reverse)
             imageView.setScaleX(-1);
         if (front) {
@@ -180,6 +193,10 @@ public class MapLoader {
 
     public ArrayList<Node> getFrontNodes() {
         return frontNodes;
+    }
+
+    public ArrayList<SpawnPoint> getSpawnPointsNodes() {
+        return spawnPointsNodes;
     }
 
     public int[][] getAiGrid() {
