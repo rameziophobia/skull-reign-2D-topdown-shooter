@@ -8,8 +8,8 @@ public enum EnemyType {
     TANK_RED(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_red-38x38.png", 2, 80, 5, false),
     TANK_BLUE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_blue-42x42.png", 2, 80, 5, false),
     TANK_HUGE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_huge-62x60.png", 0.7f, 80, 5, false),
-    MAGE1(Constants.PATH_RESOURCES_SPRITES_ENEMY + "mage-1-85x94.png", 1.2f, 10000, 5000, true),
-    MAGE2(Constants.PATH_RESOURCES_SPRITES_ENEMY + "mage-2-122x110.png", 1.3f, 30000, 15000, true),
+    MAGE1(Constants.PATH_RESOURCES_SPRITES_ENEMY + "mage-1-85x94.png", 1.2f, 20000, 5000, true),
+    MAGE2(Constants.PATH_RESOURCES_SPRITES_ENEMY + "mage-2-122x110.png", 1.3f, 40000, 15000, true),
     MAGE3(Constants.PATH_RESOURCES_SPRITES_ENEMY + "mage-3-87x110.png", 1.4f, 80000, 50000, true),
     TANK_DARK_LARGE(Constants.PATH_RESOURCES_SPRITES_ENEMY + "tank_darkLarge-52x51.png", 0.5f, 200, 5,false);
 
