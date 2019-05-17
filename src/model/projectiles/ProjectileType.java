@@ -3,10 +3,8 @@ package model.projectiles;
 import view.Main;
 
 public enum ProjectileType {
-    BULLET(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "bullet-13x3.png",
-            15, 1, 10, 3, false,1,1),
-    FIRE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fire-32x12.png",
-            1, 35, 6, 3, false,1,1),
+    BULLET(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "bullet-13x3.png", 15, 1, 10, 3, false,1,1),
+    FIRE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fire-32x12.png", 1, 35, 6, 3, false,1,1),
     REDLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserRed01-9x54.png", 1, 15, 9, 3, false,1,1),
     GREENLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserGreen01-9x54.png", 3, 15, 15, 3, false,1,1),
     BLUELASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserBlue01-9x54.png", 3, 15, 15, 3, false,1,1),
@@ -28,6 +26,8 @@ public enum ProjectileType {
     ICEICLE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "icicle-right-animated-64x11.png", 1.5, 50, 6, 5, true,1,1),
     ELECTRIC(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "electric-animated-63x83.png", 2, 40, 7, 10, true,1,1),
     CAT(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "black-cat-animated-32x26.png", 1.3, 40, 5, 10, true,1,1),
+    KNIFE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "spr_spell_knife-42x32.png", 2, 30, 8, 5, false,1,1),
+    SKULL(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fire-skull-96x112.png", 1.3, 100, 8, 10, true,1,1),
     WHIRLWIND(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "whirlwind-animated-16x19.png", 2, 40, 7, 5, true,1,1);
 
 

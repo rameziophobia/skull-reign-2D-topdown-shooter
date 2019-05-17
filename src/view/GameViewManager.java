@@ -36,7 +36,7 @@ public class GameViewManager {
         gamePane = new AnchorPane();
         gameScene = new Scene(gamePane, WIDTH, HEIGHT);
         gameStage.setScene(gameScene);
-        gameStage.setFullScreen(true);
+        gameStage.setFullScreen(false);
 
         GameUI.createBackground(gamePane);
         GameUI.setCrosshair(gamePane);

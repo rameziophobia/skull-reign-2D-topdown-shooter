@@ -1,12 +1,14 @@
 package model.projectiles;
 
+import javafx.animation.PathTransition;
 import javafx.geometry.Point2D;
+import javafx.util.Duration;
 import view.GameViewManager;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static view.GameViewManager.addGameObjectTOScene;
+import static view.GameViewManager.*;
 
 public class EnemyProjectileControl {
 
@@ -18,25 +20,26 @@ public class EnemyProjectileControl {
 
     private float ringAngle;
     private float ringAngle1by1;
-    private boolean ringFollowPlayer;
     private double bossRingAngle;
     private boolean boss;
-    private long nextchange;
+    private int missileSpeed;
 
     public enum PatternRate {
-        RING(0), RING1BY1(1), toPlayer(2);
+        RING(0), RING1BY1(1), toPlayer(2), MISSILE(3), SHOWER(4);
 
         int index;
 
         PatternRate(int i) {
             index = i;
         }
+
         public int getIndex() {
             return index;
         }
 
 
     }
+
     private final ProjectileType type;
     private long[] lastFireTime;
 
@@ -49,40 +52,72 @@ public class EnemyProjectileControl {
         }
     }
 
-    public void setPatternRate(PatternRate pattern, long rate){
+    public void setPatternRate(PatternRate pattern, long rate) {
         patternRate[pattern.getIndex()] = rate;
     }
 
-    public void addRing1by1(long rate, float ringAngle1by1){
-        setPatternRate(PatternRate.RING1BY1,rate);
-        this.ringAngle1by1 =  ringAngle1by1;
+    public void addMissiles(long rate, int speed) {
+        setPatternRate(PatternRate.MISSILE, rate);
+        this.missileSpeed = speed;
+        System.out.println(PatternRate.MISSILE.getIndex() + " " + patternRate[3]);
+
     }
 
-    public void addSpawnToPlayer(long rate){
-        setPatternRate(PatternRate.toPlayer,rate);
+    public void addRing1by1(long rate, float ringAngle1by1) {
+        setPatternRate(PatternRate.RING1BY1, rate);
+        this.ringAngle1by1 = ringAngle1by1;
+    }
+
+    public void addSpawnToPlayer(long rate) {
+        setPatternRate(PatternRate.toPlayer, rate);
+    }
+
+    private void spawnMissile() {
+        int i = PatternRate.MISSILE.getIndex();
+        final long timeNow = System.currentTimeMillis();
+        if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
+            Random random = new Random();
+            double angle = random.nextInt(360);
+            Projectile projectile = new Projectile(spawner, type, angle, true);
+            int x = random.nextInt(WIDTH  - projectile.getWidth());
+            int y = random.nextInt(HEIGHT  - projectile.getHeight());
+            if(random.nextBoolean()){
+                x = 0;
+            }else {
+                y = 0;
+            }
+            projectile.spawnProjectile(new Point2D(x, y), angle);
+            System.out.println(angle);
+            if(angle < 90 && angle > -90){
+                projectile.setScaleX(-1);
+//                projectile.setRotate(ang);
+            }else{
+                projectile.setScaleX(1);
+
+            }
+            GameViewManager.addTOScene(projectile);
+            lastFireTime[i] = timeNow;
+        }
     }
 
     public void addSpawnRingBoss(long rate, float ringAngle) {
         addSpawnRing(rate, ringAngle);
-        this.ringFollowPlayer = false;
         this.boss = true;
     }
 
-    public void addSpawnRing(long rate, float ringAngle){
-        setPatternRate(PatternRate.RING,rate);
-        this.ringAngle =  ringAngle;
-        ringFollowPlayer = true;
+    public void addSpawnRing(long rate, float ringAngle) {
+        setPatternRate(PatternRate.RING, rate);
+        this.ringAngle = ringAngle;
     }
 
     public void spawnRing() {
         int i = PatternRate.RING.getIndex();
         final long timeNow = System.currentTimeMillis();
         ArrayList<Projectile> projArrTest = new ArrayList<>();
-        long t1 = 2;
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
             final double ang = boss ? bossRingAngle : angle;
             int changeDir = (timeNow % 20000 > 8000) ? -1 : 1;
-            bossRingAngle += 0.4 * changeDir;
+            bossRingAngle += 0.4 * changeDir * patternRate[i] / 25;
             for (int j = (int) ang; j < 360 + (int) ang; j += ringAngle) {
                 Projectile projectile = new Projectile(spawner, type, j, true);
                 projArrTest.add(projectile);
@@ -123,6 +158,7 @@ public class EnemyProjectileControl {
         spawnRing();
         spawnRing1by1();
         spawnToPlayer();
+        spawnMissile();
     }
 
     public void setSpawner(Point2D spawner) {

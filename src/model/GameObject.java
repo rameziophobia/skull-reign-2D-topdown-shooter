@@ -48,5 +48,13 @@ public abstract class GameObject extends ImageView {
         return getBoundsInParent().intersects(s.getBoundsInParent());
     }//todo: ((Path)Shape.intersect(bullet, target)).getElements().size() > 0 better implementation??
 
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
     public abstract void update();
 }

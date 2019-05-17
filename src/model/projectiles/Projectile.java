@@ -47,7 +47,7 @@ public class Projectile extends GameObject {
         spawnProjectile(spawnPoint, angle);
     }
 
-    private void spawnProjectile(Point2D spawnPoint, double angle) {
+    public void spawnProjectile(Point2D spawnPoint, double angle) {
         setLayoutX(spawnPoint.getX());
         setLayoutY(spawnPoint.getY());
         Rotate rotate = new Rotate(angle, 0, 0);
