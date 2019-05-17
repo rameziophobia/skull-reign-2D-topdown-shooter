@@ -133,7 +133,7 @@ public class LevelManager {
         if (currentEnemyIndex == levels[currentLevelIndex].getWaves()[currentWaveIndex].getEnemies().length
                 && enemyArrayList.size() == 0) {
             if (currentWaveIndex + 1 == levels[currentLevelIndex].getWaves().length) {
-                if (currentLevelIndex+1 < levels.length) {
+                if (currentLevelIndex + 1 < levels.length) {
                     System.out.println("lvl Increased " + currentLevelIndex);
                     currentLevelIndex++;
                     System.out.println("Wave reset " + currentWaveIndex);
