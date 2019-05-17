@@ -50,29 +50,43 @@ public class PowerUp extends GameObject {
 
         if (isIntersects(getPlayer())) {
             Player.setSPEED(powerUpType.getSpeed());
-            getPlayer().getSecondaryBtnHandler().setPowerUp(powerUpType, powerUpType.getScale());
+
+            final PlayerProjectileControl BtnHandler =
+                    (animated) ?
+                            getPlayer().getSecondaryBtnHandler() :
+                            getPlayer().getPrimaryBtnHandler();
+
+            BtnHandler.setPowerUp(powerUpType, powerUpType.getScale());
             if (powerUpType.getProjectileType() != null) {
-                getPlayer().getSecondaryBtnHandler().addType(powerUpType.getProjectileType());
+                BtnHandler.addType(powerUpType.getProjectileType());
             }
             removeGameObjectFromScene(this);
         }
-
     }
 
+    //todo: will we use these methods?
     public static void disableSpeed() {
         Player.setSPEED(0);
     }
 
-    public static void disableScale() {
-        getPlayer().getSecondaryBtnHandler().setPowerUp(PowerUpType.SCALE, 0f);
+    public static void disableScale(boolean primary) {
+        setPowerUp(primary, PowerUpType.SCALE);
     }
 
-    public static void disableMult() {
-        getPlayer().getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 0f);
+    public static void disableMult(boolean primary) {
+        setPowerUp(primary, PowerUpType.MULT);
     }
 
-    public static void disableSpeedProjectile() {
-        getPlayer().getSecondaryBtnHandler().setPowerUp(PowerUpType.SPEEDPROJECTILE, 0f);
+    public static void disableSpeedProjectile(boolean primary) {
+        setPowerUp(primary, PowerUpType.SPEEDPROJECTILE);
+    }
+
+    private static void setPowerUp(boolean primary, PowerUpType scale) {
+        if (primary) {
+            getPlayer().getPrimaryBtnHandler().setPowerUp(scale, 0f);
+        } else {
+            getPlayer().getSecondaryBtnHandler().setPowerUp(scale, 0f);
+        }
     }
 
     @Override

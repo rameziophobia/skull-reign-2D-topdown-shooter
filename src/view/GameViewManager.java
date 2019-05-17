@@ -1,6 +1,7 @@
 package view;
 
 import javafx.animation.AnimationTimer;
+import javafx.collections.ObservableList;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.geometry.Insets;
@@ -19,11 +20,13 @@ import javafx.util.Duration;
 import model.GameObject;
 import model.player.Player;
 import model.player.PlayerType;
+import model.ui.game.ScoreLabel;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
 import java.awt.*;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 
@@ -38,8 +41,6 @@ public class GameViewManager {
     private static Stage gameStage = new Stage();
     private static Player player;
     private static Label lbl_currentScore;
-    private static Label lbl_floatingScore;
-    private static FadeTransition lblfader;
     private GameViewUI GVUI;
     private static AnimationTimer gameLoop;
 
@@ -76,11 +77,32 @@ public class GameViewManager {
         return player;
     }
 
+    public static void removeFromScene(Node node) {
+        gamePane.getChildren().remove(node);
+    }
+
+    /**
+     * @param gameObject to be removed
+     *
+     * @deprecated use {@link #removeFromScene(Node)}instead.
+     */
+    @Deprecated
     public static void removeGameObjectFromScene(GameObject gameObject) {
         gamePane.getChildren().remove(gameObject);
     }
 
+    /**
+     * @param node
+     *
+     * @deprecated use {@link #addTOScene(Node)}instead.
+     */
+    @Deprecated
     public static void addGameObjectTOScene(Node node) {
+        gamePane.getChildren().add(node);
+        node.toBack();
+    }
+
+    public static void addTOScene(Node node) {
         gamePane.getChildren().add(node);
         node.toBack();
     }
@@ -129,43 +151,12 @@ public class GameViewManager {
     }
 
     public void createScoreLabel() {
-        lbl_currentScore = new Label("CURRENT SCORE: 0");
-        lbl_currentScore.setPrefWidth(GameViewManager.WIDTH);
-        lbl_currentScore.setPadding(new Insets(10,0,0,0));
-        lbl_currentScore.setAlignment(Pos.BOTTOM_CENTER);
-        lbl_currentScore.setTextAlignment(TextAlignment.CENTER);
-        lbl_currentScore.setTextFill(Color.GHOSTWHITE);
-        lbl_currentScore.setFont(Main.FutureThinFont);
-        lbl_currentScore.setStyle("-fx-stroke: firebrick;-fx-stroke-width: 12px;");
+        lbl_currentScore = new ScoreLabel(); //todo move to GameUI
         addGameObjectTOScene(lbl_currentScore);
-
-        lbl_floatingScore = new Label("");
-        lbl_floatingScore.setFont(Font.font("Arial", FontWeight.BOLD, 35));
-        lbl_floatingScore.setTextFill(Color.GHOSTWHITE);
-        lblfader = new FadeTransition();
-        lbl_floatingScore.setLayoutX(player.getLayoutX());
-        addGameObjectTOScene(lbl_floatingScore);
     }
 
-    public static void updateLabel(int amount,double X,double Y) {
+    public static void updateLabel(int amount) {
         lbl_currentScore.setText("CURRENT SCORE: " + player.getCurrentScore());
-        lbl_floatingScore.setText("+"+amount);
-        playFloatingLabelAnimation(X,Y);
-
-    }
-    public static void playFloatingLabelAnimation(double X,double Y) {
-        lblfader.setToValue(0);
-        lblfader.setFromValue(1);
-        lblfader.setDuration(Duration.millis(1250));
-        TranslateTransition lblmover = new TranslateTransition();
-        lblmover.setDuration(Duration.millis(1500));
-        lbl_floatingScore.setLayoutX(X);
-        lblmover.setFromY(Y);
-        lblmover.setByY(-65.0);
-        lblfader.setNode(lbl_floatingScore);
-        lblmover.setNode(lbl_floatingScore);
-        lblfader.play();
-        lblmover.play();
     }
 
     public static void endGameSequence() {
@@ -205,10 +196,11 @@ public class GameViewManager {
         LevelManager.createObstacles();
         LevelManager.createPowerUp();
 
+        Object[] ob = gamePane.getChildren().toArray();
+        for (Object node : ob) {
+            if(node instanceof GameObject)
+                ((GameObject) node).update();
+        }
 
-        List<GameObject> gameObjects = gamePane.getChildren().stream().filter(n -> (n instanceof GameObject)).map(n ->
-                (GameObject) n
-        ).collect(Collectors.toList());
-        gameObjects.forEach(GameObject::update);
     }
 }
