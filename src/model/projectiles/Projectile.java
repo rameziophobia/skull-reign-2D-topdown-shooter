@@ -7,11 +7,8 @@ import javafx.scene.Node;
 import javafx.scene.transform.Rotate;
 import model.GameObject;
 import model.enemies.Enemy;
-import model.walls.Wall;
+import model.wall.Wall;
 import view.GameViewManager;
-
-import static view.GameViewManager.getPlayer;
-import static view.GameViewManager.removeGameObjectFromScene;
 
 public class Projectile extends GameObject {
 
@@ -75,15 +72,15 @@ public class Projectile extends GameObject {
 
     private void checkCollision_entity() {
         if (enemyProjectile) {
-            if (isIntersects(getPlayer())) {
-                getPlayer().takeDmg(projectileType.getDAMAGE());
-                removeGameObjectFromScene(this);
+            if (isIntersects(GameViewManager.getPlayer())) {
+                GameViewManager.getPlayer().takeDmg(projectileType.getDAMAGE());
+                GameViewManager.getMainPane().removeFromGamePane(this);
             }
         } else {
             for (Enemy enemy : GameViewManager.getInstance().getEnemyArrayList()) {
                 if (isIntersects(enemy)) {
                     enemy.takeDmg(getDamage());
-                    GameViewManager.removeGameObjectFromScene(this);
+                    GameViewManager.getMainPane().removeFromGamePane(this);
                 }
             }
         }
@@ -92,18 +89,17 @@ public class Projectile extends GameObject {
     private void checkCollision_border() {
         if ((getLayoutY() > GameViewManager.HEIGHT || getLayoutY() < 0)
                 && (getLayoutX() > GameViewManager.WIDTH || getLayoutX() < 0)) {
-            GameViewManager.removeFromScene(this);
+            GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
-    private void checkCollision_wall(){
-        for(Wall wall: GameViewManager.getInstance().getWallArrayList()){
-            if(isIntersects(wall)){
-                GameViewManager.removeFromScene(this);
+
+    private void checkCollision_wall() {
+        for (Wall wall: GameViewManager.getInstance().getWallArrayList()) {
+            if (isIntersects(wall)) {
+                GameViewManager.getMainPane().removeFromGamePane(this);
             }
         }
     }
-
-
 
     @Override
     public void update() {

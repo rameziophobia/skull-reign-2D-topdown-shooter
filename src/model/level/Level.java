@@ -1,7 +1,7 @@
 package model.level;
 
 import model.spawner.SpawnPoint;
-import model.walls.Wall;
+import model.wall.Wall;
 
 public class Level {
     private Wave[] waves;

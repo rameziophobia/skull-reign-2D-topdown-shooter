@@ -7,7 +7,7 @@ import model.level.Wave;
 import model.player.Player;
 import model.projectiles.ProjectileType;
 import model.spawner.SpawnPoint;
-import model.walls.Wall;
+import model.wall.Wall;
 import view.GameViewManager;
 
 import java.util.ArrayList;
@@ -63,10 +63,10 @@ public class LevelManager {
                 },
                 10000,
                 new Wall[]{
-                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT / 4),
-                        new Wall(GameViewManager.WIDTH * 3 / 4, GameViewManager.HEIGHT / 4),
-                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT * 3 / 4),
-                        new Wall(GameViewManager.WIDTH * 3 / 4, GameViewManager.HEIGHT * 3 / 4)
+//                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT / 4),
+//                        new Wall(GameViewManager.WIDTH * 3 / 4, GameViewManager.HEIGHT / 4),
+//                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT * 3 / 4),
+//                        new Wall(GameViewManager.WIDTH * 3 / 4, GameViewManager.HEIGHT * 3 / 4)
                 },
                 new SpawnPoint[]{
                         new SpawnPoint(200, GameViewManager.CENTER_Y),
@@ -107,9 +107,9 @@ public class LevelManager {
                 },
                 10000,
                 new Wall[]{
-                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT / 4),
-                        new Wall(GameViewManager.WIDTH * 3 / 4, GameViewManager.HEIGHT / 4),
-                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT * 3 / 4),
+//                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT / 4),
+//                        new Wall(GameViewManager.WIDTH * 3 / 4, GameViewManager.HEIGHT / 4),
+//                        new Wall(GameViewManager.WIDTH / 4, GameViewManager.HEIGHT * 3 / 4),
                 },
                 new SpawnPoint[]{
                         new SpawnPoint(200, GameViewManager.CENTER_Y),
@@ -121,7 +121,7 @@ public class LevelManager {
     }
 
     public void addEnemy(Enemy enemy) {
-        GameViewManager.addToScene(enemy);
+        GameViewManager.getMainPane().addToGamePane(enemy);
         enemyArrayList.add(enemy);
     }
 
@@ -158,21 +158,21 @@ public class LevelManager {
 
         if (currentLevelIndex != 0)//todo -.-
             for (SpawnPoint spawnPoint : levels[currentLevelIndex - 1].getSpawnPoints()) {
-                GameViewManager.removeFromScene(spawnPoint);
+                GameViewManager.getMainPane().removeFromGamePane(spawnPoint);
             }
         for (SpawnPoint spawnPoint : levels[currentLevelIndex].getSpawnPoints()) {
-            GameViewManager.addToScene(spawnPoint);
+            GameViewManager.getMainPane().addToGamePane(spawnPoint);
             spawnPoint.setActive(true);//todo temp
         }
 
         if (currentLevelIndex != 0)//todo -.-
             for (Wall wall : levels[currentLevelIndex - 1].getWalls()) {
                 wallArrayList.remove(wall);
-                GameViewManager.removeFromScene(wall);
+                GameViewManager.getMainPane().removeFromGamePane(wall);
             }
         for (Wall wall : levels[currentLevelIndex].getWalls()) {
             wallArrayList.add(wall);
-            GameViewManager.addToScene(wall);
+            GameViewManager.getMainPane().addToGamePane(wall);
         }
     }
 

@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import static view.GameViewManager.getPlayer;
 import static view.game.ProjectileUI.setWeapon;
 
-
 public class PlayerProjectileControl {
 
     private long lastFireTime;
@@ -53,7 +52,7 @@ public class PlayerProjectileControl {
 
         this.type = projectile;
         this.projectileBtn = projectileBtn;
-        MAX_SPEED = (int)(this.type.getSPEED() *1.5);
+        MAX_SPEED = (int) (this.type.getSPEED() * 1.5);
         powerUp = new HashMap<>();
 
         rangeEnable = false;
@@ -81,11 +80,11 @@ public class PlayerProjectileControl {
     }
 
     public void mouseEvents() {
-        GameViewManager.getGamePane().addEventFilter(MouseEvent.ANY, this::detectBtnType);
-        GameViewManager.getGamePane().addEventFilter(TouchEvent.ANY, e -> fireProjectile());
+        GameViewManager.getMainPane().addEventFilter(MouseEvent.ANY, this::detectBtnType);
+        GameViewManager.getMainPane().addEventFilter(TouchEvent.ANY, e -> fireProjectile());
 
-        GameViewManager.getGamePane().addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed = true);
-        GameViewManager.getGamePane().addEventFilter(MouseEvent.MOUSE_RELEASED, e -> mousePressed = false);
+        GameViewManager.getMainPane().addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed = true);
+        GameViewManager.getMainPane().addEventFilter(MouseEvent.MOUSE_RELEASED, e -> mousePressed = false);
 
     }
 
@@ -95,12 +94,11 @@ public class PlayerProjectileControl {
         fireProjectile();
     }
 
-    protected HashMap getWeaponSettings(){
+    protected HashMap getWeaponSettings() {
         return weaponSettings;
     }
 
     private void detectBtnType(MouseEvent e) {
-
         if (e.isPrimaryButtonDown()) {
             lastPressed = buttons.PRIMARY;
         } else if (e.isSecondaryButtonDown()) {
@@ -109,7 +107,6 @@ public class PlayerProjectileControl {
     }
 
     private void createProjectile() {
-
         if (System.currentTimeMillis() > (lastFireTime + 1000 / type.getFIRERATE())) {
             for (int mult = 0; mult < powerUp.get(PowerUpType.MULT); mult++) {
 
@@ -124,7 +121,7 @@ public class PlayerProjectileControl {
                 lastFireLocationX = getPlayer().getLayoutX();
                 lastFireLocationY = getPlayer().getLayoutY();
                 lastFireTime = System.currentTimeMillis();
-                GameViewManager.addGameObjectTOScene(projectile);
+                GameViewManager.getMainPane().addToGamePane(projectile);
                 projectile.toBack();
             }
         }
@@ -136,7 +133,7 @@ public class PlayerProjectileControl {
     }
 
     public void addType(ProjectileType type) {
-        if (this.type != type){
+        if (this.type != type) {
             this.type = type;
             weaponSettings.putIfAbsent(type, initializePowerUp());
             this.powerUp = weaponSettings.get(type);
@@ -146,33 +143,31 @@ public class PlayerProjectileControl {
                 weaponList.add(type);
             }
         }
-
     }
 
-    public void setToNextType(boolean special) {
-        weaponList.indexOf(type);
-        ProjectileType nextType = weaponList.get((weaponList.indexOf(type) + 1) % weaponList.size());
-        powerUp = weaponSettings.get(nextType);
-        type = nextType;
+    public void setToNextType() {
+        if (weaponList.size() > 1) {
+            weaponList.indexOf(type);
+            ProjectileType nextType = weaponList.get((weaponList.indexOf(type) + 1) % weaponList.size());
+            powerUp = weaponSettings.get(nextType);
+            type = nextType;
 
-        setWeapon(type); 
+            setWeapon(type);
+        }
     }
 
     public void setPowerUp(PowerUpType key, Float value) {
-        if (value == 0){
+        if (value == 0) {
             powerUp.put(key, 1f);
-        }
-        else if(key==PowerUpType.MULT && type.getCurrentMult() < MAX_MULT ){
+        } else if (key == PowerUpType.MULT && type.getCurrentMult() < MAX_MULT) {
             type.incCurrentMult(value);
             powerUp.put(key, type.getCurrentMult());
-        }
-        else if(key == PowerUpType.SCALE && type.getCurrentScale() <= MAX_SCALE){
+        } else if (key == PowerUpType.SCALE && type.getCurrentScale() <= MAX_SCALE) {
             type.incCurrentScale(value);
             powerUp.put(key, type.getCurrentScale());
-        }
-        else if(key == PowerUpType.SPEEDPROJECTILE && type.getSPEED() <= MAX_SPEED){
+        } else if (key == PowerUpType.SPEEDPROJECTILE && type.getSPEED() <= MAX_SPEED) {
             type.incCurrentSpeed(value);
-            powerUp.put(key, (float)type.getSPEED());
+            powerUp.put(key, (float) type.getSPEED());
         }
 
     }

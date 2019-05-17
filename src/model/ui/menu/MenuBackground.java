@@ -105,11 +105,11 @@ public class MenuBackground extends Pane {
         img_doorOpen.setOpacity(0);
     }
 
-    public void startPulse(){
+    public void startPulse() {
         fadeTransition.play();
     }
 
-    public void pausePulse(){
+    public void pausePulse() {
         fadeTransition.pause();
     }
 }

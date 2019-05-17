@@ -14,10 +14,13 @@ public abstract class GameObject extends ImageView {
     public GameObject(String url) {
         this(new Image(url));
     }
-    public GameObject(Image image){
+
+    public GameObject(Image image) {
         super(image);
-        height = getImageWidth(image.impl_getUrl());
-        width = getImageHeight(image.impl_getUrl());
+        if (image.impl_getUrl().contains("-")) {
+            height = getImageWidth(image.impl_getUrl());
+            width = getImageHeight(image.impl_getUrl());
+        }
         animated = isAnimated(image.impl_getUrl());
     }
 
@@ -42,12 +45,8 @@ public abstract class GameObject extends ImageView {
     }
 
     public boolean isIntersects(GameObject s) {
-//        return getBounds().intersects(s.getBounds().getX(),
-//                s.getBounds().getY(),
-//                s.getBounds().getWidth(),
-//                s.getBounds().getHeight());
         return getBoundsInParent().intersects(s.getBoundsInParent());
-    }//todo: ((Path)Shape.intersect(bullet, target)).getElements().size() > 0 better implementation??
+    }
 
     public abstract void update();
     public abstract Node[] getChildren();
