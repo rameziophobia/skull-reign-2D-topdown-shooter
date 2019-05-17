@@ -1,25 +1,28 @@
 package model.enemies;
 
+import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
+import org.omg.PortableServer.POA;
 import view.GameViewManager;
 import view.game.stats.HealthBars;
 import view.game.stats.StatBar;
+import javafx.scene.shape.Rectangle;
 
 import static view.GameViewManager.*;
 
 public class Boss extends Enemy {
 
     private final stageEnum stage;
-    //    private final StackPane HPStack;
     private final static int hitScore = 1;
     private EnemyProjectileControl bossProjectileControl1;
     private EnemyProjectileControl bossProjectileControl2;
     private EnemyProjectileControl bossProjectileControl3;
-    private StatBar HPRectangle;
+    private StatBar HPRectangleBoss;
+    private StackPane HPStack;
 
     public enum stageEnum {
         STAGE1(90),
@@ -52,20 +55,22 @@ public class Boss extends Enemy {
         setLayoutY((HEIGHT >> 1) - (height >> 1));
         setLayoutX((WIDTH >> 1) - (width >> 1));
 
-//        HPStack = new HealthBars().getStackPane(1600,20,Color.VIOLET,false,MAX_HP);
-////        HPRectangle =  GVUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.BOSS);
-//        GameViewManager.addTOScene(HPStack);
-//        HPStack.setLayoutX(150);
-//        HPStack.setLayoutY(1000);
+        createHPBar();
+
+        HPStack.setLayoutY(900);
+        HPStack.setPrefWidth(WIDTH);
+        HPStack.setAlignment(Pos.CENTER);
+        GameViewManager.addTOScene(HPStack);
+
     }
 
 
     @Override
     public void takeDmg(double dmg) {
         Player.increaseCurrentScore(hitScore);
-        //        HPRectangle.decreaseCurrent(dmg);
-//        barScaleAnimator(HPRectangle, MAX_HP);
-//        hp = HPRectangle.getCurrentValue();
+        HPRectangleBoss.decreaseCurrent(dmg);
+        HPRectangleBoss.barScaleAnimator(MAX_HP);
+        hp = HPRectangleBoss.getCurrentValue();
     }
 
     @Override
@@ -74,4 +79,14 @@ public class Boss extends Enemy {
         bossProjectileControl2.update(angle, getSpawner());
         bossProjectileControl3.update(angle, getSpawner());
     }
+
+   private void createHPBar(){
+        HPStack = new StackPane();
+        HPRectangleBoss = new StatBar(20, 9*WIDTH/10, Color.PURPLE,false,MAX_HP );
+        Rectangle limitRec = new Rectangle(9*WIDTH/10,20,Color.TRANSPARENT);
+        limitRec.setStrokeWidth(2);
+        limitRec.setStroke(Color.PURPLE);
+
+        HPStack.getChildren().addAll(limitRec,HPRectangleBoss);
+   }
 }

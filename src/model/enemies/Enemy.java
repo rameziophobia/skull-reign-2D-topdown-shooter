@@ -113,6 +113,7 @@ public class Enemy extends Entity {
 
     @Override
     public void takeDmg(double dmg) {
+
         this.hp -= dmg;
     }
 

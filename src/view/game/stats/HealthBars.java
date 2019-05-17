@@ -17,9 +17,9 @@ public class HealthBars extends VBox {
     private static final Color HP_COLOR = Color.DARKRED;
     private static final Color SHIELD_COLOR = Color.LIGHTBLUE;
 
-    private ArrayList<StatBar> statRectangles = new ArrayList<>(); //0 for HP, 1 for Shield, 2 for boss
+    private ArrayList<StatBar> statRectangles = new ArrayList<>(); //0 for HP, 1 for Shield
 
-    public enum Bars {HP, SHIELD, BOSS}
+    public enum Bars {HP, SHIELD}
 
     public HealthBars() {
         VBox HPVBox = new VBox();
@@ -56,8 +56,6 @@ public class HealthBars extends VBox {
                 return statRectangles.get(0);
             case SHIELD:
                 return statRectangles.get(1);
-            case BOSS:
-                return statRectangles.get(2);
         }
         return null;
     }

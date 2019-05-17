@@ -123,8 +123,8 @@ public class GameViewManager {
 
     private void createPlayer(PlayerType chosenPlayer, String playerName) {
         player = new Player(chosenPlayer,
-                GVUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.HP),
-                GVUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.SHIELD));
+                GameViewUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.HP),
+                GameViewUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.SHIELD));
         player.setName(playerName);
         addGameObjectTOScene(player);
         player.toBack();

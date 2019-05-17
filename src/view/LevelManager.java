@@ -8,6 +8,7 @@ import model.projectiles.PowerUp;
 import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
 import model.walls.Wall;
+import view.game.stats.HealthBars;
 
 import java.util.ArrayList;
 

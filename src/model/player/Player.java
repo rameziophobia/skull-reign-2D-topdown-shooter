@@ -12,7 +12,6 @@ import view.LevelManager;
 import view.game.stats.StatBar;
 
 import static java.lang.Math.atan2;
-import static view.game.stats.StatBar.barScaleAnimator;
 
 public class Player extends Entity {
 
@@ -142,11 +141,11 @@ public class Player extends Entity {
     public void takeDmg(double dmg) {
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
-            barScaleAnimator(ShieldRectangle, MAX_HP);
+            ShieldRectangle.barScaleAnimator( MAX_HP);
             currentShield = ShieldRectangle.getCurrentValue();
         } else {
             HPRectangle.decreaseCurrent(dmg);
-            barScaleAnimator(HPRectangle, MAX_SHIELD);
+            HPRectangle.barScaleAnimator( MAX_SHIELD);
             currentHp = HPRectangle.getCurrentValue();
         }
         if (currentHp <= 0)
@@ -156,12 +155,12 @@ public class Player extends Entity {
     @Override
     public void heal(float amount) {
         HPRectangle.increaseCurrent(amount);
-        barScaleAnimator(HPRectangle,MAX_HP);
+        HPRectangle.barScaleAnimator(MAX_HP);
     }
 
     public void shieldRegen() {
         ShieldRectangle.regeneration();
-        barScaleAnimator(ShieldRectangle, MAX_SHIELD);
+        ShieldRectangle.barScaleAnimator( MAX_SHIELD);
     }
 
     public PlayerProjectileControl getPrimaryBtnHandler() {
