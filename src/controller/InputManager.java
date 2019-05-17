@@ -1,4 +1,4 @@
-package view;
+package controller;
 
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -125,6 +125,9 @@ public class InputManager {//todo temp static ?
                     player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);//todo Magic Number
                     break;
                 }
+                case X:
+                    player.killPlayer();
+                    break;
             }
         });
 

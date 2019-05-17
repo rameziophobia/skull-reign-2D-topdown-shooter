@@ -1,5 +1,6 @@
 package view;
 
+import controller.InputManager;
 import controller.map.Map;
 import controller.map.MapLoader;
 import javafx.animation.AnimationTimer;
