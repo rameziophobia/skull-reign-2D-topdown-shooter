@@ -9,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Entity;
 import model.player.Player;
@@ -26,7 +25,6 @@ public class Enemy extends Entity {
     private static final Font FLOATING_SCORE_FONT = Font.font("Arial", FontWeight.BOLD, 35);
     private static final double FLOATING_SCORE_TRANSLATE_Y_BY = -65.0;
     protected final double MAX_HP;
-    private final Text damageTxt = new Text("");
     private final Label lbl_floatingScore;
     private final TranslateTransition lblmover;
     private final ParallelTransition floatingScoreTransition;
@@ -47,24 +45,28 @@ public class Enemy extends Entity {
     private long nextMove;
     private boolean farFromPlayer;
     private short randomSign;
+    protected boolean boss;
 
     public enum MoveMode {stationary, followPlayer, random, circular}
 
-    public Enemy(EnemyType enemyType, ProjectileType projectileType, MoveMode mode, double minDistance, long move_interval_ms) {
-        this(enemyType, projectileType, mode, minDistance);
+    public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode, double minDistance, long move_interval_ms) {
+        this(enemyType,projectileType,projectileControlType, mode, minDistance);
         this.moveInterval = move_interval_ms;
         this.intervalExists = true;
     }
 
-    public Enemy(EnemyType enemyType, ProjectileType projectileType, MoveMode mode, double minDistance) {
-        this(enemyType, projectileType, mode);
+    public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode, double minDistance) {
+        this(enemyType, projectileType, projectileControlType, mode);
         this.minDistance = minDistance;
     }
 
-    public Enemy(EnemyType enemyType, ProjectileType projectileType, MoveMode mode) {
+    public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode) {
         this(enemyType);
         this.mode = mode;
-        enemyProjectileControl = new EnemyProjectileControl(projectileType);
+        this.enemyProjectileControl = new EnemyProjectileControl(projectileType);
+        enemyProjectileControl.addSpawnRing(projectileControlType.getPulseRate(),projectileControlType.getPulseAngle());
+        enemyProjectileControl.addSpawnToPlayer(projectileControlType.getToPlayerRate());
+        enemyProjectileControl.addRing1by1(projectileControlType.getRing1by1Rate(),projectileControlType.getRing1by1Angle());
     }
 
     public Enemy(EnemyType enemyType) {
@@ -183,31 +185,33 @@ public class Enemy extends Entity {
 
     }
 
-    private void checkAlive() {
-        if (hp <= 0 || !LevelManager.isSpawnable()) {
-            if (hp <= 0) {
-                Player.increaseCurrentScore(this.getScoreValue());
-                lbl_floatingScore.setText("+" + this.getScoreValue());
-                lbl_floatingScore.setLayoutX(this.getLayoutX());
-                lblmover.setFromY(this.getLayoutY());
-                GameViewManager.getMainPane().addToUIPane(lbl_floatingScore);
-                floatingScoreTransition.play();
-            }
+    protected void checkAlive() {
+        if (hp <= 0) {
+            showFloatingScore();
+            Player.increaseCurrentScore(this.getScoreValue());
             GameViewManager.getMainPane().removeFromGamePane(this);
             LevelManager.removeEnemy(this);
         }
+    }
+
+
+    protected void showFloatingScore() {
+        lbl_floatingScore.setText("+" + this.getScoreValue());
+        lbl_floatingScore.setLayoutX(this.getLayoutX());
+        lblmover.setFromY(this.getLayoutY());
+        GameViewManager.getMainPane().addToUIPane(lbl_floatingScore);
+        floatingScoreTransition.play();
     }
 
     @Override
     public void update() {
         updateAngle();
         calculateDistance();
-//        setRotate(angle);
-//        move();
-
-        if (enemyProjectileControl != null)
+        if(!boss){
+            setRotate(angle);
+            move();
             enemyProjectileControl.update(angle, getSpawner());
-
+        }
         checkAlive();
         if (animated) {
             animationClip.animate();

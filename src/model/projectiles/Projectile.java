@@ -6,12 +6,14 @@ import javafx.geometry.Point2D;
 import javafx.scene.transform.Rotate;
 import model.GameObject;
 import model.enemies.Enemy;
+import model.player.Player;
 import model.wall.Wall;
 import view.GameViewManager;
 import view.LevelManager;
 
 public class Projectile extends GameObject {
 
+    private boolean skull;
     private ProjectileType projectileType;
     private double angle;
     private double scale = 1.0;
@@ -20,6 +22,11 @@ public class Projectile extends GameObject {
     private static final float playerSpeedMultiplier = 1.4f;
 
     private float speed;
+
+    Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile, boolean skull) {
+        this(spawnPoint, projectileType, angle, enemyProjectile);
+        this.skull = true;
+    }
 
     Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile) {
         super(projectileType.getURL());
@@ -95,7 +102,7 @@ public class Projectile extends GameObject {
 
     private void checkCollision_wall() {
         for (Wall wall : LevelManager.getWallArrayList()) {
-            if (isIntersects(wall)) {
+            if (isIntersects(wall) && !skull) {
                 GameViewManager.getMainPane().removeFromGamePane(this);
             }
         }

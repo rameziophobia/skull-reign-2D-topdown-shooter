@@ -1,13 +1,13 @@
 package model.projectiles;
 
-import javafx.animation.PathTransition;
+import controller.map.MapLoader;
 import javafx.geometry.Point2D;
-import javafx.util.Duration;
 import view.GameViewManager;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+import static controller.map.MapLoader.*;
 import static view.GameViewManager.*;
 
 public class EnemyProjectileControl {
@@ -27,15 +27,15 @@ public class EnemyProjectileControl {
     private long[] lastFireTime;
 
     public enum PatternRate {
-        RING(0), RING1BY1(1), toPlayer(2), MISSILE(3), KNIVES(4), SHOWER_HORIZ(4), SHOWER_VERT(5);
+        PULSE(0), RING1BY1(1), toPlayer(2), MISSILE(3), KNIVES(4), SHOWER_HORIZ(4), SHOWER_VERT(5);
 
         int index;
-
 
 
         PatternRate(int i) {
             index = i;
         }
+
         public int getIndex() {
             return index;
         }
@@ -95,23 +95,38 @@ public class EnemyProjectileControl {
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
             Random random = new Random();
             double angle = random.nextInt(360);
-            Projectile projectile = new Projectile(spawner, type, angle, true);
-            int x = random.nextInt(WIDTH - projectile.getWidth());
-            int y = random.nextInt(HEIGHT - projectile.getHeight());
-            if (random.nextBoolean()) {
-                x = 0;
-            } else {
-                y = 0;
-            }
-            projectile.spawnProjectile(new Point2D(x, y), angle);
-            if (angle < 90 && angle > -90) {
-                projectile.setScaleX(-1);
-            } else {
-                projectile.setScaleX(1);
+            Projectile projectile = new Projectile(spawner, type, angle, true, true);
 
+            int x = 50 + random.nextInt(WIDTH - 100);
+            int y = 50 + random.nextInt(HEIGHT - 100);
+
+            if (random.nextBoolean()) {
+                if (random.nextBoolean()) {
+                    x = 20;
+                    angle = 90 - random.nextInt(180);
+                } else {
+                    x = WIDTH - 50;
+                    angle = 90 + random.nextInt(180);
+                }
+            } else {
+                if (random.nextBoolean()) {
+                    y = 20;
+                    angle = random.nextInt(180);
+                } else {
+                    y = HEIGHT - 50;
+                    angle = -1 * random.nextInt(180);
+                }
+                System.out.println(x + " " + y);
+                projectile.spawnProjectile(new Point2D(x, y), angle);
+                if (angle < 90 && angle > -90) {
+                    projectile.setScaleX(-1);
+                } else {
+                    projectile.setScaleX(1);
+
+                }
+                GameViewManager.getMainPane().addToGamePane(projectile);
+                lastFireTime[i] = timeNow;
             }
-            GameViewManager.getMainPane().addToGamePane(projectile);
-            lastFireTime[i] = timeNow;
         }
     }
 
@@ -121,12 +136,12 @@ public class EnemyProjectileControl {
     }
 
     public void addSpawnRing(long rate, float ringAngle) {
-        setPatternRate(PatternRate.RING, rate);
+        setPatternRate(PatternRate.PULSE, rate);
         this.ringAngle = ringAngle;
     }
 
-    public void spawnRing() {
-        int i = PatternRate.RING.getIndex();
+    public void spawnPulse() {
+        int i = PatternRate.PULSE.getIndex();
         final long timeNow = System.currentTimeMillis();
         ArrayList<Projectile> projArrTest = new ArrayList<>();
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
@@ -144,7 +159,7 @@ public class EnemyProjectileControl {
     }
 
     public void spawnKnives() {
-        int i = PatternRate.RING.getIndex();
+        int i = PatternRate.PULSE.getIndex();
         final long timeNow = System.currentTimeMillis();
         ArrayList<Projectile> projArrTest = new ArrayList<>();
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
@@ -188,7 +203,7 @@ public class EnemyProjectileControl {
         this.angle = angle;
         setSpawner(enemyLocation);
 
-        spawnRing();
+        spawnPulse();
         spawnRing1by1();
         spawnToPlayer();
         spawnMissile();

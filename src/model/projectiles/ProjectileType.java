@@ -3,7 +3,7 @@ package model.projectiles;
 import view.Main;
 
 public enum ProjectileType {
-    BULLET(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "bullet-13x3.png", 15, 1, 10, 3, false,1,1),
+    BULLET(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "bullet-13x3.png", 15, 1000, 10, 3, false,1,1),
     FIRE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fire-32x12.png", 1, 35, 6, 3, false,1,1),
     REDLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserRed01-9x54.png", 1, 15, 9, 3, false,1,1),
     GREENLASER01(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "laserGreen01-9x54.png", 3, 15, 15, 3, false,1,1),
