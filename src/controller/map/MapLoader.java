@@ -10,6 +10,7 @@ import view.GameViewManager;
 import view.Main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class MapLoader {
@@ -31,17 +32,20 @@ public class MapLoader {
     private final ArrayList<Node> backNodes;
     private final ArrayList<Wall> wallNodes;
     private final ArrayList<Node> frontNodes;
+    private final int[][] aiGrid;
     private final Random random;
 
     public MapLoader(Map map) {
         backNodes = new ArrayList<>();
         wallNodes = new ArrayList<>();
         frontNodes = new ArrayList<>();
+        aiGrid = new int[MAP_BLOCKS_HEIGHT][MAP_BLOCKS_WIDTH];
         random = new Random();
 
         final PixelReader pixelReader = new Image(map.getPath()).getPixelReader();
         for (int i = 0; i < MAP_BLOCKS_HEIGHT; i++) {
             for (int j = 0; j < MAP_BLOCKS_WIDTH; j++) {
+                aiGrid[i][j] = 0;
                 switch (MapKey.getMapKeyFrom(pixelReader.getColor(j, i))) {
                     case FLAG:
                         addWallTiles("Flag_Red.png", j, i);
@@ -141,6 +145,8 @@ public class MapLoader {
         if (reverse)
             wall.setScaleX(-1);
         wallNodes.add(wall);
+
+        aiGrid[i][j] = 1;
     }
 
     private String getRandWallGround() {
@@ -175,5 +181,9 @@ public class MapLoader {
 
     public ArrayList<Node> getFrontNodes() {
         return frontNodes;
+    }
+
+    public int[][] getAiGrid() {
+        return aiGrid;
     }
 }
