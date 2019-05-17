@@ -9,6 +9,7 @@ import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
 import model.walls.Wall;
 import view.game.stats.HealthBars;
+import model.wall.Wall;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,7 @@ public class LevelManager {//todo temp static
             enemyArrayList.add(boss);
             GameViewManager.addGameObjectTOScene(boss);
             enemyArrayList.add(enemy);
-            GameViewManager.addGameObjectTOScene(enemy);
+            GameViewManager.getMainPane().addToGamePane(enemy);
         }
     }
 
@@ -58,21 +59,23 @@ public class LevelManager {//todo temp static
         if (nextObstaclesSpawnTime < System.currentTimeMillis() && isSpawnable()) {
             nextObstaclesSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_OBSTACLES);
 
-            GameViewManager.addGameObjectTOScene(new Obstacle());
+            GameViewManager.getMainPane().addToGamePane(new Obstacle(1));
         }
     }
+
     public static void createPowerUp() {//todo implement timer
         if (nextPowerUpSpawnTime < System.currentTimeMillis()) {
             nextPowerUpSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_POWERUPS);
             PowerUp powerUp;
             powerUp = new PowerUp(PowerUpType.getRandomPowerUpType());
-            GameViewManager.addGameObjectTOScene(powerUp);
+            GameViewManager.getMainPane().addToGamePane(powerUp);
         }
     }
+
     public static void createWall() {
-        Wall rectangle = new Wall(1200, 200);
-        wallArrayList.add(rectangle);
-        GameViewManager.addGameObjectTOScene(rectangle);
+//        Wall rectangle = new Wall(1200, 200);
+//        wallArrayList.add(rectangle);
+//        GameViewManager.addGameObjectTOScene(rectangle);
     }
 
     public static void removeEnemy(Enemy enemy) {

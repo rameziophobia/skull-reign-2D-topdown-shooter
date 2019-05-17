@@ -40,10 +40,7 @@ public enum ProjectileType {
     private float currentMult;
     private float currentScale;
 
-
-
-
-    ProjectileType(String type, double fireRate, float damage, int speed, double multAngle, boolean animated,float currentScale, float currentMult) {
+    ProjectileType(String type, double fireRate, float damage, int speed, double multAngle, boolean animated, float currentScale, float currentMult) {
         this.URL = type;
         this.FIRERATE = fireRate;
         this.DAMAGE = damage;
@@ -73,24 +70,30 @@ public enum ProjectileType {
     public double getMULTANGLE() {
         return MULTANGLE;
     }
+
     public float getCurrentMult() {
         return currentMult;
     }
+
     public float getCurrentScale() {
         return currentScale;
     }
+
     public boolean isANIMATED() {
         return ANIMATED;
     }
-    public void incCurrentMult(float mult){
-        this.currentMult+=mult;
-    }
-    public void incCurrentScale(float scale){
-        this.currentScale+=scale;
-    }public void incCurrentSpeed(float speed){
-        this.speed += speed;
+
+    public void incCurrentMult(float mult) {
+        this.currentMult += mult;
     }
 
+    public void incCurrentScale(float scale) {
+        this.currentScale += scale;
+    }
+
+    public void incCurrentSpeed(float speed) {
+        this.speed += speed;
+    }
 
     private static class Constants {
         private static final String PATH_RESOURCES_SPRITES_PROJECTILES = Main.PATH_RESOURCES_SPRITES + "projectiles/";

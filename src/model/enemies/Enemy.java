@@ -20,8 +20,6 @@ import view.LevelManager;
 
 import java.util.Random;
 
-import static view.GameViewManager.*;
-
 public class Enemy extends Entity {
     private static final Duration FLOATING_SCORE_TRANSLATE_DURATION = Duration.millis(1500);
     private static final Duration FLOATING_SCORE_FADE_DURATION = Duration.millis(1250);
@@ -78,8 +76,9 @@ public class Enemy extends Entity {
         hp = MAX_HP;
 
         Random rand = new Random();
-        setLayoutY(height + rand.nextInt(HEIGHT - 2 * height - 10));
-        setLayoutX(width + rand.nextInt(WIDTH - 2 * width - 10));
+        setLayoutY(height + rand.nextInt(GameViewManager.HEIGHT - 2 * height - 10));
+        setLayoutX(width + rand.nextInt(GameViewManager.WIDTH - 2 * width - 10));
+        enemyProjectileControl = new EnemyProjectileControl(projectileType);
 
         lbl_floatingScore = new Label("");
         lbl_floatingScore.setFont(FLOATING_SCORE_FONT);
@@ -93,7 +92,7 @@ public class Enemy extends Entity {
         lblmover.setByY(FLOATING_SCORE_TRANSLATE_Y_BY);
 
         floatingScoreTransition = new ParallelTransition(lbl_floatingScore, lblfader, lblmover);
-        floatingScoreTransition.setOnFinished(e -> GameViewManager.removeFromScene(lbl_floatingScore));
+        floatingScoreTransition.setOnFinished(e -> GameViewManager.getMainPane().removeFromUIPane(lbl_floatingScore));
 
         if (enemyType.isANIMATED()) {
             this.animated = true;
@@ -124,13 +123,13 @@ public class Enemy extends Entity {
 
     private void calculateDistance() {
         farFromPlayer = Math.hypot(
-                getLayoutX() - getPlayer().getLayoutX(),
-                getLayoutY() - getPlayer().getLayoutY())
+                getLayoutX() - GameViewManager.getPlayer().getLayoutX(),
+                getLayoutY() - GameViewManager.getPlayer().getLayoutY())
                 > minDistance;
     }
     private void updateAngle() {
-        angle = Math.toDegrees(Math.atan2(getPlayer().getLayoutY() - getLayoutY(),
-                getPlayer().getLayoutX() - getLayoutX()));
+        angle = Math.toDegrees(Math.atan2(GameViewManager.getPlayer().getLayoutY() - getLayoutY(),
+                GameViewManager.getPlayer().getLayoutX() - getLayoutX()));
     }
 
     public void setMoveMode(MoveMode mode) {
@@ -172,12 +171,12 @@ public class Enemy extends Entity {
         double nextX = getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED();
         double nextY = getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED();
 
-        if (nextX + 15 + width < WIDTH && nextX > 15) {
+        if (nextX + 15 + width < GameViewManager.WIDTH && nextX > 15) {
             setLayoutX(nextX);
         } else {
             randomSign *= -1;
         }
-        if (nextY + 15 + height < HEIGHT && nextY > 15) {
+        if (nextY + 15 + height < GameViewManager.HEIGHT && nextY > 15) {
             setLayoutY(nextY);
         } else {
             randomSign *= -1;
@@ -192,10 +191,10 @@ public class Enemy extends Entity {
                 lbl_floatingScore.setText("+" + this.getScoreValue());
                 lbl_floatingScore.setLayoutX(this.getLayoutX());
                 lblmover.setFromY(this.getLayoutY());
-                GameViewManager.addTOScene(lbl_floatingScore);
+                GameViewManager.getMainPane().addToUIPane(lbl_floatingScore);
                 floatingScoreTransition.play();
             }
-            removeFromScene(this);
+            GameViewManager.getMainPane().removeFromGamePane(this);
             LevelManager.removeEnemy(this);
         }
     }
@@ -216,9 +215,7 @@ public class Enemy extends Entity {
         }
     }
 
-
     public int getScoreValue() {
         return enemyType.getScore();
     }
-
 }

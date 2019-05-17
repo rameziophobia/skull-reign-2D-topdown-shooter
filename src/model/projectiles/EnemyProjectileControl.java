@@ -11,7 +11,6 @@ import java.util.Random;
 import static view.GameViewManager.*;
 
 public class EnemyProjectileControl {
-
     private Point2D spawner;
 
     final int CONTROLS_NUM = 10;
@@ -139,7 +138,7 @@ public class EnemyProjectileControl {
                 projArrTest.add(projectile);
             }
             lastFireTime[i] = timeNow;
-            projArrTest.forEach(GameViewManager::addGameObjectTOScene);
+            projArrTest.forEach(projectile -> GameViewManager.getMainPane().addToGamePane(projectile));
         }
 
     }
@@ -151,7 +150,7 @@ public class EnemyProjectileControl {
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
             angle1by1 += ringAngle1by1; //todo: magicNum
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1, true);
-            addGameObjectTOScene(projectile);
+            GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;
         }
     }
@@ -162,7 +161,7 @@ public class EnemyProjectileControl {
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
             Projectile projectile = new Projectile(spawner, type, angle, true);
-            addGameObjectTOScene(projectile);
+            GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;
         }
     }
