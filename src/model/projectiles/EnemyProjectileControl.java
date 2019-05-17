@@ -5,11 +5,6 @@ import view.GameViewManager;
 
 import java.util.ArrayList;
 
-import static controller.audiomanager.AudioManager.playAudio;
-import static controller.audiomanager.AudioManager.playNewAudio;
-import static view.GameViewManager.addGameObjectTOScene;
-
-
 public class EnemyProjectileControl {
     private Point2D spawner;
 

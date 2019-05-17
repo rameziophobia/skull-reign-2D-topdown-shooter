@@ -48,14 +48,11 @@ public class GameViewManager {
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(true);
 
-        GameUI.createBackground(gamePane);
-        GameUI.setCrosshair(gamePane);
-
         levelUI waveui = new levelUI("Wave",6,30);
-        waveui.addUIToGame(gamePane);
+        waveui.addUIToGame();
 
         levelUI levelui = new levelUI("Level",10,0);
-        levelui.addUIToGame(gamePane);
+        levelui.addUIToGame();
 
         setWindowScaling();
 
