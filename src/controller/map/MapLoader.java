@@ -105,6 +105,7 @@ public class MapLoader {
                         break;
                     case SKULL:
                         addTile("Skull.png", j, i);
+                        break;
                     case GROUND:
                         final Rectangle rectangle = new Rectangle(BLOCK_SIZE, BLOCK_SIZE, MapKey.GROUND.getColor());
                         rectangle.setStroke(MapKey.GROUND.getColor());

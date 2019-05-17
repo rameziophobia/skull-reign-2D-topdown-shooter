@@ -4,10 +4,12 @@ import controller.MainPane;
 import controller.map.Map;
 import controller.map.MapLoader;
 import javafx.animation.AnimationTimer;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.GameObject;
 import model.player.Player;
@@ -15,8 +17,6 @@ import model.player.PlayerType;
 import model.ui.game.ScoreLabel;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
-
-import java.awt.*;
 
 public class GameViewManager {
     public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
@@ -73,10 +73,10 @@ public class GameViewManager {
     }
 
     private void setWindowScaling() {
-        Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
+        Rectangle2D bounds = Screen.getPrimary().getBounds();
         mainPane.getTransforms().add(new Scale(
-                resolution.getWidth() / WIDTH,
-                resolution.getHeight() / HEIGHT,
+                bounds.getWidth() / WIDTH,
+                bounds.getHeight() / HEIGHT,
                 0, 0));//todo
     }
 
