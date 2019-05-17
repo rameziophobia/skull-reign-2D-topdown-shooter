@@ -6,6 +6,8 @@ import model.enemies.Enemy;
 import model.enemies.EnemyType;
 import model.level.Level;
 import model.player.Player;
+import model.projectiles.PowerUp;
+import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
 import model.spawner.SpawnPoint;
 import model.tornado.Tornado;
@@ -33,6 +35,8 @@ public class LevelManager {
     private long nextTornadoSpawnTime;
     private List<Tornado> currentTornadoList;
     private Enemy[] currentWave;
+    private int numOfPowerUps;
+    private long nextPowerUpSpawnTime;
 
     public LevelManager(CounterLabel levelLabel, CounterLabel waveLabel) {
         this.levelLabel = levelLabel;
@@ -74,6 +78,8 @@ public class LevelManager {
                 new MapLoader(Map.LEVEL_01),
                 6000,
                 5,
+                10000,
+                3,
                 10000
         );
 
@@ -100,19 +106,12 @@ public class LevelManager {
                 new MapLoader(Map.LEVEL_02),
                 6000,
                 5,
+                10000,
+                3,
                 10000
         );
 
         spawnNextLevel();
-    }
-
-    public void addEnemy(Enemy enemy) {
-        GameViewManager.getMainPane().addToGamePane(enemy);
-        enemyArrayList.add(enemy);
-    }
-
-    public void removeEnemy(Enemy enemy) {
-        enemyArrayList.remove(enemy);
     }
 
     public void update() {
@@ -127,13 +126,18 @@ public class LevelManager {
             } else {
                 waveLabel.incrementUICounterWithAnimation();
                 currentWave = currentLevel.getEnemies()[++currentWaveIndex];
-                currentTornadoList.forEach(tornado -> GameViewManager.getMainPane().removeFromGamePane(tornado));
                 currentEnemyIndex = 0;
             }
         }
 
         createEnemies();
-        createObstacles();//todo kill all tornados
+        createObstacles();
+        createPowerUp();
+    }
+
+    private void resetExtra() {
+        currentTornadoList.forEach(tornado -> GameViewManager.getMainPane().removeFromGamePane(tornado));
+        numOfPowerUps = 0;
     }
 
     private void loadLevel() {
@@ -154,7 +158,7 @@ public class LevelManager {
         wallArrayList.removeAll(mapLoader.getWallNodes());
         mapLoader.getSpawnPointsNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
 
-        currentTornadoList.forEach(tornado -> GameViewManager.getMainPane().removeFromGamePane(tornado));
+        resetExtra();
 
         levels[currentLevelIndex - 1] = null;
     }
@@ -190,14 +194,15 @@ public class LevelManager {
                     final Enemy enemy = currentWave[currentEnemyIndex++];
                     enemy.setLayoutX(spawnPoint.getSpawnPointX());
                     enemy.setLayoutY(spawnPoint.getSpawnPointY());
-                    addEnemy(enemy);
+                    GameViewManager.getMainPane().addToGamePane(enemy);
+                    enemyArrayList.add(enemy);
                 }
             }
         }
     }
 
-    public void createObstacles() {
-        if (currentTornadoList.size() < currentLevel.getNumberOfTornados())
+    private void createObstacles() {
+        if (currentTornadoList.size() < currentLevel.getNumberOfTornados()){
             if (System.currentTimeMillis() > nextTornadoSpawnTime) {
                 nextTornadoSpawnTime = System.currentTimeMillis() + currentLevel.getTimeBetweenTornado();
 
@@ -205,9 +210,17 @@ public class LevelManager {
                 currentTornadoList.add(tornado);
                 GameViewManager.getMainPane().addToGamePane(tornado);
             }
+        }
     }
 
-    public void createPowerUp() {
+    private void createPowerUp() {
+        if (numOfPowerUps < currentLevel.getNumberOfPowerups()){
+            if (System.currentTimeMillis() > nextPowerUpSpawnTime) {
+                nextPowerUpSpawnTime = System.currentTimeMillis() + currentLevel.getTimeBetweenPowerups();
+                GameViewManager.getMainPane().addToGamePane(new PowerUp(PowerUpType.getRandomPowerUpType()));
+                numOfPowerUps++;
+            }
+        }
     }
 
     public ArrayList<Enemy> getEnemyArrayList() {
@@ -220,5 +233,9 @@ public class LevelManager {
 
     public void reduceNumOfTornado(Tornado tornado) {
         currentTornadoList.remove(tornado);
+    }
+
+    public void removeEnemy(Enemy enemy) {
+        enemyArrayList.remove(enemy);
     }
 }

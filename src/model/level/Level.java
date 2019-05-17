@@ -10,14 +10,18 @@ public class Level {
     private int timeBetweenSpawns;
     private int numberOfTornados;
     private int timeBetweenTornado;
+    private int numberOfPowerups;
+    private int timeBetweenPowerups;
 
-    public Level(Enemy[][] enemies, int timeBetweenWaves, MapLoader mapLoader, int timeBetweenSpawns, int numberOfTornados, int timeBetweenTornado) {
+    public Level(Enemy[][] enemies, int timeBetweenWaves, MapLoader mapLoader, int timeBetweenSpawns, int numberOfTornados, int timeBetweenTornado, int numberOfPowerups, int timeBetweenPowerups) {
         this.enemies = enemies;
         this.timeBetweenWaves = timeBetweenWaves;
         this.mapLoader = mapLoader;
         this.timeBetweenSpawns = timeBetweenSpawns;
         this.numberOfTornados = numberOfTornados;
         this.timeBetweenTornado = timeBetweenTornado;
+        this.numberOfPowerups = numberOfPowerups;
+        this.timeBetweenPowerups = timeBetweenPowerups;
     }
 
     public Enemy[][] getEnemies() {
@@ -42,5 +46,13 @@ public class Level {
 
     public int getTimeBetweenTornado() {
         return timeBetweenTornado;
+    }
+
+    public int getNumberOfPowerups() {
+        return numberOfPowerups;
+    }
+
+    public int getTimeBetweenPowerups() {
+        return timeBetweenPowerups;
     }
 }
