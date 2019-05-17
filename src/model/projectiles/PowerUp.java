@@ -5,8 +5,8 @@ import controller.animation.SpriteSheet;
 import javafx.scene.Node;
 import model.GameObject;
 import model.player.Player;
-import view.GameViewManager;
 import model.wall.Wall;
+import view.GameViewManager;
 
 import java.util.Random;
 

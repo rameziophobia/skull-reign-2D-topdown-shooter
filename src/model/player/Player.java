@@ -1,5 +1,6 @@
 package model.player;
 
+import controller.InputManager;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
 import javafx.util.Duration;
@@ -8,7 +9,6 @@ import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
 import model.wall.Wall;
 import view.GameViewManager;
-import controller.InputManager;
 import view.game.stats.StatBar;
 
 import static java.lang.Math.atan2;

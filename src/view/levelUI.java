@@ -4,7 +4,6 @@ import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -79,9 +78,9 @@ public class levelUI {
         animatelabels(label1,label2,waveBreakSeconds);
     }
 
-    public void addUIToGame(AnchorPane gamepane) {
-        gamepane.getChildren().addAll(label1);
-        gamepane.getChildren().addAll(label2);
+    public void addUIToGame() {
+        GameViewManager.getMainPane().addToUIPane(label1);
+        GameViewManager.getMainPane().addToUIPane(label2);
     }
 }
 
