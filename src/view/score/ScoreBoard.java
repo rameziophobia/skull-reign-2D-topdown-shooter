@@ -88,10 +88,10 @@ public class ScoreBoard {
             try {
                 writer.write(entry);
                 writer.newLine();
-
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
+
             i++;
         }
         if (writer != null)
@@ -104,6 +104,9 @@ public class ScoreBoard {
 
     public void addNewScore(String Name, int highScore) {
         String scoreString = String.valueOf(highScore);
+        if (scoreString.equals(""))
+            scoreString = "No Name";
+
         while (scoreString.length() < MAX_DIGITS) {
             scoreString = '0' + scoreString;
         }
