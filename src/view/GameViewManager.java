@@ -35,7 +35,6 @@ public class GameViewManager {
     private static Label lbl_currentScore;
     private GameViewUI GVUI;
     private static AnimationTimer gameLoop;
-    private static ArrayList<Rectangle> rectangleArrayList;
 
 
     private static GameMap map;
@@ -74,7 +73,6 @@ public class GameViewManager {
     }
 
     public static void initMap() {
-        rectangleArrayList = new ArrayList<>();
 
         for (int y=0;y<map.getHeightInTiles();y++) {
             for (int x=0;x<map.getWidthInTiles();x++) {

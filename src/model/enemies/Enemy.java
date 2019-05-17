@@ -127,7 +127,7 @@ public class Enemy extends Entity{
     }
 
     private void move() {
-//        if (System.currentTimeMillis() % (moveInterval * 2) > moveInterval && farFromPlayer) {
+        if (System.currentTimeMillis() % (moveInterval * 2) > moveInterval && farFromPlayer) {
             switch (mode) {
 
                 case followPlayer: {
@@ -153,8 +153,7 @@ public class Enemy extends Entity{
                     break;
                 }
             }
-
-
+        }
     }
 
 //    private void moveImageView(double angle) {
@@ -203,22 +202,32 @@ public class Enemy extends Entity{
 //
 //
 //    }
-    private void moveImageView(double angle) {
-        double nextX = getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED();
-        double nextY = getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED();
 
-        if (nextX + 15 + width < WIDTH && nextX > 15) {
+
+
+    private void smartMove(GameMap map,AStarPathFinder finder){
+
+        map.setUnit((int)getLayoutX(),(int)getLayoutY(),5);
+        path = finder.findPath(new UnitMover(map.getUnit((int)getLayoutX(),(int)getLayoutY())),
+                (int)getLayoutX(), (int)getLayoutY(), (int)getPlayer().getLayoutX(), (int)getPlayer().getLayoutY());
+    }
+    private void moveImageView(double angle) {
+        double nextX = path.getX(1);
+        double nextY = path.getY(1);
+
+        if (nextX + 15 + width < GameViewManager.WIDTH && nextX > 15) {
             setLayoutX(nextX);
         } else {
             randomSign *= -1;
         }
-        if (nextY + 15 + height < HEIGHT && nextY > 15) {
+        if (nextY + 15 + height < GameViewManager.HEIGHT && nextY > 15) {
             setLayoutY(nextY);
         } else {
             randomSign *= -1;
         }
 
     }
+
 
     private void checkAlive() {
         if (hp <= 0 || !LevelManager.isSpawnable()) {
@@ -238,10 +247,10 @@ public class Enemy extends Entity{
     @Override
     public void update() {
         updateAngle();
-//        if(!disableRotate){
-//
-//        }
-        setRotate(angle);
+        if(!disableRotate){
+            setRotate(angle);
+        }
+        smartMove(GameViewManager.getMap(),GameViewManager.getFinder());
         calculateDistance();
         move();
 

@@ -10,12 +10,12 @@ package view.map;
  * @author Kevin Glass
  */
 public class GameMap implements TileBasedMap {
-    public static final int SIZE =56;
+    public static final int SIZE =64;
 
     /** The map width */
-    public static final int WIDTH = 1920;
+    public static final int WIDTH = 30;
     /** The map height */
-    public static final int HEIGHT = 1080;
+    public static final int HEIGHT = 17;
 
 
     /** Indicate grass terrain at a given location */
@@ -44,12 +44,6 @@ public class GameMap implements TileBasedMap {
             for(int j = 0; j < getWidthInTiles();j++){
                 if (i==0 && j == 0){
                     fillArea(j,i,SIZE*17,SIZE,WALL);
-                }
-                else if((i!=getHeightInTiles()-1) && (j==0 || j==getWidthInTiles()-1)){
-                    terrain[j][i]=1;
-                }
-                else if(i==getHeightInTiles()-1){
-                    terrain[j][i]=1;
                 }
             }
         }
