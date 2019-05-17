@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import model.GameObject;
@@ -23,6 +24,7 @@ public class GameViewManager {
     public static final int WIDTH = 1920;
 
     private static AnchorPane gamePane;
+    private Pane mainPane;
     private static GameEnd gameEnd;
     private static boolean gameEnded;
     private Scene gameScene;
@@ -34,13 +36,15 @@ public class GameViewManager {
 
     public GameViewManager() {
         gamePane = new AnchorPane();
-        gameScene = new Scene(gamePane, WIDTH, HEIGHT);
+        mainPane = new Pane();
+        mainPane.getChildren().add(gamePane);
+        gameScene = new Scene(mainPane, WIDTH, HEIGHT);
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(true);
 
         setWindowScaling();
 
-        GVUI = new GameUI(gamePane);
+        GVUI = new GameUI(mainPane);
 
         gameEnded = false;
         gameEnd = new GameEnd();

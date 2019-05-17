@@ -14,7 +14,7 @@ public class GameUI {
     private Group group = new Group();
     private HealthBars healthBars = new HealthBars();
 
-    public GameUI(AnchorPane gamePane) {
+    public GameUI(Pane gamePane) {
         createWeaponBar();
         createBackground(gamePane);
         setCrosshair(gamePane);
@@ -32,7 +32,7 @@ public class GameUI {
         return healthBars;
     }
 
-    public static void createBackground(AnchorPane gamePane) {
+    public static void createBackground(Pane gamePane) {
         gamePane.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
     }
 
