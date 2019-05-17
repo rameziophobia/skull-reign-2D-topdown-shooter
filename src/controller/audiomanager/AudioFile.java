@@ -1,5 +1,6 @@
 package controller.audiomanager;
 
+import javafx.scene.media.AudioClip;
 import view.Main;
 
 public enum AudioFile {
@@ -13,6 +14,7 @@ public enum AudioFile {
     WOOSH(Constants.FOLDER_PROJECTILE + "woosh.mp3", MixerType.SFX, 0.85),
     ELECTRIC1(Constants.FOLDER_PROJECTILE + "electric1.mp3", MixerType.SFX, 0.85),
     BUTTON_CLICK(Constants.FOLDER_MENU  + "tap-crisp.aif", MixerType.SFX, 0.7, 1),
+    MENU_MUSIC(Constants.FOLDER_MENU  + "Mystical_Pixels.mp3",MixerType.MUSIC,0.7, AudioClip.INDEFINITE),//todo assign to right file
     FIRE("fire.mp3", MixerType.SFX, 0.05, 1),//todo
     FIREBALL("334234__liamg-sfx__fireball-cast-1.wav", MixerType.SFX, 0.9),
     HURT("SFX_Hurt10.wav", MixerType.SFX, 1);

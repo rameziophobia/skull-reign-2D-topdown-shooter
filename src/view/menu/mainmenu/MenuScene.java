@@ -1,6 +1,8 @@
 package view.menu.mainmenu;
 
 import controller.animation.AnimationClip;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.geometry.Insets;
@@ -50,6 +52,8 @@ public class MenuScene extends Scene {
 
     private void createScene() {
         menuBackground = new MenuBackground();
+
+        AudioManager.playAudio(AudioFile.MENU_MUSIC);
 
         Rectangle blackScreen = new Rectangle(1280, 720, Color.BLACK);//todo width and height
         blackScreen.setOpacity(0);
