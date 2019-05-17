@@ -1,22 +1,14 @@
 package view;
 
+import controller.map.Map;
+import controller.map.MapLoader;
 import javafx.animation.AnimationTimer;
-import javafx.collections.ObservableList;
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.GameObject;
 import model.player.Player;
 import model.player.PlayerType;
@@ -25,10 +17,6 @@ import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
 import java.awt.*;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.stream.Collectors;
-
 
 public class GameViewManager {
     public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
@@ -188,6 +176,8 @@ public class GameViewManager {
         InputManager.setPlayer(player);
         InputManager.setKeyListener(gameScene);
         InputManager.setMouseListeners(gamePane);
+
+        new MapLoader(Map.BASE).getNodes().forEach(GameViewManager::addGameObjectTOScene);
     }
 
     private void gameUpdate() {
