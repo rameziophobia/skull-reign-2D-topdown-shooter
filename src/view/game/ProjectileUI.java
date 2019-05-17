@@ -59,7 +59,7 @@ public class ProjectileUI extends HBox {
                 new ImageView(projectileURL) :
                 new ImageView(SpriteSheet.getFirstSprite(projectileURL));
 
-        if (type.isANIMATED()){
+        if (type.isANIMATED()) {
 
         }
 

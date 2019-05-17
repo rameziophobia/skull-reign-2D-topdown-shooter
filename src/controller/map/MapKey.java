@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 import java.util.HashMap;
 
-public enum  MapKey {
+public enum MapKey {
     FLAG("d00a0a"),
     PILLAR("300ad0"),
     SIDE_CORNER_LEFT("1f8ed5"),
@@ -30,7 +30,7 @@ public enum  MapKey {
 
     static {
         COLOR_MAP_KEY_HASH_MAP = new HashMap<>();
-        for (MapKey mapKey: values()) {
+        for (MapKey mapKey : values()) {
             COLOR_MAP_KEY_HASH_MAP.put(mapKey.getColor(), mapKey);
         }
     }
@@ -45,7 +45,7 @@ public enum  MapKey {
         return color;
     }
 
-    public static MapKey getMapKeyFrom(Color color){
+    public static MapKey getMapKeyFrom(Color color) {
         return COLOR_MAP_KEY_HASH_MAP.getOrDefault(color, null);
     }
 }

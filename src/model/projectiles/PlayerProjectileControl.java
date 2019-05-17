@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import static view.GameViewManager.getPlayer;
 import static view.game.ProjectileUI.setWeapon;
 
-
 public class PlayerProjectileControl {
 
     private long lastFireTime;
@@ -100,7 +99,6 @@ public class PlayerProjectileControl {
     }
 
     private void detectBtnType(MouseEvent e) {
-
         if (e.isPrimaryButtonDown()) {
             lastPressed = buttons.PRIMARY;
         } else if (e.isSecondaryButtonDown()) {
@@ -109,7 +107,6 @@ public class PlayerProjectileControl {
     }
 
     private void createProjectile() {
-
         if (System.currentTimeMillis() > (lastFireTime + 1000 / type.getFIRERATE())) {
             for (int mult = 0; mult < powerUp.get(PowerUpType.MULT); mult++) {
 
@@ -146,7 +143,6 @@ public class PlayerProjectileControl {
                 weaponList.add(type);
             }
         }
-
     }
 
     public void setToNextType() {
@@ -159,6 +155,7 @@ public class PlayerProjectileControl {
             setWeapon(type);
         }
     }
+
     public void setPowerUp(PowerUpType key, Float value) {
         if (value == 0) {
             powerUp.put(key, 1f);

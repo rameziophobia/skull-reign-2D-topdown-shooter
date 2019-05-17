@@ -1,6 +1,5 @@
 package view;
 
-import controller.MainPane;
 import controller.map.Map;
 import controller.map.MapLoader;
 import javafx.animation.AnimationTimer;
@@ -12,6 +11,7 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.GameObject;
+import model.MainPane;
 import model.player.Player;
 import model.player.PlayerType;
 import model.ui.game.ScoreLabel;
@@ -116,7 +116,7 @@ public class GameViewManager {
         mainPane.addToUIPane(lbl_currentScore);
     }
 
-    public static void updateLabel(int amount) {
+    public static void updateLabel() {
         lbl_currentScore.setText("CURRENT SCORE: " + player.getCurrentScore());
     }
 
@@ -167,6 +167,5 @@ public class GameViewManager {
             if (node instanceof GameObject)
                 ((GameObject) node).update();
         }
-
     }
 }

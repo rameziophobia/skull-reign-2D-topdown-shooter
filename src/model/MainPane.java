@@ -1,8 +1,7 @@
-package controller;
+package model;
 
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
-import model.GameObject;
 
 public class MainPane extends Pane {
 

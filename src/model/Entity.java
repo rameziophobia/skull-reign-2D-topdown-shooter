@@ -1,7 +1,6 @@
 package model;
 
 public abstract class Entity extends GameObject {
-
     protected float speed;
 
     public Entity(String url, float speed) {

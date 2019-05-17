@@ -2,7 +2,6 @@ package view;
 
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.player.Player;
 import model.projectiles.PowerUpType;

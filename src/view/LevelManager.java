@@ -55,6 +55,7 @@ public class LevelManager {//todo temp static
             GameViewManager.getMainPane().addToGamePane(new Obstacle(1));
         }
     }
+
     public static void createPowerUp() {//todo implement timer
         if (nextPowerUpSpawnTime < System.currentTimeMillis()) {
             nextPowerUpSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_POWERUPS);
@@ -63,6 +64,7 @@ public class LevelManager {//todo temp static
             GameViewManager.getMainPane().addToGamePane(powerUp);
         }
     }
+
     public static void createWall() {
 //        Wall rectangle = new Wall(1200, 200);
 //        wallArrayList.add(rectangle);

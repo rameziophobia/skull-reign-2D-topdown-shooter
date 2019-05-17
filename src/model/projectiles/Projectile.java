@@ -10,8 +10,6 @@ import model.wall.Wall;
 import view.GameViewManager;
 import view.LevelManager;
 
-import static view.GameViewManager.getPlayer;
-
 public class Projectile extends GameObject {
 
     private ProjectileType projectileType;
@@ -74,8 +72,8 @@ public class Projectile extends GameObject {
 
     private void checkCollision_entity() {
         if (enemyProjectile) {
-            if (isIntersects(getPlayer())) {
-                getPlayer().takeDmg(projectileType.getDAMAGE());
+            if (isIntersects(GameViewManager.getPlayer())) {
+                GameViewManager.getPlayer().takeDmg(projectileType.getDAMAGE());
                 GameViewManager.getMainPane().removeFromGamePane(this);
             }
         } else {
@@ -94,9 +92,10 @@ public class Projectile extends GameObject {
             GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
-    private void checkCollision_wall(){
-        for(Wall wall: LevelManager.getWallArrayList()){
-            if(isIntersects(wall)){
+
+    private void checkCollision_wall() {
+        for (Wall wall : LevelManager.getWallArrayList()) {
+            if (isIntersects(wall)) {
                 GameViewManager.getMainPane().removeFromGamePane(this);
             }
         }

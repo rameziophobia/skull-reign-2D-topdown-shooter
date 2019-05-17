@@ -6,14 +6,13 @@ import controller.json.JsonParser;
 import controller.json.settings.AudioSettings;
 
 public class SettingsManager {
-    private boolean firstLaunch;
     private static AudioSettings audioSettings = JsonParser.readAudioSettings();
 
     private SettingsManager() {
     }
 
-    public static void init(){//todo temp
-        if (audioSettings == null){
+    public static void init() {//todo temp
+        if (audioSettings == null) {
             saveAudiSettings();
         }
 
@@ -25,7 +24,7 @@ public class SettingsManager {
 
     }
 
-    public static void saveAudiSettings(){
+    public static void saveAudiSettings() {
         audioSettings = new AudioSettings(
                 AudioManager.getMasterVolume(),
                 AudioManager.getMixerVolume(MixerType.SFX),

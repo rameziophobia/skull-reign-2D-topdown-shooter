@@ -87,7 +87,7 @@ public class Enemy extends Entity {
         lblmover.setByY(FLOATING_SCORE_TRANSLATE_Y_BY);
 
         floatingScoreTransition = new ParallelTransition(lbl_floatingScore, lblfader, lblmover);
-        floatingScoreTransition.setOnFinished(e->GameViewManager.getMainPane().removeFromUIPane(lbl_floatingScore));
+        floatingScoreTransition.setOnFinished(e -> GameViewManager.getMainPane().removeFromUIPane(lbl_floatingScore));
     }
 
     public EnemyProjectileControl getEnemyProjectileControl() {
@@ -196,9 +196,7 @@ public class Enemy extends Entity {
         checkAlive();
     }
 
-
     public int getScoreValue() {
         return enemyType.getScore();
     }
-
 }

@@ -14,8 +14,6 @@ import view.menu.mainmenu.MenuScene;
 import view.score.HighScores;
 import view.score.ScoreBoard;
 
-import javax.swing.*;
-
 public class HallOfFameMenu extends Menu {
     private static TableView<HighScores> highScoreTable;
     private static ScoreBoard leaderBoards;

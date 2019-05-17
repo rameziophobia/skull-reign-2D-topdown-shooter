@@ -6,7 +6,6 @@ import view.GameViewManager;
 import java.util.ArrayList;
 
 public class EnemyProjectileControl {
-
     private Point2D spawner;
 
     private long[] patternRate = new long[5];
@@ -42,22 +41,22 @@ public class EnemyProjectileControl {
         }
     }
 
-    public void setPatternRate(PatternRate pattern, long rate){
+    public void setPatternRate(PatternRate pattern, long rate) {
         patternRate[pattern.getIndex()] = rate;
     }
 
-    public void addRing1by1(long rate, float ringAngle1by1){
-        setPatternRate(PatternRate.RING1BY1,rate);
-        this.ringAngle1by1 =  ringAngle1by1;
+    public void addRing1by1(long rate, float ringAngle1by1) {
+        setPatternRate(PatternRate.RING1BY1, rate);
+        this.ringAngle1by1 = ringAngle1by1;
     }
 
-    public void addSpawnToPlayer(long rate){
-        setPatternRate(PatternRate.toPlayer,rate);
+    public void addSpawnToPlayer(long rate) {
+        setPatternRate(PatternRate.toPlayer, rate);
     }
 
-    public void addSpawnRing(long rate, float ringAngle){
-        setPatternRate(PatternRate.RING,rate);
-        this.ringAngle =  ringAngle;
+    public void addSpawnRing(long rate, float ringAngle) {
+        setPatternRate(PatternRate.RING, rate);
+        this.ringAngle = ringAngle;
     }
 
     public void spawnRing() {
