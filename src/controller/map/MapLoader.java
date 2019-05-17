@@ -10,7 +10,6 @@ import view.GameViewManager;
 import view.Main;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Random;
 
 public class MapLoader {
