@@ -12,7 +12,7 @@ public class ScoreLabel extends Label {
 
     private static final Insets PADDING = new Insets(10, 0, 0, 0);
 
-    public ScoreLabel(){
+    public ScoreLabel() {
         super("CURRENT SCORE: 0");
 
         this.setPrefWidth(GameViewManager.WIDTH);

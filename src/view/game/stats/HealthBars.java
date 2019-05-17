@@ -28,7 +28,7 @@ public class HealthBars extends VBox {
         StackPane stackShield = getStackPane(SHIELD_HEIGHT, SHIELD_COLOR, true, Player.getMaxShield());
 
         HPVBox.getChildren().addAll(stackHP, stackShield);
-        GameViewManager.addGameObjectTOScene(HPVBox);
+        GameViewManager.getMainPane().addToUIPane(HPVBox);
     }
 
     private StackPane getStackPane(int height, Color color, boolean regen, double maxHP) {
