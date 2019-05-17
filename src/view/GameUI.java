@@ -31,7 +31,7 @@ public class GameUI {
         return group;
     }
 
-    public HealthBars getHealthBars() {
+    public HealthBars getPlayerHealthBars() {
         return healthBars;
     }
 
@@ -45,4 +45,5 @@ public class GameUI {
                 image.getWidth() / 2,
                 image.getHeight() / 2));
     }
+
 }

@@ -51,14 +51,19 @@ public class GameViewManager {
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(false);
 
-        GameUI.createBackground(gamePane);
-        GameUI.setCrosshair(gamePane);
+        mainPane = new MainPane();
+
+        gameScene = new Scene(mainPane, WIDTH, HEIGHT);
+
+        gameStage = new Stage();
+        gameStage.setScene(gameScene);
+        gameStage.setFullScreen(true);
 
         levelUI waveui = new levelUI("Wave",6,30);
-        waveui.addUIToGame(gamePane);
+        waveui.addUIToGame();
 
         levelUI levelui = new levelUI("Level",10,0);
-        levelui.addUIToGame(gamePane);
+        levelui.addUIToGame();
 
         setWindowScaling();
 
@@ -116,8 +121,8 @@ public class GameViewManager {
 
     private void createPlayer(PlayerType chosenPlayer, String playerName) {
         player = new Player(chosenPlayer,
-                GameViewUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.HP),
-                GameViewUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.SHIELD));
+                GVUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.HP),
+                GVUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.SHIELD));
         player.setName(playerName);
         mainPane.addToGamePane(player);
         player.toBack();

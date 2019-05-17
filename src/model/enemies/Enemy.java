@@ -78,7 +78,6 @@ public class Enemy extends Entity {
         Random rand = new Random();
         setLayoutY(height + rand.nextInt(GameViewManager.HEIGHT - 2 * height - 10));
         setLayoutX(width + rand.nextInt(GameViewManager.WIDTH - 2 * width - 10));
-        enemyProjectileControl = new EnemyProjectileControl(projectileType);
 
         lbl_floatingScore = new Label("");
         lbl_floatingScore.setFont(FLOATING_SCORE_FONT);

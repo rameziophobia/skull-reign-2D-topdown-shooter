@@ -34,9 +34,9 @@ public class Boss extends Enemy {
     private final static int CONTROLS_NUM = 2;
 
     public enum stageEnum {
-        STAGE1(90, 120, 400,500, 4),
-        STAGE2(60, 60, 275,350, 5),
-        STAGE3(30, 45, 225, 250, 6);
+        STAGE1(90, 120, 550,500, 4),
+        STAGE2(60, 60, 400,350, 5),
+        STAGE3(30, 45, 330, 250, 6);
 
         private int ringAngle;
         private int knifeRate;
@@ -80,7 +80,7 @@ public class Boss extends Enemy {
         HPStack.setLayoutY(900);
         HPStack.setPrefWidth(WIDTH);
         HPStack.setAlignment(Pos.CENTER);
-        GameViewManager.addTOScene(HPStack);
+        GameViewManager.getMainPane().addToUIPane(HPStack);
 
     }
 

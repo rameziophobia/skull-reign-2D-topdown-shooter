@@ -7,8 +7,6 @@ import model.obstacles.Obstacle;
 import model.projectiles.PowerUp;
 import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
-import model.walls.Wall;
-import view.game.stats.HealthBars;
 import model.wall.Wall;
 
 import java.util.ArrayList;
@@ -49,7 +47,7 @@ public class LevelManager {//todo temp static
             enemy.getEnemyProjectileControl().addRing1by1(300, 30);
             Boss boss = new Boss(EnemyType.MAGE1, Boss.stageEnum.STAGE1);
             enemyArrayList.add(boss);
-            GameViewManager.addGameObjectTOScene(boss);
+            GameViewManager.getMainPane().addToGamePane(boss);
             enemyArrayList.add(enemy);
             GameViewManager.getMainPane().addToGamePane(enemy);
         }

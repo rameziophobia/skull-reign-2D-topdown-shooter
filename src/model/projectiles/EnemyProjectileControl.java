@@ -27,7 +27,7 @@ public class EnemyProjectileControl {
     private long[] lastFireTime;
 
     public enum PatternRate {
-        RING(0), RING1BY1(1), toPlayer(2), MISSILE(3), SHOWER_HORIZ(4), SHOWER_VERT(5);
+        RING(0), RING1BY1(1), toPlayer(2), MISSILE(3), KNIVES(4), SHOWER_HORIZ(4), SHOWER_VERT(5);
 
         int index;
 
@@ -82,7 +82,7 @@ public class EnemyProjectileControl {
             int j = 0;
             while (j < WIDTH) {
                 Projectile projectile = new Projectile(new Point2D(j, -30), type, 90, true);
-                GameViewManager.addTOScene(projectile);
+                GameViewManager.getMainPane().addToGamePane(projectile);
                 lastFireTime[i] = timeNow;
                 j += projectile.getFitWidth() * 1.5;
             }
@@ -110,7 +110,7 @@ public class EnemyProjectileControl {
                 projectile.setScaleX(1);
 
             }
-            GameViewManager.addTOScene(projectile);
+            GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;
         }
     }
@@ -132,7 +132,25 @@ public class EnemyProjectileControl {
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
             final double ang = boss ? bossRingAngle : angle;
             int changeDir = (timeNow % 20000 > 8000) ? -1 : 1;
-            bossRingAngle += 0.4 * changeDir * patternRate[i] / 20;
+            bossRingAngle += 0.4 * changeDir;
+            for (int j = (int) ang; j < 360 + (int) ang; j += ringAngle) {
+                Projectile projectile = new Projectile(spawner, type, j, true);
+                projArrTest.add(projectile);
+            }
+            lastFireTime[i] = timeNow;
+            projArrTest.forEach(projectile -> GameViewManager.getMainPane().addToGamePane(projectile));
+        }
+
+    }
+
+    public void spawnKnives() {
+        int i = PatternRate.RING.getIndex();
+        final long timeNow = System.currentTimeMillis();
+        ArrayList<Projectile> projArrTest = new ArrayList<>();
+        if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
+            final double ang = boss ? bossRingAngle : angle;
+            int changeDir = (timeNow % 20000 > 8000) ? -1 : 1;
+            bossRingAngle += 0.4 * changeDir;
             for (int j = (int) ang; j < 360 + (int) ang; j += ringAngle) {
                 Projectile projectile = new Projectile(spawner, type, j, true);
                 projArrTest.add(projectile);
