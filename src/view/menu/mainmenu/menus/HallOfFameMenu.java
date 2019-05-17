@@ -14,6 +14,8 @@ import view.menu.mainmenu.MenuScene;
 import view.score.HighScores;
 import view.score.ScoreBoard;
 
+import javax.swing.*;
+
 public class HallOfFameMenu extends Menu {
     private static TableView<HighScores> highScoreTable;
     private static ScoreBoard leaderBoards;
@@ -29,6 +31,7 @@ public class HallOfFameMenu extends Menu {
                 lbl_hallOfFameMenu,
                 highScoreTable,
                 new MenuButtonTransition("Back", this, Menus.MAIN));
+        highScoreTable.sort();
     }
 
     private void createLeaderBoardsTable(Double width) {
@@ -43,6 +46,7 @@ public class HallOfFameMenu extends Menu {
         scoreColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
         scoreColumn.setMinWidth(width / 2);
         scoreColumn.setSortType(TableColumn.SortType.DESCENDING);
+        scoreColumn.setSortable(true);
 
         highScoreTable.setPrefWidth(400);
         highScoreTable.getStyleClass().addAll("NoFocus");
@@ -53,6 +57,8 @@ public class HallOfFameMenu extends Menu {
         columns.add(nameColumn);
 
         VBox.setMargin(highScoreTable, new Insets(0, 0, 0, 10));
+        highScoreTable.getSortOrder().add(scoreColumn);
+        highScoreTable.sort();
     }
 
     public static void setNewRecord(String Name, int Score) {
@@ -63,5 +69,7 @@ public class HallOfFameMenu extends Menu {
     public void fadeIn() {
         super.fadeIn();
         highScoreTable.setItems(leaderBoards.getHighScores());
+        highScoreTable.getSortOrder().add(highScoreTable.getColumns().get(0));
+        highScoreTable.sort();
     }
 }
