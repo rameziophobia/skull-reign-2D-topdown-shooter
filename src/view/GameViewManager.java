@@ -29,7 +29,7 @@ public class GameViewManager {
     private static Stage gameStage = new Stage();
     private static Player player;
     private static Label lbl_currentScore;
-    private GameViewUI GVUI;
+    private GameUI GVUI;
     private static AnimationTimer gameLoop;
 
     public GameViewManager() {
@@ -38,12 +38,9 @@ public class GameViewManager {
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(true);
 
-        GameUI.createBackground(gamePane);
-        GameUI.setCrosshair(gamePane);
-
         setWindowScaling();
 
-        GVUI = new GameViewUI();
+        GVUI = new GameUI(gamePane);
 
         gameEnded = false;
         gameEnd = new GameEnd();
