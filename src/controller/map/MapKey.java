@@ -12,7 +12,7 @@ public enum  MapKey {
     SKULL("93989a"),
     WALL("230b17"),
     WALL_FRONT("641d41"),
-    WALL_ALONE("aa0c86"),
+    PILLAR_ALONE("aa0c86"),
     WALL_BARS_BOTTOM("0a1d4d"),
     WALL_BARS_MIDDLE("0d2a72"),
     WALL_BROKEN_1("2b2416"),

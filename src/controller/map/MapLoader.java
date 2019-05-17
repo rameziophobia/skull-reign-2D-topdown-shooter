@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.shape.Rectangle;
-import model.GameObject;
 import model.wall.Wall;
 import view.GameViewManager;
 import view.Main;
@@ -67,9 +66,10 @@ public class MapLoader {
                     case WALL:
                         addWallTiles("Wall.png", j, i);
                         break;
-                    case WALL_ALONE:
-                        addWall("Wall_Alone.png", j, i);
-                        addTile(getRandWallGround(), j, i + 1);
+                    case PILLAR_ALONE:
+                        addTile("Pillar_Alone_Top.png", j, i - 1, false, true);
+                        addWall("Pillar_Alone_Center.png", j, i);
+                        addTile("Pillar_Alone_Ground.png", j, i + 1);
                         break;
                     case WALL_BARS_BOTTOM:
                         addWallTiles("Wall_Bars_Bottom.png", j, i);
