@@ -79,7 +79,7 @@ public class GameViewManager {
     /**
      * @param node
      *
-     * @deprecated use {@link #addTOScene(Node)}instead.
+     * @deprecated use {@link #addToScene(Node)}instead.
      */
     @Deprecated
     public static void addGameObjectTOScene(Node node) {
@@ -87,7 +87,7 @@ public class GameViewManager {
         node.toBack();
     }
 
-    public static void addTOScene(Node node) {
+    public static void addToScene(Node node) {
         gamePane.getChildren().add(node);
         node.toBack();
     }

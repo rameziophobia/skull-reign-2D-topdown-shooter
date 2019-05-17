@@ -178,7 +178,7 @@ public class Enemy extends Entity {
                 lbl_floatingScore.setText("+" + this.getScoreValue());
                 lbl_floatingScore.setLayoutX(this.getLayoutX());
                 lblmover.setFromY(this.getLayoutY());
-                GameViewManager.addTOScene(lbl_floatingScore);
+                GameViewManager.addToScene(lbl_floatingScore);
                 floatingScoreTransition.play();
             }
             removeFromScene(this);
