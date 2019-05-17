@@ -14,14 +14,13 @@ public class Wall extends GameObject {
 
 
     public Wall(double x, double y) {
-        super(Main.PATH_RESOURCES_SPRITES + "walls/" + "wall-250x60.png");
+        super(Main.PATH_RESOURCES_SPRITES + "walls/" + "WallCenter-56x56.png");
         this.setLayoutY(y);
         this.setLayoutX(x);
     }
 
     public static boolean canMoveUp(Entity entity, ArrayList<Wall> wallArrayList) {
-
-        return canMove(entity, wallArrayList, false, -60);
+        return canMove(entity, wallArrayList, false, -57);
     }
 
     public static boolean canMoveDown(Entity entity, ArrayList<Wall> wallArrayList) {
@@ -29,11 +28,11 @@ public class Wall extends GameObject {
     }
 
     public static boolean canMoveLeft(Entity entity, ArrayList<Wall> wallArrayList) {
-        return canMove(entity, wallArrayList, true, -250);
+        return canMove(entity, wallArrayList, true, -57);
     }
 
     public static boolean canMoveRight(Entity entity, ArrayList<Wall> wallArrayList) {
-        return canMove(entity, wallArrayList, true, (int)entity.getImage().getHeight());
+        return canMove(entity, wallArrayList, true, (int)entity.getImage().getWidth());
     }
 
     public static boolean canMove(GameObject gameObject, ArrayList<Wall> wallArrayList, boolean horizontal, int offset){
@@ -41,14 +40,14 @@ public class Wall extends GameObject {
             return true;//todo da ybawaz 7aga?
 
         for(Wall wall: wallArrayList) {
-            if (wall.getBoundsInParent().intersects(gameObject.getBoundsInParent())) {
+            if (wall.isIntersects(gameObject)) {
                 if (horizontal) {
                     if(Math.abs(gameObject.getLayoutX() + offset - wall.getLayoutX() ) < MARGIN){
                         return false;
                     }
                 }
                 else{
-                    if(Math.abs(gameObject.getLayoutY() + offset - wall.getLayoutY() ) < 8){
+                    if(Math.abs(gameObject.getLayoutY() + offset - wall.getLayoutY() ) < MARGIN){
                         return false;
                     }
                 }

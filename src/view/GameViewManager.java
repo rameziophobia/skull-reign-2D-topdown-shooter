@@ -1,33 +1,25 @@
 package view;
 
 import javafx.animation.AnimationTimer;
-import javafx.collections.ObservableList;
-import javafx.animation.FadeTransition;
-import javafx.animation.TranslateTransition;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.GameObject;
 import model.player.Player;
 import model.player.PlayerType;
 import model.ui.game.ScoreLabel;
+import model.walls.Wall;
+import view.map.AStarPathFinder;
+import view.map.GameMap;
+import view.map.Path;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
 import java.awt.*;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
 
 public class GameViewManager {
@@ -43,20 +35,28 @@ public class GameViewManager {
     private static Label lbl_currentScore;
     private GameViewUI GVUI;
     private static AnimationTimer gameLoop;
+    private static ArrayList<Rectangle> rectangleArrayList;
 
+
+    private static GameMap map;
+    private static AStarPathFinder finder;
     public GameViewManager() {
         gamePane = new AnchorPane();
+        map = new GameMap();
+        finder = new AStarPathFinder(map, 1000, true);
+
         gameScene = new Scene(gamePane, WIDTH, HEIGHT);
         gameStage.setScene(gameScene);
-        gameStage.setFullScreen(true);
+        gameStage.setFullScreen(false);
 
-        GameUI.createBackground(gamePane);
+        gamePane.setStyle(" -fx-background-color:black;");
+//        GameUI.createBackground(gamePane);
         GameUI.setCrosshair(gamePane);
 
         setWindowScaling();
 
         GVUI = new GameViewUI();
-
+        initMap();
         gameEnded = false;
         gameEnd = new GameEnd();
         gameEnd.setOnMouseClicked(e -> {
@@ -73,16 +73,40 @@ public class GameViewManager {
         };
     }
 
+    public static void initMap() {
+        rectangleArrayList = new ArrayList<>();
+
+        for (int y=0;y<map.getHeightInTiles();y++) {
+            for (int x=0;x<map.getWidthInTiles();x++) {
+                if(map.getTerrain(x+56*x,y+56*y) == 1){
+                    LevelManager.addToWallArrayList(new Wall(500+56*x,225+56*y));
+                    addTOScene(new Wall(500+56*x,225+56*y));
+
+                }
+            }
+        }
+//        Wall x = new Wall(500,225);
+//        x.setFitWidth(300);
+//        x.setFitHeight(56);
+//        LevelManager.addToWallArrayList(x);
+//        addTOScene(x);
+    }
+
     public static Player getPlayer() {
         return player;
     }
-
+    public static GameMap getMap() {
+        return map;
+    }
+    public static AStarPathFinder getFinder() {
+        return finder;
+    }
     public static void removeFromScene(Node node) {
         gamePane.getChildren().remove(node);
     }
 
     /**
-     * @param gameObject to be removed
+     * @p   aram gameObject to be removed
      *
      * @deprecated use {@link #removeFromScene(Node)}instead.
      */

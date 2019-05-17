@@ -40,7 +40,7 @@ public class LevelManager {//todo temp static
         if (nextEnemySpawnTime < System.currentTimeMillis() && spawnable) {
             nextEnemySpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
 
-            Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, Enemy.MoveMode.stationary);
+            Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, Enemy.MoveMode.followPlayer,100,100);
             enemy.getEnemyProjectileControl().addSpawnRing(3000, 90);
             enemy.getEnemyProjectileControl().addRing1by1(300, 30);
             enemyArrayList.add(enemy);
@@ -68,6 +68,9 @@ public class LevelManager {//todo temp static
         wallArrayList.add(rectangle);
         GameViewManager.addGameObjectTOScene(rectangle);
     }
+    public static void createCall() {
+
+    }
 
     public static void removeEnemy(Enemy enemy) {
         enemyArrayList.remove(enemy);
@@ -79,5 +82,8 @@ public class LevelManager {//todo temp static
 
     public static void setSpawnable(boolean state) {
         spawnable = state;
+    }
+    public static void addToWallArrayList(Wall wall){
+        wallArrayList.add(wall);
     }
 }

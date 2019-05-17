@@ -19,7 +19,7 @@ public class Player extends Entity {
     private static int currentScore = 0;
     private static final float MAX_SPEED = 8;
     private static float SPEED = 6;
-    private static final double MAX_HP = 500;
+    private static final double MAX_HP = 100000;
     private static final double MAX_SHIELD = 500;
     private static final long REGENERATION_TIME_CD_MS = 5000;
 
@@ -95,7 +95,6 @@ public class Player extends Entity {
             }
         }
         if (rightPressed) {
-
             if (Wall.canMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()) {
                 if (upPressed || downPressed) {
                     setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
@@ -206,21 +205,6 @@ public class Player extends Entity {
     private void updateAngle(double x, double y) {
         angle = Math.toDegrees(atan2(y - getSpawner().getY(), x - getSpawner().getX()));
     }
-
-    @Override
-    public void update() {
-        if (currentHp > 0) {
-            updateAngle(InputManager.getMouseXPos(), InputManager.getMouseYPos());
-            setRotate(angle);
-
-            move();
-            warp();
-
-            secondaryBtnHandler.update(angle);
-            primaryBtnHandler.update(angle);
-        }
-    }
-
     public static void increaseCurrentScore(int amount) {
         currentScore += amount;
         GameViewManager.updateLabel(amount);
@@ -242,5 +226,16 @@ public class Player extends Entity {
     public static void increasePlayerCurrentScore(int amount) {
         currentScore += amount;
     }
+    @Override
+    public void update() {
+        if (currentHp > 0) {
+            updateAngle(InputManager.getMouseXPos(), InputManager.getMouseYPos());
+//            setRotate(angle);
 
+            move();
+//            warp();
+            secondaryBtnHandler.update(angle);
+            primaryBtnHandler.update(angle);
+        }
+    }
 }
