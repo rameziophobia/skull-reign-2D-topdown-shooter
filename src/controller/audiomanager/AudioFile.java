@@ -18,7 +18,11 @@ public enum AudioFile {
     GAME_MUSIC_BASIC(Constants.FOLDER_GAME+"backgroundmusic.mp3",MixerType.AMBIENT,0.4,AudioClip.INDEFINITE),
     FIRE("fire.mp3", MixerType.SFX, 0.05, 1),//todo
     FIREBALL("334234__liamg-sfx__fireball-cast-1.wav", MixerType.SFX, 0.9),
-    HURT("SFX_Hurt10.wav", MixerType.SFX, 1);
+    HURT("SFX_Hurt10.wav", MixerType.SFX, 1),
+    PLAYER_DEATH(Constants.FOLDER_PLAYER+"playerdeath.wav",MixerType.SFX,0.6,1),
+    PLAYER_POWERUP(Constants.FOLDER_PLAYER+"powerup.wav",MixerType.SFX,0.6,1),
+    ENEMY_DEATH("enemydeath.wav",MixerType.SFX,0.15,1),
+    BOSS_DEATH("bossdeath.wav",MixerType.SFX,0.4,1);
 
     private final String path;
     private final MixerType mixer;
@@ -79,5 +83,6 @@ public enum AudioFile {
         private static final String FOLDER_PROJECTILE = "projectiles/";
         private static final String FOLDER_MENU = "menu/";
         private static final String FOLDER_GAME = "game/";
+        private static final String FOLDER_PLAYER = "player/";
     }
 }

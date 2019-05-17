@@ -2,6 +2,8 @@ package model.projectiles;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import model.GameObject;
 import model.player.Player;
 import model.wall.Wall;
@@ -54,6 +56,7 @@ public class PowerUp extends GameObject {
             if (powerUpType.getProjectileType() != null) {
                 BtnHandler.addType(powerUpType.getProjectileType());
             }
+            AudioManager.playNewAudio(AudioFile.PLAYER_POWERUP,0.3);
             GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }

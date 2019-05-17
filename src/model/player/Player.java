@@ -236,6 +236,7 @@ public class Player extends Entity {
     }
 
     public void killPlayer() {
+        AudioManager.playAudio(AudioFile.PLAYER_DEATH);
         LevelManager.setSpawnable(false);
         GameViewManager.endGameSequence();
     }
