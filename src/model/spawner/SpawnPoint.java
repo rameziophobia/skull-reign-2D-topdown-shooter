@@ -2,9 +2,11 @@ package model.spawner;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import controller.map.MapLoader;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import model.GameObject;
@@ -12,7 +14,7 @@ import view.Main;
 
 public class SpawnPoint extends GameObject {
 
-    private static final SpriteSheet SPAWNING_SPRITE_SHEET = new SpriteSheet(Main.PATH_RESOURCES_SPRITES + "SpawnEffect-32x32.png", 0);
+    private static final SpriteSheet SPAWNING_SPRITE_SHEET = new SpriteSheet(Main.PATH_RESOURCES_SPRITES + "SpawnEffect-64x64.png", 0);
     private static final Duration PULSE_FADE_DURATION = Duration.seconds(1.25);
 
     private final ImageView img_pulseActive;
@@ -23,12 +25,15 @@ public class SpawnPoint extends GameObject {
     private final AnimationClip spawningAnimation;
 
     public SpawnPoint(int x, int y) {
-        super(Main.PATH_RESOURCES_SPRITES + "pent/Pent_IDLE-16x16.png");
+        super(new Image(Main.PATH_RESOURCES_SPRITES + "pent/Pent_IDLE-16x16.png",
+                MapLoader.BLOCK_SIZE, MapLoader.BLOCK_SIZE, true, false));
 
         this.setLayoutX(x);
         this.setLayoutY(y);
 
-        img_pulseActive = new ImageView(Main.PATH_RESOURCES_SPRITES + "pent/Pent_ACTIVE-16x16.png");
+        img_pulseActive = new ImageView(new Image(Main.PATH_RESOURCES_SPRITES + "pent/Pent_ACTIVE-16x16.png",
+                MapLoader.BLOCK_SIZE, MapLoader.BLOCK_SIZE, true, false));
+
         img_pulseActive.setLayoutX(x);
         img_pulseActive.setLayoutY(y);
 
@@ -79,16 +84,19 @@ public class SpawnPoint extends GameObject {
 
     @Override
     public void update() {
-        if (active)
+        if (active) {
             pulseFadeTransition.play();
-        else
-            pulseFadeTransition.stop();//todo set opacity to 0 ?
+        } else {
+            img_pulseActive.setOpacity(0);
+            pulseFadeTransition.stop();
+        }
 
         if (spawning) {
             spawningAnimation.animate();
-            if (spawningAnimation.isDone())
+            if (spawningAnimation.isDone()) {
                 spawning = false;
-            img_spawningVFX.setOpacity(0);
+                img_spawningVFX.setOpacity(0);
+            }
         }
     }
 

@@ -28,11 +28,10 @@ public class MainPane extends Pane {
     }
 
     public void addToGamePane(GameObject gameObject) {
+        gamePane.getChildren().add(gameObject);
         Node[] children = gameObject.getChildren();
         if (children != null)
             gamePane.getChildren().addAll(children);//todo we don't care about polymorphism :(
-
-        gamePane.getChildren().add(gameObject);
     }
 
     public void removeFromGamePane(GameObject gameObject) {
