@@ -14,12 +14,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MapLoader {
-    private static final int MAP_BLOCKS_WIDTH = 25;
-    private static final int MAP_BLOCKS_HEIGHT = 16;
+    public static final int MAP_BLOCKS_WIDTH = 25;
+    public static final int MAP_BLOCKS_HEIGHT = 16;
 
     public static final double BLOCK_SIZE = 16 * 4;
-    private static final int STARTING_X = (int) ((GameViewManager.WIDTH - (BLOCK_SIZE * MAP_BLOCKS_WIDTH)) / 2);
-    private static final int STARTING_Y = (int) ((GameViewManager.HEIGHT - (BLOCK_SIZE * MAP_BLOCKS_HEIGHT)) / 2);
+    public static final int STARTING_X = (int) ((GameViewManager.WIDTH - (BLOCK_SIZE * MAP_BLOCKS_WIDTH)) / 2);
+    public static final int STARTING_Y = (int) ((GameViewManager.HEIGHT - (BLOCK_SIZE * MAP_BLOCKS_HEIGHT)) / 2);
 
     private static final String PATH_RESOURCES_SPRITES_MAP = Main.PATH_RESOURCES_SPRITES + "map/";
 

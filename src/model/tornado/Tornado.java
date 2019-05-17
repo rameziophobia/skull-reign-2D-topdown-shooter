@@ -1,5 +1,6 @@
 package model.tornado;
 
+import controller.LevelManager;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.animation.PathTransition;
@@ -24,6 +25,7 @@ public class Tornado extends GameObject {
 
     private static final String PATH_RESOURCES_SPRITES_OBSTACLES = Main.PATH_RESOURCES_SPRITES + "tornado/";
     private static final String FILE_TORNADO = PATH_RESOURCES_SPRITES_OBSTACLES + "tornado-animated-64x64.png";
+    private final LevelManager levelManager;
     private AnimationClip animationClip;
     private static double limStartX = 0;
     private static double limStartY = 0;
@@ -32,8 +34,9 @@ public class Tornado extends GameObject {
     private int damageMultiplier;
 
     //todo: bug spawns at the upper left corner of the screen
-    public Tornado(int DmgMultiplier) {
+    public Tornado(int DmgMultiplier, LevelManager levelManager) {
         super(FILE_TORNADO);
+        this.levelManager = levelManager;
         damageMultiplier = DmgMultiplier;
         setUpRandMov();
 
@@ -106,6 +109,7 @@ public class Tornado extends GameObject {
     public void playerCollisionCheck(Player player) {
         if (isIntersects(player)) {
             player.takeDmg(damageMultiplier);
+            levelManager.reduceNumOfTornado(this);
             GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
