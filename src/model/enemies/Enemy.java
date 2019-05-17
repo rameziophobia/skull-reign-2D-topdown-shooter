@@ -203,14 +203,6 @@ public class Enemy extends Entity{
 //
 //    }
 
-
-
-    private void smartMove(GameMap map,AStarPathFinder finder){
-
-        map.setUnit((int)getLayoutX(),(int)getLayoutY(),5);
-        path = finder.findPath(new UnitMover(map.getUnit((int)getLayoutX(),(int)getLayoutY())),
-                (int)getLayoutX(), (int)getLayoutY(), (int)getPlayer().getLayoutX(), (int)getPlayer().getLayoutY());
-    }
     private void moveImageView(double angle) {
         double nextX = path.getX(1);
         double nextY = path.getY(1);
@@ -250,7 +242,6 @@ public class Enemy extends Entity{
         if(!disableRotate){
             setRotate(angle);
         }
-        smartMove(GameViewManager.getMap(),GameViewManager.getFinder());
         calculateDistance();
         move();
 
