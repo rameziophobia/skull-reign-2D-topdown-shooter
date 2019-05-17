@@ -81,11 +81,11 @@ public class PlayerProjectileControl {
     }
 
     public void mouseEvents() {
-        GameViewManager.getGamePane().addEventFilter(MouseEvent.ANY, this::detectBtnType);
-        GameViewManager.getGamePane().addEventFilter(TouchEvent.ANY, e -> fireProjectile());
+        GameViewManager.getMainPane().addEventFilter(MouseEvent.ANY, this::detectBtnType);
+        GameViewManager.getMainPane().addEventFilter(TouchEvent.ANY, e -> fireProjectile());
 
-        GameViewManager.getGamePane().addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed = true);
-        GameViewManager.getGamePane().addEventFilter(MouseEvent.MOUSE_RELEASED, e -> mousePressed = false);
+        GameViewManager.getMainPane().addEventFilter(MouseEvent.MOUSE_PRESSED, e -> mousePressed = true);
+        GameViewManager.getMainPane().addEventFilter(MouseEvent.MOUSE_RELEASED, e -> mousePressed = false);
 
     }
 
@@ -124,7 +124,7 @@ public class PlayerProjectileControl {
                 lastFireLocationX = getPlayer().getLayoutX();
                 lastFireLocationY = getPlayer().getLayoutY();
                 lastFireTime = System.currentTimeMillis();
-                GameViewManager.addGameObjectTOScene(projectile);
+                GameViewManager.getMainPane().addToGamePane(projectile);
                 projectile.toBack();
             }
         }
@@ -136,7 +136,6 @@ public class PlayerProjectileControl {
     }
 
     public void addType(ProjectileType type) {
-        System.out.println(this.type + " alas " + type);
         if (this.type != type) {
             this.type = type;
             weaponSettings.putIfAbsent(type, initializePowerUp());

@@ -104,8 +104,8 @@ public class Obstacle extends GameObject {
 
     public void playerCollisionCheck(Player player) {
         if (isIntersects(player)) {
-            player.takeDmg(damageMultiplier * 1);
-            GameViewManager.removeGameObjectFromScene(this);
+            player.takeDmg(damageMultiplier);
+            GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
 }

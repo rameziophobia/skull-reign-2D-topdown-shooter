@@ -11,7 +11,6 @@ import view.GameViewManager;
 import view.LevelManager;
 
 import static view.GameViewManager.getPlayer;
-import static view.GameViewManager.removeGameObjectFromScene;
 
 public class Projectile extends GameObject {
 
@@ -77,13 +76,13 @@ public class Projectile extends GameObject {
         if (enemyProjectile) {
             if (isIntersects(getPlayer())) {
                 getPlayer().takeDmg(projectileType.getDAMAGE());
-                removeGameObjectFromScene(this);
+                GameViewManager.getMainPane().removeFromGamePane(this);
             }
         } else {
             for (Enemy enemy : LevelManager.getEnemyArrayList()) {
                 if (isIntersects(enemy)) {
                     enemy.takeDmg(getDamage());
-                    GameViewManager.removeGameObjectFromScene(this);
+                    GameViewManager.getMainPane().removeFromGamePane(this);
                 }
             }
         }
@@ -92,18 +91,16 @@ public class Projectile extends GameObject {
     private void checkCollision_border() {
         if ((getLayoutY() > GameViewManager.HEIGHT || getLayoutY() < 0)
                 && (getLayoutX() > GameViewManager.WIDTH || getLayoutX() < 0)) {
-            GameViewManager.removeGameObjectFromScene(this);
+            GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
     private void checkCollision_wall(){
         for(Wall wall: LevelManager.getWallArrayList()){
             if(isIntersects(wall)){
-                GameViewManager.removeGameObjectFromScene(this);
+                GameViewManager.getMainPane().removeFromGamePane(this);
             }
         }
     }
-
-
 
     @Override
     public void update() {

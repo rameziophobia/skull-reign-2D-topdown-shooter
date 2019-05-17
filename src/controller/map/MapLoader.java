@@ -5,9 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.shape.Rectangle;
+import model.GameObject;
 import model.wall.Wall;
 import view.GameViewManager;
-import view.LevelManager;
 import view.Main;
 
 import java.util.ArrayList;
@@ -29,11 +29,15 @@ public class MapLoader {
             "Wall_Ground_3.png"
     };
 
-    private final ArrayList<Node> nodes;
+    private final ArrayList<Node> backNodes;
+    private final ArrayList<Wall> wallNodes;
+    private final ArrayList<Node> frontNodes;
     private final Random random;
 
     public MapLoader(Map map) {
-        nodes = new ArrayList<>();
+        backNodes = new ArrayList<>();
+        wallNodes = new ArrayList<>();
+        frontNodes = new ArrayList<>();
         random = new Random();
 
         final PixelReader pixelReader = new Image(map.getPath()).getPixelReader();
@@ -52,7 +56,7 @@ public class MapLoader {
                         addTile("Side_Corner.png", j, i);
                         break;
                     case SIDE_CORNER_RIGHT:
-                        addTile("Side_Corner.png", j, i, true);
+                        addTile("Side_Corner.png", j, i, true, false);
                         break;
                     case WALL_SIDE_LEFT:
                         addWall("Side_Wall.png", j, i);
@@ -90,14 +94,14 @@ public class MapLoader {
                         addTile(getRandWallGround(), j, i + 1);
                         break;
                     case WALL_FRONT:
-                        addTile("Wall_Top.png", j, i - 1);
+                        addTile("Wall_Top.png", j, i - 1, false, true);
                         addWall("Wall.png", j, i);
                         break;
                     case WALL_FRONT_END_LEFT:
                         addTile("Wall_Front_End.png", j, i);
                         break;
                     case WALL_FRONT_END_RIGHT:
-                        addTile("Wall_Front_End.png", j, i, true);
+                        addTile("Wall_Front_End.png", j, i, true, false);
                         break;
                     case SKULL:
                         addTile("Skull.png", j, i);
@@ -107,7 +111,7 @@ public class MapLoader {
                         rectangle.setStrokeWidth(5);
                         rectangle.setLayoutX(STARTING_X + j * BLOCK_SIZE);
                         rectangle.setLayoutY(STARTING_Y + i * BLOCK_SIZE);
-                        nodes.add(rectangle);
+                        backNodes.add(rectangle);
                         break;
                     case EMPTY:
                         continue;
@@ -135,8 +139,7 @@ public class MapLoader {
         wall.setLayoutY(STARTING_Y + i * BLOCK_SIZE);
         if (reverse)
             wall.setScaleX(-1);
-        nodes.add(wall);
-        LevelManager.getWallArrayList().add(wall);
+        wallNodes.add(wall);
     }
 
     private String getRandWallGround() {
@@ -144,20 +147,32 @@ public class MapLoader {
     }
 
     private void addTile(String fileName, int j, int i) {
-        addTile(fileName, j, i, false);
+        addTile(fileName, j, i, false, false);
     }
 
-    private void addTile(String fileName, int j, int i, boolean reverse) {
+    private void addTile(String fileName, int j, int i, boolean reverse, boolean front) {
         ImageView imageView = new ImageView(new Image(PATH_RESOURCES_SPRITES_MAP + fileName,
                 BLOCK_SIZE, BLOCK_SIZE, true, false));
         imageView.setLayoutX(STARTING_X + j * BLOCK_SIZE);
         imageView.setLayoutY(STARTING_Y + i * BLOCK_SIZE);
         if (reverse)
             imageView.setScaleX(-1);
-        nodes.add(imageView);
+        if (front) {
+            frontNodes.add(imageView);
+        } else {
+            backNodes.add(imageView);
+        }
     }
 
-    public ArrayList<Node> getNodes() {
-        return nodes;
+    public ArrayList<Node> getBackNodes() {
+        return backNodes;
+    }
+
+    public ArrayList<Wall> getWallNodes() {
+        return wallNodes;
+    }
+
+    public ArrayList<Node> getFrontNodes() {
+        return frontNodes;
     }
 }

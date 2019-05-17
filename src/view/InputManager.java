@@ -3,6 +3,7 @@ package view;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import model.player.Player;
 import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
@@ -158,7 +159,7 @@ public class InputManager {//todo temp static ?
         });
     }
 
-    public static void setMouseListeners(AnchorPane gamePane) {
+    public static void setMouseListeners(Pane gamePane) {
         gamePane.addEventFilter(MouseEvent.ANY, event -> {
             mouseXPos = event.getX();
             mouseYPos = event.getY();

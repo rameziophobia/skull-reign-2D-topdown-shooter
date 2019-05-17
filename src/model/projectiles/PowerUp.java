@@ -1,17 +1,14 @@
 package model.projectiles;
 
-
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import model.GameObject;
 import model.player.Player;
 import model.wall.Wall;
+import view.GameViewManager;
 import view.LevelManager;
 
-
 import java.util.Random;
-
-import static view.GameViewManager.*;
 
 public class PowerUp extends GameObject {
 
@@ -27,8 +24,8 @@ public class PowerUp extends GameObject {
 
         Random rand = new Random();
         do {
-            setLayoutY(rand.nextInt((HEIGHT - 50)));
-            setLayoutX(rand.nextInt((WIDTH - 50)));
+            setLayoutY(rand.nextInt((GameViewManager.HEIGHT - 50)));
+            setLayoutX(rand.nextInt((GameViewManager.WIDTH - 50)));
         }
         while (LevelManager.getWallArrayList().size() > 0 &&
                 Wall.canMove(this, LevelManager.getWallArrayList(), false, 0));
@@ -42,25 +39,22 @@ public class PowerUp extends GameObject {
                     this);
             animationClip.animate();
         }
-
-
     }
 
     private void checkCollision() {
-
-        if (isIntersects(getPlayer())) {
+        if (isIntersects(GameViewManager.getPlayer())) {
             Player.setSPEED(powerUpType.getSpeed());
 
             final PlayerProjectileControl BtnHandler =
                     (animated) ?
-                            getPlayer().getSecondaryBtnHandler() :
-                            getPlayer().getPrimaryBtnHandler();
+                            GameViewManager.getPlayer().getSecondaryBtnHandler() :
+                            GameViewManager.getPlayer().getPrimaryBtnHandler();
 
             BtnHandler.setPowerUp(powerUpType, powerUpType.getScale());
             if (powerUpType.getProjectileType() != null) {
                 BtnHandler.addType(powerUpType.getProjectileType());
             }
-            removeGameObjectFromScene(this);
+            GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
 
@@ -83,9 +77,9 @@ public class PowerUp extends GameObject {
 
     private static void setPowerUp(boolean primary, PowerUpType scale) {
         if (primary) {
-            getPlayer().getPrimaryBtnHandler().setPowerUp(scale, 0f);
+            GameViewManager.getPlayer().getPrimaryBtnHandler().setPowerUp(scale, 0f);
         } else {
-            getPlayer().getSecondaryBtnHandler().setPowerUp(scale, 0f);
+            GameViewManager.getPlayer().getSecondaryBtnHandler().setPowerUp(scale, 0f);
         }
     }
 

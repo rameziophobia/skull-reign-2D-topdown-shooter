@@ -21,7 +21,7 @@ public class GameUI {
     }
 
     private static void createWeaponBar() {
-        GameViewManager.addToScene(new ProjectileUI());
+        GameViewManager.getMainPane().addToUIPane(new ProjectileUI());
     }
 
     public Group getGroup() {

@@ -44,7 +44,7 @@ public class LevelManager {//todo temp static
             enemy.getEnemyProjectileControl().addSpawnRing(3000, 90);
             enemy.getEnemyProjectileControl().addRing1by1(300, 30);
             enemyArrayList.add(enemy);
-            GameViewManager.addGameObjectTOScene(enemy);
+            GameViewManager.getMainPane().addToGamePane(enemy);
         }
     }
 
@@ -52,7 +52,7 @@ public class LevelManager {//todo temp static
         if (nextObstaclesSpawnTime < System.currentTimeMillis() && isSpawnable()) {
             nextObstaclesSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_OBSTACLES);
 
-            GameViewManager.addGameObjectTOScene(new Obstacle(1));
+            GameViewManager.getMainPane().addToGamePane(new Obstacle(1));
         }
     }
     public static void createPowerUp() {//todo implement timer
@@ -60,7 +60,7 @@ public class LevelManager {//todo temp static
             nextPowerUpSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_POWERUPS);
             PowerUp powerUp;
             powerUp = new PowerUp(PowerUpType.getRandomPowerUpType());
-            GameViewManager.addGameObjectTOScene(powerUp);
+            GameViewManager.getMainPane().addToGamePane(powerUp);
         }
     }
     public static void createWall() {

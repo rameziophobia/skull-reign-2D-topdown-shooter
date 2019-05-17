@@ -1,12 +1,11 @@
 package view;
 
+import controller.MainPane;
 import controller.map.Map;
 import controller.map.MapLoader;
 import javafx.animation.AnimationTimer;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -23,8 +22,7 @@ public class GameViewManager {
     public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
     public static final int WIDTH = 1920;
 
-    private static AnchorPane gamePane;
-    private Pane mainPane;
+    private static MainPane mainPane;
     private static GameEnd gameEnd;
     private static boolean gameEnded;
     private Scene gameScene;
@@ -35,9 +33,8 @@ public class GameViewManager {
     private static AnimationTimer gameLoop;
 
     public GameViewManager() {
-        gamePane = new AnchorPane();
-        mainPane = new Pane();
-        mainPane.getChildren().add(gamePane);
+        mainPane = new MainPane();
+
         gameScene = new Scene(mainPane, WIDTH, HEIGHT);
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(true);
@@ -66,47 +63,21 @@ public class GameViewManager {
         return player;
     }
 
-    public static void removeFromScene(Node node) {
-        gamePane.getChildren().remove(node);
-    }
-
-    /**
-     * @param gameObject to be removed
-     *
-     * @deprecated use {@link #removeFromScene(Node)}instead.
-     */
-    @Deprecated
-    public static void removeGameObjectFromScene(GameObject gameObject) {
-        gamePane.getChildren().remove(gameObject);
-    }
-
-    /**
-     * @param node
-     *
-     * @deprecated use {@link #addToScene(Node)}instead.
-     */
-    @Deprecated
-    public static void addGameObjectTOScene(Node node) {
-        gamePane.getChildren().add(node);
-        node.toBack();
-    }
-
-    public static void addToScene(Node node) {
-        gamePane.getChildren().add(node);
-        node.toBack();
+    public static MainPane getMainPane() {
+        return mainPane;
     }
 
     @Deprecated
-    public static AnchorPane getGamePane() {
-        return gamePane;
+    public static Pane getGamePane() {
+        return mainPane.getGamePane();
     }
 
     private void setWindowScaling() {
         Dimension resolution = Toolkit.getDefaultToolkit().getScreenSize();
-        gamePane.getTransforms().add(new Scale(
+        mainPane.getTransforms().add(new Scale(
                 resolution.getWidth() / WIDTH,
                 resolution.getHeight() / HEIGHT,
-                0, 0));
+                0, 0));//todo
     }
 
     @Deprecated
@@ -125,12 +96,13 @@ public class GameViewManager {
     private void createPlayer(PlayerType chosenPlayer, String playerName) {
         player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
         player.setName(playerName);
-        addGameObjectTOScene(player);
+        mainPane.addToGamePane(player);
         player.toBack();
     }
 
     private void createUI() {
-        gamePane.getChildren().addAll(GVUI.getGroup(), GVUI.getHealthBars());
+        mainPane.addToUIPane(GVUI.getGroup());
+        mainPane.addToUIPane(GVUI.getHealthBars());
         createScoreLabel();
     }
 
@@ -141,7 +113,7 @@ public class GameViewManager {
 
     public void createScoreLabel() {
         lbl_currentScore = new ScoreLabel(); //todo move to GameUI
-        addGameObjectTOScene(lbl_currentScore);
+        mainPane.addToUIPane(lbl_currentScore);
     }
 
     public static void updateLabel(int amount) {
@@ -154,7 +126,7 @@ public class GameViewManager {
 
             gameEnd.setName(player.getName());
             gameEnd.setScore(player.getCurrentScore());
-            addGameObjectTOScene(gameEnd);
+            mainPane.addToUIPane(gameEnd);
             gameEnd.show();
             gameEnd.toFront();
         }
@@ -176,20 +148,23 @@ public class GameViewManager {
 
         InputManager.setPlayer(player);
         InputManager.setKeyListener(gameScene);
-        InputManager.setMouseListeners(gamePane);
+        InputManager.setMouseListeners(mainPane);
 
-        new MapLoader(Map.BASE).getNodes().forEach(GameViewManager::addGameObjectTOScene);
+        MapLoader mapLoader = new MapLoader(Map.BASE);
+        mapLoader.getBackNodes().forEach(mainPane::addToBackPane);
+        mapLoader.getWallNodes().forEach(mainPane::addToGamePane);
+        LevelManager.getWallArrayList().addAll(mapLoader.getWallNodes());
+        mapLoader.getFrontNodes().forEach(mainPane::addToFrontPane);
     }
 
     private void gameUpdate() {
-
         LevelManager.createEnemies();
         LevelManager.createObstacles();
         LevelManager.createPowerUp();
 
-        Object[] ob = gamePane.getChildren().toArray();
-        for (Object node : ob) {
-            if(node instanceof GameObject)
+        Object[] objects = mainPane.getGamePane().getChildren().toArray();
+        for (Object node : objects) {
+            if (node instanceof GameObject)
                 ((GameObject) node).update();
         }
 
