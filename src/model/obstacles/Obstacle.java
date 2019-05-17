@@ -4,11 +4,14 @@ import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
+import javafx.geometry.Point2D;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.QuadCurveTo;
 import javafx.util.Duration;
 import model.GameObject;
+import model.player.Player;
+import view.GameViewManager;
 import view.Main;
 
 import java.util.Random;
@@ -21,11 +24,16 @@ public class Obstacle extends GameObject {
     private static final String PATH_RESOURCES_SPRITES_OBSTACLES = Main.PATH_RESOURCES_SPRITES + "obstacles/";
     private static final String FILE_TORNADO = PATH_RESOURCES_SPRITES_OBSTACLES + "tornado-animated-64x64.png";
     private AnimationClip animationClip;
+    private static double limStartX = 0;
+    private static double limStartY = 0;
+    private static double limEndX = WIDTH;
+    private static double limEndY = HEIGHT;
+    private int damageMultiplier;
 
     //todo: bug spawns at the upper left corner of the screen
-    public Obstacle() {
+    public Obstacle(int DmgMultiplier) {
         super(FILE_TORNADO);
-
+        damageMultiplier = DmgMultiplier;
         setUpRandMov();
 
         animationClip = new AnimationClip(
@@ -49,16 +57,30 @@ public class Obstacle extends GameObject {
 
     private Path getRandPath() {
         Random rand = new Random();
-        final int startX = rand.nextInt(WIDTH);
-        final int startY = rand.nextInt(HEIGHT);
+        int startX = rand.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
+        int startY = rand.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
+        int EndX = rand.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
+        int EndY = rand.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
 
+        Point2D start = new Point2D(startX, startY);
+        Point2D end = new Point2D(EndX, EndY);
+
+        while (start.distance(end) < 400) {
+            startX = rand.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
+            startY = rand.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
+            EndX = rand.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
+            EndY = rand.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
+
+            start = new Point2D(startX, startY);
+            end = new Point2D(EndX, EndY);
+        }
         final Path path = new Path();
         path.getElements().addAll(
                 new MoveTo(startX, startY),
                 new QuadCurveTo(
                         startX,
                         startY,
-                        rand.nextInt(WIDTH), rand.nextInt(HEIGHT)));
+                        EndX, EndY));
         path.setOpacity(0);
         return path;
     }
@@ -66,5 +88,24 @@ public class Obstacle extends GameObject {
     @Override
     public void update() {
         animationClip.animate();
+        playerCollisionCheck(GameViewManager.getPlayer());
+    }
+
+    public void setDamageMultiplier(int multiplier) {
+        damageMultiplier = multiplier;
+    }
+
+    public static void setMapLimits(double StartX, double EndX, double StartY, double EndY) {
+        limStartX = StartX;
+        limEndX = EndX;
+        limStartY = StartY;
+        limEndY = EndY;
+    }
+
+    public void playerCollisionCheck(Player player) {
+        if (isIntersects(player)) {
+            player.takeDmg(damageMultiplier * 1);
+            GameViewManager.removeGameObjectFromScene(this);
+        }
     }
 }

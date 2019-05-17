@@ -52,7 +52,7 @@ public class LevelManager {//todo temp static
         if (nextObstaclesSpawnTime < System.currentTimeMillis() && isSpawnable()) {
             nextObstaclesSpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_OBSTACLES);
 
-            GameViewManager.addGameObjectTOScene(new Obstacle());
+            GameViewManager.addGameObjectTOScene(new Obstacle(1));
         }
     }
     public static void createPowerUp() {//todo implement timer
