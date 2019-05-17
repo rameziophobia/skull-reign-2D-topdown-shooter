@@ -53,7 +53,7 @@ public class MenuScene extends Scene {
     private void createScene() {
         menuBackground = new MenuBackground();
 
-        AudioManager.playAudio(AudioFile.MENU_MUSIC);
+        AudioManager.playAudio(AudioFile.MENU_MUSIC,0.3);
 
         Rectangle blackScreen = new Rectangle(1280, 720, Color.BLACK);//todo width and height
         blackScreen.setOpacity(0);

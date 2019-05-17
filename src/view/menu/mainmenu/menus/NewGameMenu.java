@@ -21,6 +21,7 @@ public class NewGameMenu extends Menu {
         MenuButton new_campaign = new MenuButton("New Campaign");
         new_campaign.setOnAnimationEndAction(() -> {
             AudioManager.stopAudio(AudioFile.MENU_MUSIC);
+            AudioManager.playAudio(AudioFile.GAME_MUSIC_BASIC,0.08);
             menuScene.stopLoop();
             createGameViewManager();
             gameViewManager.createNewGame(PlayerType.ROBOT, menuScene.getPlayerName());
