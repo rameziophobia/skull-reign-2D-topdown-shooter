@@ -2,8 +2,6 @@ package view;
 
 import controller.InputManager;
 import controller.LevelManager;
-import controller.map.Map;
-import controller.map.MapLoader;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -18,7 +16,6 @@ import model.enemies.Enemy;
 import model.player.Player;
 import model.player.PlayerType;
 import model.ui.game.ScoreLabel;
-import model.ui.game.levelUI;
 import model.wall.Wall;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
@@ -40,7 +37,7 @@ public class GameViewManager {
     private static Stage gameStage;
     private static Player player;
     private static Label lbl_currentScore;
-    private GameUI GVUI;
+    private GameUI gameUI;
     private static AnimationTimer gameLoop;
     private LevelManager levelManager;
 
@@ -59,15 +56,9 @@ public class GameViewManager {
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(true);
 
-        levelUI waveui = new levelUI("Wave", 6, 30);
-        waveui.addUIToGame();
-
-        levelUI levelui = new levelUI("Level", 10, 0);
-        levelui.addUIToGame();
-
         setWindowScaling();
 
-        GVUI = new GameUI(mainPane);
+        gameUI = new GameUI(mainPane);
 
         gameEnded = false;
         gameEnd = new GameEnd();
@@ -111,19 +102,19 @@ public class GameViewManager {
 
         createPlayer(chosenPlayer, playerName);
 
-        levelManager = new LevelManager();
+        levelManager = new LevelManager(gameUI.getLevelLabel(), gameUI.getWaveLabel());
         startGameLoop();
     }
 
     private void createPlayer(PlayerType chosenPlayer, String playerName) {
-        player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
+        player = new Player(chosenPlayer, gameUI.getHealthBars().getHPRectangle(), gameUI.getHealthBars().getShieldRectangle());
         player.setName(playerName);
         mainPane.addToGamePane(player);
     }
 
     private void createUI() {
-        mainPane.addToUIPane(GVUI.getGroup());
-        mainPane.addToUIPane(GVUI.getHealthBars());
+        mainPane.addToUIPane(gameUI.getGroup());
+        mainPane.addToUIPane(gameUI.getHealthBars());
         createScoreLabel();
     }
 

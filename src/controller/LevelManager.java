@@ -9,6 +9,7 @@ import model.level.Wave;
 import model.player.Player;
 import model.projectiles.ProjectileType;
 import model.spawner.SpawnPoint;
+import model.ui.game.CounterLabel;
 import model.wall.Wall;
 import view.GameViewManager;
 
@@ -27,7 +28,12 @@ public class LevelManager {
     private Level currentLevel;
     private ArrayList<SpawnPoint> currentSpawnPoints;
 
-    public LevelManager() {
+    private CounterLabel levelLabel, waveLabel;
+
+    public LevelManager(CounterLabel levelLabel, CounterLabel waveLabel) {
+        this.levelLabel = levelLabel;
+        this.waveLabel = waveLabel;
+
         enemyArrayList = new ArrayList<>();
         wallArrayList = new ArrayList<>();
 
@@ -99,7 +105,7 @@ public class LevelManager {
                 new MapLoader(Map.LEVEL_02)
         );
 
-        loadLevel();
+        spawnNextLevel();
     }
 
     public void addEnemy(Enemy enemy) {
@@ -116,15 +122,15 @@ public class LevelManager {
                 && enemyArrayList.size() == 0) {
             if (currentWaveIndex + 1 == levels[currentLevelIndex].getWaves().length) {
                 if (currentLevelIndex + 1 < levels.length) {
-//                    System.out.println("lvl Increased " + currentLevelIndex);
-//                    System.out.println("Wave reset " + currentWaveIndex);
+                    levelLabel.incrementUICounterWithAnimation();
+                    waveLabel.setUICounter(1);
                     currentLevelIndex++;
                     currentWaveIndex = 0;
                     currentEnemyIndex = 0;
                     loadLevel();
                 }
             } else {
-//                System.out.println("Wave Increased " + currentWaveIndex);
+                waveLabel.incrementUICounterWithAnimation();
                 currentWaveIndex++;
                 currentEnemyIndex = 0;
             }
@@ -134,22 +140,26 @@ public class LevelManager {
     }
 
     private void loadLevel() {
+        removeLastLevel();
+        spawnNextLevel();
+    }
+
+    private void removeLastLevel() {
+        final MapLoader mapLoader = levels[currentLevelIndex - 1].getMapLoader();
+        GameViewManager.getMainPane().removeAllFromFrontPane(mapLoader.getFrontNodes());
+        GameViewManager.getMainPane().removeAllFromBackPane(mapLoader.getBackNodes());
+
+        mapLoader.getWallNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
+        wallArrayList.removeAll(mapLoader.getWallNodes());
+        mapLoader.getSpawnPointsNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
+
+        levels[currentLevelIndex - 1] = null;
+    }
+
+    private void spawnNextLevel() {
         Player player = GameViewManager.getPlayer();
         player.setLayoutX(GameViewManager.CENTER_X);
         player.setLayoutY(GameViewManager.CENTER_Y);
-
-
-        if (currentLevelIndex != 0) {//todo -.-
-            final MapLoader mapLoader = levels[currentLevelIndex - 1].getMapLoader();
-            GameViewManager.getMainPane().removeAllFromFrontPane(mapLoader.getFrontNodes());
-            GameViewManager.getMainPane().removeAllFromBackPane(mapLoader.getBackNodes());
-
-            System.out.println(mapLoader.getBackNodes().size());
-
-            mapLoader.getWallNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
-            wallArrayList.removeAll(mapLoader.getWallNodes());
-            mapLoader.getSpawnPointsNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
-        }
 
         currentLevel = levels[currentLevelIndex];
         final MapLoader mapLoader = currentLevel.getMapLoader();
