@@ -13,11 +13,8 @@ import view.GameViewManager;
 import java.util.ArrayList;
 
 public class LevelManager {
-
     private final ArrayList<Enemy> enemyArrayList;
     private final ArrayList<Wall> wallArrayList;
-
-    private boolean spawnable = true;//todo ?
 
     private Level[] levels;
 
@@ -200,14 +197,6 @@ public class LevelManager {
     }
 
     public void createPowerUp() {
-    }
-
-    public boolean isSpawnable() {
-        return spawnable;
-    }
-
-    public void setSpawnable(boolean state) {
-        spawnable = state;
     }
 
     public ArrayList<Enemy> getEnemyArrayList() {

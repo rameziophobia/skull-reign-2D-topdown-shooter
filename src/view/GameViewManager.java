@@ -25,7 +25,7 @@ import view.menu.mainmenu.menus.HallOfFameMenu;
 import java.util.ArrayList;
 
 public class GameViewManager {
-    public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
+    public static final int HEIGHT = 1080;
     public static final int WIDTH = 1920;
 
     public static final int CENTER_X = WIDTH / 2;
@@ -58,10 +58,10 @@ public class GameViewManager {
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(true);
 
-        levelUI waveui = new levelUI("Wave",6,30);
+        levelUI waveui = new levelUI("Wave", 6, 30);
         waveui.addUIToGame();
 
-        levelUI levelui = new levelUI("Level",10,0);
+        levelUI levelui = new levelUI("Level", 10, 0);
         levelui.addUIToGame();
 
         setWindowScaling();
@@ -105,11 +105,6 @@ public class GameViewManager {
                 0, 0));//todo
     }
 
-    @Deprecated
-    public void createNewGame(PlayerType chosenPlayer) {
-        createNewGame(chosenPlayer, "");
-    }
-
     public void createNewGame(PlayerType chosenPlayer, String playerName) {
         Main.switchToGame();
 
@@ -123,7 +118,6 @@ public class GameViewManager {
         player = new Player(chosenPlayer, GVUI.getHealthBars().getHPRectangle(), GVUI.getHealthBars().getShieldRectangle());
         player.setName(playerName);
         mainPane.addToGamePane(player);
-        player.toBack();
     }
 
     private void createUI() {
@@ -137,7 +131,7 @@ public class GameViewManager {
         gameLoop.start();
     }
 
-    public void createScoreLabel() {
+    private void createScoreLabel() {
         lbl_currentScore = new ScoreLabel(); //todo move to GameUI
         mainPane.addToUIPane(lbl_currentScore);
     }
@@ -174,14 +168,6 @@ public class GameViewManager {
 
     public ArrayList<Wall> getWallArrayList() {
         return levelManager.getWallArrayList();
-    }
-
-    public void setSpawnable(boolean state) {
-        levelManager.setSpawnable(state);
-    }
-
-    public boolean isSpawnable() {
-        return levelManager.isSpawnable();
     }
 
     public void removeEnemy(Enemy enemy) {

@@ -94,7 +94,7 @@ public class Projectile extends GameObject {
     }
 
     private void checkCollision_wall() {
-        for (Wall wall: GameViewManager.getInstance().getWallArrayList()) {
+        for (Wall wall : GameViewManager.getInstance().getWallArrayList()) {
             if (isIntersects(wall)) {
                 GameViewManager.getMainPane().removeFromGamePane(this);
             }

@@ -49,5 +49,6 @@ public abstract class GameObject extends ImageView {
     }
 
     public abstract void update();
+
     public abstract Node[] getChildren();
 }

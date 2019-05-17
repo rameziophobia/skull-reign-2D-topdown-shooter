@@ -102,7 +102,7 @@ public class AnimationClip {
         reset(1);
     }
 
-    public void reset(int repeats){
+    public void reset(int repeats) {
         currentFrame = 0;
         this.repeats = repeats;
     }

@@ -40,7 +40,7 @@ public class GameUI {
     }
 
     public static void setCrosshair(Pane pane) {
-        Image image = new Image("file:resources/sprites/crosshair/crosshair177.png"); // todo use path constants
+        Image image = new Image(Main.PATH_RESOURCES_SPRITES + "crosshair/crosshair177.png"); // todo use path constants
         pane.setCursor(new ImageCursor(image,
                 image.getWidth() / 2,
                 image.getHeight() / 2));

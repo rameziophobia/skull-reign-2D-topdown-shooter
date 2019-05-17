@@ -170,18 +170,22 @@ public class Enemy extends Entity {
     }
 
     private void checkAlive() {
-        if (hp <= 0 || !GameViewManager.getInstance().isSpawnable()) {
-            if (hp <= 0) {
-                Player.increaseCurrentScore(this.getScoreValue());
-                lbl_floatingScore.setText("+" + this.getScoreValue());
-                lbl_floatingScore.setLayoutX(this.getLayoutX());
-                lblmover.setFromY(this.getLayoutY());
-                GameViewManager.getMainPane().addToUIPane(lbl_floatingScore);
-                floatingScoreTransition.play();
-            }
+        if (hp <= 0) {
+            showFloatingScore();
+
+            Player.increaseCurrentScore(this.getScoreValue());
+
             GameViewManager.getMainPane().removeFromGamePane(this);
-        GameViewManager.getInstance().removeEnemy(this);
+            GameViewManager.getInstance().removeEnemy(this);
         }
+    }
+
+    private void showFloatingScore() {
+        lbl_floatingScore.setText("+" + this.getScoreValue());
+        lbl_floatingScore.setLayoutX(this.getLayoutX());
+        lblmover.setFromY(this.getLayoutY());
+        GameViewManager.getMainPane().addToUIPane(lbl_floatingScore);
+        floatingScoreTransition.play();
     }
 
     @Override

@@ -238,7 +238,6 @@ public class Player extends Entity {
     }
 
     public void killPlayer() {
-        GameViewManager.getInstance().setSpawnable(false);
         GameViewManager.endGameSequence();
     }
 
