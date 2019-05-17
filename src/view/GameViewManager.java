@@ -7,6 +7,12 @@ import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.layout.Pane;
 import javafx.scene.transform.Scale;
 import javafx.stage.Screen;
@@ -39,6 +45,15 @@ public class GameViewManager {
         gameScene = new Scene(mainPane, WIDTH, HEIGHT);
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(true);
+
+        GameUI.createBackground(gamePane);
+        GameUI.setCrosshair(gamePane);
+
+        levelUI waveui = new levelUI("Wave",6,30);
+        waveui.addUIToGame(gamePane);
+
+        levelUI levelui = new levelUI("Level",10,0);
+        levelui.addUIToGame(gamePane);
 
         setWindowScaling();
 

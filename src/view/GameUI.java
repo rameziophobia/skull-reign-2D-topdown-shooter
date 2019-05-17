@@ -45,5 +45,4 @@ public class GameUI {
                 image.getWidth() / 2,
                 image.getHeight() / 2));
     }
-
 }
