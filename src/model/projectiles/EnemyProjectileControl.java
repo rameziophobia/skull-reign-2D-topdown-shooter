@@ -5,10 +5,7 @@ import view.GameViewManager;
 
 import java.util.ArrayList;
 
-import static view.GameViewManager.addGameObjectTOScene;
-
 public class EnemyProjectileControl {
-
     private Point2D spawner;
 
     private long[] patternRate = new long[5];
@@ -44,22 +41,22 @@ public class EnemyProjectileControl {
         }
     }
 
-    public void setPatternRate(PatternRate pattern, long rate){
+    public void setPatternRate(PatternRate pattern, long rate) {
         patternRate[pattern.getIndex()] = rate;
     }
 
-    public void addRing1by1(long rate, float ringAngle1by1){
-        setPatternRate(PatternRate.RING1BY1,rate);
-        this.ringAngle1by1 =  ringAngle1by1;
+    public void addRing1by1(long rate, float ringAngle1by1) {
+        setPatternRate(PatternRate.RING1BY1, rate);
+        this.ringAngle1by1 = ringAngle1by1;
     }
 
-    public void addSpawnToPlayer(long rate){
-        setPatternRate(PatternRate.toPlayer,rate);
+    public void addSpawnToPlayer(long rate) {
+        setPatternRate(PatternRate.toPlayer, rate);
     }
 
-    public void addSpawnRing(long rate, float ringAngle){
-        setPatternRate(PatternRate.RING,rate);
-        this.ringAngle =  ringAngle;
+    public void addSpawnRing(long rate, float ringAngle) {
+        setPatternRate(PatternRate.RING, rate);
+        this.ringAngle = ringAngle;
     }
 
     public void spawnRing() {
@@ -74,7 +71,7 @@ public class EnemyProjectileControl {
                 projArrTest.add(projectile);
             }
             lastFireTime[i] = timeNow;
-            projArrTest.forEach(GameViewManager::addGameObjectTOScene);
+            projArrTest.forEach(projectile -> GameViewManager.getMainPane().addToGamePane(projectile));
         }
 
     }
@@ -86,7 +83,7 @@ public class EnemyProjectileControl {
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
             angle1by1 += ringAngle1by1; //todo: magicNum
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1, true);
-            addGameObjectTOScene(projectile);
+            GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;
         }
     }
@@ -97,7 +94,7 @@ public class EnemyProjectileControl {
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
             Projectile projectile = new Projectile(spawner, type, angle, true);
-            addGameObjectTOScene(projectile);
+            GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;
         }
     }

@@ -38,12 +38,13 @@ public class Main extends Application {
         stage.close();
     }
 
-    public static void switchToMainMenu(){
+    public static void switchToMainMenu() {
         stage.show();
         menuScene.startLoop();
         GameViewManager.getGameStage().hide();
     }
-    public static void switchToGame(){
+
+    public static void switchToGame() {
         stage.hide();
         GameViewManager.getGameStage().show();
     }
