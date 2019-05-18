@@ -4,12 +4,12 @@ import controller.audiomanager.AudioFile;
 import controller.audiomanager.AudioManager;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
+import controller.InputManager;
 import model.Entity;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
 import model.wall.Wall;
 import view.GameViewManager;
-import controller.InputManager;
 import view.LevelManager;
 import view.game.stats.StatBar;
 
@@ -41,8 +41,8 @@ public class Player extends Entity {
     public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change it to said's char mn 8er rotation
         super(player.getURL(), SPEED);
 
-        setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2);
-        setLayoutY((GameViewManager.HEIGHT >> 1) - getFitHeight() / 2);
+        setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2 - 300);
+        setLayoutY((GameViewManager.HEIGHT >> 1) - getFitHeight() / 2 - 300);
 
         HPRectangle = HPBar;
         ShieldRectangle = ShieldBar;
@@ -142,11 +142,11 @@ public class Player extends Entity {
         AudioManager.playNewAudio(AudioFile.HURT, 1);
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
-            barScaleAnimator(ShieldRectangle);
+            ShieldRectangle.barScaleAnimator(MAX_HP);
             currentShield = ShieldRectangle.getCurrentValue();
         } else {
             HPRectangle.decreaseCurrent(dmg);
-            barScaleAnimator(HPRectangle);
+            HPRectangle.barScaleAnimator(MAX_SHIELD);
             currentHp = HPRectangle.getCurrentValue();
         }
         if (currentHp <= 0)
@@ -156,21 +156,12 @@ public class Player extends Entity {
     @Override
     public void heal(float amount) {
         HPRectangle.increaseCurrent(amount);
-        barScaleAnimator(HPRectangle);
+        HPRectangle.barScaleAnimator(MAX_HP);
     }
 
     public void shieldRegen() {
         ShieldRectangle.regeneration();
-        barScaleAnimator(ShieldRectangle);
-    }
-
-    private void barScaleAnimator(StatBar HP) {//todo change paramaters to StatBar only
-        //todo this shouldn't be here
-        ScaleTransition HPAnimation = new ScaleTransition(Duration.seconds(0.1), HP);
-
-        HPAnimation.setToX((HP.getCurrentValue()) / MAX_HP);
-
-        HPAnimation.play();
+        ShieldRectangle.barScaleAnimator(MAX_SHIELD);
     }
 
     public PlayerProjectileControl getPrimaryBtnHandler() {

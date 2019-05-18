@@ -2,15 +2,15 @@ package model.enemies;
 
 import controller.audiomanager.AudioFile;
 import controller.audiomanager.AudioManager;
+import controller.animation.AnimationClip;
+import controller.animation.SpriteSheet;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Path;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.Entity;
 import model.player.Player;
@@ -26,46 +26,53 @@ public class Enemy extends Entity {
     private static final Duration FLOATING_SCORE_FADE_DURATION = Duration.millis(1250);
     private static final Font FLOATING_SCORE_FONT = Font.font("Arial", FontWeight.BOLD, 35);
     private static final double FLOATING_SCORE_TRANSLATE_Y_BY = -65.0;
-    private final double MAX_HP;
-    private final Text damageTxt = new Text("");
+    protected final double MAX_HP;
     private final Label lbl_floatingScore;
     private final TranslateTransition lblmover;
     private final ParallelTransition floatingScoreTransition;
+    private AnimationClip animationClip;
 
     private EnemyType enemyType;
-    private double angle;
+    double angle;
     private double randomAngle = Math.random() * 360;
 
-    private Path path = new Path();
     private double minDistance;
-    private long lastMoved;
-    private long moveInterval = 999999999;
+    private long moveInterval;
+    private boolean intervalExists = false;
     private MoveMode mode;
 
-    private double hp;
+    protected double hp;
 
     private EnemyProjectileControl enemyProjectileControl;
-    private boolean bool;
     private long nextMove;
     private boolean farFromPlayer;
     private short randomSign;
+    protected boolean boss;
 
     public enum MoveMode {stationary, followPlayer, random, circular}
 
-    public Enemy(EnemyType enemyType, ProjectileType projectileType, MoveMode mode, double minDistance, long move_interval_ms) {
-        this(enemyType, projectileType, mode, minDistance);
+    public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode, double minDistance, long move_interval_ms) {
+        this(enemyType, projectileType, projectileControlType, mode, minDistance);
         this.moveInterval = move_interval_ms;
+        this.intervalExists = true;
     }
 
-    public Enemy(EnemyType enemyType, ProjectileType projectileType, MoveMode mode, double minDistance) {
-        this(enemyType, projectileType, mode);
+    public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode, double minDistance) {
+        this(enemyType, projectileType, projectileControlType, mode);
         this.minDistance = minDistance;
     }
 
-    public Enemy(EnemyType enemyType, ProjectileType projectileType, MoveMode mode) {
-        super(enemyType.getURL(), enemyType.getSPEED());
-
+    public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode) {
+        this(enemyType);
         this.mode = mode;
+        this.enemyProjectileControl = new EnemyProjectileControl(projectileType);
+        enemyProjectileControl.addPulse(projectileControlType.getPulseRate(), projectileControlType.getPulseAngle());
+        enemyProjectileControl.addSpawnToPlayer(projectileControlType.getToPlayerRate());
+        enemyProjectileControl.addRing1by1(projectileControlType.getRing1by1Rate(), projectileControlType.getRing1by1Angle());
+    }
+
+    public Enemy(EnemyType enemyType) {
+        super(enemyType.getURL(), enemyType.getSPEED());
         this.enemyType = enemyType;
         this.MAX_HP = enemyType.getHP();
         Random r = new Random();
@@ -75,7 +82,6 @@ public class Enemy extends Entity {
         Random rand = new Random();
         setLayoutY(height + rand.nextInt(GameViewManager.HEIGHT - 2 * height - 10));
         setLayoutX(width + rand.nextInt(GameViewManager.WIDTH - 2 * width - 10));
-        enemyProjectileControl = new EnemyProjectileControl(projectileType);
 
         lbl_floatingScore = new Label("");
         lbl_floatingScore.setFont(FLOATING_SCORE_FONT);
@@ -90,6 +96,17 @@ public class Enemy extends Entity {
 
         floatingScoreTransition = new ParallelTransition(lbl_floatingScore, lblfader, lblmover);
         floatingScoreTransition.setOnFinished(e -> GameViewManager.getMainPane().removeFromUIPane(lbl_floatingScore));
+
+        if (enemyType.isANIMATED()) {
+            this.animated = true;
+            SpriteSheet spriteSheet = new SpriteSheet(enemyType.getURL(), 0);
+            animationClip = new AnimationClip(spriteSheet,
+                    spriteSheet.getFrameCount() * 1.2f,
+                    false,
+                    AnimationClip.INF_REPEATS,
+                    this);
+            animationClip.animate();
+        }
     }
 
     public EnemyProjectileControl getEnemyProjectileControl() {
@@ -98,6 +115,7 @@ public class Enemy extends Entity {
 
     @Override
     public void takeDmg(double dmg) {
+
         this.hp -= dmg;
     }
 
@@ -122,10 +140,9 @@ public class Enemy extends Entity {
         this.mode = mode;
     }
 
-    private void move() {
+    protected void move() {
 
-        if (System.currentTimeMillis() % (moveInterval * 2) > moveInterval && farFromPlayer) {
-
+        if ((!intervalExists || System.currentTimeMillis() % (moveInterval * 2) > moveInterval) && farFromPlayer) {
             switch (mode) {
                 case followPlayer: {
                     moveImageView(angle);
@@ -171,32 +188,38 @@ public class Enemy extends Entity {
 
     }
 
-    private void checkAlive() {
-        if (hp <= 0 || !LevelManager.isSpawnable()) {
-            if (hp <= 0) {
-                AudioManager.playNewAudio(AudioFile.ENEMY_DEATH,0.15);
-                Player.increaseCurrentScore(this.getScoreValue());
-                lbl_floatingScore.setText("+" + this.getScoreValue());
-                lbl_floatingScore.setLayoutX(this.getLayoutX());
-                lblmover.setFromY(this.getLayoutY());
-                GameViewManager.getMainPane().addToUIPane(lbl_floatingScore);
-                floatingScoreTransition.play();
-            }
+    protected void checkAlive() {
+        if (hp <= 0) {
+            showFloatingScore();
+            AudioManager.playNewAudio(AudioFile.ENEMY_DEATH,0.15);
+            Player.increaseCurrentScore(this.getScoreValue());
             GameViewManager.getMainPane().removeFromGamePane(this);
             LevelManager.removeEnemy(this);
         }
     }
 
+
+    protected void showFloatingScore() {
+        lbl_floatingScore.setText("+" + this.getScoreValue());
+        lbl_floatingScore.setLayoutX(this.getLayoutX());
+        lblmover.setFromY(this.getLayoutY());
+        GameViewManager.getMainPane().addToUIPane(lbl_floatingScore);
+        floatingScoreTransition.play();
+    }
+
     @Override
     public void update() {
         updateAngle();
-        setRotate(angle);
         calculateDistance();
-        move();
-
-        enemyProjectileControl.update(angle, getSpawner());
-
+        if (!boss) {
+            setRotate(angle);
+            move();
+            enemyProjectileControl.update(angle, getSpawner());
+        }
         checkAlive();
+        if (animated) {
+            animationClip.animate();
+        }
     }
 
     public int getScoreValue() {
