@@ -3,12 +3,12 @@ package model.projectiles;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.transform.Rotate;
 import model.GameObject;
 import model.enemies.Enemy;
 import model.wall.Wall;
 import view.GameViewManager;
-import view.LevelManager;
 
 public class Projectile extends GameObject {
 
@@ -83,7 +83,7 @@ public class Projectile extends GameObject {
                 GameViewManager.getMainPane().removeFromGamePane(this);
             }
         } else {
-            for (Enemy enemy : LevelManager.getEnemyArrayList()) {
+            for (Enemy enemy : GameViewManager.getInstance().getEnemyArrayList()) {
                 if (isIntersects(enemy)) {
                     enemy.takeDmg(getDamage());
                     GameViewManager.getMainPane().removeFromGamePane(this);
@@ -100,8 +100,8 @@ public class Projectile extends GameObject {
     }
 
     private void checkCollision_wall() {
-        for (Wall wall : LevelManager.getWallArrayList()) {
-            if (isIntersects(wall) && !skull) {
+        for (Wall wall : GameViewManager.getInstance().getWallArrayList()) {
+            if (isIntersects(wall)) {
                 GameViewManager.getMainPane().removeFromGamePane(this);
             }
         }
@@ -120,5 +120,8 @@ public class Projectile extends GameObject {
         //todo: check range
     }
 
-
+    @Override
+    public Node[] getChildren() {
+        return null;
+    }
 }

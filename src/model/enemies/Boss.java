@@ -8,7 +8,6 @@ import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
 import view.GameViewManager;
-import view.LevelManager;
 import view.game.stats.StatBar;
 
 import static view.GameViewManager.HEIGHT;
@@ -154,7 +153,7 @@ public class Boss extends Enemy {
         if (hp <= 0 && currentStage.index < stage.index) {
             super.checkAlive();
             Boss b = new Boss(stage, EnemyStageEnum.getEnemyStage(currentStage.index + 1));
-            LevelManager.getEnemyArrayList().add(b);
+            GameViewManager.getInstance().getEnemyArrayList().add(b);
             GameViewManager.getMainPane().addToGamePane(b);
         } else if (hp <= 0 && currentStage.index >= stage.index) {
             System.out.println(currentStage.index + " " + stage.index);

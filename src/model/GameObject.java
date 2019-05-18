@@ -1,6 +1,7 @@
 package model;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -48,4 +49,6 @@ public abstract class GameObject extends ImageView {
     }
 
     public abstract void update();
+
+    public abstract Node[] getChildren();
 }

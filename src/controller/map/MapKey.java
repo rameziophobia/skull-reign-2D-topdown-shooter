@@ -24,7 +24,8 @@ public enum MapKey {
     EMPTY("000000"),
     GROUND("422835"),
     WALL_END_LEFT("097309"),
-    WALL_END_RIGHT("075407");
+    WALL_END_RIGHT("075407"),
+    SPAWNER("ad171e");
 
     private static final HashMap<Color, MapKey> COLOR_MAP_KEY_HASH_MAP;
 

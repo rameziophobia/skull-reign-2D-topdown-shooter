@@ -17,14 +17,14 @@ public enum EnemyType {
     private float SPEED;
     private float HP;
     private int SCORE;
-    private boolean animated;
+    private boolean ANIMATED;
 
-    EnemyType(String s, float speed, float hp, int score, boolean animated) {
+    EnemyType(String s, float speed, float hp, int score, boolean ANIMATED) {
         URL = Constants.PATH_RESOURCES_SPRITES_ENEMY + s;
         SPEED = speed;
         HP = hp;
         SCORE = score;
-        this.animated = animated;
+        this.ANIMATED = ANIMATED;
     }
 
     public String getURL() {
@@ -44,7 +44,7 @@ public enum EnemyType {
     }
 
     public boolean isANIMATED() {
-        return animated;
+        return ANIMATED;
     }
 
     private static class Constants {

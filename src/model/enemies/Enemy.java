@@ -5,6 +5,7 @@ import controller.animation.SpriteSheet;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -15,7 +16,6 @@ import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
 import view.GameViewManager;
-import view.LevelManager;
 
 import java.util.Random;
 
@@ -25,6 +25,7 @@ public class Enemy extends Entity {
     private static final Font FLOATING_SCORE_FONT = Font.font("Arial", FontWeight.BOLD, 35);
     private static final double FLOATING_SCORE_TRANSLATE_Y_BY = -65.0;
     protected final double MAX_HP;
+
     private final Label lbl_floatingScore;
     private final TranslateTransition lblmover;
     private final ParallelTransition floatingScoreTransition;
@@ -47,7 +48,7 @@ public class Enemy extends Entity {
     private short randomSign;
     protected boolean boss;
 
-    public enum MoveMode {stationary, followPlayer, random, circular}
+    public enum MoveMode {STATIONARY, FOLLOW_PLAYER, RANDOM, CIRCULAR}
 
     public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode, double minDistance, long move_interval_ms) {
         this(enemyType, projectileType, projectileControlType, mode, minDistance);
@@ -59,6 +60,7 @@ public class Enemy extends Entity {
         this(enemyType, projectileType, projectileControlType, mode);
         this.minDistance = minDistance;
     }
+
 
     public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode) {
         this(enemyType);
@@ -142,16 +144,16 @@ public class Enemy extends Entity {
 
         if ((!intervalExists || System.currentTimeMillis() % (moveInterval * 2) > moveInterval) && farFromPlayer) {
             switch (mode) {
-                case followPlayer: {
+                case FOLLOW_PLAYER: {
                     moveImageView(angle);
                     break;
                 }
-                case circular: {
+                case CIRCULAR: {
                     moveImageView(angle + 90 * randomSign);
                     break;
                 }
                 //todo remove it if it looks stupid with the new assets
-                case random: {
+                case RANDOM: {
 
                     if (nextMove < System.currentTimeMillis()) {
                         randomAngle = -30 + Math.random() * 30;
@@ -161,7 +163,7 @@ public class Enemy extends Entity {
                     break;
                 }
                 default:
-                case stationary: {
+                case STATIONARY: {
                     break;
                 }
             }
@@ -191,7 +193,7 @@ public class Enemy extends Entity {
             showFloatingScore();
             Player.increaseCurrentScore(this.getScoreValue());
             GameViewManager.getMainPane().removeFromGamePane(this);
-            LevelManager.removeEnemy(this);
+            GameViewManager.getInstance().removeEnemy(this);
         }
     }
 
@@ -217,6 +219,11 @@ public class Enemy extends Entity {
         if (animated) {
             animationClip.animate();
         }
+    }
+
+    @Override
+    public Node[] getChildren() {
+        return null;
     }
 
     public int getScoreValue() {
