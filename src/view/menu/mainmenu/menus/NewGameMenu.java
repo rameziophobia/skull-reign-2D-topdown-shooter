@@ -17,23 +17,35 @@ public class NewGameMenu extends Menu {
         Label lbl_newGameMenu = MenuScene.createMenuTitle("Choose Game Type");
 
         MenuButton new_campaign = new MenuButton("New Campaign");
+
+        MenuButton endless = new MenuButton("Endless");
+
         new_campaign.setOnAnimationEndAction(() -> {
             menuScene.stopLoop();
-            createGameViewManager();
+            createGameViewManager(false);
             gameViewManager.createNewGame(PlayerType.ROBOT, menuScene.getPlayerName());
             new_campaign.setTranslateY(0);
             new_campaign.setOpacity(1);
+        });
+        endless.setOnAnimationEndAction(() -> {
+            menuScene.stopLoop();
+            createGameViewManager(true);
+            gameViewManager.createNewGame(PlayerType.ROBOT, menuScene.getPlayerName());
+            endless.setTranslateY(0);
+            endless.setOpacity(1);
+
         });
 
         addNodeAll(
                 lbl_newGameMenu,
                 new_campaign,
-                new MenuButton("Endless"),
+                endless,
                 new MenuButtonTransition("Back", this, Menus.CUSTOMIZATION));
     }
 
-    private void createGameViewManager() {
-        gameViewManager = new GameViewManager();
+    private void createGameViewManager(Boolean endless) {
+        gameViewManager = new GameViewManager(endless);
     }
 
 }
+

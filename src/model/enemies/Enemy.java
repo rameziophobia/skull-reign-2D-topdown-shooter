@@ -15,9 +15,14 @@ import model.Entity;
 import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
+import controller.map.Map;
+import model.wall.Wall;
 import view.GameViewManager;
 
 import java.util.Random;
+
+import static view.GameViewManager.HEIGHT;
+import static view.GameViewManager.WIDTH;
 
 public class Enemy extends Entity {
     private static final Duration FLOATING_SCORE_TRANSLATE_DURATION = Duration.millis(1500);
@@ -25,7 +30,6 @@ public class Enemy extends Entity {
     private static final Font FLOATING_SCORE_FONT = Font.font("Arial", FontWeight.BOLD, 35);
     private static final double FLOATING_SCORE_TRANSLATE_Y_BY = -65.0;
     protected final double MAX_HP;
-
     private final Label lbl_floatingScore;
     private final TranslateTransition lblmover;
     private final ParallelTransition floatingScoreTransition;
@@ -39,8 +43,14 @@ public class Enemy extends Entity {
     private long moveInterval;
     private boolean intervalExists = false;
     private MoveMode mode;
+    private Boolean disableRotate = false;
 
     protected double hp;
+
+    private static double limStartX = 0;
+    private static double limStartY = 0;
+    private static double limEndX = WIDTH;
+    private static double limEndY = HEIGHT;
 
     private EnemyProjectileControl enemyProjectileControl;
     private long nextMove;
@@ -51,7 +61,7 @@ public class Enemy extends Entity {
     public enum MoveMode {STATIONARY, FOLLOW_PLAYER, RANDOM, CIRCULAR}
 
     public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode, double minDistance, long move_interval_ms) {
-        this(enemyType, projectileType, projectileControlType, mode, minDistance);
+        this(enemyType,projectileType,projectileControlType, mode, minDistance);
         this.moveInterval = move_interval_ms;
         this.intervalExists = true;
     }
@@ -66,6 +76,7 @@ public class Enemy extends Entity {
         this(enemyType);
         this.mode = mode;
         this.enemyProjectileControl = new EnemyProjectileControl(projectileType);
+
         enemyProjectileControl.addPulse(projectileControlType.getPulseRate(), projectileControlType.getPulseAngle());
         enemyProjectileControl.addSpawnToPlayer(projectileControlType.getToPlayerRate());
         enemyProjectileControl.addRing1by1(projectileControlType.getRing1by1Rate(), projectileControlType.getRing1by1Angle());
@@ -80,8 +91,8 @@ public class Enemy extends Entity {
         hp = MAX_HP;
 
         Random rand = new Random();
-        setLayoutY(height + rand.nextInt(GameViewManager.HEIGHT - 2 * height - 10));
-        setLayoutX(width + rand.nextInt(GameViewManager.WIDTH - 2 * width - 10));
+        setLayoutY(limStartY +height + rand.nextInt((int)limEndY - 2* height - 10 - (int)(limStartY)));
+        setLayoutX(limStartX +width + rand.nextInt((int)limEndX - 2*width - 10 - (int)(limStartX)));
 
         lbl_floatingScore = new Label("");
         lbl_floatingScore.setFont(FLOATING_SCORE_FONT);
@@ -130,7 +141,6 @@ public class Enemy extends Entity {
                 getLayoutY() - GameViewManager.getPlayer().getLayoutY())
                 > minDistance;
     }
-
     private void updateAngle() {
         angle = Math.toDegrees(Math.atan2(GameViewManager.getPlayer().getLayoutY() - getLayoutY(),
                 GameViewManager.getPlayer().getLayoutX() - getLayoutX()));
@@ -138,6 +148,19 @@ public class Enemy extends Entity {
 
     public void setMoveMode(MoveMode mode) {
         this.mode = mode;
+    }
+    public static MoveMode getRandomMoveMode() {
+        Random random = new Random();
+        switch (random.nextInt(3)) {
+            case 0:
+                return MoveMode.STATIONARY;
+            case 1:
+                return MoveMode.CIRCULAR;
+            case 2:
+                return MoveMode.FOLLOW_PLAYER;
+            default:
+                return MoveMode.FOLLOW_PLAYER;
+        }
     }
 
     protected void move() {
@@ -169,22 +192,62 @@ public class Enemy extends Entity {
         }
 
     }
+    public static void setMapLimits(double StartX, double EndX, double StartY, double EndY){
+        limStartX = StartX;
+        limEndX = EndX;
+        limStartY = StartY;
+        limEndY = EndY;
+    }
 
-    private void moveImageView(double angle) {
-        double nextX = getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED();
-        double nextY = getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED();
+        private void moveImageView(double angle) {
+        double nextX =getLayoutX();
+        double nextY=getLayoutY();
+        disableRotate = false;
+        if(Math.cos(Math.toRadians(angle)) <0 && Wall.canMoveLeft(this, GameViewManager.getInstance().getWallArrayList())){
+            nextX = getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED();
+        }
+        if(Math.cos(Math.toRadians(angle)) >0 && Wall.canMoveRight(this,GameViewManager.getInstance().getWallArrayList())){
+            nextX = getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED();
+        }
+        if(Math.sin(Math.toRadians(angle)) > 0 && Wall.canMoveDown(this,GameViewManager.getInstance().getWallArrayList())){
+            nextY = getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED();
+        }
+        if(Math.sin(Math.toRadians(angle)) < 0 && Wall.canMoveUp(this,GameViewManager.getInstance().getWallArrayList())){
+            nextY = getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED();
+        }
+        if(nextX==getLayoutX()&&nextY>getLayoutY()){
+            disableRotate = true;
+            setRotate(90);
+        }
+        else if(nextX==getLayoutX()&&nextY<getLayoutY()){
+            disableRotate = true;
+            setRotate(-90);
+        }
+        else if(nextY==getLayoutY()&&nextX<getLayoutX()){
+            disableRotate = true;
+            setRotate(180);
+        }
+        else if(nextY==getLayoutY()&&nextX>getLayoutX()){
+            disableRotate = true;
+            setRotate(0);
+        }
 
-        if (nextX + 15 + width < GameViewManager.WIDTH && nextX > 15) {
+        if (nextX + 15 + width < WIDTH && nextX > 15) {
             setLayoutX(nextX);
         } else {
             randomSign *= -1;
         }
-        if (nextY + 15 + height < GameViewManager.HEIGHT && nextY > 15) {
+        if (nextY + 15 + height < HEIGHT && nextY > 15) {
             setLayoutY(nextY);
         } else {
             randomSign *= -1;
         }
 
+
+    }
+    @Override
+    public Node[] getChildren() {
+        return new Node[0];
     }
 
     protected void checkAlive() {
@@ -209,8 +272,11 @@ public class Enemy extends Entity {
     public void update() {
         updateAngle();
         calculateDistance();
-        if (!boss) {
-            setRotate(angle);
+        if(!boss){
+            if(!disableRotate){
+                setRotate(angle);
+            }
+
             move();
             enemyProjectileControl.update(angle, getSpawner());
         }
@@ -218,11 +284,6 @@ public class Enemy extends Entity {
         if (animated) {
             animationClip.animate();
         }
-    }
-
-    @Override
-    public Node[] getChildren() {
-        return null;
     }
 
     public int getScoreValue() {

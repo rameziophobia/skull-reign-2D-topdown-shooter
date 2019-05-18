@@ -158,6 +158,8 @@ public class Map {
         wall.setLayoutY(getY(i));
         if (reverse)
             wall.setScaleX(-1);
+
+
         wallNodes.add(wall);
 
         aiGrid[i][j] = 1;
