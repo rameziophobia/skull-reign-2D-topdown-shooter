@@ -41,13 +41,14 @@ public class Endless extends LevelManager {
         this.debug = debug;
         this.spawnCD = spawnCD;
 
-        final Map map = new Map("Map");
+        final Map map = new Map("Endless");
         GameViewManager.getMainPane().addAllToFrontPane(map.getFrontNodes());
         GameViewManager.getMainPane().addAllToBackPane(map.getBackNodes());
 
         map.getWallNodes().forEach(node -> GameViewManager.getMainPane().addToGamePane(node));
         GameViewManager.getInstance().getWallArrayList().addAll(map.getWallNodes());
 
+        GameViewManager.getPlayer().endlessStats();
         sortedEnemyTypes = Arrays.asList(EnemyType.values());
         sortedEnemyTypes.sort(Comparator.comparingInt(EnemyType::getPOWER));
 

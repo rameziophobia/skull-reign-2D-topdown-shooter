@@ -55,6 +55,8 @@ public class Player extends Entity {
                 PlayerProjectileControl.buttons.SECONDARY);
     }
 
+
+
     public String getName() {
         return name;
     }
@@ -77,6 +79,14 @@ public class Player extends Entity {
 
     public void setRightPressed(boolean rightPressed) {
         this.rightPressed = rightPressed;
+    }
+
+    public void endlessStats(){
+        MAX_HP=10000;
+        MAX_SHIELD=10000;
+
+        currentHp = MAX_HP;
+        currentHp = MAX_SHIELD;
     }
 
     private void move() {

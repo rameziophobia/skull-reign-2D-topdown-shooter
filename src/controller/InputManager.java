@@ -52,76 +52,12 @@ public class InputManager {
                     player.setRightPressed(true);
                     break;
                 }
-                case DIGIT1: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.EYEBALL);
-                    break;
-                }
-                case DIGIT2: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.FIREBALL);
-                    break;
-                }
-                case DIGIT3: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.FLAMEBALL);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);
-                    break;
-                }
-                case DIGIT4: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.SHOCK);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 4f);
-                    break;
-                }
-                case DIGIT5: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE);
-                    break;
-                }
-                case DIGIT6: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 5f);
-                    break;
-                }
-                case TAB: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.WHIRLWIND);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);
-                    break;
-                }
-                case CAPS: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.ELECTRIC);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);
-                    break;
-                }
-                case DIGIT7: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER01);
-                    break;
-                }
-                case DIGIT8: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.REDLASER02);
-                    break;
-                }
-                case DIGIT9: {
-                    player.getPrimaryBtnHandler().addType(ProjectileType.GREENLASER03);
-                    break;
-                }
-                case R: {
-                    player.getSecondaryBtnHandler().addType(ProjectileType.CAT);
-                    break;
-                }
                 case Q: {
                     player.getPrimaryBtnHandler().setToNextType();
                     break;
                 }
                 case E: {
                     player.getSecondaryBtnHandler().setToNextType();
-                    break;
-                }
-                case SHIFT: {
-                    player.getPrimaryBtnHandler().setPowerUp(PowerUpType.SCALE, 3f);
-                    player.getPrimaryBtnHandler().setPowerUp(PowerUpType.MULT, 4f);
-                    player.getPrimaryBtnHandler().setRange(700);
-                    break;
-                }
-                case SPACE: {
-                    player.getSecondaryBtnHandler().setRange(500);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);
                     break;
                 }
                 case X:
