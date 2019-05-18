@@ -61,7 +61,7 @@ public class MenuScene extends Scene {
         fadeToBlack.setDelay(Duration.seconds(0.2));
         fadeToBlack.setNode(blackScreen);
 
-        ImageView imgV_logo = new ImageView(PATH_RESOURCES_SPRITES_UI + "placeholder-logo-2.png");
+        ImageView imgV_logo = new ImageView(PATH_RESOURCES_SPRITES_UI + "Skull Reign.png");
         HBox hbx_logo = new HBox(imgV_logo);
         hbx_logo.setAlignment(Pos.CENTER);
 
