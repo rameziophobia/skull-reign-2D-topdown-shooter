@@ -4,14 +4,14 @@ import view.Main;
 
 public enum EnemyType {
     TANK_SAND("tank_sand-42x42.png", 1.7f, 60, 5, true),
-    TANK_DARK("tank_dark-42x42.png", 1f, 80, 5, false),
-    TANK_RED("tank_red-38x38.png", 2, 80, 5, false),
-    TANK_BLUE("tank_blue-42x42.png", 2, 80, 5, false),
-    TANK_HUGE("tank_huge-62x60.png", 0.7f, 80, 5, false),
+    TANK_DARK("tank_dark-42x42.png", 1f, 80, 10, false),
+    TANK_RED("tank_red-38x38.png", 2, 80, 20, false),
+    TANK_BLUE("tank_blue-42x42.png", 2, 100, 40, false),
+    TANK_HUGE("tank_huge-62x60.png", 0.7f, 140, 100, false),
     MAGE1("mage-1-85x94.png", 1.2f, 20000, 5000, true),
     MAGE2("mage-2-122x110.png", 1.3f, 40000, 15000, true),
     MAGE3("mage-3-87x110.png", 1.4f, 80000, 50000, true),
-    TANK_DARK_LARGE("tank_darkLarge-52x51.png", 0.5f, 200, 5, false);
+    TANK_DARK_LARGE("tank_darkLarge-52x51.png", 0.5f, 200, 500, false);
 
     private String URL;
     private float SPEED;

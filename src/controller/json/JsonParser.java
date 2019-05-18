@@ -6,6 +6,7 @@ import controller.json.level.EnemyData;
 import controller.json.level.LevelJson;
 import controller.json.settings.AudioSettings;
 import controller.map.Map;
+import model.enemies.Boss;
 import model.enemies.Enemy;
 import model.enemies.EnemyType;
 import model.enemies.ProjectileControlType;
@@ -83,11 +84,16 @@ public class JsonParser {
             enemies[i] = new Enemy[wave.size()];
             for (int j = 0; j < wave.size(); j++) {
                 final EnemyData enemyData = wave.get(j);
-                enemies[i][j] = new Enemy(enemyData.getEnemyType(),
-                        enemyData.getProjectileType(),
-                        enemyData.getProjectileControlType(),
-                        enemyData.getMoveMode(),
-                        150);
+                if (enemyData.getEnemyType() == EnemyType.MAGE1) {
+                    enemies[i][j] = new Boss(Boss.EnemyStageEnum.STAGE3);
+                } else {
+                    enemies[i][j] = new Enemy(enemyData.getEnemyType(),
+                            enemyData.getProjectileType(),
+                            enemyData.getProjectileControlType(),
+                            enemyData.getMoveMode(),
+                            150);
+
+                }
             }
         }
         return enemies;
