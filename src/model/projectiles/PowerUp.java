@@ -30,12 +30,10 @@ public class PowerUp extends GameObject {
         this.powerUpType = powerUpType;
 
         Random rand = new Random();
-        do {
-            setLayoutY(2.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_HEIGHT - 4) - Map.STARTING_Y)) + Map.STARTING_Y);
-            setLayoutX(1.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_WIDTH - 1.5) - Map.STARTING_X)) + Map.STARTING_X);
-        }
-        while (GameViewManager.getInstance().getWallArrayList().size() > 0 &&
-                Wall.canMove(this, GameViewManager.getInstance().getWallArrayList(), false, 0));
+
+        setLayoutY(2.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_HEIGHT - 4) - Map.STARTING_Y)) + Map.STARTING_Y);
+        setLayoutX(1.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_WIDTH - 1.5) - Map.STARTING_X)) + Map.STARTING_X);
+
         this.animated = powerUpType.isANIMATED();
         if (animated) {
             SpriteSheet spriteSheet = new SpriteSheet(powerUpType.getURL(), 0);
@@ -66,6 +64,16 @@ public class PowerUp extends GameObject {
             GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
+
+    private void checkCollision_wall() {
+        for (Wall wall : GameViewManager.getInstance().getWallArrayList()) {
+            if (isIntersects(wall)) {
+                GameViewManager.getMainPane().removeFromGamePane(this);
+            }
+        }
+    }
+
+
 
     private void setUpNode() {
         final double width = getImageWidth(powerUpType.getURL());
@@ -110,6 +118,7 @@ public class PowerUp extends GameObject {
         if (animated) {
             animationClip.animate();
         }
+        checkCollision_wall();
         checkCollision();
     }
 
