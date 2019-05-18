@@ -6,12 +6,13 @@ import controller.json.JsonParser;
 import controller.json.settings.AudioSettings;
 
 public class SettingsManager {
-    private static AudioSettings audioSettings = JsonParser.readAudioSettings();
+    private static AudioSettings audioSettings;
 
     private SettingsManager() {
     }
 
-    static {
+    public static void init() {
+        audioSettings = JsonParser.readAudioSettings();
         if (audioSettings == null) {
             saveAudiSettings();
         }

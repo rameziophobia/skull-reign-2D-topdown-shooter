@@ -32,7 +32,6 @@ public class Boss extends Enemy {
     private double hp_interval;
     private int control = -1;
     private final static int CONTROLS_NUM = 4;
-    private static boolean bossIsSpawned = false;
     private Node[] nodes;
 
     public enum EnemyStageEnum {
@@ -109,8 +108,6 @@ public class Boss extends Enemy {
     private void bossInit(EnemyStageEnum currentStage) {
         projectileControlInit(currentStage);
 
-        setBossAsSpawned(true);
-
         setLayoutY((HEIGHT >> 1) - (height >> 1));
         setLayoutX((WIDTH >> 1) - (width >> 1));
 
@@ -159,18 +156,20 @@ public class Boss extends Enemy {
 
     @Override
     protected void checkAlive() {
-        if (hp <= 0 && currentStage.index < stage.index) {
+        if (hp <= 0){
             super.checkAlive();
-            Boss b = new Boss(stage, EnemyStageEnum.getEnemyStage(currentStage.index + 1));
-            GameViewManager.getInstance().getEnemyArrayList().add(b);
-            GameViewManager.getMainPane().addToGamePane(b);
-        } else if (hp <= 0 && currentStage.index >= stage.index) {
-            System.out.println(currentStage.index + " " + stage.index);
-            AudioManager.playAudio(AudioFile.BOSS_DEATH, 0.8);
-            AudioManager.stopAudio(AudioFile.BOSS_MUSIC);
-            super.checkAlive();
+            if (currentStage.index < stage.index) {
+                final Boss b = new Boss(stage, EnemyStageEnum.getEnemyStage(currentStage.index + 1));
+                GameViewManager.getInstance().getEnemyArrayList().add(b);
+                GameViewManager.getMainPane().addToGamePane(b);
+            } else{
+                AudioManager.stopAudio(AudioFile.BOSS_MUSIC);
+                AudioManager.playAudio(AudioFile.BOSS_DEATH, 0.8);
+            }
+        }else{
+            AudioManager.playAudio(AudioFile.BOSS_MUSIC);
         }
-        setBossAsSpawned(false);
+
     }
 
     @Override
@@ -215,14 +214,6 @@ public class Boss extends Enemy {
     @Override
     public Node[] getChildren() {
         return nodes;
-    }
-
-    public static void setBossAsSpawned(boolean state){
-        bossIsSpawned = state;
-    }
-
-    public static boolean isBossSpawned() {
-        return bossIsSpawned;
     }
 }
 

@@ -15,7 +15,7 @@ public enum AudioFile {
     ELECTRIC1(Constants.FOLDER_PROJECTILE + "electric1.mp3", MixerType.SFX, 0.85),
     BUTTON_CLICK(Constants.FOLDER_MENU  + "tap-crisp.aif", MixerType.SFX, 0.7, 1),
     MENU_MUSIC(Constants.FOLDER_MENU  + "Mystical_Pixels.mp3",MixerType.MUSIC,0.7, AudioClip.INDEFINITE),
-    GAME_MUSIC_BASIC(Constants.FOLDER_GAME+"backgroundmusic.mp3",MixerType.AMBIENT,0.4,AudioClip.INDEFINITE),
+    GAME_MUSIC_BASIC(Constants.FOLDER_GAME+"backgroundmusic.mp3",MixerType.MUSIC,0.4,AudioClip.INDEFINITE),
     FIRE("fire.mp3", MixerType.SFX, 0.05, 1),//todo
     FIREBALL("334234__liamg-sfx__fireball-cast-1.wav", MixerType.SFX, 0.9),
     HURT("SFX_Hurt10.wav", MixerType.SFX, 1),
@@ -23,7 +23,7 @@ public enum AudioFile {
     PLAYER_POWERUP(Constants.FOLDER_PLAYER+"powerup.wav",MixerType.SFX,0.6,1),
     ENEMY_DEATH("enemydeath.wav",MixerType.SFX,0.2,1),
     BOSS_DEATH(Constants.FOLDER_BOSS+"bossdeath.wav",MixerType.SFX,0.6,1),
-    BOSS_MUSIC(Constants.FOLDER_GAME + "bossfight.mp3",MixerType.AMBIENT,0.7, AudioClip.INDEFINITE),
+    BOSS_MUSIC(Constants.FOLDER_GAME + "bossfight.mp3",MixerType.MUSIC,0.7, AudioClip.INDEFINITE),
     BOSS_PHASE(Constants.FOLDER_BOSS+"bossphasechange.wav",MixerType.SFX,0.2,1);
 
     private final String path;

@@ -24,7 +24,7 @@ public class NewGameMenu extends Menu {
 
         new_campaign.setOnAnimationEndAction(() -> {
             AudioManager.stopAudio(AudioFile.MENU_MUSIC);
-            AudioManager.playAudio(AudioFile.GAME_MUSIC_BASIC,0.08);
+            AudioManager.playAudio(AudioFile.GAME_MUSIC_BASIC,0.2);
             menuScene.stopLoop();
             createGameViewManager(false);
             gameViewManager.createNewGame(PlayerType.ROBOT, menuScene.getPlayerName());
@@ -32,12 +32,13 @@ public class NewGameMenu extends Menu {
             new_campaign.setOpacity(1);
         });
         endless.setOnAnimationEndAction(() -> {
+            AudioManager.stopAudio(AudioFile.MENU_MUSIC);
+            AudioManager.playAudio(AudioFile.GAME_MUSIC_BASIC,0.2);
             menuScene.stopLoop();
             createGameViewManager(true);
             gameViewManager.createNewGame(PlayerType.ROBOT, menuScene.getPlayerName());
             endless.setTranslateY(0);
             endless.setOpacity(1);
-
         });
 
         addNodeAll(

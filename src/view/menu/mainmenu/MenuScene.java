@@ -1,5 +1,6 @@
 package view.menu.mainmenu;
 
+import controller.SettingsManager;
 import controller.animation.AnimationClip;
 import controller.audiomanager.AudioFile;
 import controller.audiomanager.AudioManager;
@@ -52,6 +53,8 @@ public class MenuScene extends Scene {
 
     private void createScene() {
         menuBackground = new MenuBackground();
+
+        SettingsManager.init();
 
         AudioManager.playAudio(AudioFile.MENU_MUSIC);
 

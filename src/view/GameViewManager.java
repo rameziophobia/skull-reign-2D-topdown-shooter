@@ -241,10 +241,6 @@ public class GameViewManager {
     private void gameUpdate() {
         gameMode.update();
 
-        if(Boss.isBossSpawned()){
-            AudioManager.playAudioStopPrev(AudioFile.BOSS_MUSIC);
-        }
-
         Object[] objects = mainPane.getGamePane().getChildren().toArray();
         for (Object node : objects) {
             if (node instanceof GameObject)
