@@ -65,7 +65,7 @@ public class GameViewManager {
         gameEnd.setOnMouseClicked(e -> {
             HallOfFameMenu.setNewRecord(player.getName(), player.getCurrentScore());
             player.resetScore();
-            endGame();
+            Main.switchToMainMenu();
         });
 
         gameLoop = new AnimationTimer() {
@@ -135,6 +135,7 @@ public class GameViewManager {
     public static void endGameSequence() {
         if (!gameEnded) {
             gameEnded = true;
+            gameLoop.stop();
 
             gameEnd.setName(player.getName());
             gameEnd.setScore(player.getCurrentScore());
@@ -143,11 +144,6 @@ public class GameViewManager {
             gameEnd.show();
             gameEnd.toFront();
         }
-    }
-
-    public void endGame() {
-        gameLoop.stop();
-        Main.switchToMainMenu();
     }
 
     public static Stage getGameStage() {
