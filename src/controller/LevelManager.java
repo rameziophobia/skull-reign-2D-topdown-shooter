@@ -49,7 +49,7 @@ public class LevelManager {
         Tornado.setMapLimits(
                 MapLoader.BLOCK_SIZE + MapLoader.STARTING_X,
                 MapLoader.STARTING_X + (MapLoader.MAP_BLOCKS_WIDTH - 1) * MapLoader.BLOCK_SIZE,
-                MapLoader.BLOCK_SIZE * 2 + MapLoader.STARTING_Y,
+                MapLoader.BLOCK_SIZE * 3 + MapLoader.STARTING_Y,
                 MapLoader.STARTING_Y + (MapLoader.MAP_BLOCKS_HEIGHT - 1) * MapLoader.BLOCK_SIZE
         );
 
@@ -206,7 +206,7 @@ public class LevelManager {
             if (System.currentTimeMillis() > nextTornadoSpawnTime) {
                 nextTornadoSpawnTime = System.currentTimeMillis() + currentLevel.getTimeBetweenTornado();
 
-                final Tornado tornado = new Tornado(1, this);//todo 1
+                final Tornado tornado = new Tornado(this);//todo 1
                 currentTornadoList.add(tornado);
                 GameViewManager.getMainPane().addToGamePane(tornado);
             }
