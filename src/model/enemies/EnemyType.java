@@ -8,9 +8,9 @@ public enum EnemyType {
     TANK_RED("tank_red-38x38.png", 2, 80, 5, false),
     TANK_BLUE("tank_blue-42x42.png", 2, 80, 5, false),
     TANK_HUGE("tank_huge-62x60.png", 0.7f, 80, 5, false),
-    MAGE1("mage-1-85x94.png", 1.2f, 20000, 5000, true),
-    MAGE2("mage-2-122x110.png", 1.3f, 40000, 15000, true),
-    MAGE3("mage-3-87x110.png", 1.4f, 80000, 50000, true),
+    MAGE1("mage-1-85x94.png", 1.2f, 200, 5000, true),
+    MAGE2("mage-2-122x110.png", 1.3f, 200, 15000, true),
+    MAGE3("mage-3-87x110.png", 1.4f, 200, 50000, true),
     TANK_DARK_LARGE("tank_darkLarge-52x51.png", 0.5f, 200, 5, false);
 
     private String URL;

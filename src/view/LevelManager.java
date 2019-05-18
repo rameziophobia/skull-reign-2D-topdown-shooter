@@ -1,5 +1,7 @@
 package view;
 
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import model.enemies.Boss;
 import model.enemies.Enemy;
 import model.enemies.ProjectileControlType;
@@ -42,12 +44,13 @@ public class LevelManager {//todo temp static
         if (nextEnemySpawnTime < System.currentTimeMillis() && spawnable) {
             nextEnemySpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
 
-            Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, ProjectileControlType.pulse200rx90a, Enemy.MoveMode.followPlayer);
+            //Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, ProjectileControlType.pulse200rx90a, Enemy.MoveMode.followPlayer);
+
             Boss boss = new Boss(Boss.EnemyStageEnum.STAGE3);
             enemyArrayList.add(boss);
             GameViewManager.getMainPane().addToGamePane(boss);
-            enemyArrayList.add(enemy);
-            GameViewManager.getMainPane().addToGamePane(enemy);
+            //enemyArrayList.add(enemy);
+            //GameViewManager.getMainPane().addToGamePane(enemy);
         }
     }
 

@@ -27,6 +27,8 @@ public enum ProjectileType {
     ICEICLE("icicle-right-animated-64x11.png", 1.5, 50, 6, 5, true, AudioFile.S2, 1, 1),
     ELECTRIC("electric-animated-63x83.png", 2, 40, 7, 10, true, AudioFile.ELECTRIC1, 1, 1),
     CAT("black-cat-animated-32x26.png", 1.3, 40, 5, 10, true, AudioFile.S2, 1, 1),
+    KNIFE("spr_spell_knife-42x32.png", 2, 50, 8, 5, false,null, 1, 1),
+    SKULL("fire-skull-96x88.png", 1.3, 100, 8, 10, true,null, 1, 1),
     WHIRLWIND("whirlwind-animated-16x19.png", 2, 40, 7, 5, true, AudioFile.WOOSH, 1, 1);
 
     private final String URL;

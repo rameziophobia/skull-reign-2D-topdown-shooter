@@ -1,5 +1,7 @@
 package model.enemies;
 
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -24,17 +26,18 @@ public class Boss extends Enemy {
     private EnemyProjectileControl knifeChargePulseSlow;
     private EnemyProjectileControl knifeChargePulseFast;
     private EnemyProjectileControl knife1by1;
-    private StatBar HPRectangleBoss;
+    private static StatBar HPRectangleBoss;
     private StackPane HPStack;
     private double HP_INTERVAL;
     private double hp_interval;
     private int control = -1;
     private final static int CONTROLS_NUM = 4;
+    private static boolean bossIsSpawned = false;
 
     public enum EnemyStageEnum {
-        STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20, 5000),
-        STAGE2(EnemyType.MAGE2, 60, 60, 550, 350, 5, 2, 250, 150, 15, 4000),
-        STAGE3(EnemyType.MAGE3, 45, 45, 450, 250, 6, 3, 150, 120, 12, 3000);
+        STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20, 5000, Color.DARKBLUE),
+        STAGE2(EnemyType.MAGE2, 60, 60, 550, 350, 5, 2, 250, 150, 15, 4000, Color.DARKVIOLET),
+        STAGE3(EnemyType.MAGE3, 45, 45, 450, 250, 6, 3, 150, 120, 12, 3000, Color.DARKRED);
 
         private EnemyType enemyType;
         private int pulseAngle;
@@ -47,9 +50,10 @@ public class Boss extends Enemy {
         private int ringRate;
         private int ringAngle;
         private int knifeChargeRate;
+        private Color color;
 
         EnemyStageEnum(EnemyType enemyType, int pulseAngle, int knifeAngle, int knifeRate, int skullRate,
-                       int skullSpeed, int index, int showerRate, int ringRate, int ringAngle, int knifeChargeRate) {
+                       int skullSpeed, int index, int showerRate, int ringRate, int ringAngle, int knifeChargeRate, Color color) {
             this.enemyType = enemyType;
             this.pulseAngle = pulseAngle;
             this.knifeRate = knifeRate;
@@ -61,6 +65,7 @@ public class Boss extends Enemy {
             this.ringRate = ringRate;
             this.ringAngle = ringAngle;
             this.knifeChargeRate = knifeChargeRate;
+            this.color = color;
         }
 
         public int getPulseAngle() {
@@ -96,16 +101,20 @@ public class Boss extends Enemy {
         super(EnemyType.MAGE1);
         this.stage = stage;
         this.boss = true;
+
         bossInit(currentStage);
     }
 
     private void bossInit(EnemyStageEnum currentStage) {
         projectileControlInit(currentStage);
 
+        setBossAsSpawned(true);
+
         setLayoutY((HEIGHT >> 1) - (height >> 1));
         setLayoutX((WIDTH >> 1) - (width >> 1));
 
         createHPBar();
+        HPRectangleBoss.setFill(currentStage.color);
 
         HPStack.setLayoutY(900);
         HPStack.setPrefWidth(WIDTH);
@@ -158,8 +167,11 @@ public class Boss extends Enemy {
             GameViewManager.getMainPane().addToGamePane(b);
         } else if (hp <= 0 && currentStage.index >= stage.index) {
             System.out.println(currentStage.index + " " + stage.index);
+            AudioManager.playAudio(AudioFile.BOSS_DEATH, 0.8);
+            AudioManager.stopAudio(AudioFile.BOSS_MUSIC);
             super.checkAlive();
         }
+        setBossAsSpawned(false);
     }
 
     @Override
@@ -169,6 +181,7 @@ public class Boss extends Enemy {
             control++;
             System.out.println(control);
             hp_interval = HP_INTERVAL;
+            AudioManager.playAudio(AudioFile.BOSS_PHASE);
         }
         switch (control) {
             case 0:
@@ -198,5 +211,13 @@ public class Boss extends Enemy {
         limitRec.setStroke(Color.PURPLE);
 
         HPStack.getChildren().addAll(limitRec, HPRectangleBoss);
+    }
+
+    public static void setBossAsSpawned(boolean state){
+        bossIsSpawned = state;
+    }
+
+    public static boolean isBossSpawned() {
+        return bossIsSpawned;
     }
 }

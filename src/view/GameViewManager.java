@@ -1,5 +1,6 @@
 package view;
 
+import controller.audiomanager.AudioFile;
 import controller.audiomanager.AudioManager;
 import controller.InputManager;
 import controller.map.Map;
@@ -15,6 +16,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.GameObject;
 import model.MainPane;
+import model.enemies.Boss;
 import model.player.Player;
 import model.player.PlayerType;
 import model.ui.game.ScoreLabel;
@@ -178,6 +180,10 @@ public class GameViewManager {
         LevelManager.createEnemies();
         LevelManager.createObstacles();
         LevelManager.createPowerUp();
+
+        if(Boss.isBossSpawned()){
+            AudioManager.playAudioStopPrev(AudioFile.BOSS_MUSIC);
+        }
 
         Object[] objects = mainPane.getGamePane().getChildren().toArray();
         for (Object node : objects) {
