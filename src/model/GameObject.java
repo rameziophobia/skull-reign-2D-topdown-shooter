@@ -47,13 +47,5 @@ public abstract class GameObject extends ImageView {
         return getBoundsInParent().intersects(s.getBoundsInParent());
     }
 
-    public int getHeight() {
-        return height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
     public abstract void update();
 }

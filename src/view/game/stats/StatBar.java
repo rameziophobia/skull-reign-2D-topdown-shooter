@@ -17,7 +17,8 @@ public class StatBar extends Rectangle {
         this.maxValue = max;
         setCurrentValue(maxValue);
     }
-    public StatBar(double height,double width, Color fill, boolean canRegenerate, double max) {
+
+    public StatBar(double height, double width, Color fill, boolean canRegenerate, double max) {
         super(width, height, fill);
         this.canRegenerate = canRegenerate;
         this.maxValue = max;
@@ -45,6 +46,7 @@ public class StatBar extends Rectangle {
             setCurrentValue(maxValue / 2);
         }
     }
+
     public void barScaleAnimator(double MAX_HP) {
         ScaleTransition HPAnimation = new ScaleTransition(Duration.seconds(0.1), this);
         HPAnimation.setToX((this.getCurrentValue()) / MAX_HP);

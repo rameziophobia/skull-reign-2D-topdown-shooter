@@ -2,7 +2,6 @@ package view;
 
 import model.enemies.Boss;
 import model.enemies.Enemy;
-import model.enemies.EnemyType;
 import model.enemies.ProjectileControlType;
 import model.obstacles.Obstacle;
 import model.projectiles.PowerUp;
@@ -43,7 +42,7 @@ public class LevelManager {//todo temp static
         if (nextEnemySpawnTime < System.currentTimeMillis() && spawnable) {
             nextEnemySpawnTime = System.currentTimeMillis() + (long) (SPAWN_CD_ENEMY);
 
-            Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, ProjectileControlType.pulse200rx90a,Enemy.MoveMode.followPlayer);
+            Enemy enemy = new Enemy(TANK_SAND, ProjectileType.REDLASER01, ProjectileControlType.pulse200rx90a, Enemy.MoveMode.followPlayer);
             Boss boss = new Boss(Boss.EnemyStageEnum.STAGE3);
             enemyArrayList.add(boss);
             GameViewManager.getMainPane().addToGamePane(boss);

@@ -26,7 +26,7 @@ public class HealthBars extends VBox {
         HPVBox.setSpacing(5);
         HPVBox.setPadding(new Insets(5, 10, 0, 5));
 
-        StackPane stackHP = getStackPane(BARWIDTH,HP_HEIGHT, HP_COLOR, false, Player.getMaxHp());
+        StackPane stackHP = getStackPane(BARWIDTH, HP_HEIGHT, HP_COLOR, false, Player.getMaxHp());
         StackPane stackShield = getStackPane(BARWIDTH, SHIELD_HEIGHT, SHIELD_COLOR, true, Player.getMaxShield());
 
         HPVBox.getChildren().addAll(stackHP, stackShield);
@@ -35,7 +35,7 @@ public class HealthBars extends VBox {
 
     public StackPane getStackPane(int width, int height, Color color, boolean regen, double maxHP) {
         StackPane stack = new StackPane();
-        Rectangle limit = getLimitRectangle(width,height, color);
+        Rectangle limit = getLimitRectangle(width, height, color);
         StatBar rectangle = new StatBar(height, color, regen, maxHP);
         statRectangles.add(rectangle);
         stack.getChildren().addAll(limit, rectangle);

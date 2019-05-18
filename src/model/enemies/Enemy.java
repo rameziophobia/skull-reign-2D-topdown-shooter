@@ -50,7 +50,7 @@ public class Enemy extends Entity {
     public enum MoveMode {stationary, followPlayer, random, circular}
 
     public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode, double minDistance, long move_interval_ms) {
-        this(enemyType,projectileType,projectileControlType, mode, minDistance);
+        this(enemyType, projectileType, projectileControlType, mode, minDistance);
         this.moveInterval = move_interval_ms;
         this.intervalExists = true;
     }
@@ -64,9 +64,9 @@ public class Enemy extends Entity {
         this(enemyType);
         this.mode = mode;
         this.enemyProjectileControl = new EnemyProjectileControl(projectileType);
-        enemyProjectileControl.addPulse(projectileControlType.getPulseRate(),projectileControlType.getPulseAngle());
+        enemyProjectileControl.addPulse(projectileControlType.getPulseRate(), projectileControlType.getPulseAngle());
         enemyProjectileControl.addSpawnToPlayer(projectileControlType.getToPlayerRate());
-        enemyProjectileControl.addRing1by1(projectileControlType.getRing1by1Rate(),projectileControlType.getRing1by1Angle());
+        enemyProjectileControl.addRing1by1(projectileControlType.getRing1by1Rate(), projectileControlType.getRing1by1Angle());
     }
 
     public Enemy(EnemyType enemyType) {
@@ -128,6 +128,7 @@ public class Enemy extends Entity {
                 getLayoutY() - GameViewManager.getPlayer().getLayoutY())
                 > minDistance;
     }
+
     private void updateAngle() {
         angle = Math.toDegrees(Math.atan2(GameViewManager.getPlayer().getLayoutY() - getLayoutY(),
                 GameViewManager.getPlayer().getLayoutX() - getLayoutX()));
@@ -207,7 +208,7 @@ public class Enemy extends Entity {
     public void update() {
         updateAngle();
         calculateDistance();
-        if(!boss){
+        if (!boss) {
             setRotate(angle);
             move();
             enemyProjectileControl.update(angle, getSpawner());

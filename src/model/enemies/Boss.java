@@ -3,15 +3,16 @@ package model.enemies;
 import javafx.geometry.Pos;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
 import view.GameViewManager;
 import view.LevelManager;
 import view.game.stats.StatBar;
-import javafx.scene.shape.Rectangle;
 
-import static view.GameViewManager.*;
+import static view.GameViewManager.HEIGHT;
+import static view.GameViewManager.WIDTH;
 
 public class Boss extends Enemy {
 
@@ -27,15 +28,13 @@ public class Boss extends Enemy {
     private StackPane HPStack;
     private double HP_INTERVAL;
     private double hp_interval;
-    private final static int CONTROL_INTERVAL = 40 * 1000;
-    private long nextControl;
     private int control = -1;
     private final static int CONTROLS_NUM = 4;
 
     public enum EnemyStageEnum {
-        STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20,5000),
-        STAGE2(EnemyType.MAGE2, 60, 60, 550, 350, 5, 2, 250, 150, 15,4000),
-        STAGE3(EnemyType.MAGE3, 45, 45, 450, 250, 6, 3, 150, 120, 12,3000);
+        STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20, 5000),
+        STAGE2(EnemyType.MAGE2, 60, 60, 550, 350, 5, 2, 250, 150, 15, 4000),
+        STAGE3(EnemyType.MAGE3, 45, 45, 450, 250, 6, 3, 150, 120, 12, 3000);
 
         private EnemyType enemyType;
         private int pulseAngle;
@@ -98,7 +97,6 @@ public class Boss extends Enemy {
         this.stage = stage;
         this.boss = true;
         bossInit(currentStage);
-
     }
 
     private void bossInit(EnemyStageEnum currentStage) {
@@ -130,17 +128,16 @@ public class Boss extends Enemy {
         shower.addShower(stage.showerRate);
 
         knife1by1 = new EnemyProjectileControl(ProjectileType.KNIFE);
-        knife1by1.addRing1by1(stage.ringRate,stage.ringAngle);
+        knife1by1.addRing1by1(stage.ringRate, stage.ringAngle);
 
         knifeChargePulseSlow = new EnemyProjectileControl(ProjectileType.KNIFE);
-        knifeChargePulseSlow.addPulse(stage.knifeChargeRate + 2000,5);
+        knifeChargePulseSlow.addPulse(stage.knifeChargeRate + 2000, 5);
 
         knifeChargePulseFast = new EnemyProjectileControl(ProjectileType.KNIFE);
-        knifeChargePulseFast.addPulse(stage.knifeChargeRate,5);
+        knifeChargePulseFast.addPulse(stage.knifeChargeRate, 5);
 
 
     }
-
 
     @Override
     public void takeDmg(double dmg) {

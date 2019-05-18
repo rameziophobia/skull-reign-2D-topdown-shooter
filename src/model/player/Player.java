@@ -137,11 +137,11 @@ public class Player extends Entity {
     public void takeDmg(double dmg) {
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
-            ShieldRectangle.barScaleAnimator( MAX_HP);
+            ShieldRectangle.barScaleAnimator(MAX_HP);
             currentShield = ShieldRectangle.getCurrentValue();
         } else {
             HPRectangle.decreaseCurrent(dmg);
-            HPRectangle.barScaleAnimator( MAX_SHIELD);
+            HPRectangle.barScaleAnimator(MAX_SHIELD);
             currentHp = HPRectangle.getCurrentValue();
         }
         if (currentHp <= 0)
@@ -156,7 +156,7 @@ public class Player extends Entity {
 
     public void shieldRegen() {
         ShieldRectangle.regeneration();
-        ShieldRectangle.barScaleAnimator( MAX_SHIELD);
+        ShieldRectangle.barScaleAnimator(MAX_SHIELD);
     }
 
     public PlayerProjectileControl getPrimaryBtnHandler() {
