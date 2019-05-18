@@ -1,14 +1,18 @@
 package view;
 
+import controller.Campaign;
 import controller.InputManager;
 import controller.LevelManager;
 import controller.map.Map;
-import controller.map.MapLoader;
+import controller.json.JsonParser;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -19,6 +23,7 @@ import model.player.Player;
 import model.player.PlayerType;
 import model.ui.game.ScoreLabel;
 import model.wall.Wall;
+import view.game.stats.HealthBars;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
@@ -42,7 +47,7 @@ public class GameViewManager {
     private static Label lbl_currentScore;
     private GameUI gameUI;
     private static AnimationTimer gameLoop;
-    private Endless endless;
+    private LevelManager gameMode;
     private Boolean isEndless;
     private static ArrayList<Wall>  wallArrayList= new ArrayList<>();
 
@@ -56,31 +61,27 @@ public class GameViewManager {
         instance = this;
         isEndless=endless;
         mainPane = new MainPane();
+        mainPane.addAllToBackPane(new Rectangle(WIDTH, HEIGHT, Color.BLACK));
 
         gameScene = new Scene(mainPane, WIDTH, HEIGHT);
 
         gameStage = new Stage();
         gameStage.setScene(gameScene);
-        gameStage.setFullScreen(false);
+        gameStage.setFullScreen(true);
+        gameStage.setTitle("Skull Reign");
+        gameStage.getIcons().add(new Image(Main.PATH_RESOURCES_SPRITES + "icon.png"));
 
 
-
-        final MapLoader mapLoader = new MapLoader(Map.BASE);
-        GameViewManager.getMainPane().addAllToFrontPane(mapLoader.getFrontNodes());
-        GameViewManager.getMainPane().addAllToBackPane(mapLoader.getBackNodes());
-
-        mapLoader.getWallNodes().forEach(node -> GameViewManager.getMainPane().addToGamePane(node));
-        wallArrayList.addAll(mapLoader.getWallNodes());
         setWindowScaling();
 
-        gameUI = new GameUI(mainPane,true);
+        gameUI = new GameUI(mainPane,isEndless);
 
         gameEnded = false;
         gameEnd = new GameEnd();
         gameEnd.setOnMouseClicked(e -> {
             HallOfFameMenu.setNewRecord(player.getName(), player.getCurrentScore());
             player.resetScore();
-            endGame();
+            Main.switchToMainMenu();
         });
 
         gameLoop = new AnimationTimer() {
@@ -89,7 +90,9 @@ public class GameViewManager {
                 gameUpdate();
             }
         };
+        JsonParser.writeEnemyEnum();
     }
+
 
     public static Player getPlayer() {
         return player;
@@ -112,7 +115,7 @@ public class GameViewManager {
         mainPane.getTransforms().add(new Scale(
                 bounds.getWidth() / WIDTH,
                 bounds.getHeight() / HEIGHT,
-                0, 0));//todo
+                0, 0));
     }
 
     public void createNewGame(PlayerType chosenPlayer, String playerName) {
@@ -122,20 +125,24 @@ public class GameViewManager {
 
 
         if(isEndless){
-            endless = new Endless(2000,false);
+            gameMode = new Endless(2000,false);
+        }else{
+            gameMode = new Campaign(gameUI.getLevelLabel(),gameUI.getWaveLabel());
         }
         startGameLoop();
     }
 
     private void createPlayer(PlayerType chosenPlayer, String playerName) {
-        player = new Player(chosenPlayer, gameUI.getHealthBars().getHPRectangle(), gameUI.getHealthBars().getShieldRectangle());
+        player = new Player(chosenPlayer,
+                gameUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.HP),
+                gameUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.SHIELD));
         player.setName(playerName);
         mainPane.addToGamePane(player);
     }
 
     private void createUI() {
         mainPane.addToUIPane(gameUI.getGroup());
-        mainPane.addToUIPane(gameUI.getHealthBars());
+        mainPane.addToUIPane(gameUI.getPlayerHealthBars());
         createScoreLabel();
     }
 
@@ -145,7 +152,7 @@ public class GameViewManager {
     }
 
     private void createScoreLabel() {
-        lbl_currentScore = new ScoreLabel(); //todo move to GameUI
+        lbl_currentScore = new ScoreLabel();
         mainPane.addToUIPane(lbl_currentScore);
     }
 
@@ -156,7 +163,8 @@ public class GameViewManager {
     public static void endGameSequence() {
         if (!gameEnded) {
             gameEnded = true;
-
+            gameLoop.stop();
+            wallArrayList.clear();
             gameEnd.setName(player.getName());
             gameEnd.setScore(player.getCurrentScore());
 
@@ -166,20 +174,13 @@ public class GameViewManager {
         }
     }
 
-    public void endGame() {
-        gameLoop.stop();
-        Main.switchToMainMenu();
-    }
-
     public static Stage getGameStage() {
         return gameStage;
     }
 
     public List<Enemy> getEnemyArrayList() {
-        if(isEndless){
-            return endless.getEnemyArrayList();
-        }
-        return null;
+        return gameMode.getEnemyArrayList();
+
     }
 
     public ArrayList<Wall> getWallArrayList() {
@@ -187,10 +188,7 @@ public class GameViewManager {
     }
 
     public void removeEnemy(Enemy enemy) {
-        if(isEndless){
-            endless.removeEnemy(enemy);
-        }
-
+        gameMode.removeEnemy(enemy);
     }
 
     private void gameStart() {
@@ -202,10 +200,8 @@ public class GameViewManager {
     }
 
     private void gameUpdate() {
-        if(isEndless){
-            endless.update();
-            gameUI.getWaveLabel().setUICounter(endless.getCurrentWave());
-        }
+        gameMode.update();
+
 
 
         Object[] objects = mainPane.getGamePane().getChildren().toArray();

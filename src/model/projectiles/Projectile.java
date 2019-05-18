@@ -12,6 +12,7 @@ import view.GameViewManager;
 
 public class Projectile extends GameObject {
 
+    private boolean skull;
     private ProjectileType projectileType;
     private double angle;
     private double scale = 1.0;
@@ -20,6 +21,11 @@ public class Projectile extends GameObject {
     private static final float playerSpeedMultiplier = 1.4f;
 
     private float speed;
+
+    Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile, boolean skull) {
+        this(spawnPoint, projectileType, angle, enemyProjectile);
+        this.skull = true;
+    }
 
     Projectile(Point2D spawnPoint, ProjectileType projectileType, double angle, Boolean enemyProjectile) {
         super(projectileType.getURL());
@@ -44,7 +50,7 @@ public class Projectile extends GameObject {
         spawnProjectile(spawnPoint, angle);
     }
 
-    private void spawnProjectile(Point2D spawnPoint, double angle) {
+    public void spawnProjectile(Point2D spawnPoint, double angle) {
         setLayoutX(spawnPoint.getX());
         setLayoutY(spawnPoint.getY());
         Rotate rotate = new Rotate(angle, 0, 0);
@@ -105,19 +111,16 @@ public class Projectile extends GameObject {
     public void update() {
         move();
 
-        if (animated) { //todo everything should be animated
+        if (animated) {
             animationClip.animate();
         }
         checkCollision_entity();
         checkCollision_border();
         checkCollision_wall();
-        //todo: check range
     }
 
     @Override
     public Node[] getChildren() {
         return null;
     }
-
-
 }

@@ -23,9 +23,11 @@ public class MainPane extends Pane {
     public void addToBackPane(Node node) {
         backPane.getChildren().add(node);
     }
+
     public void addAllToBackPane(Node... node) {
         backPane.getChildren().addAll(node);
     }
+
     public void addAllToBackPane(Collection<? extends Node> node) {
         backPane.getChildren().addAll(node);
     }
@@ -33,17 +35,19 @@ public class MainPane extends Pane {
     public void removeFromBackPane(Node node) {
         backPane.getChildren().remove(node);
     }
+
     public void removeAllFromBackPane(Node... node) {
         backPane.getChildren().removeAll(node);
     }
+
     public void removeAllFromBackPane(Collection<? extends Node> node) {
         backPane.getChildren().removeAll(node);
     }
 
     public void addToGamePane(GameObject gameObject) {
         Node[] children = gameObject.getChildren();
-        if (children != null){
-            gamePane.getChildren().addAll(children);//todo we don't care about polymorphism :(
+        if (children != null) {
+            gamePane.getChildren().addAll(children);
             for (Node child : children) {
                 child.toBack();
             }
@@ -56,15 +60,17 @@ public class MainPane extends Pane {
         gamePane.getChildren().remove(gameObject);
         Node[] children = gameObject.getChildren();
         if (children != null)
-            gamePane.getChildren().removeAll(children);//todo we don't care about polymorphism :(
+            gamePane.getChildren().removeAll(children);
     }
 
     public void addToFrontPane(Node node) {
         frontPane.getChildren().add(node);
     }
+
     public void addAllToFrontPane(Node... node) {
         frontPane.getChildren().addAll(node);
     }
+
     public void addAllToFrontPane(Collection<? extends Node> node) {
         frontPane.getChildren().addAll(node);
     }
@@ -72,9 +78,11 @@ public class MainPane extends Pane {
     public void removeFromFrontPane(Node node) {
         frontPane.getChildren().remove(node);
     }
+
     public void removeAllFromFrontPane(Node... node) {
         frontPane.getChildren().removeAll(node);
     }
+
     public void removeAllFromFrontPane(Collection<? extends Node> node) {
         frontPane.getChildren().removeAll(node);
     }

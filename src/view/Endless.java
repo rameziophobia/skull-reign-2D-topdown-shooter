@@ -1,7 +1,7 @@
 package view;
 
 import controller.LevelManager;
-import controller.map.MapLoader;
+import controller.map.Map;
 import javafx.geometry.Point2D;
 import model.enemies.Enemy;
 import model.enemies.EnemyType;
@@ -9,9 +9,7 @@ import model.enemies.ProjectileControlType;
 import model.projectiles.PowerUp;
 import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
-import model.tornado.Tornado;
 import model.wall.Wall;
-import controller.map.Map;
 
 import java.util.*;
 
@@ -28,7 +26,7 @@ public class Endless extends LevelManager {
 
     private boolean debug;
 
-    private int currentEnemyIndex; //todo temp?
+    private int currentEnemyIndex;
     private int currentWave=1;
     private int currentX=1;
     private int k;
@@ -38,11 +36,17 @@ public class Endless extends LevelManager {
     private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
     private static ArrayList<Wall> wallArrayList = new ArrayList<>();
 
-    
+
     public Endless(long spawnCD, boolean debug) {
         this.debug = debug;
         this.spawnCD = spawnCD;
 
+        final Map map = new Map("Map");
+        GameViewManager.getMainPane().addAllToFrontPane(map.getFrontNodes());
+        GameViewManager.getMainPane().addAllToBackPane(map.getBackNodes());
+
+        map.getWallNodes().forEach(node -> GameViewManager.getMainPane().addToGamePane(node));
+        GameViewManager.getInstance().getWallArrayList().addAll(map.getWallNodes());
 
         sortedEnemyTypes = Arrays.asList(EnemyType.values());
         sortedEnemyTypes.sort(Comparator.comparingInt(EnemyType::getPOWER));
@@ -55,10 +59,10 @@ public class Endless extends LevelManager {
         this.enemies = new ArrayList<>();
         this.spawnedEnemies = new ArrayList<>();
 
-        Enemy.setMapLimits( MapLoader.BLOCK_SIZE + MapLoader.STARTING_X,
-                MapLoader.STARTING_X + (MapLoader.MAP_BLOCKS_WIDTH - 1) * MapLoader.BLOCK_SIZE,
-                MapLoader.BLOCK_SIZE * 3 + MapLoader.STARTING_Y,
-                MapLoader.STARTING_Y + (MapLoader.MAP_BLOCKS_HEIGHT - 1) * MapLoader.BLOCK_SIZE);
+        Enemy.setMapLimits( Map.BLOCK_SIZE + Map.STARTING_X,
+                Map.STARTING_X + (Map.MAP_BLOCKS_WIDTH - 1) * Map.BLOCK_SIZE,
+                Map.BLOCK_SIZE * 3 + Map.STARTING_Y,
+                Map.STARTING_Y + (Map.MAP_BLOCKS_HEIGHT - 1) * Map.BLOCK_SIZE);
         prepEnemies();
 
     }
@@ -67,19 +71,17 @@ public class Endless extends LevelManager {
     }
     private void prepEnemies() {
             final double totalPower =   25+(10 * (1.5 * currentX + (Math.sin(2 * currentX) / 2)));
-            System.out.println(totalPower);
             currentX++;
 
-            //todo dups ?
             enemies.add(new LinkedList<>());
-            enemies.get(k).add((new Enemy(sortedEnemyTypes.get(0),ProjectileType.FIRE,sortedProjectileControlType.get(0),Enemy.MoveMode.followPlayer)));
+            enemies.get(k).add((new Enemy(sortedEnemyTypes.get(0),ProjectileType.FIRE,sortedProjectileControlType.get(0),Enemy.MoveMode.FOLLOW_PLAYER)));
             for (int i = sortedEnemyTypes.size() - 1; i > 0; i--) {
                 final EnemyType enemyType = sortedEnemyTypes.get(i);
                 for(int j = sortedProjectileControlType.size() -1 ; j>0; j--){
                     final ProjectileControlType projectileControlType = sortedProjectileControlType.get(j);
                     if(projectileControlType.getPOWER()+enemyType.getPOWER()<=totalPower){
                         for (int l = 0; l < (int) (totalPower / (enemyType.getPOWER()+projectileControlType.getPOWER())); l++) {
-                            enemies.get(k).add(random.nextInt(enemies.get(k).size()),(new Enemy(enemyType,ProjectileType.FIRE,projectileControlType,Enemy.MoveMode.followPlayer)));
+                            enemies.get(k).add(random.nextInt(enemies.get(k).size()),(new Enemy(enemyType,ProjectileType.FIRE,projectileControlType,Enemy.MoveMode.FOLLOW_PLAYER)));
                         }
                     }
                 }
@@ -90,9 +92,6 @@ public class Endless extends LevelManager {
     public void spawn() {
         if (nextSpawnTime < System.currentTimeMillis()) {
             nextSpawnTime = System.currentTimeMillis() + spawnCD;
-            System.out.println(currentWave);
-            System.out.println(currentEnemyIndex);
-            System.out.println(spawnedEnemies.size());
             if (currentEnemyIndex < enemies.get(currentWave).size()) {
                 final Enemy enemy = enemies.get(currentWave).get(currentEnemyIndex++);
 
@@ -106,18 +105,12 @@ public class Endless extends LevelManager {
             }
         }
     }
-//    private Enemy getEnemyRandomPos() {
-//        final Enemy enemy = enemies.get(currentWave).get(currentEnemyIndex++);
-//        enemy.setLayoutX(random.nextInt(GameViewManager.HEIGHT));
-//        enemy.setLayoutY(random.nextInt(GameViewManager.HEIGHT));
-//        return enemy;
-//    }
 
-    private void createTorandoes() {//todo implement timer
+    private void createTorandoes() {
 
     }
 
-    private void createPowerUp() {//todo implement timer
+    private void createPowerUp() {
         if (nextPowerUPSpawnTime < System.currentTimeMillis()) {
             nextPowerUPSpawnTime = System.currentTimeMillis() + powerUpCD-currentWave*20;
             PowerUp powerUp = new PowerUp(PowerUpType.getRandomPowerUpType());
@@ -137,14 +130,7 @@ public class Endless extends LevelManager {
     public ArrayList<Wall> getWallArrayList() {
         return wallArrayList;
     }
-    public void addWallArrayList(Wall wall) {
-        wallArrayList.add(wall);
-    }
 
-    @Override
-    public void reduceNumOfTornado(){
-
-    }
 
     @Override
     public void removeEnemy(Enemy enemy) {
@@ -153,8 +139,7 @@ public class Endless extends LevelManager {
     @Override
     public void update() {
         GameViewManager.getInstance().getGameUI().getWaveLabel().setUICounter(currentWave);
-
-        if(k < 50){
+        if(k < 30){
             prepEnemies();
         }
         spawn();

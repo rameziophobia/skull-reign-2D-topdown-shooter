@@ -18,7 +18,7 @@ public class AudioManager {
         return masterVolume;
     }
 
-    public static void init() {
+    static {
         for (MixerType mixerType : MixerType.values()) {
             AUDIO_MIXER_HASH_MAP.put(mixerType, new AudioMixer());
         }

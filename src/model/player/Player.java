@@ -1,9 +1,8 @@
 package model.player;
 
+
 import controller.InputManager;
-import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
-import javafx.util.Duration;
 import model.Entity;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
@@ -36,11 +35,11 @@ public class Player extends Entity {
 
     private String name;
 
-    public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change it to said's char mn 8er rotation
+    public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) {
         super(player.getURL(), SPEED);
 
-        setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2);
-        setLayoutY((GameViewManager.HEIGHT >> 1) - getFitHeight() / 2);
+        setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2 - 300);
+        setLayoutY((GameViewManager.HEIGHT >> 1) - getFitHeight() / 2 - 300);
 
         HPRectangle = HPBar;
         ShieldRectangle = ShieldBar;
@@ -139,11 +138,11 @@ public class Player extends Entity {
     public void takeDmg(double dmg) {
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
-            barScaleAnimator(ShieldRectangle);
+            ShieldRectangle.barScaleAnimator(MAX_HP);
             currentShield = ShieldRectangle.getCurrentValue();
         } else {
             HPRectangle.decreaseCurrent(dmg);
-            barScaleAnimator(HPRectangle);
+            HPRectangle.barScaleAnimator(MAX_SHIELD);
             currentHp = HPRectangle.getCurrentValue();
         }
         if (currentHp <= 0)
@@ -153,21 +152,12 @@ public class Player extends Entity {
     @Override
     public void heal(float amount) {
         HPRectangle.increaseCurrent(amount);
-        barScaleAnimator(HPRectangle);
+        HPRectangle.barScaleAnimator(MAX_HP);
     }
 
     public void shieldRegen() {
         ShieldRectangle.regeneration();
-        barScaleAnimator(ShieldRectangle);
-    }
-
-    private void barScaleAnimator(StatBar HP) {//todo change paramaters to StatBar only
-        //todo this shouldn't be here
-        ScaleTransition HPAnimation = new ScaleTransition(Duration.seconds(0.1), HP);
-
-        HPAnimation.setToX((HP.getCurrentValue()) / MAX_HP);
-
-        HPAnimation.play();
+        ShieldRectangle.barScaleAnimator(MAX_SHIELD);
     }
 
     public PlayerProjectileControl getPrimaryBtnHandler() {

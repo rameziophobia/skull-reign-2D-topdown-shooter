@@ -113,7 +113,7 @@ public class PlayerProjectileControl {
                 Projectile projectile = new Projectile(getPlayer().getSpawner(),
                         type,
                         angle + mult * type.getMULTANGLE() * Math.pow(-1, mult),
-                        false);//todo odd multiples look weird
+                        false);
 
                 projectile.setDmgScale(powerUp.get(PowerUpType.SCALE));
                 projectile.addSpeed(powerUp.get(PowerUpType.SPEEDPROJECTILE));

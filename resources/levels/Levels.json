@@ -1,0 +1,174 @@
+[
+  {
+    "Waves": [
+      [
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        }
+      ],
+      [
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        }
+      ]
+    ],
+    "TimeBetweenSpawns": 6000,
+    "TimeBetweenWaves": 10000,
+    "NumberOfTornados": 5,
+    "TimeBetweenTornado": 10000,
+    "NumberOfPowerups": 3,
+    "TimeBetweenPowerups": 10000
+  },
+  {
+    "Waves": [
+      [
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        }
+      ],
+      [
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        }
+      ]
+    ],
+    "TimeBetweenSpawns": 6000,
+    "TimeBetweenWaves": 10000,
+    "NumberOfTornados": 5,
+    "TimeBetweenTornado": 10000,
+    "NumberOfPowerups": 3,
+    "TimeBetweenPowerups": 10000
+  }
+]

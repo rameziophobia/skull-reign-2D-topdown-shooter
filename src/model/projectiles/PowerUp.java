@@ -2,7 +2,13 @@ package model.projectiles;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import controller.map.Map;
+import javafx.animation.Animation;
+import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.util.Duration;
 import model.GameObject;
 import model.player.Player;
 import model.wall.Wall;
@@ -12,20 +18,21 @@ import java.util.Random;
 
 public class PowerUp extends GameObject {
 
+    public static final Duration animationDuration = Duration.millis(1500);
     private PowerUpType powerUpType;
     private AnimationClip animationClip;
     private boolean animated;
+    private Node[] powerUpNodes;
 
     public PowerUp(PowerUpType powerUpType) {
-
         super(powerUpType.getURL());
 
         this.powerUpType = powerUpType;
 
         Random rand = new Random();
         do {
-            setLayoutY(rand.nextInt((GameViewManager.HEIGHT - 50)));
-            setLayoutX(rand.nextInt((GameViewManager.WIDTH - 50)));
+            setLayoutY(2.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_HEIGHT - 4) - Map.STARTING_Y)) + Map.STARTING_Y);
+            setLayoutX(1.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_WIDTH - 1.5) - Map.STARTING_X)) + Map.STARTING_X);
         }
         while (GameViewManager.getInstance().getWallArrayList().size() > 0 &&
                 Wall.canMove(this, GameViewManager.getInstance().getWallArrayList(), false, 0));
@@ -39,6 +46,8 @@ public class PowerUp extends GameObject {
                     this);
             animationClip.animate();
         }
+        setUpNode();
+        powerUpAnimation();
     }
 
     private void checkCollision() {
@@ -58,7 +67,20 @@ public class PowerUp extends GameObject {
         }
     }
 
-    //todo: will we use these methods?
+    private void setUpNode() {
+        final double width = getImageWidth(powerUpType.getURL());
+        final double height = getImageHeight(powerUpType.getURL());
+        final double radius = Math.max(width, height) / 2;
+        final Circle circle = new Circle(radius, Color.DARKSLATEGREY);
+        circle.setCenterX(getLayoutX() + width / 2);
+        circle.setCenterY(getLayoutY() + height / 2);
+        circle.setOpacity(0.25);
+        circle.setStroke(Color.BLACK);
+        circle.setStrokeWidth(4);
+
+        powerUpNodes = new Node[]{circle};
+    }
+
     public static void disableSpeed() {
         Player.setSPEED(0);
     }
@@ -93,6 +115,24 @@ public class PowerUp extends GameObject {
 
     @Override
     public Node[] getChildren() {
-        return null;
+        return powerUpNodes;
     }
+
+    private void powerUpAnimation() {
+        final ScaleTransition rotaterProjectile = new ScaleTransition(animationDuration, this);
+        final ScaleTransition rotaterCircle = new ScaleTransition(animationDuration, powerUpNodes[0]);
+
+        rotaterCircle.setToX(-1);
+        rotaterProjectile.setToX(-1);
+
+        rotaterCircle.setAutoReverse(true);
+        rotaterProjectile.setAutoReverse(true);
+
+        rotaterCircle.setCycleCount(Animation.INDEFINITE);
+        rotaterProjectile.setCycleCount(Animation.INDEFINITE);
+
+        rotaterCircle.play();
+        rotaterProjectile.play();
+    }
+
 }

@@ -1,6 +1,5 @@
 package model.enemies;
 
-import controller.LevelManager;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.animation.FadeTransition;
@@ -59,8 +58,7 @@ public class Enemy extends Entity {
     private short randomSign;
     protected boolean boss;
 
-
-    public enum MoveMode {stationary, followPlayer, random, circular}
+    public enum MoveMode {STATIONARY, FOLLOW_PLAYER, RANDOM, CIRCULAR}
 
     public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode, double minDistance, long move_interval_ms) {
         this(enemyType,projectileType,projectileControlType, mode, minDistance);
@@ -73,13 +71,15 @@ public class Enemy extends Entity {
         this.minDistance = minDistance;
     }
 
+
     public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode) {
         this(enemyType);
         this.mode = mode;
         this.enemyProjectileControl = new EnemyProjectileControl(projectileType);
-        enemyProjectileControl.addSpawnRing(projectileControlType.getPulseRate(),projectileControlType.getPulseAngle());
+
+        enemyProjectileControl.addPulse(projectileControlType.getPulseRate(), projectileControlType.getPulseAngle());
         enemyProjectileControl.addSpawnToPlayer(projectileControlType.getToPlayerRate());
-        enemyProjectileControl.addRing1by1(projectileControlType.getRing1by1Rate(),projectileControlType.getRing1by1Angle());
+        enemyProjectileControl.addRing1by1(projectileControlType.getRing1by1Rate(), projectileControlType.getRing1by1Angle());
     }
 
     public Enemy(EnemyType enemyType) {
@@ -153,13 +153,13 @@ public class Enemy extends Entity {
         Random random = new Random();
         switch (random.nextInt(3)) {
             case 0:
-                return MoveMode.stationary;
+                return MoveMode.STATIONARY;
             case 1:
-                return MoveMode.circular;
+                return MoveMode.CIRCULAR;
             case 2:
-                return MoveMode.followPlayer;
+                return MoveMode.FOLLOW_PLAYER;
             default:
-                return MoveMode.followPlayer;
+                return MoveMode.FOLLOW_PLAYER;
         }
     }
 
@@ -167,16 +167,15 @@ public class Enemy extends Entity {
 
         if ((!intervalExists || System.currentTimeMillis() % (moveInterval * 2) > moveInterval) && farFromPlayer) {
             switch (mode) {
-                case followPlayer: {
+                case FOLLOW_PLAYER: {
                     moveImageView(angle);
                     break;
                 }
-                case circular: {
+                case CIRCULAR: {
                     moveImageView(angle + 90 * randomSign);
                     break;
                 }
-                //todo remove it if it looks stupid with the new assets
-                case random: {
+                case RANDOM: {
 
                     if (nextMove < System.currentTimeMillis()) {
                         randomAngle = -30 + Math.random() * 30;
@@ -186,7 +185,7 @@ public class Enemy extends Entity {
                     break;
                 }
                 default:
-                case stationary: {
+                case STATIONARY: {
                     break;
                 }
             }
@@ -251,7 +250,7 @@ public class Enemy extends Entity {
         return new Node[0];
     }
 
-    private void checkAlive() {
+    protected void checkAlive() {
         if (hp <= 0) {
             showFloatingScore();
             Player.increaseCurrentScore(this.getScoreValue());
@@ -277,6 +276,7 @@ public class Enemy extends Entity {
             if(!disableRotate){
                 setRotate(angle);
             }
+
             move();
             enemyProjectileControl.update(angle, getSpawner());
         }

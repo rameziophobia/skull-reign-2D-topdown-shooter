@@ -24,15 +24,15 @@ public class NewGameMenu extends Menu {
             menuScene.stopLoop();
             createGameViewManager(false);
             gameViewManager.createNewGame(PlayerType.ROBOT, menuScene.getPlayerName());
-            new_campaign.setTranslateY(0);//todo temp
-            new_campaign.setOpacity(1);//todo temp
+            new_campaign.setTranslateY(0);
+            new_campaign.setOpacity(1);
         });
         endless.setOnAnimationEndAction(() -> {
             menuScene.stopLoop();
             createGameViewManager(true);
             gameViewManager.createNewGame(PlayerType.ROBOT, menuScene.getPlayerName());
-            new_campaign.setTranslateY(0);//todo temp
-            new_campaign.setOpacity(1);//todo temp
+            endless.setTranslateY(0);
+            endless.setOpacity(1);
 
         });
 
@@ -48,3 +48,4 @@ public class NewGameMenu extends Menu {
     }
 
 }
+

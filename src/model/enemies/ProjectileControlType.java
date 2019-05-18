@@ -24,6 +24,7 @@ public enum ProjectileControlType {
     ;
 
     ProjectileControlType(long pulseRate, float pulseAngle, long toPlayerRate, long ring1by1Rate, float ring1by1Angle,int POWER) {
+
         this.pulseRate = pulseRate;
         this.pulseAngle = pulseAngle;
         this.toPlayerRate = toPlayerRate;
@@ -42,6 +43,7 @@ public enum ProjectileControlType {
     public int getPOWER() {
         return POWER;
     }
+
     public long getPulseRate() {
         return pulseRate;
     }
@@ -61,4 +63,5 @@ public enum ProjectileControlType {
     public float getRing1by1Angle() {
         return ring1by1Angle;
     }
+
 }
