@@ -133,8 +133,8 @@ public class MenuButton extends StackPane {
 
     private ImageView createFire(ColorAdjust colorAdjust, Insets marginInset) {
         ImageView imageView = new ImageView();
-        imageView.setScaleX(1.25); //todo scale it using a software
-        imageView.setScaleY(1.25); //todo scale it using a software
+        imageView.setScaleX(1.25);
+        imageView.setScaleY(1.25);
         imageView.setOpacity(0);
 
         StackPane.setAlignment(imageView, Pos.CENTER_LEFT);

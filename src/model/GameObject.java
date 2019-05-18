@@ -25,7 +25,7 @@ public abstract class GameObject extends ImageView {
     }
 
     public static boolean isAnimated(String url) {
-        return url.contains("animated");//todo X: -.-
+        return url.contains("animated");
     }
 
     public Point2D getSpawner() {

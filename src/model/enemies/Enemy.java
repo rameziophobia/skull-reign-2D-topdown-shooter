@@ -152,7 +152,6 @@ public class Enemy extends Entity {
                     moveImageView(angle + 90 * randomSign);
                     break;
                 }
-                //todo remove it if it looks stupid with the new assets
                 case RANDOM: {
 
                     if (nextMove < System.currentTimeMillis()) {

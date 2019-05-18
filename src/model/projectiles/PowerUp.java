@@ -70,10 +70,10 @@ public class PowerUp extends GameObject {
     private void setUpNode() {
         final double width = getImageWidth(powerUpType.getURL());
         final double height = getImageHeight(powerUpType.getURL());
-        final double radius = Math.max(width,height)/2;
+        final double radius = Math.max(width, height) / 2;
         final Circle circle = new Circle(radius, Color.DARKSLATEGREY);
-        circle.setCenterX(getLayoutX() + width/2);
-        circle.setCenterY(getLayoutY()+height/2);
+        circle.setCenterX(getLayoutX() + width / 2);
+        circle.setCenterY(getLayoutY() + height / 2);
         circle.setOpacity(0.25);
         circle.setStroke(Color.BLACK);
         circle.setStrokeWidth(4);
@@ -81,7 +81,6 @@ public class PowerUp extends GameObject {
         powerUpNodes = new Node[]{circle};
     }
 
-    //todo: will we use these methods?
     public static void disableSpeed() {
         Player.setSPEED(0);
     }
@@ -119,9 +118,9 @@ public class PowerUp extends GameObject {
         return powerUpNodes;
     }
 
-    private void powerUpAnimation(){
-        final ScaleTransition rotaterProjectile = new ScaleTransition(animationDuration,this);
-        final ScaleTransition rotaterCircle = new ScaleTransition(animationDuration,powerUpNodes[0]);
+    private void powerUpAnimation() {
+        final ScaleTransition rotaterProjectile = new ScaleTransition(animationDuration, this);
+        final ScaleTransition rotaterCircle = new ScaleTransition(animationDuration, powerUpNodes[0]);
 
         rotaterCircle.setToX(-1);
         rotaterProjectile.setToX(-1);
