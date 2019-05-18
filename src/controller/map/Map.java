@@ -159,14 +159,12 @@ public class Map {
         if (reverse)
             wall.setScaleX(-1);
 
-        if(wallFileName.equals("Pillar_Alone_Center.png")){
+        if (wallFileName.equals("Pillar_Alone_Center.png")) {
             wallNodes.add(wall);
-        }else if(reverse)
-        {
-            addTile(wallFileName,j,i,true,false);
-        }
-        else{
-            addTile(wallFileName,j,i,false,true);
+        } else if (reverse) {
+            addTile(wallFileName, j, i, true, false);
+        } else {
+            addTile(wallFileName, j, i, false, true);
         }
 
 

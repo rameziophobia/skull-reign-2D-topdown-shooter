@@ -1,10 +1,8 @@
 package model.player;
 
+import controller.InputManager;
 import controller.audiomanager.AudioFile;
 import controller.audiomanager.AudioManager;
-import javafx.animation.ScaleTransition;
-import javafx.util.Duration;
-import controller.InputManager;
 import javafx.scene.Node;
 import model.Entity;
 import model.projectiles.PlayerProjectileControl;

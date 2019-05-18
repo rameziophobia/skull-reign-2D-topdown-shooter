@@ -65,7 +65,7 @@ public class PowerUp extends GameObject {
             if (powerUpType.getProjectileType() != null) {
                 BtnHandler.addType(powerUpType.getProjectileType());
             }
-            AudioManager.playNewAudio(AudioFile.PLAYER_POWERUP,0.3);
+            AudioManager.playNewAudio(AudioFile.PLAYER_POWERUP, 0.3);
             GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }

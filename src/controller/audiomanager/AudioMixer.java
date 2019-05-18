@@ -39,7 +39,7 @@ class AudioMixer {
     void playNewAudio(AudioFile audioFile, double volume) {
         AudioClip audioClip = audioClipHashMap.get(audioFile);
 
-        if (audioClip.isPlaying()){
+        if (audioClip.isPlaying()) {
             audioClip = new AudioClip(audioClip.getSource());
         }
 

@@ -16,14 +16,14 @@ public class GameUI {
     private HealthBars healthBars = new HealthBars();
 
 
-    public GameUI(Pane gamePane,Boolean endless) {
+    public GameUI(Pane gamePane, Boolean endless) {
         createWeaponBar();
         setCrosshair(gamePane);
 
         waveLabel = new CounterLabel("Wave", 3, 30);
         waveLabel.addUIToGame();
         levelLabel = new CounterLabel("Level", 2, 0);
-        if(!endless){
+        if (!endless) {
             levelLabel.addUIToGame();
         }
 

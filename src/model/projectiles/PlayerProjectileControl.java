@@ -1,7 +1,5 @@
 package model.projectiles;
 
-import controller.audiomanager.AudioFile;
-import controller.audiomanager.AudioManager;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TouchEvent;
 import view.GameViewManager;
@@ -9,7 +7,6 @@ import view.GameViewManager;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import static controller.audiomanager.AudioManager.playAudio;
 import static view.GameViewManager.getPlayer;
 import static view.game.ProjectileUI.setWeapon;
 

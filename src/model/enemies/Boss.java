@@ -156,17 +156,17 @@ public class Boss extends Enemy {
 
     @Override
     protected void checkAlive() {
-        if (hp <= 0){
+        if (hp <= 0) {
             super.checkAlive();
             if (currentStage.index < stage.index) {
                 final Boss b = new Boss(stage, EnemyStageEnum.getEnemyStage(currentStage.index + 1));
                 GameViewManager.getInstance().getEnemyArrayList().add(b);
                 GameViewManager.getMainPane().addToGamePane(b);
-            } else{
+            } else {
                 AudioManager.stopAudio(AudioFile.BOSS_MUSIC);
                 AudioManager.playAudio(AudioFile.BOSS_DEATH, 0.8);
             }
-        }else{
+        } else {
             AudioManager.playAudio(AudioFile.BOSS_MUSIC);
         }
 

@@ -208,7 +208,6 @@ public class EnemyProjectileControl {
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1, true);
             GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;
-//            playNewAudio(type.getSound(), 1);
         }
     }
 
@@ -220,7 +219,6 @@ public class EnemyProjectileControl {
             Projectile projectile = new Projectile(spawner, type, angle, true);
             GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;
-//            playNewAudio(type.getSound(), 1);
         }
     }
 

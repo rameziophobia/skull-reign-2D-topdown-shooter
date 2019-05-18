@@ -1,9 +1,9 @@
 package model.enemies;
 
-import controller.audiomanager.AudioFile;
-import controller.audiomanager.AudioManager;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
@@ -17,7 +17,6 @@ import model.Entity;
 import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
-import controller.map.Map;
 import model.wall.Wall;
 import view.GameViewManager;
 
@@ -63,7 +62,7 @@ public class Enemy extends Entity {
     public enum MoveMode {STATIONARY, FOLLOW_PLAYER, RANDOM, CIRCULAR}
 
     public Enemy(EnemyType enemyType, ProjectileType projectileType, ProjectileControlType projectileControlType, MoveMode mode, double minDistance, long move_interval_ms) {
-        this(enemyType,projectileType,projectileControlType, mode, minDistance);
+        this(enemyType, projectileType, projectileControlType, mode, minDistance);
         this.moveInterval = move_interval_ms;
         this.intervalExists = true;
     }
@@ -93,8 +92,8 @@ public class Enemy extends Entity {
         hp = MAX_HP;
 
         Random rand = new Random();
-        setLayoutY(limStartY +height + rand.nextInt((int)limEndY - 2* height - 10 - (int)(limStartY)));
-        setLayoutX(limStartX +width + rand.nextInt((int)limEndX - 2*width - 10 - (int)(limStartX)));
+        setLayoutY(limStartY + height + rand.nextInt((int) limEndY - 2 * height - 10 - (int) (limStartY)));
+        setLayoutX(limStartX + width + rand.nextInt((int) limEndX - 2 * width - 10 - (int) (limStartX)));
 
         lbl_floatingScore = new Label("");
         lbl_floatingScore.setFont(FLOATING_SCORE_FONT);
@@ -143,6 +142,7 @@ public class Enemy extends Entity {
                 getLayoutY() - GameViewManager.getPlayer().getLayoutY())
                 > minDistance;
     }
+
     private void updateAngle() {
         angle = Math.toDegrees(Math.atan2(GameViewManager.getPlayer().getLayoutY() - getLayoutY(),
                 GameViewManager.getPlayer().getLayoutX() - getLayoutX()));
@@ -151,6 +151,7 @@ public class Enemy extends Entity {
     public void setMoveMode(MoveMode mode) {
         this.mode = mode;
     }
+
     public static MoveMode getRandomMoveMode() {
         Random random = new Random();
         switch (random.nextInt(3)) {
@@ -194,42 +195,40 @@ public class Enemy extends Entity {
         }
 
     }
-    public static void setMapLimits(double StartX, double EndX, double StartY, double EndY){
+
+    public static void setMapLimits(double StartX, double EndX, double StartY, double EndY) {
         limStartX = StartX;
         limEndX = EndX;
         limStartY = StartY;
         limEndY = EndY;
     }
 
-        private void moveImageView(double angle) {
-        double nextX =getLayoutX();
-        double nextY=getLayoutY();
+    private void moveImageView(double angle) {
+        double nextX = getLayoutX();
+        double nextY = getLayoutY();
         disableRotate = false;
-        if(Math.cos(Math.toRadians(angle)) <0 && Wall.canMoveLeft(this, GameViewManager.getInstance().getWallArrayList())){
+        if (Math.cos(Math.toRadians(angle)) < 0 && Wall.canMoveLeft(this, GameViewManager.getInstance().getWallArrayList())) {
             nextX = getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED();
         }
-        if(Math.cos(Math.toRadians(angle)) >0 && Wall.canMoveRight(this,GameViewManager.getInstance().getWallArrayList())){
+        if (Math.cos(Math.toRadians(angle)) > 0 && Wall.canMoveRight(this, GameViewManager.getInstance().getWallArrayList())) {
             nextX = getLayoutX() + Math.cos(Math.toRadians(angle)) * enemyType.getSPEED();
         }
-        if(Math.sin(Math.toRadians(angle)) > 0 && Wall.canMoveDown(this,GameViewManager.getInstance().getWallArrayList())){
+        if (Math.sin(Math.toRadians(angle)) > 0 && Wall.canMoveDown(this, GameViewManager.getInstance().getWallArrayList())) {
             nextY = getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED();
         }
-        if(Math.sin(Math.toRadians(angle)) < 0 && Wall.canMoveUp(this,GameViewManager.getInstance().getWallArrayList())){
+        if (Math.sin(Math.toRadians(angle)) < 0 && Wall.canMoveUp(this, GameViewManager.getInstance().getWallArrayList())) {
             nextY = getLayoutY() + Math.sin(Math.toRadians(angle)) * enemyType.getSPEED();
         }
-        if(nextX==getLayoutX()&&nextY>getLayoutY()){
+        if (nextX == getLayoutX() && nextY > getLayoutY()) {
             disableRotate = true;
             setRotate(90);
-        }
-        else if(nextX==getLayoutX()&&nextY<getLayoutY()){
+        } else if (nextX == getLayoutX() && nextY < getLayoutY()) {
             disableRotate = true;
             setRotate(-90);
-        }
-        else if(nextY==getLayoutY()&&nextX<getLayoutX()){
+        } else if (nextY == getLayoutY() && nextX < getLayoutX()) {
             disableRotate = true;
             setRotate(180);
-        }
-        else if(nextY==getLayoutY()&&nextX>getLayoutX()){
+        } else if (nextY == getLayoutY() && nextX > getLayoutX()) {
             disableRotate = true;
             setRotate(0);
         }
@@ -247,6 +246,7 @@ public class Enemy extends Entity {
 
 
     }
+
     @Override
     public Node[] getChildren() {
         return new Node[0];
@@ -255,7 +255,7 @@ public class Enemy extends Entity {
     protected void checkAlive() {
         if (hp <= 0) {
             showFloatingScore();
-            AudioManager.playNewAudio(AudioFile.ENEMY_DEATH,0.15);
+            AudioManager.playNewAudio(AudioFile.ENEMY_DEATH, 0.15);
             Player.increaseCurrentScore(this.getScoreValue());
             GameViewManager.getMainPane().removeFromGamePane(this);
             GameViewManager.getInstance().removeEnemy(this);
@@ -275,8 +275,8 @@ public class Enemy extends Entity {
     public void update() {
         updateAngle();
         calculateDistance();
-        if(!boss){
-            if(!disableRotate){
+        if (!boss) {
+            if (!disableRotate) {
                 setRotate(angle);
             }
 

@@ -85,7 +85,7 @@ public class Tornado extends GameObject {
     public void playerCollisionCheck(Player player) {
         if (isIntersects(player)) {
             player.takeDmg(DMG);
-            ((Campaign)levelManager).reduceNumOfTornado(this);
+            ((Campaign) levelManager).reduceNumOfTornado(this);
             GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }

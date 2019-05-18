@@ -1,10 +1,10 @@
 package view;
 
-import controller.audiomanager.AudioFile;
-import controller.audiomanager.AudioManager;
 import controller.Campaign;
 import controller.InputManager;
 import controller.LevelManager;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import controller.json.JsonParser;
 import controller.map.Map;
 import javafx.animation.AnimationTimer;
@@ -20,7 +20,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.GameObject;
 import model.MainPane;
-import model.enemies.Boss;
 import model.enemies.Enemy;
 import model.player.Player;
 import model.player.PlayerType;
@@ -52,17 +51,16 @@ public class GameViewManager {
     private static AnimationTimer gameLoop;
     private LevelManager gameMode;
     private Boolean isEndless;
-    private static ArrayList<Wall>  wallArrayList= new ArrayList<>();
+    private static ArrayList<Wall> wallArrayList = new ArrayList<>();
 
     public static GameViewManager getInstance() {
         return instance;
     }
 
 
-
     public GameViewManager(Boolean endless) {
         instance = this;
-        isEndless=endless;
+        isEndless = endless;
         mainPane = new MainPane();
         mainPane.addAllToBackPane(new Rectangle(WIDTH, HEIGHT, Color.BLACK));
 
@@ -76,7 +74,7 @@ public class GameViewManager {
 
         setWindowScaling();
 
-        gameUI = new GameUI(mainPane,isEndless);
+        gameUI = new GameUI(mainPane, isEndless);
 
         gameEnded = false;
         gameEnd = new GameEnd();
@@ -103,6 +101,7 @@ public class GameViewManager {
     public static MainPane getMainPane() {
         return mainPane;
     }
+
     public GameUI getGameUI() {
         return gameUI;
     }
@@ -126,10 +125,10 @@ public class GameViewManager {
         createPlayer(chosenPlayer, playerName);
 
         initializeMapBorder();
-        if(isEndless){
-            gameMode = new Endless(2000,false);
-        }else{
-            gameMode = new Campaign(gameUI.getLevelLabel(),gameUI.getWaveLabel());
+        if (isEndless) {
+            gameMode = new Endless(2000, false);
+        } else {
+            gameMode = new Campaign(gameUI.getLevelLabel(), gameUI.getWaveLabel());
         }
         startGameLoop();
     }
@@ -153,7 +152,7 @@ public class GameViewManager {
         gameLoop.start();
     }
 
-    private void initializeMapBorder(){
+    private void initializeMapBorder() {
         Wall up = new Wall(new Image(Main.PATH_RESOURCES_SPRITES + "walls/empty-704x396.png"));
         Wall down = new Wall(new Image(Main.PATH_RESOURCES_SPRITES + "walls/empty-704x396.png"));
         Wall left = new Wall(new Image(Main.PATH_RESOURCES_SPRITES + "walls/empty-704x396.png"));
@@ -162,7 +161,7 @@ public class GameViewManager {
         up.setFitHeight(Map.BLOCK_SIZE);
         up.setFitWidth((Map.MAP_BLOCKS_WIDTH - 1) * Map.BLOCK_SIZE);
         up.setLayoutX(Map.STARTING_X);
-        up.setLayoutY(Map.STARTING_Y+Map.BLOCK_SIZE);
+        up.setLayoutY(Map.STARTING_Y + Map.BLOCK_SIZE);
 
         down.setFitWidth((Map.MAP_BLOCKS_WIDTH - 1) * Map.BLOCK_SIZE);
         down.setFitHeight(Map.BLOCK_SIZE);
@@ -171,11 +170,11 @@ public class GameViewManager {
         left.setFitWidth(Map.BLOCK_SIZE);
         left.setFitHeight((Map.MAP_BLOCKS_HEIGHT - 1) * Map.BLOCK_SIZE);
         left.setLayoutX(Map.STARTING_X);
-        left.setLayoutY(Map.STARTING_Y+Map.BLOCK_SIZE);
+        left.setLayoutY(Map.STARTING_Y + Map.BLOCK_SIZE);
         right.setFitWidth(Map.BLOCK_SIZE);
         right.setFitHeight((Map.MAP_BLOCKS_HEIGHT - 1) * Map.BLOCK_SIZE);
         right.setLayoutX(Map.STARTING_X + (Map.MAP_BLOCKS_WIDTH - 1) * Map.BLOCK_SIZE);
-        right.setLayoutY(Map.STARTING_Y+Map.BLOCK_SIZE);
+        right.setLayoutY(Map.STARTING_Y + Map.BLOCK_SIZE);
 
 
         mainPane.addToGamePane(up);
@@ -188,6 +187,7 @@ public class GameViewManager {
         getWallArrayList().add(left);
         getWallArrayList().add(up);
     }
+
     private void createScoreLabel() {
         lbl_currentScore = new ScoreLabel();
         mainPane.addToUIPane(lbl_currentScore);
