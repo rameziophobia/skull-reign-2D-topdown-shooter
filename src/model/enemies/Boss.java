@@ -20,19 +20,22 @@ public class Boss extends Enemy {
     private EnemyProjectileControl knifeContinuousPulse;
     private EnemyProjectileControl randomSkulls;
     private EnemyProjectileControl shower;
-    private EnemyProjectileControl knifeChargePulse;
+    private EnemyProjectileControl knifeChargePulseSlow;
+    private EnemyProjectileControl knifeChargePulseFast;
     private EnemyProjectileControl knife1by1;
     private StatBar HPRectangleBoss;
     private StackPane HPStack;
+    private double HP_INTERVAL;
+    private double hp_interval;
     private final static int CONTROL_INTERVAL = 40 * 1000;
     private long nextControl;
-    private int control;
-    private final static int CONTROLS_NUM = 3;
+    private int control = -1;
+    private final static int CONTROLS_NUM = 4;
 
     public enum EnemyStageEnum {
-        STAGE1(EnemyType.MAGE1, 90, 120, 550, 500, 4, 1, 350, 120, 25,4000),
-        STAGE2(EnemyType.MAGE2, 60, 60, 400, 350, 5, 2, 250, 100, 20,3000),
-        STAGE3(EnemyType.MAGE3, 45, 45, 330, 250, 6, 3, 150, 90, 17,2000);
+        STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20,5000),
+        STAGE2(EnemyType.MAGE2, 60, 60, 550, 350, 5, 2, 250, 150, 15,4000),
+        STAGE3(EnemyType.MAGE3, 45, 45, 450, 250, 6, 3, 150, 120, 12,3000);
 
         private EnemyType enemyType;
         private int pulseAngle;
@@ -110,6 +113,7 @@ public class Boss extends Enemy {
         HPStack.setPrefWidth(WIDTH);
         HPStack.setAlignment(Pos.CENTER);
         GameViewManager.getMainPane().addToUIPane(HPStack);
+        HP_INTERVAL = MAX_HP / CONTROLS_NUM;
     }
 
     private void projectileControlInit(EnemyStageEnum stage) {
@@ -128,8 +132,13 @@ public class Boss extends Enemy {
         knife1by1 = new EnemyProjectileControl(ProjectileType.KNIFE);
         knife1by1.addRing1by1(stage.ringRate,stage.ringAngle);
 
-        knifeChargePulse = new EnemyProjectileControl(ProjectileType.KNIFE);
-        knifeChargePulse.addPulse(stage.knifeChargeRate,5);
+        knifeChargePulseSlow = new EnemyProjectileControl(ProjectileType.KNIFE);
+        knifeChargePulseSlow.addPulse(stage.knifeChargeRate + 2000,5);
+
+        knifeChargePulseFast = new EnemyProjectileControl(ProjectileType.KNIFE);
+        knifeChargePulseFast.addPulse(stage.knifeChargeRate,5);
+
+
     }
 
 
@@ -140,6 +149,7 @@ public class Boss extends Enemy {
         HPRectangleBoss.decreaseCurrent(dmg);
         HPRectangleBoss.barScaleAnimator(MAX_HP);
         hp = HPRectangleBoss.getCurrentValue();
+        hp_interval -= dmg;
     }
 
     @Override
@@ -158,25 +168,26 @@ public class Boss extends Enemy {
     @Override
     public void update() {
         super.update();
-        long timeNow = System.currentTimeMillis();
-        if (nextControl < timeNow) {
-            control = (control + 1) % CONTROLS_NUM;
-            nextControl = timeNow + CONTROL_INTERVAL;
+        if (hp_interval <= 0) {
+            control++;
+            System.out.println(control);
+            hp_interval = HP_INTERVAL;
         }
         switch (control) {
             case 0:
                 knifeContinuousPulse.update(angle, getSpawner());
-                randomSkulls.update(angle, getSpawner());
-                laser.update(angle, getSpawner());
-                shower.update(angle, getSpawner());
-                knife1by1.update(angle, getSpawner());
-                knifeChargePulse.update(angle, getSpawner());
                 break;
             case 1:
+                laser.update(angle, getSpawner());
                 break;
             case 2:
+                shower.update(angle, getSpawner());
+                knifeChargePulseFast.update(angle, getSpawner());
                 break;
             case 3:
+                randomSkulls.update(angle, getSpawner());
+                knife1by1.update(angle, getSpawner());
+                knifeChargePulseSlow.update(angle, getSpawner());
                 break;
         }
 

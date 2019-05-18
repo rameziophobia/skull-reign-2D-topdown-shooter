@@ -80,7 +80,7 @@ public class Projectile extends GameObject {
     private void checkCollision_entity() {
         if (enemyProjectile) {
             if (isIntersects(GameViewManager.getPlayer())) {
-//                GameViewManager.getPlayer().takeDmg(projectileType.getDAMAGE());
+                GameViewManager.getPlayer().takeDmg(projectileType.getDAMAGE());
                 GameViewManager.getMainPane().removeFromGamePane(this);
             }
         } else {
@@ -112,7 +112,7 @@ public class Projectile extends GameObject {
     public void update() {
         move();
 
-        if (animated) { //todo everything should be animated
+        if (animated) {
             animationClip.animate();
         }
         checkCollision_entity();
