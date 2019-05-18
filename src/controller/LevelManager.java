@@ -1,14 +1,12 @@
 package controller;
 
+import controller.json.JsonParser;
 import controller.map.Map;
-import controller.map.MapLoader;
 import model.enemies.Enemy;
-import model.enemies.EnemyType;
 import model.level.Level;
 import model.player.Player;
 import model.projectiles.PowerUp;
 import model.projectiles.PowerUpType;
-import model.projectiles.ProjectileType;
 import model.spawner.SpawnPoint;
 import model.tornado.Tornado;
 import model.ui.game.CounterLabel;
@@ -23,25 +21,28 @@ public class LevelManager {
     private final ArrayList<Enemy> enemyArrayList;
     private final ArrayList<Wall> wallArrayList;
 
-    private Level[] levels;
+    private final Level[] levels;
+    private final CounterLabel levelLabel, waveLabel;
 
     private int currentLevelIndex;
     private int currentWaveIndex;
     private int currentEnemyIndex;
-    private long nextEnemySpawnTime;
-    private Level currentLevel;
-    private ArrayList<SpawnPoint> currentSpawnPoints;
 
-    private CounterLabel levelLabel, waveLabel;
+    private long nextEnemySpawnTime;
     private long nextTornadoSpawnTime;
-    private List<Tornado> currentTornadoList;
-    private Enemy[] currentWave;
-    private int numOfPowerUps;
     private long nextPowerUpSpawnTime;
     private long nextWaveTime;
+    private long nextLevelTime;
+
+    private Level currentLevel;
+    private Enemy[] currentWave;
+    private ArrayList<SpawnPoint> currentSpawnPoints;
+    private List<Tornado> currentTornadoList;
+
+    private int numOfPowerUps;
+
     private boolean waitingForNextWave;
     private boolean waitingForNextLevel;
-    private long nextLevelTime;
 
     public LevelManager(CounterLabel levelLabel, CounterLabel waveLabel) {
         this.levelLabel = levelLabel;
@@ -52,69 +53,13 @@ public class LevelManager {
         currentTornadoList = new ArrayList<>();
 
         Tornado.setMapLimits(
-                MapLoader.BLOCK_SIZE + MapLoader.STARTING_X,
-                MapLoader.STARTING_X + (MapLoader.MAP_BLOCKS_WIDTH - 1) * MapLoader.BLOCK_SIZE,
-                MapLoader.BLOCK_SIZE * 3 + MapLoader.STARTING_Y,
-                MapLoader.STARTING_Y + (MapLoader.MAP_BLOCKS_HEIGHT - 1) * MapLoader.BLOCK_SIZE
+                Map.BLOCK_SIZE + Map.STARTING_X,
+                Map.STARTING_X + (Map.MAP_BLOCKS_WIDTH - 1) * Map.BLOCK_SIZE,
+                Map.BLOCK_SIZE * 3 + Map.STARTING_Y,
+                Map.STARTING_Y + (Map.MAP_BLOCKS_HEIGHT - 1) * Map.BLOCK_SIZE
         );
 
-        levels = new Level[2];
-
-        levels[0] = new Level(
-                new Enemy[][]{
-                        new Enemy[]{
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer)
-                        },
-                        new Enemy[]{
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer)
-                        }
-                },
-                10000,
-                new MapLoader(Map.LEVEL_01),
-                6000,
-                5,
-                10000,
-                3,
-                10000
-        );
-
-        levels[1] = new Level(
-                new Enemy[][]{
-                        new Enemy[]{
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer)
-                        },
-                        new Enemy[]{
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer),
-                                new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer)
-                        }
-                },
-                10000,
-                new MapLoader(Map.LEVEL_02),
-                6000,
-                5,
-                10000,
-                3,
-                10000
-        );
+        levels = JsonParser.readLevels();
 
         spawnNextLevel();
     }
@@ -171,13 +116,13 @@ public class LevelManager {
     }
 
     private void removeLastLevel() {
-        final MapLoader mapLoader = levels[currentLevelIndex - 1].getMapLoader();
-        GameViewManager.getMainPane().removeAllFromFrontPane(mapLoader.getFrontNodes());
-        GameViewManager.getMainPane().removeAllFromBackPane(mapLoader.getBackNodes());
+        final Map map = levels[currentLevelIndex - 1].getMap();
+        GameViewManager.getMainPane().removeAllFromFrontPane(map.getFrontNodes());
+        GameViewManager.getMainPane().removeAllFromBackPane(map.getBackNodes());
 
-        mapLoader.getWallNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
-        wallArrayList.removeAll(mapLoader.getWallNodes());
-        mapLoader.getSpawnPointsNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
+        map.getWallNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
+        wallArrayList.removeAll(map.getWallNodes());
+        map.getSpawnPointsNodes().forEach(node -> GameViewManager.getMainPane().removeFromGamePane(node));
 
         resetExtra();
 
@@ -190,13 +135,13 @@ public class LevelManager {
         player.setLayoutY(GameViewManager.CENTER_Y);
 
         currentLevel = levels[currentLevelIndex];
-        final MapLoader mapLoader = currentLevel.getMapLoader();
-        GameViewManager.getMainPane().addAllToFrontPane(mapLoader.getFrontNodes());
-        GameViewManager.getMainPane().addAllToBackPane(mapLoader.getBackNodes());
+        final Map map = currentLevel.getMap();
+        GameViewManager.getMainPane().addAllToFrontPane(map.getFrontNodes());
+        GameViewManager.getMainPane().addAllToBackPane(map.getBackNodes());
 
-        mapLoader.getWallNodes().forEach(node -> GameViewManager.getMainPane().addToGamePane(node));
-        wallArrayList.addAll(mapLoader.getWallNodes());
-        currentSpawnPoints = mapLoader.getSpawnPointsNodes();
+        map.getWallNodes().forEach(node -> GameViewManager.getMainPane().addToGamePane(node));
+        wallArrayList.addAll(map.getWallNodes());
+        currentSpawnPoints = map.getSpawnPointsNodes();
         currentSpawnPoints.forEach(node -> {
             GameViewManager.getMainPane().addToGamePane(node);
             node.setActive(true);

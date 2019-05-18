@@ -2,6 +2,7 @@ package view;
 
 import controller.InputManager;
 import controller.LevelManager;
+import controller.json.JsonParser;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -74,6 +75,7 @@ public class GameViewManager {
                 gameUpdate();
             }
         };
+        JsonParser.writeEnemyEnum();
     }
 
     public static Player getPlayer() {

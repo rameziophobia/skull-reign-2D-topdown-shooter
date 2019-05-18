@@ -2,8 +2,7 @@ package model.spawner;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
-import controller.map.MapKey;
-import controller.map.MapLoader;
+import controller.map.Map;
 import javafx.animation.FadeTransition;
 import javafx.animation.Transition;
 import javafx.scene.Node;
@@ -27,13 +26,13 @@ public class SpawnPoint extends GameObject {
 
     public SpawnPoint(double x, double y) {
         super(new Image(Main.PATH_RESOURCES_SPRITES + "pent/Pent_IDLE-16x16.png",
-                MapLoader.BLOCK_SIZE, MapLoader.BLOCK_SIZE, true, false));
+                Map.BLOCK_SIZE, Map.BLOCK_SIZE, true, false));
 
         this.setLayoutX(x);
         this.setLayoutY(y);
 
         img_pulseActive = new ImageView(new Image(Main.PATH_RESOURCES_SPRITES + "pent/Pent_ACTIVE-16x16.png",
-                MapLoader.BLOCK_SIZE, MapLoader.BLOCK_SIZE, true, false));
+                Map.BLOCK_SIZE, Map.BLOCK_SIZE, true, false));
 
         img_pulseActive.setLayoutX(x);
         img_pulseActive.setLayoutY(y);
@@ -56,11 +55,11 @@ public class SpawnPoint extends GameObject {
     }
 
     public double getSpawnPointX() {
-        return this.getLayoutX() + MapLoader.BLOCK_SIZE/4;
+        return this.getLayoutX() + Map.BLOCK_SIZE / 4;
     }
 
     public double getSpawnPointY() {
-        return this.getLayoutY() + MapLoader.BLOCK_SIZE/4;
+        return this.getLayoutY() + Map.BLOCK_SIZE / 4;
     }
 
     public boolean isActive() {

@@ -2,11 +2,10 @@ package model.projectiles;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
-import controller.map.MapLoader;
+import controller.map.Map;
 import javafx.animation.Animation;
 import javafx.animation.ScaleTransition;
 import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -32,8 +31,8 @@ public class PowerUp extends GameObject {
 
         Random rand = new Random();
         do {
-            setLayoutY(2.5*MapLoader.BLOCK_SIZE + rand.nextInt((int)(MapLoader.BLOCK_SIZE*(MapLoader.MAP_BLOCKS_HEIGHT-4)-MapLoader.STARTING_Y))+ MapLoader.STARTING_Y);
-            setLayoutX(1.5*MapLoader.BLOCK_SIZE + rand.nextInt((int)(MapLoader.BLOCK_SIZE*(MapLoader.MAP_BLOCKS_WIDTH-1.5) - MapLoader.STARTING_X))+ MapLoader.STARTING_X );
+            setLayoutY(2.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_HEIGHT - 4) - Map.STARTING_Y)) + Map.STARTING_Y);
+            setLayoutX(1.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_WIDTH - 1.5) - Map.STARTING_X)) + Map.STARTING_X);
         }
         while (GameViewManager.getInstance().getWallArrayList().size() > 0 &&
                 Wall.canMove(this, GameViewManager.getInstance().getWallArrayList(), false, 0));

@@ -13,7 +13,7 @@ import view.Main;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class MapLoader {
+public class Map {
     public static final int MAP_BLOCKS_WIDTH = 25;
     public static final int MAP_BLOCKS_HEIGHT = 16;
 
@@ -21,6 +21,7 @@ public class MapLoader {
     public static final int STARTING_X = (int) ((GameViewManager.WIDTH - (BLOCK_SIZE * MAP_BLOCKS_WIDTH)) / 2);
     public static final int STARTING_Y = (int) ((GameViewManager.HEIGHT - (BLOCK_SIZE * MAP_BLOCKS_HEIGHT)) / 2);
 
+    private static final String PATH_RESOURCES_MAPS = Main.PATH_RESOURCES + "maps/";
     private static final String PATH_RESOURCES_SPRITES_MAP = Main.PATH_RESOURCES_SPRITES + "map/";
 
     private static final String[] WALL_GROUNDS = {
@@ -36,7 +37,8 @@ public class MapLoader {
     private final int[][] aiGrid;
     private final Random random;
 
-    public MapLoader(Map map) {
+    public Map(String mapName) {
+        mapName = PATH_RESOURCES_MAPS + mapName + ".png";
         backNodes = new ArrayList<>();
         wallNodes = new ArrayList<>();
         spawnPointsNodes = new ArrayList<>();
@@ -44,7 +46,7 @@ public class MapLoader {
         aiGrid = new int[MAP_BLOCKS_HEIGHT][MAP_BLOCKS_WIDTH];
         random = new Random();
 
-        final PixelReader pixelReader = new Image(map.getPath()).getPixelReader();
+        final PixelReader pixelReader = new Image(mapName).getPixelReader();
         for (int i = 0; i < MAP_BLOCKS_HEIGHT; i++) {
             for (int j = 0; j < MAP_BLOCKS_WIDTH; j++) {
                 aiGrid[i][j] = 0;
