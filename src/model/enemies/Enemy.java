@@ -1,6 +1,5 @@
 package model.enemies;
 
-import controller.LevelManager;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.animation.FadeTransition;
@@ -49,7 +48,7 @@ public class Enemy extends Entity {
     private boolean farFromPlayer;
     private short randomSign;
 
-    public enum MoveMode {stationary, followPlayer, random, circular}
+    public enum MoveMode {STATIONARY, FOLLOW_PLAYER, RANDOM, CIRCULAR}
 
     public Enemy(EnemyType enemyType, ProjectileType projectileType, MoveMode mode, double minDistance, long move_interval_ms) {
         this(enemyType, projectileType, mode, minDistance);
@@ -141,16 +140,16 @@ public class Enemy extends Entity {
 
         if ((!intervalExists || System.currentTimeMillis() % (moveInterval * 2) > moveInterval) && farFromPlayer) {
             switch (mode) {
-                case followPlayer: {
+                case FOLLOW_PLAYER: {
                     moveImageView(angle);
                     break;
                 }
-                case circular: {
+                case CIRCULAR: {
                     moveImageView(angle + 90 * randomSign);
                     break;
                 }
                 //todo remove it if it looks stupid with the new assets
-                case random: {
+                case RANDOM: {
 
                     if (nextMove < System.currentTimeMillis()) {
                         randomAngle = -30 + Math.random() * 30;
@@ -160,7 +159,7 @@ public class Enemy extends Entity {
                     break;
                 }
                 default:
-                case stationary: {
+                case STATIONARY: {
                     break;
                 }
             }
