@@ -42,7 +42,7 @@ public class MenuScene extends Scene {
     private String playerName;
 
     public MenuScene(double width, double height, Stage primaryStage) {
-        super(new StackPane(), width, height);//todo width and height
+        super(new StackPane(), width, height);
         stackPane = (StackPane) getRoot();
 
         this.primaryStage = primaryStage;
@@ -55,7 +55,7 @@ public class MenuScene extends Scene {
 
         AudioManager.playAudio(AudioFile.MENU_MUSIC);
 
-        Rectangle blackScreen = new Rectangle(1280, 720, Color.BLACK);//todo width and height
+        Rectangle blackScreen = new Rectangle(1280, 720, Color.BLACK);
         blackScreen.setOpacity(0);
         blackScreen.setMouseTransparent(true);
 
@@ -65,7 +65,7 @@ public class MenuScene extends Scene {
         fadeToBlack.setDelay(Duration.seconds(0.2));
         fadeToBlack.setNode(blackScreen);
 
-        ImageView imgV_logo = new ImageView(PATH_RESOURCES_SPRITES_UI + "placeholder-logo-2.png");
+        ImageView imgV_logo = new ImageView(PATH_RESOURCES_SPRITES_UI + "Skull Reign.png");
         HBox hbx_logo = new HBox(imgV_logo);
         hbx_logo.setAlignment(Pos.CENTER);
 
@@ -80,8 +80,8 @@ public class MenuScene extends Scene {
         final Menu newGameMenu = new NewGameMenu(this);
         menuHashMap.put(Menus.NEW_GAME, newGameMenu);
 
-        final Menu loadGameMenu = new LoadGameMenu(this);
-        menuHashMap.put(Menus.LOAD_GAME, loadGameMenu);
+//        final Menu loadGameMenu = new LoadGameMenu(this);
+//        menuHashMap.put(Menus.LOAD_GAME, loadGameMenu);
 
         final Menu hallOfFameMenu = new HallOfFameMenu(this);
         menuHashMap.put(Menus.HALL_OF_FAME, hallOfFameMenu);
@@ -93,7 +93,7 @@ public class MenuScene extends Scene {
                 mainMenu,
                 customizationMenu,
                 newGameMenu,
-                loadGameMenu,
+//                loadGameMenu,
                 hallOfFameMenu,
                 settingsMenu
         );

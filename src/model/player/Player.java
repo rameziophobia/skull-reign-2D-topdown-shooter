@@ -5,12 +5,12 @@ import controller.audiomanager.AudioManager;
 import javafx.animation.ScaleTransition;
 import javafx.util.Duration;
 import controller.InputManager;
+import javafx.scene.Node;
 import model.Entity;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
 import model.wall.Wall;
 import view.GameViewManager;
-import view.LevelManager;
 import view.game.stats.StatBar;
 
 import static java.lang.Math.atan2;
@@ -19,9 +19,11 @@ public class Player extends Entity {
     private static int currentScore = 0;
     private static final float MAX_SPEED = 8;
     private static float SPEED = 6;
-    private static final double MAX_HP = 500;
-    private static final double MAX_SHIELD = 500;
-    private static final long REGENERATION_TIME_CD_MS = 5000;
+    private static double MAX_HP = 500;
+    private static double MAX_SHIELD = 300;
+    private static final long HEALTH_REGEN_INTERVAL = 2000;
+    private static long REGENERATION_TIME_CD_SHIELD_MS = 5000;
+    private static long REGENERATION_TIME_CD_HP_MS = 6000;
 
     private StatBar HPRectangle;
     private StatBar ShieldRectangle;
@@ -37,8 +39,12 @@ public class Player extends Entity {
     private boolean rightPressed;
 
     private String name;
+    private long timeNow;
+    private long nextShieldRegenCheck;
+    private long nextHealthDmgCheck;
+    private long nextHealthRegenCheck;
 
-    public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change it to said's char mn 8er rotation
+    public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) {
         super(player.getURL(), SPEED);
 
         setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2 - 300);
@@ -52,6 +58,7 @@ public class Player extends Entity {
         secondaryBtnHandler = new PlayerProjectileControl(ProjectileType.WHIRLWIND,
                 PlayerProjectileControl.buttons.SECONDARY);
     }
+
 
     public String getName() {
         return name;
@@ -77,17 +84,30 @@ public class Player extends Entity {
         this.rightPressed = rightPressed;
     }
 
+    public void endlessStats() {
+        MAX_HP = 2000;
+        MAX_SHIELD = 1000;
+        currentHp = MAX_HP;
+        currentShield = MAX_SHIELD;
+        ShieldRectangle.setCurrentValue(currentShield);
+        HPRectangle.setCurrentValue(currentHp);
+        ShieldRectangle.setMaxValue(MAX_SHIELD);
+        HPRectangle.setMaxValue(MAX_HP);
+        HPRectangle.barScaleAnimator(MAX_HP);
+        ShieldRectangle.barScaleAnimator(MAX_SHIELD);
+    }
+
     private void move() {
         double DIAGONAL_FACTOR = 1.5;
         if (upPressed) {
-            if (Wall.canMoveUp(this, LevelManager.getWallArrayList()) && !atTopBorder()) {
+            if (Wall.canMoveUp(this, GameViewManager.getInstance().getWallArrayList()) && !atTopBorder()) {
                 if (rightPressed || leftPressed) {
                     setLayoutY(getLayoutY() - SPEED / DIAGONAL_FACTOR); // to avoid moving fast diagonally
                 } else {
                     setLayoutY(getLayoutY() - SPEED);
                 }
             }
-        } else if (downPressed && Wall.canMoveDown(this, LevelManager.getWallArrayList()) && !atBottomBorder()) {
+        } else if (downPressed && Wall.canMoveDown(this, GameViewManager.getInstance().getWallArrayList()) && !atBottomBorder()) {
             if (rightPressed || leftPressed) {
                 setLayoutY(getLayoutY() + SPEED / DIAGONAL_FACTOR);
             } else {
@@ -96,14 +116,14 @@ public class Player extends Entity {
         }
         if (rightPressed) {
 
-            if (Wall.canMoveRight(this, LevelManager.getWallArrayList()) && !atRightBorder()) {
+            if (Wall.canMoveRight(this, GameViewManager.getInstance().getWallArrayList()) && !atRightBorder()) {
                 if (upPressed || downPressed) {
                     setLayoutX(getLayoutX() + SPEED / DIAGONAL_FACTOR);
                 } else {
                     setLayoutX(getLayoutX() + SPEED);
                 }
             }
-        } else if (leftPressed && Wall.canMoveLeft(this, LevelManager.getWallArrayList()) && !atLeftBorder()) {
+        } else if (leftPressed && Wall.canMoveLeft(this, GameViewManager.getInstance().getWallArrayList()) && !atLeftBorder()) {
             if (upPressed || downPressed) {
                 setLayoutX(getLayoutX() - SPEED / DIAGONAL_FACTOR);
             } else {
@@ -140,13 +160,15 @@ public class Player extends Entity {
     @Override
     public void takeDmg(double dmg) {
         AudioManager.playNewAudio(AudioFile.HURT, 1);
+        nextShieldRegenCheck = timeNow + REGENERATION_TIME_CD_SHIELD_MS;
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
-            ShieldRectangle.barScaleAnimator(MAX_HP);
+            ShieldRectangle.barScaleAnimator(MAX_SHIELD);
             currentShield = ShieldRectangle.getCurrentValue();
         } else {
+            nextHealthDmgCheck = timeNow + REGENERATION_TIME_CD_HP_MS;
             HPRectangle.decreaseCurrent(dmg);
-            HPRectangle.barScaleAnimator(MAX_SHIELD);
+            HPRectangle.barScaleAnimator(MAX_HP);
             currentHp = HPRectangle.getCurrentValue();
         }
         if (currentHp <= 0)
@@ -157,12 +179,24 @@ public class Player extends Entity {
     public void heal(float amount) {
         HPRectangle.increaseCurrent(amount);
         HPRectangle.barScaleAnimator(MAX_HP);
+        currentHp = HPRectangle.getCurrentValue();
     }
 
-    public void shieldRegen() {
-        ShieldRectangle.regeneration();
-        ShieldRectangle.barScaleAnimator(MAX_SHIELD);
+    private void shieldRegen() {
+        if (nextShieldRegenCheck < timeNow) {
+            ShieldRectangle.regeneration();
+            ShieldRectangle.barScaleAnimator(MAX_SHIELD);
+            currentShield = ShieldRectangle.getCurrentValue();
+        }
     }
+
+    private void healthRegen() {
+        if (nextHealthDmgCheck < timeNow && nextHealthRegenCheck < timeNow) {
+            nextHealthRegenCheck = timeNow + HEALTH_REGEN_INTERVAL;
+            heal((float) (MAX_HP / 40));
+        }
+    }
+
 
     public PlayerProjectileControl getPrimaryBtnHandler() {
         return primaryBtnHandler;
@@ -201,16 +235,24 @@ public class Player extends Entity {
 
     @Override
     public void update() {
+        timeNow = System.currentTimeMillis();
         if (currentHp > 0) {
             updateAngle(InputManager.getMouseXPos(), InputManager.getMouseYPos());
             setRotate(angle);
 
+            shieldRegen();
+            healthRegen();
             move();
             warp();
 
             secondaryBtnHandler.update(angle);
             primaryBtnHandler.update(angle);
         }
+    }
+
+    @Override
+    public Node[] getChildren() {
+        return null;
     }
 
     public static void increaseCurrentScore(int amount) {
@@ -228,7 +270,6 @@ public class Player extends Entity {
 
     public void killPlayer() {
         AudioManager.playAudio(AudioFile.PLAYER_DEATH);
-        LevelManager.setSpawnable(false);
         GameViewManager.endGameSequence();
     }
 

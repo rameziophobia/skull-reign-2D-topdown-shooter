@@ -33,6 +33,10 @@ public class StatBar extends Rectangle {
         return currentValue;
     }
 
+    public void setMaxValue(double maxValue) {
+        this.maxValue = maxValue;
+    }
+
     public void increaseCurrent(double byValue) {
         setCurrentValue(Math.min(currentValue + byValue, maxValue));
     }

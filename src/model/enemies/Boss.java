@@ -3,6 +3,7 @@ package model.enemies;
 import controller.audiomanager.AudioFile;
 import controller.audiomanager.AudioManager;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -10,7 +11,6 @@ import model.player.Player;
 import model.projectiles.EnemyProjectileControl;
 import model.projectiles.ProjectileType;
 import view.GameViewManager;
-import view.LevelManager;
 import view.game.stats.StatBar;
 
 import static view.GameViewManager.HEIGHT;
@@ -33,6 +33,7 @@ public class Boss extends Enemy {
     private int control = -1;
     private final static int CONTROLS_NUM = 4;
     private static boolean bossIsSpawned = false;
+    private Node[] nodes;
 
     public enum EnemyStageEnum {
         STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20, 5000, Color.DARKBLUE),
@@ -144,8 +145,6 @@ public class Boss extends Enemy {
 
         knifeChargePulseFast = new EnemyProjectileControl(ProjectileType.KNIFE);
         knifeChargePulseFast.addPulse(stage.knifeChargeRate, 5);
-
-
     }
 
     @Override
@@ -163,7 +162,7 @@ public class Boss extends Enemy {
         if (hp <= 0 && currentStage.index < stage.index) {
             super.checkAlive();
             Boss b = new Boss(stage, EnemyStageEnum.getEnemyStage(currentStage.index + 1));
-            LevelManager.getEnemyArrayList().add(b);
+            GameViewManager.getInstance().getEnemyArrayList().add(b);
             GameViewManager.getMainPane().addToGamePane(b);
         } else if (hp <= 0 && currentStage.index >= stage.index) {
             System.out.println(currentStage.index + " " + stage.index);
@@ -210,7 +209,12 @@ public class Boss extends Enemy {
         limitRec.setStrokeWidth(2);
         limitRec.setStroke(Color.PURPLE);
 
-        HPStack.getChildren().addAll(limitRec, HPRectangleBoss);
+        nodes = new Node[]{limitRec, HPRectangleBoss};
+    }
+
+    @Override
+    public Node[] getChildren() {
+        return nodes;
     }
 
     public static void setBossAsSpawned(boolean state){
@@ -221,3 +225,4 @@ public class Boss extends Enemy {
         return bossIsSpawned;
     }
 }
+

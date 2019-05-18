@@ -1,6 +1,7 @@
 package model;
 
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
@@ -24,7 +25,7 @@ public abstract class GameObject extends ImageView {
     }
 
     public static boolean isAnimated(String url) {
-        return url.contains("animated");//todo X: -.-
+        return url.contains("animated");
     }
 
     public Point2D getSpawner() {
@@ -48,4 +49,6 @@ public abstract class GameObject extends ImageView {
     }
 
     public abstract void update();
+
+    public abstract Node[] getChildren();
 }

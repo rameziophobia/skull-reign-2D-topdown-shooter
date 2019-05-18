@@ -21,7 +21,7 @@ public enum AudioFile {
     HURT("SFX_Hurt10.wav", MixerType.SFX, 1),
     PLAYER_DEATH(Constants.FOLDER_PLAYER+"playerdeath.wav",MixerType.SFX,0.6,1),
     PLAYER_POWERUP(Constants.FOLDER_PLAYER+"powerup.wav",MixerType.SFX,0.6,1),
-    ENEMY_DEATH("enemydeath.wav",MixerType.SFX,0.15,1),
+    ENEMY_DEATH("enemydeath.wav",MixerType.SFX,0.2,1),
     BOSS_DEATH(Constants.FOLDER_BOSS+"bossdeath.wav",MixerType.SFX,0.6,1),
     BOSS_MUSIC(Constants.FOLDER_GAME + "bossfight.mp3",MixerType.AMBIENT,0.7, AudioClip.INDEFINITE),
     BOSS_PHASE(Constants.FOLDER_BOSS+"bossphasechange.wav",MixerType.SFX,0.2,1);

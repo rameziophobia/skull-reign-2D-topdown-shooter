@@ -1,14 +1,13 @@
 package model.projectiles;
 
-import controller.map.MapLoader;
+import controller.map.Map;
 import javafx.geometry.Point2D;
 import view.GameViewManager;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static controller.map.MapLoader.BLOCK_SIZE;
-import static controller.map.MapLoader.STARTING_X;
+import static controller.map.Map.*;
 import static view.GameViewManager.HEIGHT;
 import static view.GameViewManager.WIDTH;
 
@@ -29,7 +28,7 @@ public class EnemyProjectileControl {
     private long[] lastFireTime;
     private float knifeAngle;
     private int showerSpawnX = (int) (STARTING_X + BLOCK_SIZE);
-    private int showerSpawnY = (int) (MapLoader.STARTING_Y + BLOCK_SIZE);
+    private int showerSpawnY = (int) (STARTING_Y + BLOCK_SIZE);
     private boolean showerHorizontal = false;
 
     public enum PatternRate {
@@ -85,13 +84,13 @@ public class EnemyProjectileControl {
         int i = PatternRate.SHOWER.getIndex();
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
-            Projectile projectile = new Projectile(new Point2D(showerSpawnX, MapLoader.STARTING_Y + BLOCK_SIZE * 2), type, 90, true);
+            Projectile projectile = new Projectile(new Point2D(showerSpawnX, Map.STARTING_Y + BLOCK_SIZE * 2), type, 90, true);
             GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;
             showerSpawnX = (showerSpawnX + 100);
             if (showerSpawnX > (WIDTH - STARTING_X)) {
                 showerHorizontal = true;
-                showerSpawnX = MapLoader.STARTING_X;
+                showerSpawnX = Map.STARTING_X;
             }
         }
     }
@@ -100,13 +99,13 @@ public class EnemyProjectileControl {
         int i = PatternRate.SHOWER.getIndex();
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
-            Projectile projectile = new Projectile(new Point2D(MapLoader.STARTING_X + BLOCK_SIZE * 2 + 3, showerSpawnY), type, 0, true);
+            Projectile projectile = new Projectile(new Point2D(Map.STARTING_X + BLOCK_SIZE * 2 + 3, showerSpawnY), type, 0, true);
             GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;
             showerSpawnY = showerSpawnY + 100;
-            if (showerSpawnY > (HEIGHT - MapLoader.STARTING_Y)) {
+            if (showerSpawnY > (HEIGHT - Map.STARTING_Y)) {
                 showerHorizontal = false;
-                showerSpawnY = (int) (MapLoader.STARTING_Y + BLOCK_SIZE);
+                showerSpawnY = (int) (Map.STARTING_Y + BLOCK_SIZE);
             }
         }
     }
@@ -205,7 +204,7 @@ public class EnemyProjectileControl {
 
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
-            angle1by1 += ringAngle1by1; //todo: magicNum
+            angle1by1 += ringAngle1by1;
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1, true);
             GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;

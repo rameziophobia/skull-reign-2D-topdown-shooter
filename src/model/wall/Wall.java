@@ -1,6 +1,7 @@
 package model.wall;
 
-import controller.map.MapLoader;
+import controller.map.Map;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import model.Entity;
 import model.GameObject;
@@ -15,8 +16,7 @@ public class Wall extends GameObject {
     }
 
     public static boolean canMoveUp(Entity entity, ArrayList<Wall> wallArrayList) {
-
-        return canMove(entity, wallArrayList, false, -MapLoader.BLOCK_SIZE);
+        return canMove(entity, wallArrayList, false, -Map.BLOCK_SIZE);
     }
 
     public static boolean canMoveDown(Entity entity, ArrayList<Wall> wallArrayList) {
@@ -24,16 +24,17 @@ public class Wall extends GameObject {
     }
 
     public static boolean canMoveLeft(Entity entity, ArrayList<Wall> wallArrayList) {
-        return canMove(entity, wallArrayList, true, -MapLoader.BLOCK_SIZE);
+        return canMove(entity, wallArrayList, true, -Map.BLOCK_SIZE);
     }
 
     public static boolean canMoveRight(Entity entity, ArrayList<Wall> wallArrayList) {
         return canMove(entity, wallArrayList, true, (int) entity.getImage().getHeight());
     }
 
+
     public static boolean canMove(GameObject gameObject, ArrayList<Wall> wallArrayList, boolean horizontal, double offset) {
         if (wallArrayList == null)
-            return true;//todo da ybawaz 7aga?
+            return true;
 
         for (Wall wall : wallArrayList) {
             if (wall.getBoundsInParent().intersects(gameObject.getBoundsInParent())) {
@@ -54,5 +55,10 @@ public class Wall extends GameObject {
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public Node[] getChildren() {
+        return null;
     }
 }

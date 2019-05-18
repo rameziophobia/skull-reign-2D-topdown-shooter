@@ -7,7 +7,7 @@ public class HighScores {
     public HighScores(String Data) {
         final String[] raw = Data.split(":");
         score = Integer.valueOf(raw[0]);
-        name = raw[1];
+        name = raw.length == 1 ? "No Name" : raw[1];
     }
 
     public String getName() {

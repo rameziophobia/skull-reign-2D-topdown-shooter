@@ -97,4 +97,13 @@ public class AnimationClip {
     public boolean isAtFrame(int index) {
         return currentFrame == index;
     }
+
+    public void reset() {
+        reset(1);
+    }
+
+    public void reset(int repeats) {
+        currentFrame = 0;
+        this.repeats = repeats;
+    }
 }

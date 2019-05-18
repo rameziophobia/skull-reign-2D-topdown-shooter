@@ -1,10 +1,13 @@
-package model.obstacles;
+package model.tornado;
 
+import controller.Campaign;
+import controller.LevelManager;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.QuadCurveTo;
@@ -19,21 +22,23 @@ import java.util.Random;
 import static view.GameViewManager.HEIGHT;
 import static view.GameViewManager.WIDTH;
 
-public class Obstacle extends GameObject {
+public class Tornado extends GameObject {
 
-    private static final String PATH_RESOURCES_SPRITES_OBSTACLES = Main.PATH_RESOURCES_SPRITES + "obstacles/";
+    private static final String PATH_RESOURCES_SPRITES_OBSTACLES = Main.PATH_RESOURCES_SPRITES + "tornado/";
     private static final String FILE_TORNADO = PATH_RESOURCES_SPRITES_OBSTACLES + "tornado-animated-64x64.png";
+    private static final int DMG = 50;
+    private static final Random RAND = new Random();
+    private static final Duration PATH_TRANSITION_DURATION = Duration.seconds(4.0);
+    private final LevelManager levelManager;
     private AnimationClip animationClip;
     private static double limStartX = 0;
     private static double limStartY = 0;
     private static double limEndX = WIDTH;
     private static double limEndY = HEIGHT;
-    private int damageMultiplier;
 
-    //todo: bug spawns at the upper left corner of the screen
-    public Obstacle(int DmgMultiplier) {
+    public Tornado(LevelManager levelManager) {
         super(FILE_TORNADO);
-        damageMultiplier = DmgMultiplier;
+        this.levelManager = levelManager;
         setUpRandMov();
 
         animationClip = new AnimationClip(
@@ -45,35 +50,27 @@ public class Obstacle extends GameObject {
     }
 
     private void setUpRandMov() {
-        final PathTransition pathTransition = new PathTransition();
+        final PathTransition pathTransition = new PathTransition(PATH_TRANSITION_DURATION, getRandPath(), this);
 
-        pathTransition.setDuration(Duration.seconds(4.0));
-        pathTransition.setPath(getRandPath());
-        pathTransition.setNode(this);
         pathTransition.setCycleCount(Timeline.INDEFINITE);
         pathTransition.setAutoReverse(true);
         pathTransition.play();
     }
 
     private Path getRandPath() {
-        Random rand = new Random();
-        int startX = rand.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
-        int startY = rand.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
-        int EndX = rand.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
-        int EndY = rand.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
+        int startX, startY, EndX, EndY;
+        Point2D start, end;
 
-        Point2D start = new Point2D(startX, startY);
-        Point2D end = new Point2D(EndX, EndY);
-
-        while (start.distance(end) < 400) {
-            startX = rand.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
-            startY = rand.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
-            EndX = rand.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
-            EndY = rand.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
+        do {
+            startX = RAND.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
+            startY = RAND.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
+            EndX = RAND.nextInt((int) (limEndX - limStartX)) + (int) limStartX;
+            EndY = RAND.nextInt((int) (limEndY - limStartY)) + (int) limStartY;
 
             start = new Point2D(startX, startY);
             end = new Point2D(EndX, EndY);
-        }
+        } while (start.distance(end) < 400);
+
         final Path path = new Path();
         path.getElements().addAll(
                 new MoveTo(startX, startY),
@@ -85,14 +82,23 @@ public class Obstacle extends GameObject {
         return path;
     }
 
+    public void playerCollisionCheck(Player player) {
+        if (isIntersects(player)) {
+            player.takeDmg(DMG);
+            ((Campaign)levelManager).reduceNumOfTornado(this);
+            GameViewManager.getMainPane().removeFromGamePane(this);
+        }
+    }
+
     @Override
     public void update() {
         animationClip.animate();
         playerCollisionCheck(GameViewManager.getPlayer());
     }
 
-    public void setDamageMultiplier(int multiplier) {
-        damageMultiplier = multiplier;
+    @Override
+    public Node[] getChildren() {
+        return null;
     }
 
     public static void setMapLimits(double StartX, double EndX, double StartY, double EndY) {
@@ -102,10 +108,4 @@ public class Obstacle extends GameObject {
         limEndY = EndY;
     }
 
-    public void playerCollisionCheck(Player player) {
-        if (isIntersects(player)) {
-            player.takeDmg(damageMultiplier);
-            GameViewManager.getMainPane().removeFromGamePane(this);
-        }
-    }
 }
