@@ -1,6 +1,5 @@
 package model.wall;
 
-
 import controller.map.Map;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
