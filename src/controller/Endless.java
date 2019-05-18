@@ -1,8 +1,6 @@
-package view;
+package controller;
 
-import controller.LevelManager;
 import controller.map.Map;
-import javafx.geometry.Point2D;
 import model.enemies.Enemy;
 import model.enemies.EnemyType;
 import model.enemies.ProjectileControlType;
@@ -10,11 +8,11 @@ import model.projectiles.PowerUp;
 import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
 import model.wall.Wall;
+import view.GameViewManager;
 
 import java.util.*;
 
 public class Endless extends LevelManager {
-    private final List<Point2D> spawnPoints;
 
     private final Random random;
     private final List<EnemyType> sortedEnemyTypes;
@@ -22,7 +20,7 @@ public class Endless extends LevelManager {
     private final List<List<Enemy>> enemies;
     private final List<Enemy> spawnedEnemies;
     private final long spawnCD;
-    private final long powerUpCD = 20000;
+    private final long powerUpCD = 500;
 
     private boolean debug;
 
@@ -33,7 +31,6 @@ public class Endless extends LevelManager {
 
     private long nextSpawnTime;
     private long nextPowerUPSpawnTime;
-    private static ArrayList<Enemy> enemyArrayList = new ArrayList<>();
     private static ArrayList<Wall> wallArrayList = new ArrayList<>();
 
 
@@ -55,7 +52,6 @@ public class Endless extends LevelManager {
         sortedProjectileControlType = Arrays.asList(ProjectileControlType.values());
         sortedProjectileControlType.sort(Comparator.comparingInt(ProjectileControlType::getPOWER));
 
-        this.spawnPoints = new ArrayList<>();
         this.random = new Random();
         this.enemies = new ArrayList<>();
         this.spawnedEnemies = new ArrayList<>();
@@ -66,9 +62,6 @@ public class Endless extends LevelManager {
                 Map.STARTING_Y + (Map.MAP_BLOCKS_HEIGHT - 1) * Map.BLOCK_SIZE);
         prepEnemies();
 
-    }
-    public List<Point2D> getSpawnPoints() {
-        return spawnPoints;
     }
     private void prepEnemies() {
             final double totalPower =   25+(10 * (1.5 * currentX + (Math.sin(2 * currentX) / 2)));
@@ -106,11 +99,6 @@ public class Endless extends LevelManager {
             }
         }
     }
-
-    private void createTorandoes() {
-
-    }
-
     private void createPowerUp() {
         if (nextPowerUPSpawnTime < System.currentTimeMillis()) {
             nextPowerUPSpawnTime = System.currentTimeMillis() + powerUpCD-currentWave*20;
@@ -120,9 +108,6 @@ public class Endless extends LevelManager {
     }
 
 
-    public int getCurrentWave() {
-        return currentWave;
-    }
     @Override
     public List<Enemy>getEnemyArrayList() {
         return spawnedEnemies;
