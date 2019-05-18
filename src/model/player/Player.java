@@ -15,8 +15,8 @@ public class Player extends Entity {
     private static int currentScore = 0;
     private static final float MAX_SPEED = 8;
     private static float SPEED = 6;
-    private static final double MAX_HP = 1000;
-    private static final double MAX_SHIELD = 1000;
+    private static double MAX_HP = 1000;
+    private static double MAX_SHIELD = 1000;
     private static final long REGENERATION_TIME_CD_MS = 5000;
 
     private StatBar HPRectangle;
@@ -49,6 +49,8 @@ public class Player extends Entity {
                 PlayerProjectileControl.buttons.SECONDARY);
     }
 
+
+
     public String getName() {
         return name;
     }
@@ -71,6 +73,14 @@ public class Player extends Entity {
 
     public void setRightPressed(boolean rightPressed) {
         this.rightPressed = rightPressed;
+    }
+
+    public void endlessStats(){
+        MAX_HP=10000;
+        MAX_SHIELD=10000;
+
+        currentHp = MAX_HP;
+        currentHp = MAX_SHIELD;
     }
 
     private void move() {
