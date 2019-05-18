@@ -40,7 +40,6 @@ class AudioMixer {
         AudioClip audioClip = audioClipHashMap.get(audioFile);
 
         if (audioClip.isPlaying()){
-            System.out.println(System.currentTimeMillis() + " New Audio");
             audioClip = new AudioClip(audioClip.getSource());
         }
 

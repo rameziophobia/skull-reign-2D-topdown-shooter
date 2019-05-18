@@ -24,7 +24,6 @@ import view.game.stats.HealthBars;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
-
 public class GameViewManager {
     public static final int HEIGHT = 1080;//todo this should only be used for scaling not in the entire code base (what's the point of scaling then ?)
     public static final int WIDTH = 1920;
@@ -143,6 +142,7 @@ public class GameViewManager {
         if (!gameEnded) {
             gameEnded = true;
 
+            AudioManager.stopAudio(AudioFile.BOSS_MUSIC);
             gameEnd.setName(player.getName());
             gameEnd.setScore(player.getCurrentScore());
             mainPane.addToUIPane(gameEnd);

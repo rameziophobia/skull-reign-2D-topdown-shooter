@@ -53,7 +53,7 @@ public class MenuScene extends Scene {
     private void createScene() {
         menuBackground = new MenuBackground();
 
-        AudioManager.playAudio(AudioFile.MENU_MUSIC,0.3);
+        AudioManager.playAudio(AudioFile.MENU_MUSIC);
 
         Rectangle blackScreen = new Rectangle(1280, 720, Color.BLACK);//todo width and height
         blackScreen.setOpacity(0);
@@ -143,10 +143,6 @@ public class MenuScene extends Scene {
             }
         }));
         menuBackground.getAnimationClips().forEach(AnimationClip::animate);
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
     }
 
     public void stopLoop() {
