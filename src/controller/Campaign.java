@@ -160,8 +160,8 @@ public class Campaign extends LevelManager {
                         spawnPoint.setSpawning(true);
 
                         final Enemy enemy = currentWave[currentEnemyIndex++];
-                        enemy.setLayoutX(spawnPoint.getSpawnPointX());
-                        enemy.setLayoutY(spawnPoint.getSpawnPointY());
+                        enemy.setLayoutX(spawnPoint.getSpawnPointX() - (enemy.getWidth() >> 1));
+                        enemy.setLayoutY(spawnPoint.getSpawnPointY() - (enemy.getHeight() >> 1));
                         GameViewManager.getMainPane().addToGamePane(enemy);
                         enemyArrayList.add(enemy);
                     }
