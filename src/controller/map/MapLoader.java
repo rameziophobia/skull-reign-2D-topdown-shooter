@@ -146,6 +146,7 @@ public class MapLoader {
     }
 
     private void addWall(String wallFileName, int j, int i) {
+
         addWall(wallFileName, j, i, false);
     }
 
@@ -157,7 +158,6 @@ public class MapLoader {
         if (reverse)
             wall.setScaleX(-1);
         wallNodes.add(wall);
-
         aiGrid[i][j] = 1;
     }
 

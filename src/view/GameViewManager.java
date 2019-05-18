@@ -43,6 +43,7 @@ public class GameViewManager {
     private GameUI gameUI;
     private static AnimationTimer gameLoop;
     private Endless endless;
+    private Boolean isEndless;
     private static ArrayList<Wall>  wallArrayList= new ArrayList<>();
 
     public static GameViewManager getInstance() {
@@ -51,9 +52,9 @@ public class GameViewManager {
 
 
 
-    public GameViewManager() {
+    public GameViewManager(Boolean endless) {
         instance = this;
-
+        isEndless=endless;
         mainPane = new MainPane();
 
         gameScene = new Scene(mainPane, WIDTH, HEIGHT);
@@ -61,6 +62,7 @@ public class GameViewManager {
         gameStage = new Stage();
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(false);
+
 
 
         final MapLoader mapLoader = new MapLoader(Map.BASE);
@@ -118,7 +120,10 @@ public class GameViewManager {
 
         createPlayer(chosenPlayer, playerName);
 
-        endless = new Endless(1000,false);
+
+        if(isEndless){
+            endless = new Endless(2000,false);
+        }
         startGameLoop();
     }
 
@@ -171,15 +176,21 @@ public class GameViewManager {
     }
 
     public List<Enemy> getEnemyArrayList() {
-        return endless.getEnemyArrayList();
+        if(isEndless){
+            return endless.getEnemyArrayList();
+        }
+        return null;
     }
 
     public ArrayList<Wall> getWallArrayList() {
-        return endless.getWallArrayList();
+        return wallArrayList;
     }
 
     public void removeEnemy(Enemy enemy) {
-        endless.removeEnemy(enemy);
+        if(isEndless){
+            endless.removeEnemy(enemy);
+        }
+
     }
 
     private void gameStart() {
@@ -191,8 +202,12 @@ public class GameViewManager {
     }
 
     private void gameUpdate() {
-        endless.update();
-        gameUI.getWaveLabel().setUICounter(endless.getCurrentWave());
+        if(isEndless){
+            endless.update();
+            gameUI.getWaveLabel().setUICounter(endless.getCurrentWave());
+        }
+
+
         Object[] objects = mainPane.getGamePane().getChildren().toArray();
         for (Object node : objects) {
             if (node instanceof GameObject)
