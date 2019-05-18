@@ -1,6 +1,5 @@
 package model.player;
 
-
 import controller.InputManager;
 import javafx.scene.Node;
 import model.Entity;

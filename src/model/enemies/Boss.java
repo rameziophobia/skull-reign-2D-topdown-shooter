@@ -1,6 +1,7 @@
 package model.enemies;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -29,6 +30,7 @@ public class Boss extends Enemy {
     private double hp_interval;
     private int control = -1;
     private final static int CONTROLS_NUM = 4;
+    private Node[] nodes;
 
     public enum EnemyStageEnum {
         STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20, 5000),
@@ -134,8 +136,6 @@ public class Boss extends Enemy {
 
         knifeChargePulseFast = new EnemyProjectileControl(ProjectileType.KNIFE);
         knifeChargePulseFast.addPulse(stage.knifeChargeRate, 5);
-
-
     }
 
     @Override
@@ -196,6 +196,12 @@ public class Boss extends Enemy {
         limitRec.setStrokeWidth(2);
         limitRec.setStroke(Color.PURPLE);
 
-        HPStack.getChildren().addAll(limitRec, HPRectangleBoss);
+        nodes = new Node[]{limitRec, HPRectangleBoss};
+    }
+
+    @Override
+    public Node[] getChildren() {
+        return nodes;
     }
 }
+
