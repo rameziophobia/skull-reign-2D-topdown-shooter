@@ -19,6 +19,7 @@ import model.player.Player;
 import model.player.PlayerType;
 import model.ui.game.ScoreLabel;
 import model.wall.Wall;
+import view.game.stats.HealthBars;
 import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
@@ -59,7 +60,6 @@ public class GameViewManager {
         gameStage.setFullScreen(true);
         gameStage.setTitle("Skull Reign");
         gameStage.getIcons().add(new Image(Main.PATH_RESOURCES_SPRITES +"icon.png"));
-
 
         setWindowScaling();
 
@@ -113,14 +113,16 @@ public class GameViewManager {
     }
 
     private void createPlayer(PlayerType chosenPlayer, String playerName) {
-        player = new Player(chosenPlayer, gameUI.getHealthBars().getHPRectangle(), gameUI.getHealthBars().getShieldRectangle());
+        player = new Player(chosenPlayer,
+                gameUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.HP),
+                gameUI.getPlayerHealthBars().getRectangle(HealthBars.Bars.SHIELD));
         player.setName(playerName);
         mainPane.addToGamePane(player);
     }
 
     private void createUI() {
         mainPane.addToUIPane(gameUI.getGroup());
-        mainPane.addToUIPane(gameUI.getHealthBars());
+        mainPane.addToUIPane(gameUI.getPlayerHealthBars());
         createScoreLabel();
     }
 

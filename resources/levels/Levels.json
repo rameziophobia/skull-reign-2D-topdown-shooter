@@ -5,64 +5,76 @@
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         }
       ],
       [
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         }
       ]
     ],
@@ -79,64 +91,76 @@
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         }
       ],
       [
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         },
         {
           "EnemyType": "TANK_RED",
           "ProjectileType": "GREENLASER01",
-          "MoveMode": "FOLLOW_PLAYER"
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
         }
       ]
     ],

@@ -8,6 +8,7 @@ import controller.json.settings.AudioSettings;
 import controller.map.Map;
 import model.enemies.Enemy;
 import model.enemies.EnemyType;
+import model.enemies.ProjectileControlType;
 import model.level.Level;
 import model.projectiles.ProjectileType;
 import view.Main;
@@ -28,6 +29,7 @@ public class JsonParser {
     private static final Path FILE_PROJECTILE_TYPE = Paths.get(PATH_LEVELS + "ProjectileType.json");
     private static final Path FILE_ENEMY_TYPE = Paths.get(PATH_LEVELS + "EnemyType.json");
     private static final Path FILE_MOVE_MODE = Paths.get(PATH_LEVELS + "MoveMode.json");
+    private static final Path FILE_PROJECTILE_CONTROL_TYPE = Paths.get(PATH_LEVELS + "ProjectileControlType.json");
 
     private static Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
             .setPrettyPrinting()
@@ -83,6 +85,7 @@ public class JsonParser {
                 final EnemyData enemyData = wave.get(j);
                 enemies[i][j] = new Enemy(enemyData.getEnemyType(),
                         enemyData.getProjectileType(),
+                        enemyData.getProjectileControlType(),
                         enemyData.getMoveMode());
             }
         }
@@ -106,6 +109,7 @@ public class JsonParser {
     public static boolean writeEnemyEnum() {
         return writeJson(FILE_ENEMY_TYPE, gson.toJson(EnemyType.values())) &&
                 writeJson(FILE_MOVE_MODE, gson.toJson(Enemy.MoveMode.values())) &&
+                writeJson(FILE_PROJECTILE_CONTROL_TYPE, gson.toJson(ProjectileControlType.values())) &&
                 writeJson(FILE_PROJECTILE_TYPE, gson.toJson(ProjectileType.values()));
     }
 }

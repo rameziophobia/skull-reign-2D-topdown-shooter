@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import model.enemies.Enemy;
 import model.enemies.EnemyType;
+import model.enemies.ProjectileControlType;
 import model.projectiles.ProjectileType;
 
 public class EnemyData {
@@ -16,6 +17,9 @@ public class EnemyData {
     @SerializedName("MoveMode")
     @Expose
     private Enemy.MoveMode moveMode;
+    @SerializedName("ProjectileControlType")
+    @Expose
+    private ProjectileControlType projectileControlType;
 
     public EnemyType getEnemyType() {
         return enemyType;
@@ -39,5 +43,13 @@ public class EnemyData {
 
     public void setMoveMode(Enemy.MoveMode moveMode) {
         this.moveMode = moveMode;
+    }
+
+    public void setProjectileControlType(ProjectileControlType projectileControlType) {
+        this.projectileControlType = projectileControlType;
+    }
+
+    public ProjectileControlType getProjectileControlType() {
+        return projectileControlType;
     }
 }
