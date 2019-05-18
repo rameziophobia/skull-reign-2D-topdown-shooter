@@ -9,20 +9,24 @@ import view.game.ProjectileUI;
 import view.game.stats.HealthBars;
 
 public class GameUI {
+
     private final CounterLabel levelLabel;
     private final CounterLabel waveLabel;
     private Group group = new Group();
     private HealthBars healthBars = new HealthBars();
 
-    public GameUI(Pane mainPane) {
+
+    public GameUI(Pane gamePane,Boolean endless) {
         createWeaponBar();
-        setCrosshair(mainPane);
+        setCrosshair(gamePane);
 
         waveLabel = new CounterLabel("Wave", 3, 30);
         waveLabel.addUIToGame();
-
         levelLabel = new CounterLabel("Level", 2, 0);
-        levelLabel.addUIToGame();
+        if(!endless){
+            levelLabel.addUIToGame();
+        }
+
     }
 
     public CounterLabel getLevelLabel() {

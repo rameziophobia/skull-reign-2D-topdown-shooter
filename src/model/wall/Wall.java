@@ -17,7 +17,6 @@ public class Wall extends GameObject {
     }
 
     public static boolean canMoveUp(Entity entity, ArrayList<Wall> wallArrayList) {
-
         return canMove(entity, wallArrayList, false, -Map.BLOCK_SIZE);
     }
 
@@ -32,6 +31,7 @@ public class Wall extends GameObject {
     public static boolean canMoveRight(Entity entity, ArrayList<Wall> wallArrayList) {
         return canMove(entity, wallArrayList, true, (int) entity.getImage().getHeight());
     }
+
 
     public static boolean canMove(GameObject gameObject, ArrayList<Wall> wallArrayList, boolean horizontal, double offset) {
         if (wallArrayList == null)

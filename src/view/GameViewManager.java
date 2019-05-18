@@ -1,7 +1,9 @@
 package view;
 
+import controller.Campaign;
 import controller.InputManager;
 import controller.LevelManager;
+import controller.map.Map;
 import controller.json.JsonParser;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
@@ -26,6 +28,7 @@ import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameViewManager {
     public static final int HEIGHT = 1080;
@@ -44,15 +47,19 @@ public class GameViewManager {
     private static Label lbl_currentScore;
     private GameUI gameUI;
     private static AnimationTimer gameLoop;
-    private LevelManager levelManager;
+    private LevelManager gameMode;
+    private Boolean isEndless;
+    private static ArrayList<Wall>  wallArrayList= new ArrayList<>();
 
     public static GameViewManager getInstance() {
         return instance;
     }
 
-    public GameViewManager() {
-        instance = this;
 
+
+    public GameViewManager(Boolean endless) {
+        instance = this;
+        isEndless=endless;
         mainPane = new MainPane();
         mainPane.addAllToBackPane(new Rectangle(WIDTH, HEIGHT, Color.BLACK));
 
@@ -64,9 +71,10 @@ public class GameViewManager {
         gameStage.setTitle("Skull Reign");
         gameStage.getIcons().add(new Image(Main.PATH_RESOURCES_SPRITES + "icon.png"));
 
+
         setWindowScaling();
 
-        gameUI = new GameUI(mainPane);
+        gameUI = new GameUI(mainPane,isEndless);
 
         gameEnded = false;
         gameEnd = new GameEnd();
@@ -85,12 +93,16 @@ public class GameViewManager {
         JsonParser.writeEnemyEnum();
     }
 
+
     public static Player getPlayer() {
         return player;
     }
 
     public static MainPane getMainPane() {
         return mainPane;
+    }
+    public GameUI getGameUI() {
+        return gameUI;
     }
 
     @Deprecated
@@ -111,7 +123,12 @@ public class GameViewManager {
 
         createPlayer(chosenPlayer, playerName);
 
-        levelManager = new LevelManager(gameUI.getLevelLabel(), gameUI.getWaveLabel());
+
+        if(isEndless){
+            gameMode = new Endless(2000,false);
+        }else{
+            gameMode = new Campaign(gameUI.getLevelLabel(),gameUI.getWaveLabel());
+        }
         startGameLoop();
     }
 
@@ -147,7 +164,7 @@ public class GameViewManager {
         if (!gameEnded) {
             gameEnded = true;
             gameLoop.stop();
-
+            wallArrayList.clear();
             gameEnd.setName(player.getName());
             gameEnd.setScore(player.getCurrentScore());
 
@@ -161,16 +178,17 @@ public class GameViewManager {
         return gameStage;
     }
 
-    public ArrayList<Enemy> getEnemyArrayList() {
-        return levelManager.getEnemyArrayList();
+    public List<Enemy> getEnemyArrayList() {
+        return gameMode.getEnemyArrayList();
+
     }
 
     public ArrayList<Wall> getWallArrayList() {
-        return levelManager.getWallArrayList();
+        return wallArrayList;
     }
 
     public void removeEnemy(Enemy enemy) {
-        levelManager.removeEnemy(enemy);
+        gameMode.removeEnemy(enemy);
     }
 
     private void gameStart() {
@@ -182,7 +200,9 @@ public class GameViewManager {
     }
 
     private void gameUpdate() {
-        levelManager.update();
+        gameMode.update();
+
+
 
         Object[] objects = mainPane.getGamePane().getChildren().toArray();
         for (Object node : objects) {

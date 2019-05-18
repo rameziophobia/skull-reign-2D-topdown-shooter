@@ -16,8 +16,8 @@ public class Player extends Entity {
     private static int currentScore = 0;
     private static final float MAX_SPEED = 8;
     private static float SPEED = 6;
-    private static final double MAX_HP = 500;
-    private static final double MAX_SHIELD = 500;
+    private static final double MAX_HP = 10000;
+    private static final double MAX_SHIELD = 10000;
     private static final long REGENERATION_TIME_CD_MS = 5000;
 
     private StatBar HPRectangle;

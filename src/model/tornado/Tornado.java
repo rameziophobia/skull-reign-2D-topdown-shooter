@@ -1,5 +1,6 @@
 package model.tornado;
 
+import controller.Campaign;
 import controller.LevelManager;
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
@@ -84,7 +85,7 @@ public class Tornado extends GameObject {
     public void playerCollisionCheck(Player player) {
         if (isIntersects(player)) {
             player.takeDmg(DMG);
-            levelManager.reduceNumOfTornado(this);
+            ((Campaign)levelManager).reduceNumOfTornado(this);
             GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
@@ -106,4 +107,5 @@ public class Tornado extends GameObject {
         limStartY = StartY;
         limEndY = EndY;
     }
+
 }
