@@ -5,15 +5,15 @@ import view.Main;
 public enum ProjectileType {
     BULLET("bullet-13x3.png", 15, 1, 10, 3, false, 1, 1),
     FIRE("fire-32x12.png", 1, 35, 6, 3, false, 1, 1),
-    REDLASER01("laserRed01-9x54.png", 3, 15, 15, 3, false, 1, 1),
+    REDLASER01("laserRed01-54x9.png", 3, 15, 15, 3, false, 1, 1),
     GREENLASER01("laserGreen01-54x9.png", 3, 15, 15, 3, false, 1, 1),
-    BLUELASER01("laserBlue01-9x54.png", 3, 15, 15, 3, false, 1, 1),
+    BLUELASER01("laserBlue01-54x9.png", 3, 15, 15, 3, false, 1, 1),
 
     REDLASER02("laserRed02-37x13.png", 2, 10, 8, 2, false, 1, 1),
-    GREENLASER02("laserGreen02-13x37.png", 2, 10, 8, 2, false, 1, 1),
-    BLUELASER02("laserBlue02-13x37.png", 2, 10, 8, 2, false, 1, 1),
+    GREENLASER02("laserGreen02-37x13.png", 2, 10, 8, 2, false, 1, 1),
+    BLUELASER02("laserBlue02-37x13.png", 2, 10, 8, 2, false, 1, 1),
 
-    REDLASER03("laserRed03-9x37.png", 20, 1.5f, 10, 3, false, 1, 1),
+    REDLASER03("laserRed03-37x9.png", 20, 1.5f, 10, 3, false, 1, 1),
     GREENLASER03("laserGreen03-37x9.png", 20, 1.5f, 10, 3, false, 1, 1),
     BLUELASER03("laserBlue03-9x37.png", 20, 1.5f, 10, 3, false, 1, 1),
 

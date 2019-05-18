@@ -55,11 +55,11 @@ public class SpawnPoint extends GameObject {
     }
 
     public double getSpawnPointX() {
-        return this.getLayoutX() + Map.BLOCK_SIZE / 4;
+        return this.getLayoutX() + Map.BLOCK_SIZE / 2;
     }
 
     public double getSpawnPointY() {
-        return this.getLayoutY() + Map.BLOCK_SIZE / 4;
+        return this.getLayoutY() + Map.BLOCK_SIZE / 2;
     }
 
     public boolean isActive() {

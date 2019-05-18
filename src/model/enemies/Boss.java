@@ -1,5 +1,6 @@
 package model.enemies;
 
+import controller.map.Map;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
@@ -11,7 +12,6 @@ import model.projectiles.ProjectileType;
 import view.GameViewManager;
 import view.game.stats.StatBar;
 
-import static view.GameViewManager.HEIGHT;
 import static view.GameViewManager.WIDTH;
 
 public class Boss extends Enemy {
@@ -31,6 +31,8 @@ public class Boss extends Enemy {
     private int control = -1;
     private final static int CONTROLS_NUM = 4;
     private Node[] nodes;
+    private double spawnX;
+    private double spawnY;
 
     public enum EnemyStageEnum {
         STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20, 5000),
@@ -85,12 +87,14 @@ public class Boss extends Enemy {
     private final EnemyStageEnum stage;
     private EnemyStageEnum currentStage = EnemyStageEnum.STAGE1;
 
-    private Boss(EnemyStageEnum stage, EnemyStageEnum currentStage) {
+    private Boss(EnemyStageEnum stage, EnemyStageEnum currentStage, double x, double y) {
         super(currentStage.enemyType);
         this.stage = stage;
         this.currentStage = currentStage;
         this.boss = true;
         bossInit(currentStage);
+        setLayoutX(Map.STARTING_X + (Map.MAP_BLOCKS_WIDTH >> 1) * Map.BLOCK_SIZE - (width >> 2));
+        setLayoutY(Map.STARTING_Y + (Map.MAP_BLOCKS_HEIGHT >> 1) * Map.BLOCK_SIZE - (height >> 2));
     }
 
     public Boss(EnemyStageEnum stage) {
@@ -102,10 +106,6 @@ public class Boss extends Enemy {
 
     private void bossInit(EnemyStageEnum currentStage) {
         projectileControlInit(currentStage);
-
-        setLayoutY((HEIGHT >> 1) - (height >> 1));
-        setLayoutX((WIDTH >> 1) - (width >> 1));
-
         createHPBar();
 
         HPStack.setLayoutY(900);
@@ -117,7 +117,7 @@ public class Boss extends Enemy {
 
     private void projectileControlInit(EnemyStageEnum stage) {
         laser = new EnemyProjectileControl(ProjectileType.REDLASER01);
-        laser.addPulseBoss((long) getImageWidth(laser.getType().getURL()), stage.getPulseAngle());
+        laser.addPulseBoss((long)9, stage.getPulseAngle());
 
         knifeContinuousPulse = new EnemyProjectileControl(ProjectileType.KNIFE);
         knifeContinuousPulse.addKnives(stage.knifeRate, stage.knifeAngle);
@@ -152,7 +152,9 @@ public class Boss extends Enemy {
     protected void checkAlive() {
         if (hp <= 0 && currentStage.index < stage.index) {
             super.checkAlive();
-            Boss b = new Boss(stage, EnemyStageEnum.getEnemyStage(currentStage.index + 1));
+            Boss b = new Boss(stage,
+                    EnemyStageEnum.getEnemyStage(currentStage.index + 1), spawnX,spawnY);
+
             GameViewManager.getInstance().getEnemyArrayList().add(b);
             GameViewManager.getMainPane().addToGamePane(b);
         } else if (hp <= 0 && currentStage.index >= stage.index) {
@@ -172,6 +174,7 @@ public class Boss extends Enemy {
         switch (control) {
             case 0:
                 knifeContinuousPulse.update(angle, getSpawner());
+                randomSkulls.update(angle, getSpawner());
                 break;
             case 1:
                 laser.update(angle, getSpawner());
