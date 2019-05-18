@@ -73,6 +73,7 @@ public class CounterLabel {
 
     public void setUICounter(int value) {
         waveNumber = value;
+        lbl_sideStat.setText(title + " " + waveNumber);
     }
 
     public void incrementUICounterWithAnimation() {

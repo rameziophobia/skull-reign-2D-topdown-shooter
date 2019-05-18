@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LevelManager {
+    private static final int TIME_BETWEEN_LEVELS_MS = 7000;
     private final ArrayList<Enemy> enemyArrayList;
     private final ArrayList<Wall> wallArrayList;
 
@@ -37,6 +38,10 @@ public class LevelManager {
     private Enemy[] currentWave;
     private int numOfPowerUps;
     private long nextPowerUpSpawnTime;
+    private long nextWaveTime;
+    private boolean waitingForNextWave;
+    private boolean waitingForNextLevel;
+    private long nextLevelTime;
 
     public LevelManager(CounterLabel levelLabel, CounterLabel waveLabel) {
         this.levelLabel = levelLabel;
@@ -74,7 +79,7 @@ public class LevelManager {
                                 new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer)
                         }
                 },
-                3000,
+                10000,
                 new MapLoader(Map.LEVEL_01),
                 6000,
                 5,
@@ -102,7 +107,7 @@ public class LevelManager {
                                 new Enemy(EnemyType.TANK_RED, ProjectileType.GREENLASER01, Enemy.MoveMode.followPlayer)
                         }
                 },
-                3000,
+                10000,
                 new MapLoader(Map.LEVEL_02),
                 6000,
                 5,
@@ -119,14 +124,30 @@ public class LevelManager {
                 && enemyArrayList.size() == 0) {
             if (currentWaveIndex + 1 == levels[currentLevelIndex].getEnemies().length) {
                 if (currentLevelIndex + 1 < levels.length) {
-                    levelLabel.incrementUICounterWithAnimation();
-                    waveLabel.setUICounter(1);
-                    loadLevel();
+                    if (waitingForNextLevel) {
+                        if (nextLevelTime < System.currentTimeMillis()) {
+                            waveLabel.setUICounter(1);
+                            loadLevel();
+                            waitingForNextLevel = false;
+                        }
+                    } else {
+                        levelLabel.incrementUICounterWithAnimation();
+                        nextLevelTime = System.currentTimeMillis() + TIME_BETWEEN_LEVELS_MS;
+                        waitingForNextLevel = true;
+                    }
                 }
             } else {
-                waveLabel.incrementUICounterWithAnimation();
-                currentWave = currentLevel.getEnemies()[++currentWaveIndex];
-                currentEnemyIndex = 0;
+                if (waitingForNextWave) {
+                    if (nextWaveTime < System.currentTimeMillis()) {
+                        currentWave = currentLevel.getEnemies()[++currentWaveIndex];
+                        currentEnemyIndex = 0;
+                        waitingForNextWave = false;
+                    }
+                } else {
+                    waveLabel.incrementUICounterWithAnimation();
+                    nextWaveTime = System.currentTimeMillis() + currentLevel.getTimeBetweenWaves();
+                    waitingForNextWave = true;
+                }
             }
         }
 
@@ -202,11 +223,11 @@ public class LevelManager {
     }
 
     private void createObstacles() {
-        if (currentTornadoList.size() < currentLevel.getNumberOfTornados()){
+        if (currentTornadoList.size() < currentLevel.getNumberOfTornados()) {
             if (System.currentTimeMillis() > nextTornadoSpawnTime) {
                 nextTornadoSpawnTime = System.currentTimeMillis() + currentLevel.getTimeBetweenTornado();
 
-                final Tornado tornado = new Tornado(this);//todo 1
+                final Tornado tornado = new Tornado(this);
                 currentTornadoList.add(tornado);
                 GameViewManager.getMainPane().addToGamePane(tornado);
             }
@@ -214,7 +235,7 @@ public class LevelManager {
     }
 
     private void createPowerUp() {
-        if (numOfPowerUps < currentLevel.getNumberOfPowerups()){
+        if (numOfPowerUps < currentLevel.getNumberOfPowerups()) {
             if (System.currentTimeMillis() > nextPowerUpSpawnTime) {
                 nextPowerUpSpawnTime = System.currentTimeMillis() + currentLevel.getTimeBetweenPowerups();
                 GameViewManager.getMainPane().addToGamePane(new PowerUp(PowerUpType.getRandomPowerUpType()));

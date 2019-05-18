@@ -25,10 +25,10 @@ public class GameUI {
         createBackground(gamePane);
         setCrosshair(gamePane);
 
-        waveLabel = new CounterLabel("Wave", 6, 30);
+        waveLabel = new CounterLabel("Wave", 3, 30);
         waveLabel.addUIToGame();
 
-        levelLabel = new CounterLabel("Level", 10, 0);
+        levelLabel = new CounterLabel("Level", 2, 0);
         levelLabel.addUIToGame();
     }
 
