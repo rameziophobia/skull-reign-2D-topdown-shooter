@@ -15,11 +15,11 @@ public class Player extends Entity {
     private static int currentScore = 0;
     private static final float MAX_SPEED = 8;
     private static float SPEED = 6;
-    private static final double MAX_HP = 400;
-    private static final double MAX_SHIELD = 400;
-    private static final long REGENERATION_TIME_CD_SHIELD_MS = 5000;
-    private static final long REGENERATION_TIME_CD_HP_MS = 6000;
+    private static double MAX_HP = 500;
+    private static double MAX_SHIELD = 300;
     private static final long HEALTH_REGEN_INTERVAL = 2000;
+    private static long REGENERATION_TIME_CD_SHIELD_MS = 5000;
+    private static long REGENERATION_TIME_CD_HP_MS = 6000;
 
     private StatBar HPRectangle;
     private StatBar ShieldRectangle;
@@ -56,7 +56,6 @@ public class Player extends Entity {
     }
 
 
-
     public String getName() {
         return name;
     }
@@ -81,12 +80,17 @@ public class Player extends Entity {
         this.rightPressed = rightPressed;
     }
 
-    public void endlessStats(){
-        MAX_HP=10000;
-        MAX_SHIELD=10000;
-
+    public void endlessStats() {
+        MAX_HP = 2000;
+        MAX_SHIELD = 1000;
         currentHp = MAX_HP;
-        currentHp = MAX_SHIELD;
+        currentShield = MAX_SHIELD;
+        ShieldRectangle.setCurrentValue(currentShield);
+        HPRectangle.setCurrentValue(currentHp);
+        ShieldRectangle.setMaxValue(MAX_SHIELD);
+        HPRectangle.setMaxValue(MAX_HP);
+        HPRectangle.barScaleAnimator(MAX_HP);
+        ShieldRectangle.barScaleAnimator(MAX_SHIELD);
     }
 
     private void move() {
@@ -154,12 +158,12 @@ public class Player extends Entity {
         nextShieldRegenCheck = timeNow + REGENERATION_TIME_CD_SHIELD_MS;
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
-            ShieldRectangle.barScaleAnimator(MAX_HP);
+            ShieldRectangle.barScaleAnimator(MAX_SHIELD);
             currentShield = ShieldRectangle.getCurrentValue();
         } else {
             nextHealthDmgCheck = timeNow + REGENERATION_TIME_CD_HP_MS;
             HPRectangle.decreaseCurrent(dmg);
-            HPRectangle.barScaleAnimator(MAX_SHIELD);
+            HPRectangle.barScaleAnimator(MAX_HP);
             currentHp = HPRectangle.getCurrentValue();
         }
         if (currentHp <= 0)
@@ -174,7 +178,7 @@ public class Player extends Entity {
     }
 
     private void shieldRegen() {
-        if(nextShieldRegenCheck < timeNow){
+        if (nextShieldRegenCheck < timeNow) {
             ShieldRectangle.regeneration();
             ShieldRectangle.barScaleAnimator(MAX_SHIELD);
             currentShield = ShieldRectangle.getCurrentValue();
@@ -182,7 +186,7 @@ public class Player extends Entity {
     }
 
     private void healthRegen() {
-        if(nextHealthDmgCheck < timeNow && nextHealthRegenCheck < timeNow){
+        if (nextHealthDmgCheck < timeNow && nextHealthRegenCheck < timeNow) {
             nextHealthRegenCheck = timeNow + HEALTH_REGEN_INTERVAL;
             heal((float) (MAX_HP / 40));
         }
