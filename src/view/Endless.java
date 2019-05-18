@@ -41,7 +41,7 @@ public class Endless extends LevelManager {
         this.debug = debug;
         this.spawnCD = spawnCD;
 
-        final Map map = new Map("Map");
+        final Map map = new Map("Endless");
         GameViewManager.getMainPane().addAllToFrontPane(map.getFrontNodes());
         GameViewManager.getMainPane().addAllToBackPane(map.getBackNodes());
 
