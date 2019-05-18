@@ -61,8 +61,7 @@ public class ScoreBoard {
     }
 
     private void addToData(String name, String score) {
-        String entry = score + ":" + name;
-        data.add(entry);
+        data.add(score + ":" + (name.equals("") ? "No Name" : name));
         writeToFile(data);
     }
 
@@ -104,9 +103,6 @@ public class ScoreBoard {
 
     public void addNewScore(String Name, int highScore) {
         String scoreString = String.valueOf(highScore);
-        if (scoreString.equals(""))
-            scoreString = "No Name";
-
         while (scoreString.length() < MAX_DIGITS) {
             scoreString = '0' + scoreString;
         }
