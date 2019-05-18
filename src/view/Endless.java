@@ -48,6 +48,7 @@ public class Endless extends LevelManager {
         map.getWallNodes().forEach(node -> GameViewManager.getMainPane().addToGamePane(node));
         GameViewManager.getInstance().getWallArrayList().addAll(map.getWallNodes());
 
+        GameViewManager.getPlayer().endlessStats();
         sortedEnemyTypes = Arrays.asList(EnemyType.values());
         sortedEnemyTypes.sort(Comparator.comparingInt(EnemyType::getPOWER));
 
