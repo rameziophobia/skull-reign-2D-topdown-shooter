@@ -27,7 +27,7 @@ public enum ProjectileType {
     ELECTRIC(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "electric-animated-63x83.png", 2, 40, 7, 10, true,1,1),
     CAT(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "black-cat-animated-32x26.png", 1.3, 40, 5, 10, true,1,1),
     KNIFE(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "spr_spell_knife-42x32.png", 2, 30, 8, 5, false,1,1),
-    SKULL(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fire-skull-96x112.png", 1.3, 100, 8, 10, true,1,1),
+    SKULL(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "fire-skull-96x88.png", 1.3, 100, 8, 10, true,1,1),
     WHIRLWIND(Constants.PATH_RESOURCES_SPRITES_PROJECTILES + "whirlwind-animated-16x19.png", 2, 40, 7, 5, true,1,1);
 
 

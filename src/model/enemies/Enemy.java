@@ -64,7 +64,7 @@ public class Enemy extends Entity {
         this(enemyType);
         this.mode = mode;
         this.enemyProjectileControl = new EnemyProjectileControl(projectileType);
-        enemyProjectileControl.addSpawnRing(projectileControlType.getPulseRate(),projectileControlType.getPulseAngle());
+        enemyProjectileControl.addPulse(projectileControlType.getPulseRate(),projectileControlType.getPulseAngle());
         enemyProjectileControl.addSpawnToPlayer(projectileControlType.getToPlayerRate());
         enemyProjectileControl.addRing1by1(projectileControlType.getRing1by1Rate(),projectileControlType.getRing1by1Angle());
     }

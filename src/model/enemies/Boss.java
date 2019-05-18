@@ -1,7 +1,6 @@
 package model.enemies;
 
 import javafx.geometry.Pos;
-import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import model.player.Player;
@@ -17,42 +16,52 @@ import static view.GameViewManager.*;
 public class Boss extends Enemy {
 
     private final static int hitScore = 1;
-    private EnemyProjectileControl bossProjectileControl1;
-    private EnemyProjectileControl bossProjectileControl2;
-    private EnemyProjectileControl bossProjectileControl3;
+    private EnemyProjectileControl laser;
+    private EnemyProjectileControl knifeContinuousPulse;
+    private EnemyProjectileControl randomSkulls;
+    private EnemyProjectileControl shower;
+    private EnemyProjectileControl knifeChargePulse;
     private StatBar HPRectangleBoss;
     private StackPane HPStack;
-    private EnemyProjectileControl bossProjectileControl4;
     private final static int CONTROL_INTERVAL = 40 * 1000;
     private long nextControl;
     private int control;
-    private final static int CONTROLS_NUM = 2;
+    private final static int CONTROLS_NUM = 3;
 
     public enum EnemyStageEnum {
-        STAGE1(EnemyType.MAGE1, 90, 120, 550, 500, 4, 1),
-        STAGE2(EnemyType.MAGE2, 60, 60, 400, 350, 5, 2),
-        STAGE3(EnemyType.MAGE3, 45, 45, 330, 250, 6, 3);
+        STAGE1(EnemyType.MAGE1, 90, 120, 550, 500, 4, 1, 350, 120, 25,4000),
+        STAGE2(EnemyType.MAGE2, 60, 60, 400, 350, 5, 2, 250, 100, 20,3000),
+        STAGE3(EnemyType.MAGE3, 45, 45, 330, 250, 6, 3, 150, 90, 17,2000);
 
         private EnemyType enemyType;
-        private int ringAngle;
+        private int pulseAngle;
         private int knifeRate;
         private int knifeAngle;
         private int skullRate;
         private int skullSpeed;
         private int index;
+        private int showerRate;
+        private int ringRate;
+        private int ringAngle;
+        private int knifeChargeRate;
 
-        EnemyStageEnum(EnemyType enemyType, int ringAngle, int knifeAngle, int knifeRate, int skullRate, int skullSpeed, int index) {
+        EnemyStageEnum(EnemyType enemyType, int pulseAngle, int knifeRate, int knifeAngle, int skullRate,
+                       int skullSpeed, int index, int showerRate, int ringRate, int ringAngle, int knifeChargeRate) {
             this.enemyType = enemyType;
-            this.ringAngle = ringAngle;
-            this.knifeAngle = knifeAngle;
+            this.pulseAngle = pulseAngle;
             this.knifeRate = knifeRate;
+            this.knifeAngle = knifeAngle;
             this.skullRate = skullRate;
             this.skullSpeed = skullSpeed;
             this.index = index;
+            this.showerRate = showerRate;
+            this.ringRate = ringRate;
+            this.ringAngle = ringAngle;
+            this.knifeChargeRate = knifeChargeRate;
         }
 
-        public int getRingAngle() {
-            return ringAngle;
+        public int getPulseAngle() {
+            return pulseAngle;
         }
 
         private static EnemyStageEnum getEnemyStage(int index) {
@@ -77,21 +86,18 @@ public class Boss extends Enemy {
         this.stage = stage;
         this.currentStage = currentStage;
         this.boss = true;
-        projectileControlInit(currentStage);
-        setLayoutY((HEIGHT >> 1) - (height >> 1));
-        setLayoutX((WIDTH >> 1) - (width >> 1));
-        createHPBar();
-
-        HPStack.setLayoutY(900);
-        HPStack.setPrefWidth(WIDTH);
-        HPStack.setAlignment(Pos.CENTER);
-        GameViewManager.getMainPane().addToUIPane(HPStack);
+        bossInit(currentStage);
     }
 
     public Boss(EnemyStageEnum stage) {
         super(EnemyType.MAGE1);
         this.stage = stage;
         this.boss = true;
+        bossInit(currentStage);
+
+    }
+
+    private void bossInit(EnemyStageEnum currentStage) {
         projectileControlInit(currentStage);
 
         setLayoutY((HEIGHT >> 1) - (height >> 1));
@@ -103,21 +109,29 @@ public class Boss extends Enemy {
         HPStack.setPrefWidth(WIDTH);
         HPStack.setAlignment(Pos.CENTER);
         GameViewManager.getMainPane().addToUIPane(HPStack);
-
     }
 
     private void projectileControlInit(EnemyStageEnum stage) {
-        bossProjectileControl1 = new EnemyProjectileControl(ProjectileType.REDLASER01);
-        bossProjectileControl1.addSpawnRingBoss((long) getImageWidth(bossProjectileControl1.getType().getURL()), stage.getRingAngle());
+        laser = new EnemyProjectileControl(ProjectileType.REDLASER01);
+        laser.addPulseBoss((long) getImageWidth(laser.getType().getURL()), stage.getPulseAngle());
 
-        bossProjectileControl2 = new EnemyProjectileControl(ProjectileType.KNIFE);
-        bossProjectileControl2.addSpawnRingBoss(stage.knifeRate, stage.knifeAngle);
+        knifeContinuousPulse = new EnemyProjectileControl(ProjectileType.KNIFE);
+        knifeContinuousPulse.addKnives(stage.knifeRate, stage.knifeAngle);
 
-        bossProjectileControl3 = new EnemyProjectileControl(ProjectileType.SKULL);
-        bossProjectileControl3.addMissiles(stage.skullRate, stage.skullSpeed);
+        randomSkulls = new EnemyProjectileControl(ProjectileType.SKULL);
+        randomSkulls.addMissiles(stage.skullRate, stage.skullSpeed);
 
-        bossProjectileControl4 = new EnemyProjectileControl(ProjectileType.SKULL);
-        bossProjectileControl4.addShowerVertical(100);
+        shower = new EnemyProjectileControl(ProjectileType.SKULL);
+        shower.addShower(200);
+
+        knifeChargePulse = new EnemyProjectileControl(ProjectileType.KNIFE);
+        knifeChargePulse.addRing1by1(100,20);
+
+        knifeChargePulse = new EnemyProjectileControl(ProjectileType.KNIFE);
+        knifeChargePulse.addPulse(stage.knifeChargeRate,5);
+
+
+
     }
 
 
@@ -151,17 +165,22 @@ public class Boss extends Enemy {
             control = (control + 1) % CONTROLS_NUM;
             nextControl = timeNow + CONTROL_INTERVAL;
         }
-//        System.out.println(control);
         switch (control) {
             case 0:
-                bossProjectileControl2.update(angle, getSpawner());
-                bossProjectileControl3.update(angle, getSpawner());
-//                bossProjectileControl4.update(angle, getSpawner());
+                knifeContinuousPulse.update(angle, getSpawner());
+                randomSkulls.update(angle, getSpawner());
+                knifeChargePulse.update(angle, getSpawner());
+
                 break;
             case 1:
-                bossProjectileControl1.update(angle, getSpawner());
+                laser.update(angle, getSpawner());
+//                shower.update(angle, getSpawner());
+                knifeChargePulse.update(angle, getSpawner());
 
-//                bossProjectileControl4.update(angle, getSpawner());
+                break;
+            case 2:
+//                shower.update(angle, getSpawner());
+                knifeChargePulse.update(angle, getSpawner());
                 break;
         }
 
