@@ -28,12 +28,12 @@ public class EnemyProjectileControl {
     private final ProjectileType type;
     private long[] lastFireTime;
     private float knifeAngle;
-    private int showerSpawnX = STARTING_X;
-    private int showerSpawnY = MapLoader.STARTING_Y;
+    private int showerSpawnX = (int) (STARTING_X + BLOCK_SIZE);
+    private int showerSpawnY = (int) (MapLoader.STARTING_Y + BLOCK_SIZE);
     private boolean showerHorizontal = false;
 
     public enum PatternRate {
-        PULSE(0), RING1BY1(1), toPlayer(2), MISSILE(3), KNIVES(4), SHOWER(4);
+        PULSE(0), RING1BY1(1), toPlayer(2), MISSILE(3), KNIVES(4), SHOWER(5);
 
         int index;
 
@@ -106,7 +106,7 @@ public class EnemyProjectileControl {
             showerSpawnY = showerSpawnY + 100;
             if (showerSpawnY > (HEIGHT - MapLoader.STARTING_Y)) {
                 showerHorizontal = false;
-                showerSpawnY = MapLoader.STARTING_Y;
+                showerSpawnY = (int) (MapLoader.STARTING_Y + BLOCK_SIZE);
             }
         }
     }
@@ -139,7 +139,6 @@ public class EnemyProjectileControl {
                     angle = -1 * random.nextInt(180);
                 }
             }
-            System.out.println(x + " " + y);
             projectile.spawnProjectile(new Point2D(x, y), angle);
             if (angle < 90 && angle > -90) {
                 projectile.setScaleX(-1);
@@ -160,7 +159,6 @@ public class EnemyProjectileControl {
 
     public void addKnives(long rate, float knifeAngle) {
         setPatternRate(PatternRate.KNIVES, rate);
-        this.boss = true;
         this.knifeAngle = knifeAngle;
     }
 

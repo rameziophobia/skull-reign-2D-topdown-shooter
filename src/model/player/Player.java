@@ -1,13 +1,11 @@
 package model.player;
 
-import javafx.animation.ScaleTransition;
-import javafx.util.Duration;
+import controller.InputManager;
 import model.Entity;
 import model.projectiles.PlayerProjectileControl;
 import model.projectiles.ProjectileType;
 import model.wall.Wall;
 import view.GameViewManager;
-import controller.InputManager;
 import view.LevelManager;
 import view.game.stats.StatBar;
 

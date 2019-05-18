@@ -21,6 +21,7 @@ public class Boss extends Enemy {
     private EnemyProjectileControl randomSkulls;
     private EnemyProjectileControl shower;
     private EnemyProjectileControl knifeChargePulse;
+    private EnemyProjectileControl knife1by1;
     private StatBar HPRectangleBoss;
     private StackPane HPStack;
     private final static int CONTROL_INTERVAL = 40 * 1000;
@@ -45,7 +46,7 @@ public class Boss extends Enemy {
         private int ringAngle;
         private int knifeChargeRate;
 
-        EnemyStageEnum(EnemyType enemyType, int pulseAngle, int knifeRate, int knifeAngle, int skullRate,
+        EnemyStageEnum(EnemyType enemyType, int pulseAngle, int knifeAngle, int knifeRate, int skullRate,
                        int skullSpeed, int index, int showerRate, int ringRate, int ringAngle, int knifeChargeRate) {
             this.enemyType = enemyType;
             this.pulseAngle = pulseAngle;
@@ -81,7 +82,7 @@ public class Boss extends Enemy {
     private final EnemyStageEnum stage;
     private EnemyStageEnum currentStage = EnemyStageEnum.STAGE1;
 
-    public Boss(EnemyStageEnum stage, EnemyStageEnum currentStage) {
+    private Boss(EnemyStageEnum stage, EnemyStageEnum currentStage) {
         super(currentStage.enemyType);
         this.stage = stage;
         this.currentStage = currentStage;
@@ -122,16 +123,13 @@ public class Boss extends Enemy {
         randomSkulls.addMissiles(stage.skullRate, stage.skullSpeed);
 
         shower = new EnemyProjectileControl(ProjectileType.SKULL);
-        shower.addShower(200);
+        shower.addShower(stage.showerRate);
 
-        knifeChargePulse = new EnemyProjectileControl(ProjectileType.KNIFE);
-        knifeChargePulse.addRing1by1(100,20);
+        knife1by1 = new EnemyProjectileControl(ProjectileType.KNIFE);
+        knife1by1.addRing1by1(stage.ringRate,stage.ringAngle);
 
         knifeChargePulse = new EnemyProjectileControl(ProjectileType.KNIFE);
         knifeChargePulse.addPulse(stage.knifeChargeRate,5);
-
-
-
     }
 
 
@@ -169,18 +167,16 @@ public class Boss extends Enemy {
             case 0:
                 knifeContinuousPulse.update(angle, getSpawner());
                 randomSkulls.update(angle, getSpawner());
+                laser.update(angle, getSpawner());
+                shower.update(angle, getSpawner());
+                knife1by1.update(angle, getSpawner());
                 knifeChargePulse.update(angle, getSpawner());
-
                 break;
             case 1:
-                laser.update(angle, getSpawner());
-//                shower.update(angle, getSpawner());
-                knifeChargePulse.update(angle, getSpawner());
-
                 break;
             case 2:
-//                shower.update(angle, getSpawner());
-                knifeChargePulse.update(angle, getSpawner());
+                break;
+            case 3:
                 break;
         }
 

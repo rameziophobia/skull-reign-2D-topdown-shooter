@@ -80,7 +80,7 @@ public class Projectile extends GameObject {
     private void checkCollision_entity() {
         if (enemyProjectile) {
             if (isIntersects(GameViewManager.getPlayer())) {
-                GameViewManager.getPlayer().takeDmg(projectileType.getDAMAGE());
+//                GameViewManager.getPlayer().takeDmg(projectileType.getDAMAGE());
                 GameViewManager.getMainPane().removeFromGamePane(this);
             }
         } else {
