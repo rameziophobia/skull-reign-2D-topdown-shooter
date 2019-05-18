@@ -6,6 +6,8 @@ import model.enemies.Enemy;
 import model.enemies.EnemyType;
 import model.level.Level;
 import model.player.Player;
+import model.projectiles.PowerUp;
+import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
 import model.spawner.SpawnPoint;
 import model.tornado.Tornado;
@@ -31,6 +33,7 @@ public class LevelManager {
 
     private CounterLabel levelLabel, waveLabel;
     private long nextTornadoSpawnTime;
+    private long nextPowerUpSpawnTime;
     private List<Tornado> currentTornadoList;
     private Enemy[] currentWave;
 
@@ -132,6 +135,7 @@ public class LevelManager {
             }
         }
 
+        createPowerUp();
         createEnemies();
         createObstacles();//todo kill all tornados
     }
@@ -208,6 +212,12 @@ public class LevelManager {
     }
 
     public void createPowerUp() {
+        long timeBetweenPowerUpSpawns = 30000;
+        if(System.currentTimeMillis() > nextPowerUpSpawnTime){
+            nextPowerUpSpawnTime = System.currentTimeMillis() + timeBetweenPowerUpSpawns;
+
+            GameViewManager.getMainPane().addToGamePane(new PowerUp(PowerUpType.getRandomPowerUpType()));
+        }
     }
 
     public ArrayList<Enemy> getEnemyArrayList() {
