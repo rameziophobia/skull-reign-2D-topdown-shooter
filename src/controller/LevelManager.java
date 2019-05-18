@@ -79,6 +79,7 @@ public class LevelManager {
                         levelLabel.incrementUICounterWithAnimation();
                         nextLevelTime = System.currentTimeMillis() + TIME_BETWEEN_LEVELS_MS;
                         waitingForNextLevel = true;
+                        currentSpawnPoints.forEach(spawnPoint -> spawnPoint.setActive(false));
                     }
                 }
             } else {
@@ -87,11 +88,13 @@ public class LevelManager {
                         currentWave = currentLevel.getEnemies()[++currentWaveIndex];
                         currentEnemyIndex = 0;
                         waitingForNextWave = false;
+                    currentSpawnPoints.forEach(spawnPoint -> spawnPoint.setActive(true));
                     }
                 } else {
                     waveLabel.incrementUICounterWithAnimation();
                     nextWaveTime = System.currentTimeMillis() + currentLevel.getTimeBetweenWaves();
                     waitingForNextWave = true;
+                    currentSpawnPoints.forEach(spawnPoint -> spawnPoint.setActive(false));
                 }
             }
         }

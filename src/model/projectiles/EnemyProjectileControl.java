@@ -204,7 +204,7 @@ public class EnemyProjectileControl {
 
         final long timeNow = System.currentTimeMillis();
         if (timeNow > lastFireTime[i] + patternRate[i] && patternRate[i] != 0) {
-            angle1by1 += ringAngle1by1; //todo: magicNum
+            angle1by1 += ringAngle1by1;
             Projectile projectile = new Projectile(spawner, type, angle + angle1by1, true);
             GameViewManager.getMainPane().addToGamePane(projectile);
             lastFireTime[i] = timeNow;

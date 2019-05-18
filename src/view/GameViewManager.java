@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -52,6 +54,7 @@ public class GameViewManager {
         instance = this;
 
         mainPane = new MainPane();
+        mainPane.addAllToBackPane(new Rectangle(WIDTH, HEIGHT, Color.BLACK));
 
         gameScene = new Scene(mainPane, WIDTH, HEIGHT);
 
@@ -59,7 +62,7 @@ public class GameViewManager {
         gameStage.setScene(gameScene);
         gameStage.setFullScreen(true);
         gameStage.setTitle("Skull Reign");
-        gameStage.getIcons().add(new Image(Main.PATH_RESOURCES_SPRITES +"icon.png"));
+        gameStage.getIcons().add(new Image(Main.PATH_RESOURCES_SPRITES + "icon.png"));
 
         setWindowScaling();
 
@@ -100,7 +103,7 @@ public class GameViewManager {
         mainPane.getTransforms().add(new Scale(
                 bounds.getWidth() / WIDTH,
                 bounds.getHeight() / HEIGHT,
-                0, 0));//todo
+                0, 0));
     }
 
     public void createNewGame(PlayerType chosenPlayer, String playerName) {
@@ -132,7 +135,7 @@ public class GameViewManager {
     }
 
     private void createScoreLabel() {
-        lbl_currentScore = new ScoreLabel(); //todo move to GameUI
+        lbl_currentScore = new ScoreLabel();
         mainPane.addToUIPane(lbl_currentScore);
     }
 

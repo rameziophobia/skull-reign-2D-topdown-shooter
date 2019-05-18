@@ -11,7 +11,7 @@ public class SettingsManager {
     private SettingsManager() {
     }
 
-    public static void init() {//todo temp
+    static {
         if (audioSettings == null) {
             saveAudiSettings();
         }
@@ -21,7 +21,6 @@ public class SettingsManager {
         AudioManager.setMixerVolume(MixerType.SFX, audioSettings.getSfxVolume());
         AudioManager.setMixerVolume(MixerType.MUSIC, audioSettings.getMusicVolume());
         AudioManager.setMixerVolume(MixerType.AMBIENT, audioSettings.getAmbientVolume());
-
     }
 
     public static void saveAudiSettings() {

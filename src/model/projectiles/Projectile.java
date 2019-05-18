@@ -117,7 +117,6 @@ public class Projectile extends GameObject {
         checkCollision_entity();
         checkCollision_border();
         checkCollision_wall();
-        //todo: check range
     }
 
     @Override

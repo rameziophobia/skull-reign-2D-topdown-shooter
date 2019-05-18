@@ -86,7 +86,8 @@ public class JsonParser {
                 enemies[i][j] = new Enemy(enemyData.getEnemyType(),
                         enemyData.getProjectileType(),
                         enemyData.getProjectileControlType(),
-                        enemyData.getMoveMode());
+                        enemyData.getMoveMode(),
+                        150);
             }
         }
         return enemies;

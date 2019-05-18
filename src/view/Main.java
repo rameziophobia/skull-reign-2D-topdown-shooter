@@ -1,7 +1,5 @@
 package view;
 
-import controller.SettingsManager;
-import controller.audiomanager.AudioManager;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.scene.text.Font;
@@ -20,14 +18,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        AudioManager.init();
-        SettingsManager.init();
-
         stage = primaryStage;
         menuScene = new MenuScene(1280, 720, stage);
         stage.setScene(menuScene);
         stage.setTitle("Skull Reign");
-        stage.getIcons().add(new Image(PATH_RESOURCES_SPRITES +"icon.png"));
+        stage.getIcons().add(new Image(PATH_RESOURCES_SPRITES + "icon.png"));
         stage.show();
     }
 

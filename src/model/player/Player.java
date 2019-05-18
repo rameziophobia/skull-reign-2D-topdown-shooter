@@ -1,7 +1,6 @@
 package model.player;
 
 
-
 import controller.InputManager;
 import javafx.scene.Node;
 import model.Entity;
@@ -36,7 +35,7 @@ public class Player extends Entity {
 
     private String name;
 
-    public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) { //todo: change it to said's char mn 8er rotation
+    public Player(PlayerType player, StatBar HPBar, StatBar ShieldBar) {
         super(player.getURL(), SPEED);
 
         setLayoutX((GameViewManager.WIDTH >> 1) - getFitWidth() / 2 - 300);

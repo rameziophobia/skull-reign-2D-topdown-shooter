@@ -7,8 +7,7 @@ import model.player.Player;
 import model.projectiles.PowerUpType;
 import model.projectiles.ProjectileType;
 
-public class InputManager {//todo temp static ?
-
+public class InputManager {
     private static Player player;
 
     private static double mouseYPos;
@@ -30,7 +29,7 @@ public class InputManager {//todo temp static ?
         return mouseXPos;
     }
 
-    public static void setKeyListener(Scene gameScene) {//todo don't have scene as a parameter ?
+    public static void setKeyListener(Scene gameScene) {
         gameScene.setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case W:
@@ -63,12 +62,12 @@ public class InputManager {//todo temp static ?
                 }
                 case DIGIT3: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.FLAMEBALL);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);
                     break;
                 }
                 case DIGIT4: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.SHOCK);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 4f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 4f);
                     break;
                 }
                 case DIGIT5: {
@@ -77,17 +76,17 @@ public class InputManager {//todo temp static ?
                 }
                 case DIGIT6: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.ICEICLE);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 5f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 5f);
                     break;
                 }
                 case TAB: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.WHIRLWIND);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);
                     break;
                 }
                 case CAPS: {
                     player.getSecondaryBtnHandler().addType(ProjectileType.ELECTRIC);
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);
                     break;
                 }
                 case DIGIT7: {
@@ -115,14 +114,14 @@ public class InputManager {//todo temp static ?
                     break;
                 }
                 case SHIFT: {
-                    player.getPrimaryBtnHandler().setPowerUp(PowerUpType.SCALE, 3f);//todo Magic Number
-                    player.getPrimaryBtnHandler().setPowerUp(PowerUpType.MULT, 4f);//todo Magic Number
-                    player.getPrimaryBtnHandler().setRange(700);//todo Magic Number
+                    player.getPrimaryBtnHandler().setPowerUp(PowerUpType.SCALE, 3f);
+                    player.getPrimaryBtnHandler().setPowerUp(PowerUpType.MULT, 4f);
+                    player.getPrimaryBtnHandler().setRange(700);
                     break;
                 }
                 case SPACE: {
-                    player.getSecondaryBtnHandler().setRange(500);//todo Magic Number
-                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);//todo Magic Number
+                    player.getSecondaryBtnHandler().setRange(500);
+                    player.getSecondaryBtnHandler().setPowerUp(PowerUpType.MULT, 3f);
                     break;
                 }
                 case X:
