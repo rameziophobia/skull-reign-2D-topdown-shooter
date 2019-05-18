@@ -4,8 +4,6 @@ import javafx.scene.shape.Rectangle;
 import model.Entity;
 import model.GameObject;
 import model.player.Player;
-import view.GameViewManager;
-import view.LevelManager;
 import view.Main;
 
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class Wall extends GameObject {
         return canMove(entity, wallArrayList, true, (int)entity.getImage().getWidth(),3);
     }
 
-    private static void positionEntity(GameObject entity,int position,Wall wall){
+    private static void repositionEntity(GameObject entity, int position, Wall wall){
         switch (position){
             case 0:
                 entity.setLayoutY(wall.getLayoutY()+58);
@@ -86,13 +84,36 @@ public class Wall extends GameObject {
             if (wall.isIntersects(gameObject)) {
                 if (horizontal) {
                     if(Math.abs(gameObject.getLayoutX() + offset - wall.getLayoutX() ) < MARGIN){
-                        positionEntity(gameObject,position,wall);
+                        repositionEntity(gameObject,position,wall);
                         return false;
                     }
                 }
                 else{
                     if(Math.abs(gameObject.getLayoutY() + offset - wall.getLayoutY() ) < MARGIN){
-                        positionEntity(gameObject,position,wall);
+                        repositionEntity(gameObject,position,wall);
+                        return false;
+                    }
+                }
+            }
+            if(offset == 0){
+                return wall.getBoundsInParent().intersects(gameObject.getBoundsInParent());
+            }
+        }
+        return true;
+    }
+    public static boolean canMove(GameObject gameObject, ArrayList<Wall> wallArrayList, boolean horizontal, int offset){
+        if(wallArrayList == null)
+            return true;//todo da ybawaz 7aga?
+
+        for(Wall wall: wallArrayList) {
+            if (wall.isIntersects(gameObject)) {
+                if (horizontal) {
+                    if(Math.abs(gameObject.getLayoutX() + offset - wall.getLayoutX() ) < MARGIN){
+                        return false;
+                    }
+                }
+                else{
+                    if(Math.abs(gameObject.getLayoutY() + offset - wall.getLayoutY() ) < MARGIN){
                         return false;
                     }
                 }
