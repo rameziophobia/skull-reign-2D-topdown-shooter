@@ -2,6 +2,8 @@ package view;
 
 import controller.InputManager;
 import controller.LevelManager;
+import controller.map.Map;
+import controller.map.MapLoader;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -21,6 +23,7 @@ import view.menu.GameEnd;
 import view.menu.mainmenu.menus.HallOfFameMenu;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameViewManager {
     public static final int HEIGHT = 1080;
@@ -39,11 +42,14 @@ public class GameViewManager {
     private static Label lbl_currentScore;
     private GameUI gameUI;
     private static AnimationTimer gameLoop;
-    private LevelManager levelManager;
+    private Endless endless;
+    private static ArrayList<Wall>  wallArrayList= new ArrayList<>();
 
     public static GameViewManager getInstance() {
         return instance;
     }
+
+
 
     public GameViewManager() {
         instance = this;
@@ -54,11 +60,18 @@ public class GameViewManager {
 
         gameStage = new Stage();
         gameStage.setScene(gameScene);
-        gameStage.setFullScreen(true);
+        gameStage.setFullScreen(false);
 
+
+        final MapLoader mapLoader = new MapLoader(Map.BASE);
+        GameViewManager.getMainPane().addAllToFrontPane(mapLoader.getFrontNodes());
+        GameViewManager.getMainPane().addAllToBackPane(mapLoader.getBackNodes());
+
+        mapLoader.getWallNodes().forEach(node -> GameViewManager.getMainPane().addToGamePane(node));
+        wallArrayList.addAll(mapLoader.getWallNodes());
         setWindowScaling();
 
-        gameUI = new GameUI(mainPane);
+        gameUI = new GameUI(mainPane,true);
 
         gameEnded = false;
         gameEnd = new GameEnd();
@@ -83,6 +96,9 @@ public class GameViewManager {
     public static MainPane getMainPane() {
         return mainPane;
     }
+    public GameUI getGameUI() {
+        return gameUI;
+    }
 
     @Deprecated
     public static Pane getGamePane() {
@@ -102,7 +118,7 @@ public class GameViewManager {
 
         createPlayer(chosenPlayer, playerName);
 
-        levelManager = new LevelManager(gameUI.getLevelLabel(), gameUI.getWaveLabel());
+        endless = new Endless(1000,false);
         startGameLoop();
     }
 
@@ -154,16 +170,16 @@ public class GameViewManager {
         return gameStage;
     }
 
-    public ArrayList<Enemy> getEnemyArrayList() {
-        return levelManager.getEnemyArrayList();
+    public List<Enemy> getEnemyArrayList() {
+        return endless.getEnemyArrayList();
     }
 
     public ArrayList<Wall> getWallArrayList() {
-        return levelManager.getWallArrayList();
+        return endless.getWallArrayList();
     }
 
     public void removeEnemy(Enemy enemy) {
-        levelManager.removeEnemy(enemy);
+        endless.removeEnemy(enemy);
     }
 
     private void gameStart() {
@@ -175,8 +191,8 @@ public class GameViewManager {
     }
 
     private void gameUpdate() {
-        levelManager.update();
-
+        endless.update();
+        gameUI.getWaveLabel().setUICounter(endless.getCurrentWave());
         Object[] objects = mainPane.getGamePane().getChildren().toArray();
         for (Object node : objects) {
             if (node instanceof GameObject)

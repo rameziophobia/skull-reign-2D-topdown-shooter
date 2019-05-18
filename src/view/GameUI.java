@@ -15,12 +15,12 @@ import view.game.stats.HealthBars;
 
 public class GameUI {
 
-    private final CounterLabel levelLabel;
+//    private final CounterLabel levelLabel;
     private final CounterLabel waveLabel;
     private Group group = new Group();
     private HealthBars healthBars = new HealthBars();
 
-    public GameUI(Pane gamePane) {
+    public GameUI(Pane gamePane,Boolean endless) {
         createWeaponBar();
         createBackground(gamePane);
         setCrosshair(gamePane);
@@ -28,13 +28,17 @@ public class GameUI {
         waveLabel = new CounterLabel("Wave", 6, 30);
         waveLabel.addUIToGame();
 
-        levelLabel = new CounterLabel("Level", 10, 0);
-        levelLabel.addUIToGame();
+//        levelLabel = new CounterLabel("Level", 10, 0);
+//
+//        if(endless){
+//            levelLabel.addUIToGame();
+//        }
+
     }
 
-    public CounterLabel getLevelLabel() {
-        return levelLabel;
-    }
+//    public CounterLabel getLevelLabel() {
+//        return levelLabel;
+//    }
 
     public CounterLabel getWaveLabel() {
         return waveLabel;
