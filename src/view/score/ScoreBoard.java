@@ -21,9 +21,9 @@ public class ScoreBoard {
         }
         try {
             if (scoreFile.createNewFile()) {
-                System.out.println("File created");
+                System.out.println("Highscore file created");
             } else {
-                System.out.println("File exists");
+                System.out.println("Highscore file exists");
             }
         } catch (IOException e) {
             e.printStackTrace();
