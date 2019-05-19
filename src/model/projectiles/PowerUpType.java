@@ -65,10 +65,8 @@ public enum PowerUpType {
     public static PowerUpType getRandomPowerUpType() {
         Random random = new Random();
         PowerUpType power;
-        do {
-            power = values()[random.nextInt(values().length)];
-        }
-        while (getPlayer().getSecondaryBtnHandler().getWeaponSettings().containsKey(power.projectileType));
+        power = values()[random.nextInt(values().length)];
+
         return power;
     }
 
