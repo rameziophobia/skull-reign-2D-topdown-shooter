@@ -1,6 +1,8 @@
 package model.player;
 
 import controller.InputManager;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import javafx.scene.Node;
 import model.Entity;
 import model.projectiles.PlayerProjectileControl;
@@ -155,6 +157,7 @@ public class Player extends Entity {
 
     @Override
     public void takeDmg(double dmg) {
+        AudioManager.playNewAudio(AudioFile.HURT, 1);
         nextShieldRegenCheck = timeNow + REGENERATION_TIME_CD_SHIELD_MS;
         if (ShieldRectangle.getCurrentValue() > 0) {
             ShieldRectangle.decreaseCurrent(dmg);
@@ -264,6 +267,7 @@ public class Player extends Entity {
     }
 
     public void killPlayer() {
+        AudioManager.playAudio(AudioFile.PLAYER_DEATH);
         GameViewManager.endGameSequence();
     }
 

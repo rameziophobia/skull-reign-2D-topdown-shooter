@@ -2,6 +2,8 @@ package model.projectiles;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import controller.map.Map;
 import javafx.animation.Animation;
 import javafx.animation.ScaleTransition;
@@ -71,6 +73,7 @@ public class PowerUp extends GameObject {
             } else {
                 BtnHandler = GameViewManager.getPlayer().getPrimaryBtnHandler();
             }
+            AudioManager.playNewAudio(AudioFile.PLAYER_POWERUP, 0.3);
             BtnHandler.setPowerUp(powerUpType, powerUpType.getScale());
             GameViewManager.getMainPane().removeFromGamePane(this);
         }

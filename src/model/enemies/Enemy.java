@@ -2,6 +2,8 @@ package model.enemies;
 
 import controller.animation.AnimationClip;
 import controller.animation.SpriteSheet;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
@@ -253,6 +255,7 @@ public class Enemy extends Entity {
     protected void checkAlive() {
         if (hp <= 0) {
             showFloatingScore();
+            AudioManager.playNewAudio(AudioFile.ENEMY_DEATH, 0.15);
             Player.increaseCurrentScore(this.getScoreValue());
             GameViewManager.getMainPane().removeFromGamePane(this);
             GameViewManager.getInstance().removeEnemy(this);

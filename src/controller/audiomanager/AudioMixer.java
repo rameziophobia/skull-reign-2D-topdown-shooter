@@ -23,6 +23,7 @@ class AudioMixer {
 
     void addAudio(AudioFile audioFile) {
         final AudioClip audioClip = new AudioClip(audioFile.getPath());
+
         audioClip.setCycleCount(audioFile.getCycleCount());
 
         audioClipHashMap.put(audioFile, audioClip);
@@ -33,6 +34,16 @@ class AudioMixer {
 
         if (!audioClip.isPlaying())
             audioClip.play(volume * mixerVolume * AudioManager.getMasterVolume() * audioFile.getVolume());
+    }
+
+    void playNewAudio(AudioFile audioFile, double volume) {
+        AudioClip audioClip = audioClipHashMap.get(audioFile);
+
+        if (audioClip.isPlaying()) {
+            audioClip = new AudioClip(audioClip.getSource());
+        }
+
+        audioClip.play(volume * mixerVolume * AudioManager.getMasterVolume() * audioFile.getVolume());
     }
 
     void stopAudio(AudioFile audioFile) {

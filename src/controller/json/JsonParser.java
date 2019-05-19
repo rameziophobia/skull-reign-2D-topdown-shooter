@@ -47,7 +47,6 @@ public class JsonParser {
             fileData = new String(bytes);
         } catch (NoSuchFileException e) {
             System.out.println("Json Parser " + fileLevels + " not found");
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

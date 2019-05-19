@@ -57,4 +57,5 @@ public class StatBar extends Rectangle {
 
         HPAnimation.play();
     }
+
 }

@@ -1,6 +1,7 @@
 package view.menu.mainmenu.menus;
 
 import controller.SettingsManager;
+import controller.audiomanager.AudioFile;
 import controller.audiomanager.AudioManager;
 import controller.audiomanager.MixerType;
 import javafx.scene.control.Label;
@@ -37,6 +38,8 @@ public class SettingsMenu extends Menu {
                 new MenuButtonTransition("Save", this, Menus.MAIN, () -> {
                     this.applyVolumeSettings();
                     SettingsManager.saveAudiSettings();
+                    AudioManager.stopAudio(AudioFile.MENU_MUSIC);
+                    AudioManager.playAudio(AudioFile.MENU_MUSIC);
                 }),
                 new MenuButtonTransition("Back", this, Menus.MAIN, this::resetSliders));
     }

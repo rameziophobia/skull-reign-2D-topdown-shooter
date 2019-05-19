@@ -1,5 +1,7 @@
 package model.enemies;
 
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import controller.map.Map;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -24,7 +26,7 @@ public class Boss extends Enemy {
     private EnemyProjectileControl knifeChargePulseSlow;
     private EnemyProjectileControl knifeChargePulseFast;
     private EnemyProjectileControl knife1by1;
-    private StatBar HPRectangleBoss;
+    private static StatBar HPRectangleBoss;
     private StackPane HPStack;
     private double HP_INTERVAL;
     private double hp_interval;
@@ -35,9 +37,9 @@ public class Boss extends Enemy {
     private double spawnY;
 
     public enum EnemyStageEnum {
-        STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20, 5000),
-        STAGE2(EnemyType.MAGE2, 60, 60, 550, 350, 5, 2, 250, 150, 15, 4000),
-        STAGE3(EnemyType.MAGE3, 45, 45, 450, 250, 6, 3, 150, 120, 12, 3000);
+        STAGE1(EnemyType.MAGE1, 90, 120, 650, 500, 4, 1, 350, 220, 20, 5000, Color.DARKBLUE),
+        STAGE2(EnemyType.MAGE2, 60, 60, 550, 350, 5, 2, 250, 150, 15, 4000, Color.DARKVIOLET),
+        STAGE3(EnemyType.MAGE3, 45, 45, 450, 250, 6, 3, 150, 120, 12, 3000, Color.DARKRED);
 
         private EnemyType enemyType;
         private int pulseAngle;
@@ -50,9 +52,10 @@ public class Boss extends Enemy {
         private int ringRate;
         private int ringAngle;
         private int knifeChargeRate;
+        private Color color;
 
         EnemyStageEnum(EnemyType enemyType, int pulseAngle, int knifeAngle, int knifeRate, int skullRate,
-                       int skullSpeed, int index, int showerRate, int ringRate, int ringAngle, int knifeChargeRate) {
+                       int skullSpeed, int index, int showerRate, int ringRate, int ringAngle, int knifeChargeRate, Color color) {
             this.enemyType = enemyType;
             this.pulseAngle = pulseAngle;
             this.knifeRate = knifeRate;
@@ -64,6 +67,7 @@ public class Boss extends Enemy {
             this.ringRate = ringRate;
             this.ringAngle = ringAngle;
             this.knifeChargeRate = knifeChargeRate;
+            this.color = color;
         }
 
         public int getPulseAngle() {
@@ -101,12 +105,14 @@ public class Boss extends Enemy {
         super(EnemyType.MAGE1);
         this.stage = stage;
         this.boss = true;
+
         bossInit(currentStage);
     }
 
     private void bossInit(EnemyStageEnum currentStage) {
         projectileControlInit(currentStage);
         createHPBar();
+        HPRectangleBoss.setFill(currentStage.color);
 
         HPStack.setLayoutY(900);
         HPStack.setPrefWidth(WIDTH);
@@ -150,17 +156,20 @@ public class Boss extends Enemy {
 
     @Override
     protected void checkAlive() {
-        if (hp <= 0 && currentStage.index < stage.index) {
+        if (hp <= 0) {
             super.checkAlive();
-            Boss b = new Boss(stage,
-                    EnemyStageEnum.getEnemyStage(currentStage.index + 1), spawnX, spawnY);
-
-            GameViewManager.getInstance().getEnemyArrayList().add(b);
-            GameViewManager.getMainPane().addToGamePane(b);
-        } else if (hp <= 0 && currentStage.index >= stage.index) {
-            System.out.println(currentStage.index + " " + stage.index);
-            super.checkAlive();
+            if (currentStage.index < stage.index) {
+                final Boss b = new Boss(stage, EnemyStageEnum.getEnemyStage(currentStage.index + 1), spawnX, spawnY);
+                GameViewManager.getInstance().getEnemyArrayList().add(b);
+                GameViewManager.getMainPane().addToGamePane(b);
+            } else {
+                AudioManager.stopAudio(AudioFile.BOSS_MUSIC);
+                AudioManager.playAudio(AudioFile.BOSS_DEATH, 0.8);
+            }
+        } else {
+            AudioManager.playAudio(AudioFile.BOSS_MUSIC);
         }
+
     }
 
     @Override
@@ -170,6 +179,7 @@ public class Boss extends Enemy {
             control++;
             System.out.println(control);
             hp_interval = HP_INTERVAL;
+            AudioManager.playAudio(AudioFile.BOSS_PHASE);
         }
         switch (control) {
             case 0:

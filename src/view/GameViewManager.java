@@ -4,6 +4,8 @@ import controller.Campaign;
 import controller.Endless;
 import controller.InputManager;
 import controller.LevelManager;
+import controller.audiomanager.AudioFile;
+import controller.audiomanager.AudioManager;
 import controller.json.JsonParser;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
@@ -71,7 +73,6 @@ public class GameViewManager {
         gameStage.setTitle("Skull Reign");
         gameStage.getIcons().add(new Image(Main.PATH_RESOURCES_SPRITES + "icon.png"));
 
-
         setWindowScaling();
 
         gameUI = new GameUI(mainPane, isEndless);
@@ -82,6 +83,7 @@ public class GameViewManager {
             HallOfFameMenu.setNewRecord(player.getName(), player.getCurrentScore());
             player.resetScore();
             Main.switchToMainMenu();
+            AudioManager.stopAudio(AudioFile.BOSS_MUSIC);
         });
 
         gameLoop = new AnimationTimer() {
@@ -124,7 +126,6 @@ public class GameViewManager {
 
         createPlayer(chosenPlayer, playerName);
 
-//        initializeMapBorder();
         if (isEndless) {
             gameMode = new Endless(2000, false);
         } else {
@@ -152,7 +153,6 @@ public class GameViewManager {
         gameLoop.start();
     }
 
-
     private void createScoreLabel() {
         lbl_currentScore = new ScoreLabel();
         mainPane.addToUIPane(lbl_currentScore);
@@ -165,6 +165,7 @@ public class GameViewManager {
     public static void endGameSequence() {
         if (!gameEnded) {
             gameEnded = true;
+
             gameLoop.stop();
             wallArrayList.clear();
             gameEnd.setName(player.getName());
@@ -207,7 +208,6 @@ public class GameViewManager {
 
     private void gameUpdate() {
         gameMode.update();
-
 
         Object[] objects = mainPane.getGamePane().getChildren().toArray();
         for (Object node : objects) {

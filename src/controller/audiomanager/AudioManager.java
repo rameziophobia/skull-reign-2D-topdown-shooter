@@ -31,8 +31,17 @@ public class AudioManager {
         playAudio(audioFile, 1.0);
     }
 
+    public static void playAudioStopPrev(AudioFile audioFile) {
+        stopAudio(audioFile);
+        playAudio(audioFile, 1.0);
+    }
+
     public static void playAudio(AudioFile audioFile, double volume) {
         AUDIO_MIXER_HASH_MAP.get(audioFile.getMixer()).playAudio(audioFile, volume);
+    }
+
+    public static void playNewAudio(AudioFile audioFile, double volume) {
+        AUDIO_MIXER_HASH_MAP.get(audioFile.getMixer()).playNewAudio(audioFile, volume);
     }
 
     public static void stopAudio(AudioFile audioFile) {
@@ -47,4 +56,3 @@ public class AudioManager {
         return AUDIO_MIXER_HASH_MAP.get(mixerVolume).getMixerVolume();
     }
 }
-

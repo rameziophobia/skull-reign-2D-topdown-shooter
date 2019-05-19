@@ -24,7 +24,7 @@ public class Campaign extends LevelManager {
     private final Level[] levels;
     private final CounterLabel levelLabel, waveLabel;
 
-    private int currentLevelIndex;
+    private int currentLevelIndex = 5;
     private int currentWaveIndex;
     private int currentEnemyIndex;
 

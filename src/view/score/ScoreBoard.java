@@ -26,7 +26,7 @@ public class ScoreBoard {
             } else {
                 System.out.println("File exists");
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         data = new ArrayList<>();
@@ -53,7 +53,7 @@ public class ScoreBoard {
                     data.add(line);
                 }
                 reader.close();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         } else
