@@ -84,8 +84,6 @@ public class MenuButton extends StackPane {
             isFireShown = true;
             img_fireRight.setOpacity(1);
             img_fireLeft.setOpacity(1);
-
-//            AudioManager.playAudio(AudioFile.FIRE);
         });
         setOnMouseExited(e -> {
             imageView.setScaleX(1);
@@ -94,8 +92,6 @@ public class MenuButton extends StackPane {
             isFireShown = false;
             img_fireRight.setOpacity(0);
             img_fireLeft.setOpacity(0);
-
-//            AudioManager.stopAudio(AudioFile.FIRE);
         });
     }
 

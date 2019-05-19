@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ASU19_Prog2Project:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ASU19_Prog2Project_jar</output-path>
+    <root id="archive" name="ASU19_Prog2Project.jar">
+      <element id="module-output" name="ASU19_Prog2Project" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../_Resources/Java Lib/gson-2.8.5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

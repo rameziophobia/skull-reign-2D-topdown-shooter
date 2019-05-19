@@ -23,7 +23,6 @@ public class PlayerProjectileControl {
     private HashMap<ProjectileType, HashMap<PowerUpType, Float>> weaponSettings = new HashMap<>();
 
     private LinkedList<ProjectileType> weaponList = new LinkedList<>();
-    //dictionary of weapons used with their respective powerUp dict
 
     public final static int MAX_MULT = 6;
     private final static int MAX_SCALE = 50;
@@ -31,7 +30,7 @@ public class PlayerProjectileControl {
 
 
     private boolean rangeEnable;
-    private double range = 2000; //bound akbar mn el shasha
+    private double range = 2000;
     private double lastFireLocationX;
     private double lastFireLocationY;
     private double angle;
@@ -63,7 +62,6 @@ public class PlayerProjectileControl {
         weaponList.add(type);
     }
 
-    //sets powerUp to zero
     private HashMap<PowerUpType, Float> initializePowerUp() {
         HashMap<PowerUpType, Float> power = new HashMap<>();
         for (PowerUpType powerUpTypes : PowerUpType.values()) {

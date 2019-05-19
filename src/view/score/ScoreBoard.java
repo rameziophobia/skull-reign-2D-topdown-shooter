@@ -11,7 +11,6 @@ public class ScoreBoard {
     private static final String FILE_PATH = "resources/savedata";
     private static final String FILE_NAME = "highscores.dat";
     private ArrayList<String> data;
-    //score data format --> SCORE:NAME
     private File scoreFile;
 
     public ScoreBoard() {

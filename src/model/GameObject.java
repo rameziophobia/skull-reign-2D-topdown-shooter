@@ -17,6 +17,7 @@ public abstract class GameObject extends ImageView {
 
     public GameObject(Image image) {
         super(image);
+        //impl_getUrl() was added to javafx 11
         if (image.impl_getUrl().contains("-")) {
             height = getImageWidth(image.impl_getUrl());
             width = getImageHeight(image.impl_getUrl());

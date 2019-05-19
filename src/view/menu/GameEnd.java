@@ -37,8 +37,6 @@ public class GameEnd extends VBox {
         addLabels();
 
         setUpFade();
-
-//        this.setOnMouseClicked(this::);
     }
 
     private void setUpFade() {
