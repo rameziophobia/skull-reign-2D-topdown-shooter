@@ -177,7 +177,6 @@ public class Boss extends Enemy {
         super.update();
         if (hp_interval <= 0) {
             control++;
-            System.out.println(control);
             hp_interval = HP_INTERVAL;
             AudioManager.playAudio(AudioFile.BOSS_PHASE);
         }
