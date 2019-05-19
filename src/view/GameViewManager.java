@@ -68,7 +68,7 @@ public class GameViewManager {
 
         gameStage = new Stage();
         gameStage.setScene(gameScene);
-        gameStage.setFullScreen(false);
+        gameStage.setFullScreen(true);
         gameStage.setTitle("Skull Reign");
         gameStage.getIcons().add(new Image(Main.PATH_RESOURCES_SPRITES + "icon.png"));
 

@@ -217,6 +217,64 @@
           "MoveMode": "FOLLOW_PLAYER",
           "ProjectileControlType": "toPlayer1000"
         }
+      ],[
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer500"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        }
+        ,
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        }
+        ,
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        }
+        ,
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        }
       ]
     ],
     "TimeBetweenSpawns": 5500,
@@ -263,7 +321,19 @@
           "EnemyType": "TANK_RED",
           "ProjectileType": "BLUELASER01",
           "MoveMode": "FOLLOW_PLAYER",
-          "ProjectileControlType": "toPlayer1000"
+          "ProjectileControlType": "toPlayer500"
+        },
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer500"
+        },
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer500"
         }
       ],
       [
@@ -295,13 +365,51 @@
           "EnemyType": "TANK_DARK",
           "ProjectileType": "GREENLASER01",
           "MoveMode": "FOLLOW_PLAYER",
-          "ProjectileControlType": "toPlayer1000"
+          "ProjectileControlType": "ring300rx5a"
         },
         {
           "EnemyType": "TANK_HUGE",
           "ProjectileType": "REDLASER01",
           "MoveMode": "FOLLOW_PLAYER",
-          "ProjectileControlType": "toPlayer1000"
+          "ProjectileControlType": "toPlayer500"
+        }
+      ],
+      [
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer500"
+        },
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer500"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "ring100rx5a"
+        },
+        {
+          "EnemyType": "TANK_HUGE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer500"
+        },
+        {
+          "EnemyType": "TANK_DARK",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "ring100rx5a"
+        },
+        {
+          "EnemyType": "TANK_HUGE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer400"
         }
       ]
     ],
@@ -309,8 +417,8 @@
     "TimeBetweenWaves": 2500,
     "NumberOfTornados": 10,
     "TimeBetweenTornado": 6500,
-    "NumberOfPowerups": 12,
-    "TimeBetweenPowerups": 2700
+    "NumberOfPowerups": 10,
+    "TimeBetweenPowerups": 3000
   },
   {
     "Waves": [
@@ -349,7 +457,7 @@
           "EnemyType": "TANK_HUGE",
           "ProjectileType": "GREENLASER01",
           "MoveMode": "FOLLOW_PLAYER",
-          "ProjectileControlType": "toPlayer1000"
+          "ProjectileControlType": "toPlayer300"
         }
       ],
       [
@@ -387,7 +495,45 @@
           "EnemyType": "TANK_HUGE",
           "ProjectileType": "GREENLASER01",
           "MoveMode": "FOLLOW_PLAYER",
-          "ProjectileControlType": "toPlayer500"
+          "ProjectileControlType": "toPlayer400"
+        }
+      ],
+      [
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer400"
+        },
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer1000"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "pulse200rx90a"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "pulse400rx90a"
+        },
+        {
+          "EnemyType": "TANK_HUGE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer400"
+        },
+        {
+          "EnemyType": "TANK_HUGE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer400"
         }
       ]
     ],
@@ -395,8 +541,8 @@
     "TimeBetweenWaves": 2500,
     "NumberOfTornados": 10,
     "TimeBetweenTornado": 6500,
-    "NumberOfPowerups": 12,
-    "TimeBetweenPowerups": 3000
+    "NumberOfPowerups": 10,
+    "TimeBetweenPowerups": 3500
   },
   {
     "Waves": [
@@ -429,7 +575,7 @@
           "EnemyType": "TANK_HUGE",
           "ProjectileType": "GREENLASER01",
           "MoveMode": "FOLLOW_PLAYER",
-          "ProjectileControlType": "toPlayer1000"
+          "ProjectileControlType": "toPlayer500"
         },
         {
           "EnemyType": "TANK_HUGE",
@@ -464,25 +610,101 @@
           "ProjectileControlType": "ring300rx5a"
         },
         {
-          "EnemyType": "TANK_DARK",
+          "EnemyType": "TANK_HUGE",
           "ProjectileType": "GREENLASER01",
           "MoveMode": "FOLLOW_PLAYER",
           "ProjectileControlType": "ring100rx5a"
         },
         {
+          "EnemyType": "TANK_DARK_LARGE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "pulse200rx120a"
+        }
+      ],
+      [
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "pulse300rx60a"
+        },
+        {
+          "EnemyType": "TANK_RED",
+          "ProjectileType": "BLUELASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "pulse200rx90a"
+        },
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "ring300rx5a"
+        },
+        {
           "EnemyType": "TANK_HUGE",
           "ProjectileType": "GREENLASER01",
           "MoveMode": "FOLLOW_PLAYER",
-          "ProjectileControlType": "toPlayer500"
+          "ProjectileControlType": "ring300rx5a"
+        },
+        {
+          "EnemyType": "TANK_DARK_LARGE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "ring100rx5a"
+        },
+        {
+          "EnemyType": "TANK_DARK_LARGE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer100"
+        }
+      ],
+      [
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "pulse300rx60a"
+        },
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "ring50rx5a"
+        },
+        {
+          "EnemyType": "TANK_BLUE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer300"
+        },
+        {
+          "EnemyType": "TANK_HUGE",
+          "ProjectileType": "REDLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "ring200rx5a"
+        },
+        {
+          "EnemyType": "TANK_DARK_LARGE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "ring100rx5a"
+        },
+        {
+          "EnemyType": "TANK_DARK_LARGE",
+          "ProjectileType": "GREENLASER01",
+          "MoveMode": "FOLLOW_PLAYER",
+          "ProjectileControlType": "toPlayer200"
         }
       ]
     ],
     "TimeBetweenSpawns": 3000,
     "TimeBetweenWaves": 3000,
     "NumberOfTornados": 13,
-    "TimeBetweenTornado": 5000,
-    "NumberOfPowerups": 20,
-    "TimeBetweenPowerups": 4000
+    "TimeBetweenTornado": 4000,
+    "NumberOfPowerups": 14,
+    "TimeBetweenPowerups": 5000
   },
   {
     "Waves": [

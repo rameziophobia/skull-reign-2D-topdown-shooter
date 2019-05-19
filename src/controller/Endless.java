@@ -20,7 +20,7 @@ public class Endless extends LevelManager {
     private final List<List<Enemy>> enemies;
     private final List<Enemy> spawnedEnemies;
     private final long spawnCD;
-    private final long powerUpCD = 500;
+    private final long powerUpCD = 6000;
 
     private boolean debug;
 
