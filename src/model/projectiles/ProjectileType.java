@@ -3,7 +3,7 @@ package model.projectiles;
 import view.Main;
 
 public enum ProjectileType {
-    BULLET("bullet-13x3.png", 15, 1, 10, 3, false, 1, 1),
+    BULLET("bullet-13x3.png", 15, 3, 10, 3, false, 1, 1),
     FIRE("fire-32x12.png", 1, 35, 6, 3, false, 1, 1),
     REDLASER01("laserRed01-54x9.png", 3, 15, 15, 3, false, 1, 1),
     GREENLASER01("laserGreen01-54x9.png", 3, 15, 15, 3, false, 1, 1),
