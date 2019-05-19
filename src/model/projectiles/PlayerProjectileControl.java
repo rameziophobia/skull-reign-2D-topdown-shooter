@@ -21,6 +21,7 @@ public class PlayerProjectileControl {
 
     private HashMap<PowerUpType, Float> powerUp;
     private HashMap<ProjectileType, HashMap<PowerUpType, Float>> weaponSettings = new HashMap<>();
+
     private LinkedList<ProjectileType> weaponList = new LinkedList<>();
     //dictionary of weapons used with their respective powerUp dict
 
@@ -93,8 +94,10 @@ public class PlayerProjectileControl {
         mouseEvents();
         fireProjectile();
     }
-
-    protected HashMap getWeaponSettings() {
+    public LinkedList<ProjectileType> getWeaponList() {
+        return weaponList;
+    }
+    public HashMap getWeaponSettings() {
         return weaponSettings;
     }
 
