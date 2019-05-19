@@ -4,19 +4,19 @@ import controller.audiomanager.AudioFile;
 import view.Main;
 
 public enum ProjectileType {
-    BULLET("bullet-13x3.png", 15, 1, 10, 3, false, AudioFile.MACHINE, 1, 1),
+    BULLET("bullet-13x3.png", 15, 3, 10, 3, false, AudioFile.MACHINE, 1, 1),
     FIRE("fire-32x12.png", 1, 35, 6, 3, false, AudioFile.WOOSH, 1, 1),
-    REDLASER01("laserRed01-9x54.png", 3, 15, 15, 3, false, AudioFile.LASER, 1, 1),
+    REDLASER01("laserRed01-54x9.png", 3, 15, 15, 3, false, AudioFile.LASER, 1, 1),
     GREENLASER01("laserGreen01-54x9.png", 3, 15, 15, 3, false, AudioFile.LASER, 1, 1),
-    BLUELASER01("laserBlue01-9x54.png", 3, 15, 15, 3, false, AudioFile.LASER, 1, 1),
+    BLUELASER01("laserBlue01-54x9.png", 3, 15, 15, 3, false, AudioFile.LASER, 1, 1),
 
     REDLASER02("laserRed02-37x13.png", 2, 10, 8, 2, false, AudioFile.LASER, 1, 1),
-    GREENLASER02("laserGreen02-13x37.png", 2, 10, 8, 2, false, AudioFile.LASER, 1, 1),
-    BLUELASER02("laserBlue02-13x37.png", 2, 10, 8, 2, false, AudioFile.LASER, 1, 1),
+    GREENLASER02("laserGreen02-37x13.png", 2, 10, 8, 2, false, AudioFile.LASER, 1, 1),
+    BLUELASER02("laserBlue02-37x13.png", 2, 10, 8, 2, false, AudioFile.LASER, 1, 1),
 
-    REDLASER03("laserRed03-9x37.png", 20, 1.5f, 10, 3, false, AudioFile.BURST, 1, 1),
+    REDLASER03("laserRed03-37x9.png", 20, 1.5f, 10, 3, false, AudioFile.BURST, 1, 1),
     GREENLASER03("laserGreen03-37x9.png", 20, 1.5f, 10, 3, false, AudioFile.LASER, 1, 1),
-    BLUELASER03("laserBlue03-9x37.png", 20, 1.5f, 10, 3, false, AudioFile.BURST, 1, 1),
+    BLUELASER03("laserBlue03-37x9.png", 20, 1.5f, 10, 3, false, AudioFile.BURST, 1, 1),
 
     LASERRED08("laserRed08-48x45.png", 1.5, 50, 6, 5, false, AudioFile.LASER, 1, 1),
 
@@ -39,6 +39,7 @@ public enum ProjectileType {
     private final AudioFile SOUND;
 
     private int speed;
+    private int defaultSpeed;
     private float currentMult;
     private float currentScale;
 
@@ -47,6 +48,7 @@ public enum ProjectileType {
         this.FIRERATE = fireRate;
         this.DAMAGE = damage;
         this.speed = speed;
+        this.defaultSpeed = speed;
         this.MULTANGLE = multAngle;
         this.ANIMATED = animated;
         this.SOUND = sound;
@@ -84,6 +86,12 @@ public enum ProjectileType {
 
     public boolean isANIMATED() {
         return ANIMATED;
+    }
+
+    public void setToDefault() {
+        this.currentScale = 1;
+        this.currentMult = 1;
+        this.speed = defaultSpeed;
     }
 
     public void incCurrentMult(float mult) {

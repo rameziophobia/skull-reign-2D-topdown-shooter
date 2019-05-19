@@ -4,8 +4,6 @@ import view.Main;
 
 import java.util.Random;
 
-import static view.GameViewManager.getPlayer;
-
 public enum PowerUpType {
     MULT(Constants.PATH_RESOURCES_SPRITES_POWERUPS + "blue-40x40.png", 1, 1, null, false),
     SCALE(Constants.PATH_RESOURCES_SPRITES_POWERUPS + "red-40x40.png", 1, 6, null, false),
@@ -65,10 +63,8 @@ public enum PowerUpType {
     public static PowerUpType getRandomPowerUpType() {
         Random random = new Random();
         PowerUpType power;
-        do {
-            power = values()[random.nextInt(values().length)];
-        }
-        while (getPlayer().getSecondaryBtnHandler().getWeaponSettings().containsKey(power.projectileType));
+        power = values()[random.nextInt(values().length)];
+
         return power;
     }
 

@@ -45,7 +45,7 @@ public class Map {
         frontNodes = new ArrayList<>();
         aiGrid = new int[MAP_BLOCKS_HEIGHT][MAP_BLOCKS_WIDTH];
         random = new Random();
-
+        initializeMapBorder();
         final PixelReader pixelReader = new Image(mapName).getPixelReader();
         for (int i = 0; i < MAP_BLOCKS_HEIGHT; i++) {
             for (int j = 0; j < MAP_BLOCKS_WIDTH; j++) {
@@ -207,6 +207,39 @@ public class Map {
 
     public ArrayList<SpawnPoint> getSpawnPointsNodes() {
         return spawnPointsNodes;
+    }
+
+    private void initializeMapBorder() {
+        Image horizontal = new Image(PATH_RESOURCES_SPRITES_MAP + "horizontal.png");
+        Image vertical = new Image(PATH_RESOURCES_SPRITES_MAP + "vertical.png");
+
+        Wall up = new Wall(horizontal);
+        Wall down = new Wall(horizontal);
+        Wall left = new Wall(vertical);
+        Wall right = new Wall(vertical);
+
+
+        up.setLayoutX(STARTING_X);
+        up.setLayoutY(STARTING_Y + BLOCK_SIZE);
+        up.setOpacity(0);
+
+        down.setLayoutX(STARTING_X);
+        down.setLayoutY(STARTING_Y + (MAP_BLOCKS_HEIGHT - 1) * BLOCK_SIZE);
+        down.setOpacity(0);
+
+        left.setLayoutX(STARTING_X);
+        left.setLayoutY(STARTING_Y + BLOCK_SIZE);
+        left.setOpacity(0);
+
+        right.setLayoutX(STARTING_X + (MAP_BLOCKS_WIDTH - 1) * BLOCK_SIZE);
+        right.setLayoutY(STARTING_Y + BLOCK_SIZE);
+        right.setOpacity(0);
+
+
+        wallNodes.add(down);
+        wallNodes.add(right);
+        wallNodes.add(left);
+        wallNodes.add(up);
     }
 
     public int[][] getAiGrid() {

@@ -1,12 +1,12 @@
 package view;
 
 import controller.Campaign;
+import controller.Endless;
 import controller.InputManager;
 import controller.LevelManager;
 import controller.audiomanager.AudioFile;
 import controller.audiomanager.AudioManager;
 import controller.json.JsonParser;
-import controller.map.Map;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
@@ -23,6 +23,7 @@ import model.MainPane;
 import model.enemies.Enemy;
 import model.player.Player;
 import model.player.PlayerType;
+import model.projectiles.PowerUp;
 import model.ui.game.ScoreLabel;
 import model.wall.Wall;
 import view.game.stats.HealthBars;
@@ -82,6 +83,7 @@ public class GameViewManager {
             HallOfFameMenu.setNewRecord(player.getName(), player.getCurrentScore());
             player.resetScore();
             Main.switchToMainMenu();
+            AudioManager.stopAudio(AudioFile.BOSS_MUSIC);
         });
 
         gameLoop = new AnimationTimer() {
@@ -124,7 +126,6 @@ public class GameViewManager {
 
         createPlayer(chosenPlayer, playerName);
 
-        initializeMapBorder();
         if (isEndless) {
             gameMode = new Endless(2000, false);
         } else {
@@ -152,42 +153,6 @@ public class GameViewManager {
         gameLoop.start();
     }
 
-    private void initializeMapBorder() {
-        Wall up = new Wall(new Image(Main.PATH_RESOURCES_SPRITES + "walls/empty-704x396.png"));
-        Wall down = new Wall(new Image(Main.PATH_RESOURCES_SPRITES + "walls/empty-704x396.png"));
-        Wall left = new Wall(new Image(Main.PATH_RESOURCES_SPRITES + "walls/empty-704x396.png"));
-        Wall right = new Wall(new Image(Main.PATH_RESOURCES_SPRITES + "walls/empty-704x396.png"));
-
-        up.setFitHeight(Map.BLOCK_SIZE);
-        up.setFitWidth((Map.MAP_BLOCKS_WIDTH - 1) * Map.BLOCK_SIZE);
-        up.setLayoutX(Map.STARTING_X);
-        up.setLayoutY(Map.STARTING_Y + Map.BLOCK_SIZE);
-
-        down.setFitWidth((Map.MAP_BLOCKS_WIDTH - 1) * Map.BLOCK_SIZE);
-        down.setFitHeight(Map.BLOCK_SIZE);
-        down.setLayoutX(Map.STARTING_X);
-        down.setLayoutY(Map.STARTING_Y + (Map.MAP_BLOCKS_HEIGHT - 1) * Map.BLOCK_SIZE);
-        left.setFitWidth(Map.BLOCK_SIZE);
-        left.setFitHeight((Map.MAP_BLOCKS_HEIGHT - 1) * Map.BLOCK_SIZE);
-        left.setLayoutX(Map.STARTING_X);
-        left.setLayoutY(Map.STARTING_Y + Map.BLOCK_SIZE);
-        right.setFitWidth(Map.BLOCK_SIZE);
-        right.setFitHeight((Map.MAP_BLOCKS_HEIGHT - 1) * Map.BLOCK_SIZE);
-        right.setLayoutX(Map.STARTING_X + (Map.MAP_BLOCKS_WIDTH - 1) * Map.BLOCK_SIZE);
-        right.setLayoutY(Map.STARTING_Y + Map.BLOCK_SIZE);
-
-
-        mainPane.addToGamePane(up);
-        mainPane.addToGamePane(down);
-        mainPane.addToGamePane(left);
-        mainPane.addToGamePane(right);
-
-        getWallArrayList().add(down);
-        getWallArrayList().add(right);
-        getWallArrayList().add(left);
-        getWallArrayList().add(up);
-    }
-
     private void createScoreLabel() {
         lbl_currentScore = new ScoreLabel();
         mainPane.addToUIPane(lbl_currentScore);
@@ -201,12 +166,15 @@ public class GameViewManager {
         if (!gameEnded) {
             gameEnded = true;
 
-            AudioManager.stopAudio(AudioFile.BOSS_MUSIC);
             gameLoop.stop();
             wallArrayList.clear();
             gameEnd.setName(player.getName());
             gameEnd.setScore(player.getCurrentScore());
 
+            PowerUp.disableSpeed();
+            PowerUp.disableAll();
+            getPlayer().getPrimaryBtnHandler().getWeaponSettings().clear();
+            getPlayer().getSecondaryBtnHandler().getWeaponSettings().clear();
             mainPane.addToUIPane(gameEnd);
             gameEnd.show();
             gameEnd.toFront();

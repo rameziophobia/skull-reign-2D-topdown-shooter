@@ -49,11 +49,15 @@ public class MainPane extends Pane {
         if (children != null) {
             gamePane.getChildren().addAll(children);
             for (Node child : children) {
-                child.toBack();
+                if (!(gameObject instanceof Entity)) {
+                    child.toBack();
+                }
             }
         }
         gamePane.getChildren().add(gameObject);
-        gameObject.toBack();
+        if (!(gameObject instanceof Entity)) {
+            gameObject.toBack();
+        }
     }
 
     public void removeFromGamePane(GameObject gameObject) {

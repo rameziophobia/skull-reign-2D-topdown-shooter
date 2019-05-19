@@ -21,6 +21,7 @@ public class Main extends Application {
         stage = primaryStage;
         menuScene = new MenuScene(1280, 720, stage);
         stage.setScene(menuScene);
+        stage.setResizable(false);
         stage.setTitle("Skull Reign");
         stage.getIcons().add(new Image(PATH_RESOURCES_SPRITES + "icon.png"));
         stage.show();

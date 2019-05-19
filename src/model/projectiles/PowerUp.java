@@ -20,24 +20,23 @@ import java.util.Random;
 
 public class PowerUp extends GameObject {
 
-    public static final Duration animationDuration = Duration.millis(1500);
+    private static final Duration animationDuration = Duration.millis(1500);
     private PowerUpType powerUpType;
     private AnimationClip animationClip;
     private boolean animated;
     private Node[] powerUpNodes;
+    private Random rand;
 
     public PowerUp(PowerUpType powerUpType) {
         super(powerUpType.getURL());
 
         this.powerUpType = powerUpType;
 
-        Random rand = new Random();
-        do {
-            setLayoutY(2.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_HEIGHT - 4) - Map.STARTING_Y)) + Map.STARTING_Y);
-            setLayoutX(1.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_WIDTH - 1.5) - Map.STARTING_X)) + Map.STARTING_X);
-        }
-        while (GameViewManager.getInstance().getWallArrayList().size() > 0 &&
-                Wall.canMove(this, GameViewManager.getInstance().getWallArrayList(), false, 0));
+        rand = new Random();
+
+        setLayoutY(2.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_HEIGHT - 4) - Map.STARTING_Y)) + Map.STARTING_Y);
+        setLayoutX(1.5 * Map.BLOCK_SIZE + rand.nextInt((int) (Map.BLOCK_SIZE * (Map.MAP_BLOCKS_WIDTH - 1.5) - Map.STARTING_X)) + Map.STARTING_X);
+
         this.animated = powerUpType.isANIMATED();
         if (animated) {
             SpriteSheet spriteSheet = new SpriteSheet(powerUpType.getURL(), 0);
@@ -56,19 +55,51 @@ public class PowerUp extends GameObject {
         if (isIntersects(GameViewManager.getPlayer())) {
             Player.setSPEED(powerUpType.getSpeed());
 
-            final PlayerProjectileControl BtnHandler =
+            PlayerProjectileControl BtnHandler =
                     (animated) ?
                             GameViewManager.getPlayer().getSecondaryBtnHandler() :
                             GameViewManager.getPlayer().getPrimaryBtnHandler();
 
-            BtnHandler.setPowerUp(powerUpType, powerUpType.getScale());
             if (powerUpType.getProjectileType() != null) {
-                BtnHandler.addType(powerUpType.getProjectileType());
+                if (!BtnHandler.getWeaponSettings().containsKey(powerUpType.getProjectileType())) {
+                    BtnHandler.addType(powerUpType.getProjectileType());
+                } else if (powerUpType.getProjectileType().getCurrentMult() < PlayerProjectileControl.MAX_MULT) {
+                    powerUpType.getProjectileType().incCurrentMult(1);
+                }
+
+            }
+            if (rand.nextInt(2) == 0) {
+                BtnHandler = GameViewManager.getPlayer().getSecondaryBtnHandler();
+            } else {
+                BtnHandler = GameViewManager.getPlayer().getPrimaryBtnHandler();
             }
             AudioManager.playNewAudio(AudioFile.PLAYER_POWERUP, 0.3);
+            BtnHandler.setPowerUp(powerUpType, powerUpType.getScale());
             GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
+
+    private static void setPowerUp(boolean primary, PowerUpType powerUpType) {
+        if (primary) {
+            GameViewManager.getPlayer().getPrimaryBtnHandler().setPowerUp(powerUpType, 0f);
+        } else {
+            GameViewManager.getPlayer().getSecondaryBtnHandler().setPowerUp(powerUpType, 0f);
+        }
+    }
+
+    public static void disableAll() {
+        GameViewManager.getPlayer().getPrimaryBtnHandler().getWeaponList().forEach(ProjectileType::setToDefault);
+        GameViewManager.getPlayer().getSecondaryBtnHandler().getWeaponList().forEach(ProjectileType::setToDefault);
+    }
+
+    private void checkCollision_wall() {
+        for (Wall wall : GameViewManager.getInstance().getWallArrayList()) {
+            if (isIntersects(wall)) {
+                GameViewManager.getMainPane().removeFromGamePane(this);
+            }
+        }
+    }
+
 
     private void setUpNode() {
         final double width = getImageWidth(powerUpType.getURL());
@@ -100,19 +131,13 @@ public class PowerUp extends GameObject {
         setPowerUp(primary, PowerUpType.SPEEDPROJECTILE);
     }
 
-    private static void setPowerUp(boolean primary, PowerUpType scale) {
-        if (primary) {
-            GameViewManager.getPlayer().getPrimaryBtnHandler().setPowerUp(scale, 0f);
-        } else {
-            GameViewManager.getPlayer().getSecondaryBtnHandler().setPowerUp(scale, 0f);
-        }
-    }
 
     @Override
     public void update() {
         if (animated) {
             animationClip.animate();
         }
+        checkCollision_wall();
         checkCollision();
     }
 

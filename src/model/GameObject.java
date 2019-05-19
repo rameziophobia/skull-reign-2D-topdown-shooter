@@ -51,4 +51,12 @@ public abstract class GameObject extends ImageView {
     public abstract void update();
 
     public abstract Node[] getChildren();
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
 }

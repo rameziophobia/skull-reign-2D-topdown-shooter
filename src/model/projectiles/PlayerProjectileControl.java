@@ -21,10 +21,11 @@ public class PlayerProjectileControl {
 
     private HashMap<PowerUpType, Float> powerUp;
     private HashMap<ProjectileType, HashMap<PowerUpType, Float>> weaponSettings = new HashMap<>();
+
     private LinkedList<ProjectileType> weaponList = new LinkedList<>();
     //dictionary of weapons used with their respective powerUp dict
 
-    private final static int MAX_MULT = 6;
+    public final static int MAX_MULT = 6;
     private final static int MAX_SCALE = 50;
     private final int MAX_SPEED;
 
@@ -73,13 +74,13 @@ public class PlayerProjectileControl {
         return power;
     }
 
-    public void fireProjectile() {
+    private void fireProjectile() {
         if (mousePressed && lastPressed.equals(projectileBtn)) {
             createProjectile();
         }
     }
 
-    public void mouseEvents() {
+    private void mouseEvents() {
         GameViewManager.getMainPane().addEventFilter(MouseEvent.ANY, this::detectBtnType);
         GameViewManager.getMainPane().addEventFilter(TouchEvent.ANY, e -> fireProjectile());
 
@@ -94,7 +95,11 @@ public class PlayerProjectileControl {
         fireProjectile();
     }
 
-    protected HashMap getWeaponSettings() {
+    public LinkedList<ProjectileType> getWeaponList() {
+        return weaponList;
+    }
+
+    public HashMap getWeaponSettings() {
         return weaponSettings;
     }
 
@@ -107,6 +112,9 @@ public class PlayerProjectileControl {
     }
 
     private void createProjectile() {
+        powerUp.put(PowerUpType.MULT, type.getCurrentMult());
+        powerUp.put(PowerUpType.SCALE, type.getCurrentScale());
+        powerUp.put(PowerUpType.SPEEDUP, (float) type.getSPEED());
         if (System.currentTimeMillis() > (lastFireTime + 1000 / type.getFIRERATE())) {
             for (int mult = 0; mult < powerUp.get(PowerUpType.MULT); mult++) {
                 Projectile projectile = new Projectile(getPlayer().getSpawner(),
@@ -159,13 +167,10 @@ public class PlayerProjectileControl {
             powerUp.put(key, 1f);
         } else if (key == PowerUpType.MULT && type.getCurrentMult() < MAX_MULT) {
             type.incCurrentMult(value);
-            powerUp.put(key, type.getCurrentMult());
         } else if (key == PowerUpType.SCALE && type.getCurrentScale() <= MAX_SCALE) {
             type.incCurrentScale(value);
-            powerUp.put(key, type.getCurrentScale());
         } else if (key == PowerUpType.SPEEDPROJECTILE && type.getSPEED() <= MAX_SPEED) {
             type.incCurrentSpeed(value);
-            powerUp.put(key, (float) type.getSPEED());
         }
 
     }
