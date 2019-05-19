@@ -13,7 +13,6 @@ import model.GameObject;
 import model.player.Player;
 import model.wall.Wall;
 import view.GameViewManager;
-import model.projectiles.PlayerProjectileControl;
 
 import java.util.Random;
 
@@ -87,8 +86,8 @@ public class PowerUp extends GameObject {
     }
 
     public static void disableAll(){
-        GameViewManager.getPlayer().getPrimaryBtnHandler().getWeaponList().forEach(ProjectileType -> ProjectileType.setToDefault());
-        GameViewManager.getPlayer().getSecondaryBtnHandler().getWeaponList().forEach(ProjectileType -> ProjectileType.setToDefault());
+        GameViewManager.getPlayer().getPrimaryBtnHandler().getWeaponList().forEach(ProjectileType::setToDefault);
+        GameViewManager.getPlayer().getSecondaryBtnHandler().getWeaponList().forEach(ProjectileType::setToDefault);
     }
     private void checkCollision_wall() {
         for (Wall wall : GameViewManager.getInstance().getWallArrayList()) {
