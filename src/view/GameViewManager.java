@@ -4,7 +4,6 @@ import controller.Campaign;
 import controller.Endless;
 import controller.InputManager;
 import controller.LevelManager;
-import controller.map.Map;
 import controller.json.JsonParser;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Rectangle2D;
@@ -22,6 +21,7 @@ import model.MainPane;
 import model.enemies.Enemy;
 import model.player.Player;
 import model.player.PlayerType;
+import model.projectiles.PowerUp;
 import model.ui.game.ScoreLabel;
 import model.wall.Wall;
 import view.game.stats.HealthBars;
@@ -68,7 +68,7 @@ public class GameViewManager {
 
         gameStage = new Stage();
         gameStage.setScene(gameScene);
-        gameStage.setFullScreen(false);
+        gameStage.setFullScreen(true);
         gameStage.setTitle("Skull Reign");
         gameStage.getIcons().add(new Image(Main.PATH_RESOURCES_SPRITES + "icon.png"));
 
@@ -170,6 +170,10 @@ public class GameViewManager {
             gameEnd.setName(player.getName());
             gameEnd.setScore(player.getCurrentScore());
 
+            PowerUp.disableSpeed();
+            PowerUp.disableAll();
+            getPlayer().getPrimaryBtnHandler().getWeaponSettings().clear();
+            getPlayer().getSecondaryBtnHandler().getWeaponSettings().clear();
             mainPane.addToUIPane(gameEnd);
             gameEnd.show();
             gameEnd.toFront();

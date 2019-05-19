@@ -3,7 +3,7 @@ package model.projectiles;
 import view.Main;
 
 public enum ProjectileType {
-    BULLET("bullet-13x3.png", 15, 1, 10, 3, false, 1, 1),
+    BULLET("bullet-13x3.png", 15, 3, 10, 3, false, 1, 1),
     FIRE("fire-32x12.png", 1, 35, 6, 3, false, 1, 1),
     REDLASER01("laserRed01-54x9.png", 3, 15, 15, 3, false, 1, 1),
     GREENLASER01("laserGreen01-54x9.png", 3, 15, 15, 3, false, 1, 1),
@@ -36,6 +36,7 @@ public enum ProjectileType {
     private final double MULTANGLE;
     private final boolean ANIMATED;
     private int speed;
+    private int defaultSpeed;
     private float currentMult;
     private float currentScale;
 
@@ -44,6 +45,7 @@ public enum ProjectileType {
         this.FIRERATE = fireRate;
         this.DAMAGE = damage;
         this.speed = speed;
+        this.defaultSpeed = speed;
         this.MULTANGLE = multAngle;
         this.ANIMATED = animated;
         this.currentMult = currentMult;
@@ -81,7 +83,11 @@ public enum ProjectileType {
     public boolean isANIMATED() {
         return ANIMATED;
     }
-
+    public void setToDefault(){
+        this.currentScale = 1;
+        this.currentMult = 1;
+        this.speed = defaultSpeed;
+    }
     public void incCurrentMult(float mult) {
         this.currentMult += mult;
     }
