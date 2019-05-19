@@ -83,11 +83,13 @@ public enum ProjectileType {
     public boolean isANIMATED() {
         return ANIMATED;
     }
-    public void setToDefault(){
+
+    public void setToDefault() {
         this.currentScale = 1;
         this.currentMult = 1;
         this.speed = defaultSpeed;
     }
+
     public void incCurrentMult(float mult) {
         this.currentMult += mult;
     }

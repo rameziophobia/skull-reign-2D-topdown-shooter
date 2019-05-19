@@ -25,8 +25,8 @@ public class Endless extends LevelManager {
     private boolean debug;
 
     private int currentEnemyIndex;
-    private int currentWave=1;
-    private int currentX=1;
+    private int currentWave = 1;
+    private int currentX = 1;
     private int k;
 
     private long nextSpawnTime;
@@ -56,31 +56,32 @@ public class Endless extends LevelManager {
         this.enemies = new ArrayList<>();
         this.spawnedEnemies = new ArrayList<>();
 
-        Enemy.setMapLimits( Map.BLOCK_SIZE + Map.STARTING_X,
+        Enemy.setMapLimits(Map.BLOCK_SIZE + Map.STARTING_X,
                 Map.STARTING_X + (Map.MAP_BLOCKS_WIDTH - 1) * Map.BLOCK_SIZE,
                 Map.BLOCK_SIZE * 3 + Map.STARTING_Y,
                 Map.STARTING_Y + (Map.MAP_BLOCKS_HEIGHT - 1) * Map.BLOCK_SIZE);
         prepEnemies();
 
     }
-    private void prepEnemies() {
-            final double totalPower =   25+(10 * (1.5 * currentX + (Math.sin(2 * currentX) / 2)));
-            currentX++;
 
-            enemies.add(new LinkedList<>());
-            enemies.get(k).add((new Enemy(sortedEnemyTypes.get(0),ProjectileType.FIRE,sortedProjectileControlType.get(0),Enemy.MoveMode.FOLLOW_PLAYER)));
-            for (int i = sortedEnemyTypes.size() - 1; i > 0; i--) {
-                final EnemyType enemyType = sortedEnemyTypes.get(i);
-                for(int j = sortedProjectileControlType.size() -1 ; j>0; j--){
-                    final ProjectileControlType projectileControlType = sortedProjectileControlType.get(j);
-                    if(projectileControlType.getPOWER()+enemyType.getPOWER()<=totalPower){
-                        for (int l = 0; l < (int) (totalPower / (enemyType.getPOWER()+projectileControlType.getPOWER())); l++) {
-                            enemies.get(k).add(random.nextInt(enemies.get(k).size()),(new Enemy(enemyType,ProjectileType.FIRE,projectileControlType,Enemy.MoveMode.FOLLOW_PLAYER)));
-                        }
+    private void prepEnemies() {
+        final double totalPower = 25 + (10 * (1.5 * currentX + (Math.sin(2 * currentX) / 2)));
+        currentX++;
+
+        enemies.add(new LinkedList<>());
+        enemies.get(k).add((new Enemy(sortedEnemyTypes.get(0), ProjectileType.FIRE, sortedProjectileControlType.get(0), Enemy.MoveMode.FOLLOW_PLAYER)));
+        for (int i = sortedEnemyTypes.size() - 1; i > 0; i--) {
+            final EnemyType enemyType = sortedEnemyTypes.get(i);
+            for (int j = sortedProjectileControlType.size() - 1; j > 0; j--) {
+                final ProjectileControlType projectileControlType = sortedProjectileControlType.get(j);
+                if (projectileControlType.getPOWER() + enemyType.getPOWER() <= totalPower) {
+                    for (int l = 0; l < (int) (totalPower / (enemyType.getPOWER() + projectileControlType.getPOWER())); l++) {
+                        enemies.get(k).add(random.nextInt(enemies.get(k).size()), (new Enemy(enemyType, ProjectileType.FIRE, projectileControlType, Enemy.MoveMode.FOLLOW_PLAYER)));
                     }
                 }
             }
-            k++;
+        }
+        k++;
     }
 
     public void spawn() {
@@ -99,9 +100,10 @@ public class Endless extends LevelManager {
             }
         }
     }
+
     private void createPowerUp() {
         if (nextPowerUPSpawnTime < System.currentTimeMillis()) {
-            nextPowerUPSpawnTime = System.currentTimeMillis() + powerUpCD-currentWave*20;
+            nextPowerUPSpawnTime = System.currentTimeMillis() + powerUpCD - currentWave * 20;
             PowerUp powerUp = new PowerUp(PowerUpType.getRandomPowerUpType());
             GameViewManager.getMainPane().addToGamePane(powerUp);
         }
@@ -109,9 +111,10 @@ public class Endless extends LevelManager {
 
 
     @Override
-    public List<Enemy>getEnemyArrayList() {
+    public List<Enemy> getEnemyArrayList() {
         return spawnedEnemies;
     }
+
     @Override
     public ArrayList<Wall> getWallArrayList() {
         return wallArrayList;
@@ -122,10 +125,11 @@ public class Endless extends LevelManager {
     public void removeEnemy(Enemy enemy) {
         spawnedEnemies.remove(enemy);
     }
+
     @Override
     public void update() {
         GameViewManager.getInstance().getGameUI().getWaveLabel().setUICounter(currentWave);
-        if(k < 30){
+        if (k < 30) {
             prepEnemies();
         }
         spawn();

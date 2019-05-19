@@ -50,17 +50,16 @@ public class GameViewManager {
     private static AnimationTimer gameLoop;
     private LevelManager gameMode;
     private Boolean isEndless;
-    private static ArrayList<Wall>  wallArrayList= new ArrayList<>();
+    private static ArrayList<Wall> wallArrayList = new ArrayList<>();
 
     public static GameViewManager getInstance() {
         return instance;
     }
 
 
-
     public GameViewManager(Boolean endless) {
         instance = this;
-        isEndless=endless;
+        isEndless = endless;
         mainPane = new MainPane();
         mainPane.addAllToBackPane(new Rectangle(WIDTH, HEIGHT, Color.BLACK));
 
@@ -75,7 +74,7 @@ public class GameViewManager {
 
         setWindowScaling();
 
-        gameUI = new GameUI(mainPane,isEndless);
+        gameUI = new GameUI(mainPane, isEndless);
 
         gameEnded = false;
         gameEnd = new GameEnd();
@@ -102,6 +101,7 @@ public class GameViewManager {
     public static MainPane getMainPane() {
         return mainPane;
     }
+
     public GameUI getGameUI() {
         return gameUI;
     }
@@ -125,10 +125,10 @@ public class GameViewManager {
         createPlayer(chosenPlayer, playerName);
 
 //        initializeMapBorder();
-        if(isEndless){
-            gameMode = new Endless(2000,false);
-        }else{
-            gameMode = new Campaign(gameUI.getLevelLabel(),gameUI.getWaveLabel());
+        if (isEndless) {
+            gameMode = new Endless(2000, false);
+        } else {
+            gameMode = new Campaign(gameUI.getLevelLabel(), gameUI.getWaveLabel());
         }
         startGameLoop();
     }
@@ -207,7 +207,6 @@ public class GameViewManager {
 
     private void gameUpdate() {
         gameMode.update();
-
 
 
         Object[] objects = mainPane.getGamePane().getChildren().toArray();

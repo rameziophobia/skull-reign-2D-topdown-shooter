@@ -94,9 +94,11 @@ public class PlayerProjectileControl {
         mouseEvents();
         fireProjectile();
     }
+
     public LinkedList<ProjectileType> getWeaponList() {
         return weaponList;
     }
+
     public HashMap getWeaponSettings() {
         return weaponSettings;
     }
@@ -112,7 +114,7 @@ public class PlayerProjectileControl {
     private void createProjectile() {
         powerUp.put(PowerUpType.MULT, type.getCurrentMult());
         powerUp.put(PowerUpType.SCALE, type.getCurrentScale());
-        powerUp.put(PowerUpType.SPEEDUP, (float)type.getSPEED());
+        powerUp.put(PowerUpType.SPEEDUP, (float) type.getSPEED());
         if (System.currentTimeMillis() > (lastFireTime + 1000 / type.getFIRERATE())) {
             for (int mult = 0; mult < powerUp.get(PowerUpType.MULT); mult++) {
 

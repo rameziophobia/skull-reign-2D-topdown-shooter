@@ -117,7 +117,7 @@ public class Boss extends Enemy {
 
     private void projectileControlInit(EnemyStageEnum stage) {
         laser = new EnemyProjectileControl(ProjectileType.REDLASER01);
-        laser.addPulseBoss((long)9, stage.getPulseAngle());
+        laser.addPulseBoss((long) 9, stage.getPulseAngle());
 
         knifeContinuousPulse = new EnemyProjectileControl(ProjectileType.KNIFE);
         knifeContinuousPulse.addKnives(stage.knifeRate, stage.knifeAngle);
@@ -153,7 +153,7 @@ public class Boss extends Enemy {
         if (hp <= 0 && currentStage.index < stage.index) {
             super.checkAlive();
             Boss b = new Boss(stage,
-                    EnemyStageEnum.getEnemyStage(currentStage.index + 1), spawnX,spawnY);
+                    EnemyStageEnum.getEnemyStage(currentStage.index + 1), spawnX, spawnY);
 
             GameViewManager.getInstance().getEnemyArrayList().add(b);
             GameViewManager.getMainPane().addToGamePane(b);

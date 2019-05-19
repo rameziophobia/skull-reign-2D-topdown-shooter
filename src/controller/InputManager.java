@@ -4,8 +4,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import model.player.Player;
-import model.projectiles.PowerUpType;
-import model.projectiles.ProjectileType;
 
 public class InputManager {
     private static Player player;

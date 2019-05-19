@@ -58,25 +58,24 @@ public class PowerUp extends GameObject {
                             GameViewManager.getPlayer().getSecondaryBtnHandler() :
                             GameViewManager.getPlayer().getPrimaryBtnHandler();
 
-            if (powerUpType.getProjectileType() != null ) {
-                if(!BtnHandler.getWeaponSettings().containsKey(powerUpType.getProjectileType())){
+            if (powerUpType.getProjectileType() != null) {
+                if (!BtnHandler.getWeaponSettings().containsKey(powerUpType.getProjectileType())) {
                     BtnHandler.addType(powerUpType.getProjectileType());
-                }
-                else if(powerUpType.getProjectileType().getCurrentMult() < PlayerProjectileControl.MAX_MULT){
+                } else if (powerUpType.getProjectileType().getCurrentMult() < PlayerProjectileControl.MAX_MULT) {
                     powerUpType.getProjectileType().incCurrentMult(1);
                 }
 
             }
             if (rand.nextInt(2) == 0) {
                 BtnHandler = GameViewManager.getPlayer().getSecondaryBtnHandler();
-            }
-            else{
-                    BtnHandler = GameViewManager.getPlayer().getPrimaryBtnHandler();
+            } else {
+                BtnHandler = GameViewManager.getPlayer().getPrimaryBtnHandler();
             }
             BtnHandler.setPowerUp(powerUpType, powerUpType.getScale());
             GameViewManager.getMainPane().removeFromGamePane(this);
         }
     }
+
     private static void setPowerUp(boolean primary, PowerUpType powerUpType) {
         if (primary) {
             GameViewManager.getPlayer().getPrimaryBtnHandler().setPowerUp(powerUpType, 0f);
@@ -85,10 +84,11 @@ public class PowerUp extends GameObject {
         }
     }
 
-    public static void disableAll(){
+    public static void disableAll() {
         GameViewManager.getPlayer().getPrimaryBtnHandler().getWeaponList().forEach(ProjectileType::setToDefault);
         GameViewManager.getPlayer().getSecondaryBtnHandler().getWeaponList().forEach(ProjectileType::setToDefault);
     }
+
     private void checkCollision_wall() {
         for (Wall wall : GameViewManager.getInstance().getWallArrayList()) {
             if (isIntersects(wall)) {
@@ -96,7 +96,6 @@ public class PowerUp extends GameObject {
             }
         }
     }
-
 
 
     private void setUpNode() {
@@ -128,7 +127,6 @@ public class PowerUp extends GameObject {
     public static void disableSpeedProjectile(boolean primary) {
         setPowerUp(primary, PowerUpType.SPEEDPROJECTILE);
     }
-
 
 
     @Override
