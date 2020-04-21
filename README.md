@@ -42,10 +42,6 @@
 
 ![Upgrades](resources/docs/upgrades.gif)
 
-
-### map creation
-
-
 ### Weapons
 
 ![Weapons](resources/docs/weapons.gif)
@@ -56,7 +52,7 @@
 
 ## Download
 
-To download the game. You can either download the binaries from http://bit.ly/skullreign-dl.
+To download the game. You can either download the binaries from [here](http://bit.ly/skullreign-dl).
 
 or clone the repo using:
 
@@ -75,7 +71,7 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/Strykar1/ASU2019_NetworkedGameWorkshop/tags).
+We use [SemVer](http://semver.org/) for versioning.
 
 ## Authors
 
@@ -95,11 +91,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE.md) f
 
 ### Assets
 
-#### Logo
+#### Sprites and Images
+* https://opengameart.org/content/bosses-and-monsters-spritesheets-ars-notoria
+* https://0x72.itch.io/16x16-dungeon-tileset
+* https://0x72.itch.io/dungeontileset-ii
+* https://opengameart.org/content/crosshair-pack-200%C3%97
+* https://opengameart.org/content/skull-4
 
 #### Sounds
+* https://freesound.org/people/InspectorJ/sounds/336598/
 
+
+### Others
 * [README template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
+* [license-image](https://img.shields.io/badge/License-MIT-brightgreen.svg)
+* [license-url](https://opensource.org/licenses/MIT)
 
-[license-image]: https://img.shields.io/badge/License-MIT-brightgreen.svg
-[license-url]: https://opensource.org/licenses/MIT
