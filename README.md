@@ -9,7 +9,7 @@
 </p>
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/4560ab19de6b4975954b033d6c6d410d)](https://www.codacy.com/manual/rameznoshy/skull-reign-2D-topdown-shooter?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=rameziophobia/skull-reign-2D-topdown-shooter&amp;utm_campaign=Badge_Grade)
-[![License][license-image]][license-url]
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 2D Topdown shooter game made using pure Java utilizing the javafx framework
 
